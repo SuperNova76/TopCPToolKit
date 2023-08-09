@@ -1,4 +1,4 @@
-A comprehensive documentation is being built and will appear [here](https://topcptoolkit.web.cern.ch/).
+A comprehensive documentation is being built and will appear [here](https://topcptoolkit.docs.cern.ch/).
 
 In the meantime, you can run the code on a `DAOD_PHYS` sample as:
 ```bash

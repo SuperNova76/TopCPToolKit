@@ -1,7 +1,7 @@
 site_name: TopCPToolkit documentation
 site_description: Documentation for the TopCPToolkit software package
 site_author: Top Reco team
-site_url: https://topcptoolkit.web.cern.ch/
+site_url: https://topcptoolkit.docs.cern.ch/
 repo_name: GitLab
 repo_url: https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit
 edit_uri: 'tree/master/docs'

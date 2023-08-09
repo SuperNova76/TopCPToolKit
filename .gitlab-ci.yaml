@@ -1,3 +1,0 @@
-include:
-    - project: 'authoring/documentation/mkdocs-ci'
-      file: 'mkdocs-gitlab-pages.gitlab-ci.yml'
