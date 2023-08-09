@@ -1,0 +1,19 @@
+<lcgdict>
+
+  <!-- This file contains a list of all classes for which a dictionary
+       should be created. -->
+
+  <class name="top::TtbarCPalgoAnalysis" />
+  <class name="top::LeptonSFCalculator" />
+  <class name="top::RunPartonHistoryAlg" />
+  <class name="top::ParticleLevelAlg" />
+  <class name="top::KLFitterAlg" />
+  <class name="top::KLFitterResult" />
+  <class name="top::KLFitterResultContainer" />
+  <class name="top::KLFitterResultAuxContainer" />
+  <class name="top::KLFitterFinalizeOutputAlg" />
+  <class name="top::EventSelectionTestAlg" />
+  <class name="top::RunSpaNetAlg" />
+  <class name="top::RunTtbarNNLORecursiveRewAlg" />
+   
+</lcgdict>
