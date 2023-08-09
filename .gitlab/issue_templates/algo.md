@@ -14,6 +14,6 @@ Provide detailed information about the proposed algorithm.
 
 ### Implementation
 
-Link anay relevant twiki, code, issue or merge request.
+Link any relevant twiki, code, issue or merge request.
 
 /label ~"New algorithm"
