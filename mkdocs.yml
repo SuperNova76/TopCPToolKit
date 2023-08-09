@@ -1,0 +1,33 @@
+site_name: TopCPToolkit documentation
+site_description: Documentation for the TopCPToolkit software package
+site_author: Top Reco team
+site_url: https://topcptoolkit.web.cern.ch/
+repo_name: GitLab
+repo_url: https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit
+edit_uri: 'tree/master/docs'
+theme:
+    name: material
+    palette:
+        primary: 'blue'
+        accent: 'blue'
+        # logo:
+        #     icon: 'insert_chart'
+    features:
+      - content.tabs.link
+
+nav:
+    - 'Home': index.md
+
+markdown_extensions:
+    - admonition
+    - codehilite
+    - pymdownx.arithmatex
+    - pymdownx.details
+    - pymdownx.inlinehilite
+    - pymdownx.smartsymbols
+    - pymdownx.superfences
+    - pymdownx.tabbed:
+        alternate_style: true
+
+extra_javascript:
+    - 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'
