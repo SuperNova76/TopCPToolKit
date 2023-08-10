@@ -70,7 +70,7 @@ def basicInDSNameShortener(*args):
     return outDSName
 
 class Config:
-    code = 'top_el.py'
+    code = 'runTop_el.py'
 
     gridUsername    = ''
     groupProduction = None

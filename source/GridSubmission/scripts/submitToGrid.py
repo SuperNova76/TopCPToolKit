@@ -5,7 +5,7 @@ import GridSubmission.grid
 import MC20_PHYS
 
 config = GridSubmission.grid.Config()
-config.code          = 'top_el.py --no-systematics --parton --particle'  # run nominal only with parton and particle level
+config.code          = 'runTop_el.py --no-systematics --parton --particle'  # run nominal only with parton and particle level
 config.outputName    = 'output' # output directory from EventLoop
 config.gridUsername  = 'ravinab' # use e.g. phys-top or phys-higgs for group production
 config.suffix        = '230320-v0'
