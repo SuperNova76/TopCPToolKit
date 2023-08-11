@@ -32,6 +32,7 @@ markdown_extensions:
     - pymdownx.inlinehilite
     - pymdownx.smartsymbols
     - pymdownx.superfences
+    - def_list
     - pymdownx.emoji:
         emoji_index: !!python/name:materialx.emoji.twemoji
         emoji_generator: !!python/name:materialx.emoji.to_svg
@@ -58,6 +59,6 @@ nav:
         - FAQ: faq.md
     - Settings:
         - settings/index.md
-        - Electron algorithms: settings/electrons.md
-        - Muon algorithms: settings/muons.md
-        - Jet algorithms: settings/jets.md
+        - Electron config blocks: settings/electrons.md
+        - Muon config blocks: settings/muons.md
+        - Jet config blocks: settings/jets.md
