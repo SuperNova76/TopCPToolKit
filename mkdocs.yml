@@ -2,32 +2,63 @@ site_name: TopCPToolkit documentation
 site_description: Documentation for the TopCPToolkit software package
 site_author: Top Reco team
 site_url: https://topcptoolkit.docs.cern.ch/
-repo_name: GitLab
+repo_name: atlasphys-top/TopCPToolkit
 repo_url: https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit
-edit_uri: 'tree/master/docs'
+edit_uri: tree/master/docs
 theme:
     name: material
     palette:
-        primary: 'blue'
-        accent: 'blue'
-        # logo:
-        #     icon: 'insert_chart'
+        primary: blue
+        accent: indigo
+    icon:
+        logo: material/graph-outline
+        repo: fontawesome/brands/gitlab
     features:
+      - content.code.copy
       - content.tabs.link
-
-nav:
-    - 'Home': index.md
-
+      - navigation.instant
+      - navigation.tracking
+      - navigation.tabs
+#      - navigation.tabs.sticky
+      - navigation.sections
+      - navigation.indexes
+      - navigation.footer
 markdown_extensions:
     - admonition
     - codehilite
+    - attr_list
     - pymdownx.arithmatex
     - pymdownx.details
     - pymdownx.inlinehilite
     - pymdownx.smartsymbols
     - pymdownx.superfences
+    - def_list
+    - pymdownx.emoji:
+        emoji_index: !!python/name:materialx.emoji.twemoji
+        emoji_generator: !!python/name:materialx.emoji.to_svg
     - pymdownx.tabbed:
         alternate_style: true
-
 extra_javascript:
-    - 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'
+    - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML
+
+nav:
+    - Home: index.md
+    - Getting started:
+        - Installation: installation.md
+        - Running the event loop: running_local.md
+        - Submitting jobs to the Grid: running_grid.md
+        - Writing your own analysis: analysis.md
+        - Changelog:
+            - changelog/index.md
+        - Contributing:
+            - contributing/index.md
+            - Reporting a bug: contributing/reporting_bug.md
+            - Requesting a feature: contributing/requesting_feature.md
+            - Proposing a new algorithm: contributing/proposing_algorithm.md
+            - Suggesting an improvement: contributing/suggesting_improvement.md
+        - FAQ: faq.md
+    - Settings:
+        - settings/index.md
+        - Electron config blocks: settings/electrons.md
+        - Muon config blocks: settings/muons.md
+        - Jet config blocks: settings/jets.md
