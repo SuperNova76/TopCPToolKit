@@ -190,7 +190,8 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
     }
     individual_triggers = list(set(substring.strip() for chains_list in triggerChainsPerYear.values() for chain in chains_list for substring in chain.split('||')))
 
-    makeTriggerAnalysisConfig(configSeq, triggerChainsPerYear=triggerChainsPerYear, noFilter=False)
+    makeTriggerAnalysisConfig(configSeq, triggerChainsPerYear=triggerChainsPerYear, noFilter=noFilter, electronWorkingPoint='Tight.Tight_VarRad', muonWorkingPoint='Tight.None',
+                              electrons='AnaElectrons.tight', muons='AnaMuons.tight')
     # TODO this does not yet work with the OutputAnalysisConfig
     reco_branches += ['EventInfo.trigPassed_' + t + ' -> trigPassed_' + t for t in individual_triggers]
 

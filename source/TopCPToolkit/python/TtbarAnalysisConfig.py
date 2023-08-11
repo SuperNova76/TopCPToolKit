@@ -28,6 +28,6 @@ class TtbarAnalysisConfig(ConfigBlock):
         alg.electronSelection = electronSelection
         alg.muons = muons
         alg.muonSelection = muonSelection
-        alg.electronSF = f'effSF_{self.lepton_postfix}_%SYS%'
-        alg.muonSF = f'muon_effSF_{self.lepton_postfix}_%SYS%'
+        alg.electronSF = f'el_reco_effSF_{self.lepton_postfix}_%SYS%'
+        alg.muonSF = f'muon_reco_effSF_{self.lepton_postfix}_%SYS%'
         alg.event_leptonSF = f'leptonSF_{self.lepton_postfix}_%SYS%'
