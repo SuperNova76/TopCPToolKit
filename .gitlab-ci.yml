@@ -1,3 +1,10 @@
+stages:
+    - ".pre"
+    - validation
+    - deploy
+    - release
+    - ".post"
+
 include:
 # GENERATE THE DOCS
     - project: 'authoring/documentation/mkdocs-ci'
