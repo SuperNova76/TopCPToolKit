@@ -24,6 +24,12 @@ Create the additional folders where we will compile the code and run some exampl
 mkdir -p build run
 ```
 
+Note that you are now on the `main` branch, which is used for development. To access a [stable release](/changelog), you need to switch to the corresponding tag:
+```sh
+git fetch -a
+git checkout tags/vX.Y.Z -b mybranch
+```
+
 ## Setting up the environment
 
 Assuming you are working on Lxplus or an equivalent setup with access to CVMFS, all you need is the following:
