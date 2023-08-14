@@ -41,17 +41,17 @@
 `recomputeLikelihood`
 :   whether to rerun the LH. The default is `False`, i.e. to use derivation flags.
 
+!!! warning
+    The only way to get the DNN ID at the moment is to recompute the likelihood, as it's not stored in derivations.
+
 `chargeIDSelection`
 :   whether to run the [ECIDS tool](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/ElectronPhotonID/ElectronPhotonSelectorTools/Root/AsgElectronChargeIDSelectorTool.cxx?v=21.2). The default is `False`.
+
+!!! warning
+    ECIDS is actually not supported in release 24. It will likely become part of the DNN ID.
 
 !!! success "Registers the following variables:"
     - `select`: whether the electron passes the ID and isolation cuts
     - `reco_effSF`: the per-electron reconstruction SF
     - `id_effSF`: the per-electron ID SF
     - `isol_effSF`: the per-electron isolation SF
-
-!!! warning
-    ECIDS is actually not supported in release 24. It will likely become part of the DNN ID.
-
-!!! warning
-    The only way to get the DNN ID at the moment is to recompute the likelihood, as it's not stored in derivations.
