@@ -32,13 +32,13 @@ The default is `[]` (empty list).
     Only the photon isolation is really needed. Passing e.g. `None.TightCaloOnly` is therefore correct.
 
 `electrons`
-:   the input electron container.
+:   the input electron container, with a possible selection, in the format `container` or `container.selection`.
 
 `muons`
-:   the input muon container.
+:   the input muon container, with a possible selection, in the format `container` or `container.selection`.
 
 `photons`
-:   the input photon container.
+:   the input photon container, with a possible selection, in the format `container` or `container.selection`.
 
 `configName`
 :   name of the block config, typically not needed here. The default is `Trigger`.

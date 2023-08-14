@@ -67,3 +67,6 @@ nav:
         - MET config blocks: settings/met.md
         - Trigger config blocks: settings/trigger.md
         - Overlap removal config blocks: settings/overlap.md
+        - Object selection config blocks: settings/objectselection.md
+        - Top reconstruction config blocks: settings/reconstruction.md
+        - Ntupling config blocks: settings/ntupling.md

@@ -19,22 +19,22 @@
 :   whether to set up the electron-electron overlap removal (instance of [`ORUtils::EleEleOverlapTool`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/AnalysisCommon/AssociationUtils/Root/EleEleOverlapTool.cxx)). The default is `False`.
 
 `electrons`
-:   the input electron container.
+:   the input electron container, with a possible selection, in the format `container` or `container.selection`.
 
 `muons`
-:   the input muon container.
+:   the input muon container, with a possible selection, in the format `container` or `container.selection`.
 
 `jets`
-:   the input jet container.
+:   the input jet container, with a possible selection, in the format `container` or `container.selection`.
 
 `taus`
-:   the input tau container.
+:   the input tau container, with a possible selection, in the format `container` or `container.selection`.
 
 `photons`
-:   the input photon container.
+:   the input photon containe, with a possible selection, in the format `container` or `container.selection`r.
 
 `fatJets`
-:   the input large-R jet container.
+:   the input large-R jet container, with a possible selection, in the format `container` or `container.selection`.
 
 `enableUserPriority`
 :   whether to use the user's custom priority ranking, instead of the recommended one. If set to `True`, will respect the priorities set with `inputLabel` (e.g. in SUSYTools, every object gets priority 2, but pre-selected jets get priority 1). The default is `False`.
