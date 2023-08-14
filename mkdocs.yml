@@ -61,4 +61,8 @@ nav:
         - settings/index.md
         - Electron config blocks: settings/electrons.md
         - Muon config blocks: settings/muons.md
+        - Photon config blocks: settings/photons.md
         - Jet config blocks: settings/jets.md
+        - Tau config blocks: settings/taus.md
+        - MET config blocks: settings/met.md
+        - Trigger config blocks: settings/trigger.md
