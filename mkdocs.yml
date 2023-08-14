@@ -66,3 +66,4 @@ nav:
         - Tau config blocks: settings/taus.md
         - MET config blocks: settings/met.md
         - Trigger config blocks: settings/trigger.md
+        - Overlap removal config blocks: settings/overlap.md
