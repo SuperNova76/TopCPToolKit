@@ -69,4 +69,5 @@ nav:
         - Overlap removal config blocks: settings/overlap.md
         - Object selection config blocks: settings/objectselection.md
         - Top reconstruction config blocks: settings/reconstruction.md
+        - Truth content config blocks: settings/truth.md
         - Ntupling config blocks: settings/ntupling.md
