@@ -30,8 +30,12 @@ class TtbarAnalysisConfig(ConfigBlock):
         alg.electronSelection = electronSelection
         alg.muons = muons
         alg.muonSelection = muonSelection
-        alg.electronSF = f'el_reco_effSF_{self.lepton_postfix}_%SYS%'
-        alg.muonSF = f'muon_reco_effSF_{self.lepton_postfix}_%SYS%'
+        alg.electronRecoSF = f'el_reco_effSF_{self.lepton_postfix}_%SYS%'
+        alg.electronIDSF = f'el_id_effSF_{self.lepton_postfix}_%SYS%'
+        alg.electronIsolSF = f'el_isol_effSF_{self.lepton_postfix}_%SYS%'
+        alg.muonRecoSF = f'muon_reco_effSF_{self.lepton_postfix}_%SYS%'
+        alg.muonIsolSF = f'muon_isol_effSF_{self.lepton_postfix}_%SYS%'
+        alg.muonTTVASF = f'muon_TTVA_effSF_{self.lepton_postfix}_%SYS%'
         alg.event_leptonSF = f'leptonSF_{self.lepton_postfix}_%SYS%'
 
         config.addOutputVar('EventInfo', alg.event_leptonSF, alg.event_leptonSF.split("_%SYS")[0], isEventLevel=True)
