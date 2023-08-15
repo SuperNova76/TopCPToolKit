@@ -13,7 +13,7 @@
 :   the jet container to run on. It is interpreted to determine the correct config blocks to call for small- or large-R jets.
 
 `runGhostMuonAssociation`
-:   whether to set up the jet-ghost-muon association algorithm [CP::JetGhostMuonAssociationAlg](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/JetAnalysisAlgorithms/Root/JetGhostMuonAssociationAlg.cxx). The default is `False`.
+:   whether to set up the jet-ghost-muon association algorithm [`CP::JetGhostMuonAssociationAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/JetAnalysisAlgorithms/Root/JetGhostMuonAssociationAlg.cxx). The default is `False`.
 
 !!! success "Registers the following variables:"
     - `pt`: jet $p_\mathrm{T}$

@@ -9,8 +9,11 @@
 `postfix`
 :   a postfix to apply to decorations and algorithm names. Typically not needed here since the calibration is common to all electrons.
 
+`crackVeto`
+:   whether to perform LAr crack veto, i.e. remove electrons within $1.37<\vert\eta\vert<1.52$. The default is `False`.
+
 `ptSelectionOutput`
-:   $p_\mathrm{T}$ cut to apply to calibrated electrons, in MeV. The default is 4.5 GeV.
+:   whether or not to apply the default $p_\mathrm{T} > 4.5$ GeV cut to calibrated electrons. The default is `False`.
 
 `isolationCorrection`
 :   whether or not to perform isolation corrections (leakage corrections), i.e. set up an instance of [`CP::EgammaIsolationCorrectionAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/Root/EgammaIsolationCorrectionAlg.cxx).
@@ -38,17 +41,17 @@
 `recomputeLikelihood`
 :   whether to rerun the LH. The default is `False`, i.e. to use derivation flags.
 
+!!! warning
+    The only way to get the DNN ID at the moment is to recompute the likelihood, as it's not stored in derivations.
+
 `chargeIDSelection`
 :   whether to run the [ECIDS tool](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/ElectronPhotonID/ElectronPhotonSelectorTools/Root/AsgElectronChargeIDSelectorTool.cxx?v=21.2). The default is `False`.
+
+!!! warning
+    ECIDS is actually not supported in release 24. It will likely become part of the DNN ID.
 
 !!! success "Registers the following variables:"
     - `select`: whether the electron passes the ID and isolation cuts
     - `reco_effSF`: the per-electron reconstruction SF
     - `id_effSF`: the per-electron ID SF
     - `isol_effSF`: the per-electron isolation SF
-
-!!! warning
-    ECIDS is actually not supported in release 24. It will likely become part of the DNN ID.
-
-!!! warning
-    The only way to get the DNN ID at the moment is to recompute the likelihood, as it's not stored in derivations.

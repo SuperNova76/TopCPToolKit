@@ -7,7 +7,7 @@ Examples are available; in your `run` directory, try
 ```sh
 getExamples
 ```
-This will create a sub-folder called `grid`, with several Python files within.
+This will create a sub-folder called `grid`, with several python files within.
 You can also see them [here](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/tree/main/source/GridSubmission/scripts).
 
 Most of them simply list MC and data containers, neatly organised into "samples", e.g. `PHYS_ttbar_PP8_mc20e`.

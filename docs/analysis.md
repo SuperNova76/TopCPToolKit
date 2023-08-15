@@ -22,7 +22,7 @@ It's the statement in bold that is of interest to us: we need to define an *anal
 
 ## Analysis modules
 
-Analysis modules are Python files whose role is to define a `makeRecoConfiguration` method that can be overloaded by [commonAlgoConfig.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/commonAlgoConfig.py).
+Analysis modules are python files whose role is to define a `makeRecoConfiguration` method that can be overloaded by [commonAlgoConfig.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/commonAlgoConfig.py).
 A good place to start, is the [example analysis module](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/TtbarCPalgoConfigBlocksAnalysis.py).
 Schematically, it looks like this:
 ```python

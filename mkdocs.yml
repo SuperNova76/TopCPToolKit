@@ -61,4 +61,15 @@ nav:
         - settings/index.md
         - Electron config blocks: settings/electrons.md
         - Muon config blocks: settings/muons.md
+        - Photon config blocks: settings/photons.md
         - Jet config blocks: settings/jets.md
+        - Tau config blocks: settings/taus.md
+        - MET config blocks: settings/met.md
+        - Trigger config blocks: settings/trigger.md
+        - Overlap removal config blocks: settings/overlap.md
+        - Object selection config blocks: settings/objectselection.md
+        - Top reconstruction config blocks: settings/reconstruction.md
+        - Truth content config blocks: settings/truth.md
+        - Ntupling config blocks: settings/ntupling.md
+        - Other useful config blocks and methods: settings/others.md
+        - Experimental: settings/experimental.md
