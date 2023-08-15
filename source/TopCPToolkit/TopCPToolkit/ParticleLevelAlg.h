@@ -37,6 +37,7 @@ class ParticleLevelAlg final : public EL::AnaAlgorithm {
  private:
   std::string outputSGKey;
   StatusCode save;
+  StatusCode saveAux;
 
   const bool m_useTruthElectrons, m_useTruthMuons, m_useTruthPhotons,
       m_useTruthTaus, m_useTruthJets, m_useTruthLargeRJets, m_useTruthMET,

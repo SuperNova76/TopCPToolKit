@@ -406,7 +406,8 @@ StatusCode ParticleLevelAlg::execute() {
     }
     outputSGKey = "ParticleLevelElectrons_NOSYS";
     save = evtStore()->tds()->record(outputElectrons, outputSGKey);
-    if (!save)
+    saveAux = evtStore()->tds()->record(outputElectronsAux, outputSGKey + "Aux.");
+    if (!save || !saveAux)
       return StatusCode::FAILURE;
   }
 
@@ -427,6 +428,7 @@ StatusCode ParticleLevelAlg::execute() {
     }
     outputSGKey = "ParticleLevelMuons_NOSYS";
     save = evtStore()->tds()->record(outputMuons, outputSGKey);
+    saveAux = evtStore()->tds()->record(outputMuonsAux, outputSGKey + "Aux.");
     if (!save)
       return StatusCode::FAILURE;
   }
@@ -450,7 +452,8 @@ StatusCode ParticleLevelAlg::execute() {
     }
     outputSGKey = "ParticleLevelPhotons_NOSYS";
     save = evtStore()->tds()->record(outputPhotons, outputSGKey);
-    if (!save)
+    saveAux = evtStore()->tds()->record(outputPhotonsAux, outputSGKey + "Aux.");
+    if (!save || !saveAux)
       return StatusCode::FAILURE;
   }
 
@@ -474,7 +477,8 @@ StatusCode ParticleLevelAlg::execute() {
     }
     outputSGKey = "ParticleLevelTaus_NOSYS";
     save = evtStore()->tds()->record(outputTaus, outputSGKey);
-    if (!save)
+    saveAux = evtStore()->tds()->record(outputTausAux, outputSGKey + "Aux.");
+    if (!save || !saveAux)
       return StatusCode::FAILURE;
   }
 
@@ -497,7 +501,8 @@ StatusCode ParticleLevelAlg::execute() {
     }
     outputSGKey = "ParticleLevelJets_NOSYS";
     save = evtStore()->tds()->record(outputJets, outputSGKey);
-    if (!save)
+    saveAux = evtStore()->tds()->record(outputJetsAux, outputSGKey + "Aux.");
+    if (!save || !saveAux)
       return StatusCode::FAILURE;
   }
 
@@ -520,7 +525,8 @@ StatusCode ParticleLevelAlg::execute() {
     }
     outputSGKey = "ParticleLevelLargeRJets_NOSYS";
     save = evtStore()->tds()->record(outputLargeRJets, outputSGKey);
-    if (!save)
+    saveAux = evtStore()->tds()->record(outputLargeRJetsAux, outputSGKey + "Aux.");
+    if (!save || !saveAux)
       return StatusCode::FAILURE;
   }
 
@@ -541,7 +547,8 @@ StatusCode ParticleLevelAlg::execute() {
     }
     outputSGKey = "ParticleLevelMissingET_NOSYS";
     save = evtStore()->tds()->record(outputMissingET, outputSGKey);
-    if (!save)
+    saveAux = evtStore()->tds()->record(outputMissingETAux, outputSGKey + "Aux.");
+    if (!save || !saveAux)
       return StatusCode::FAILURE;
   }
 
