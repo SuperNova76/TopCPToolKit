@@ -17,7 +17,7 @@ namespace top {
     ANA_CHECK(m_electronRecoSF.initialize(m_systematicsList, m_electronsHandle));
     ANA_CHECK(m_electronIDSF.initialize(m_systematicsList, m_electronsHandle));
     ANA_CHECK(m_electronIsolSF.initialize(m_systematicsList, m_electronsHandle));
-    ANA_CHECK(m_muonRecoSF.initialize(m_systematicsList, m_electronsHandle));
+    ANA_CHECK(m_muonRecoSF.initialize(m_systematicsList, m_muonsHandle));
     ANA_CHECK(m_muonIsolSF.initialize(m_systematicsList, m_muonsHandle));
     ANA_CHECK(m_muonTTVASF.initialize(m_systematicsList, m_muonsHandle));
 
@@ -48,10 +48,11 @@ namespace top {
         }
       }
       for (const xAOD::Muon *mu : *muons) {
-        if (m_muonSelection.getBool(*mu, syst))
+        if (m_muonSelection.getBool(*mu, syst)) {
           leptonSF *= m_muonRecoSF.get(*mu, syst);
           leptonSF *= m_muonIsolSF.get(*mu, syst);
           leptonSF *= m_muonTTVASF.get(*mu, syst);
+	}
       }
 
       m_event_leptonSF.set(*evtInfo, leptonSF, syst);
