@@ -17,3 +17,9 @@
 
 `treeName`
 :   name of the output TTree to save. The default is `analysis`.
+
+`metTermName`
+:   the name (string) of the MET term to save, turning the MET container into a single object. The default is `'Final'`.
+
+!!! tip
+    For a particle-level truth analysis, you likely want to recover `'NonInt'` instead. See [MET_Truth](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/Run2xAODMissingET#MET_Truth).
