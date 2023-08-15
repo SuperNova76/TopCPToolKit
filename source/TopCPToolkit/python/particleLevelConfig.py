@@ -72,6 +72,24 @@ class particleLevelConfig(ConfigBlock):
         self.addOption('useTruthLargeRJets', False, type=bool)
         self.addOption('useTruthMET', True, type=bool)
         self.addOption('doOverlapRemoval', True, type=bool)
+        self.addOption('elPtMin', None, type=float)
+        self.addOption('elEtaMax', None, type=float)
+        self.addOption('elNotFromHadron', True, type=bool)
+        self.addOption('elTauIsHadron', False, type=bool)
+        self.addOption('muPtMin', None, type=float)
+        self.addOption('muEtaMax', None, type=float)
+        self.addOption('muNotFromHadron', True, type=bool)
+        self.addOption('muTauIsHadron', False, type=bool)
+        self.addOption('phPtMin', None, type=float)
+        self.addOption('phEtaMax', None, type=float)
+        self.addOption('phOrigin', '', type=str)
+        self.addOption('phIsolation', '', type=str)
+        self.addOption('tauPtMin', None, type=float)
+        self.addOption('tauEtaMax', None, type=float)
+        self.addOption('jetPtMin', None, type=float)
+        self.addOption('jetEtaMax', None, type=float)
+        self.addOption('ljetPtMin', None, type=float)
+        self.addOption('ljetEtaMax', None, type=float)
     
     def makeAlgs(self, config):
         alg = config.createAlgorithm("top::ParticleLevelAlg", "TopParticleLevel")
@@ -87,21 +105,39 @@ class particleLevelConfig(ConfigBlock):
         if self.useTruthElectrons:
             container = "ParticleLevelElectrons"
             config = self.createAndFillOutputContainer(config, container, "electrons")
+            if self.elPtMin: alg.el_ptMin = self.elPtMin
+            if self.elEtaMax: alg.el_etaMax = self.elEtaMax
+            alg.el_notFromHadron = self.elNotFromHadron
+            alg.el_tauIsHadron = self.elTauIsHadron
         if self.useTruthMuons:
             container = "ParticleLevelMuons"
             config = self.createAndFillOutputContainer(config, container, "muons")
+            if self.muPtMin: alg.mu_ptMin = self.muPtMin
+            if self.muEtaMax: alg.mu_etaMax = self.muEtaMax
+            alg.mu_notFromHadron = self.muNotFromHadron
+            alg.mu_tauIsHadron = self.muTauIsHadron
         if self.useTruthPhotons:
             container = "ParticleLevelPhotons"
             config = self.createAndFillOutputContainer(config, container, "photons")
+            if self.phPtMin: alg.ph_ptMin = self.phPtMin
+            if self.phEtaMax: alg.ph_etaMax = self.phEtaMax
+            alg.ph_origin = self.phOrigin
+            alg.ph_isolation = self.phIsolation
         if self.useTruthTaus:
             container = "ParticleLevelTaus"
             config = self.createAndFillOutputContainer(config, container, "taus")
+            if self.tauPtMin: alg.tau_ptMin = self.tauPtMin
+            if self.tauEtaMax: alg.tau_etaMax = self.tauEtaMax
         if self.useTruthJets:
             container = "ParticleLevelJets"
             config = self.createAndFillOutputContainer(config, container, "jets")
+            if self.jetPtMin: alg.jet_ptMin = self.jetPtMin
+            if self.jetEtaMax: alg.jet_etaMax = self.jetEtaMax
         if self.useTruthLargeRJets:
             container = "ParticleLevelLargeRJets"
             config = self.createAndFillOutputContainer(config, container, "ljets")
+            if self.ljetPtMin: alg.ljet_ptMin = self.ljetPtMin
+            if self.ljetEtaMax: alg.ljet_etaMax = self.ljetEtaMax
         if self.useTruthMET:
             container = "ParticleLevelMissingET"
             config = self.createAndFillOutputContainer(config, container, "met")
