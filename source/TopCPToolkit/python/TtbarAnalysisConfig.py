@@ -21,6 +21,10 @@ class TtbarAnalysisConfig(ConfigBlock):
         alg.muons = muons
         alg.jets = jets
 
+        config.addOutputVar(electrons, 'e_%SYS%', 'e')
+        config.addOutputVar(muons, 'e_%SYS%', 'e')
+        config.addOutputVar(jets, 'e_%SYS%', 'e')
+
         alg = config.createAlgorithm('top::LeptonSFCalculator', 'leptonSFCalculator')
         alg.electrons = electrons
         alg.electronSelection = electronSelection
@@ -29,3 +33,5 @@ class TtbarAnalysisConfig(ConfigBlock):
         alg.electronSF = f'el_reco_effSF_{self.lepton_postfix}_%SYS%'
         alg.muonSF = f'muon_reco_effSF_{self.lepton_postfix}_%SYS%'
         alg.event_leptonSF = f'leptonSF_{self.lepton_postfix}_%SYS%'
+
+        config.addOutputVar('EventInfo', alg.event_leptonSF, alg.event_leptonSF.split("_%SYS")[0], isEventLevel=True)
