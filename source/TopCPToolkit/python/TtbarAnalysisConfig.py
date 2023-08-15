@@ -10,8 +10,6 @@ class TtbarAnalysisConfig(ConfigBlock):
         self.addOption('muons', None, type=str)
         self.addOption('jets', None, type=str)
         self.addOption('lepton_postfix', None, type=str)
-        self.addOption('btagger', 'DL1dv01', type=str)
-        self.addOption('btagWP', 'FixedCutBEff_77', type=str)
 
     def makeAlgs(self, config):
         electrons, electronSelection = config.readNameAndSelection(self.electrons)
