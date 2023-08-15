@@ -140,14 +140,17 @@ class particleLevelConfig(ConfigBlock):
             if self.ljetEtaMax: alg.ljet_etaMax = self.ljetEtaMax
         if self.useTruthMET:
             container = "ParticleLevelMissingET"
-            config = self.createAndFillOutputContainer(config, container, "met")
+            config = self.createAndFillOutputContainer(config, container, "met", True)
 
         return
     
-    def createAndFillOutputContainer(self, config, container, map_key):
+    def createAndFillOutputContainer(self, config, container, map_key, isMET=False):
         # create the output container for that object collection
-        config.setSourceName(container, container)
-        config.addOutputContainer(container, container)
+        if not isMET:
+            config.setSourceName(container, container)
+            config.addOutputContainer(container, container)
+        else:
+            _ = config.writeName(container, isMet=True)
 
         # loop over branch mappings
         for mapping in particlelevel_branch_mappings[map_key]:

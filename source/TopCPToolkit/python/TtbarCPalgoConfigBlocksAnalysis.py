@@ -404,6 +404,7 @@ def makeParticleLevelConfiguration(metadata, algSeq, debugHistograms):
     cfg.setOptionValue('treeName', 'particleLevel')
     cfg.setOptionValue('vars', particleLevel_branches)
     cfg.setOptionValue('containers', outputContainers)
+    cfg.setOptionValue('metTermName', 'NonInt')
     configSeq.append(cfg)
 
     # put everything together
