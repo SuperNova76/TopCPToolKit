@@ -32,6 +32,11 @@ StatusCode TtbarCPalgoAnalysis::execute() {
     // generic decorators
     static const SG::AuxElement::Decorator<float>  dec_energy("e");
 
+    // user-friendly loose electron decorations
+    for (const xAOD::Electron *electron: *electrons) {
+        dec_energy(*electron) = electron->e();
+    }
+
     // user-friendly loose muon decorations
     for (const xAOD::Muon *muon : *muons) {
       dec_energy(*muon) = muon->e();
