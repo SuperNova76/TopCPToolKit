@@ -9,7 +9,8 @@
 namespace top {
   class CalcTtbarPartonHistory: public CalcTopPartonHistory {
   public:
-    explicit CalcTtbarPartonHistory(const std::string& name);
+    explicit CalcTtbarPartonHistory(const std::string &name,
+                                    std::vector<std::string> truthCollections = {"TruthTop"});
     virtual ~CalcTtbarPartonHistory() {}
 
     //Storing parton history for ttbar resonance analysis
@@ -17,9 +18,9 @@ namespace top {
     CalcTtbarPartonHistory(CalcTtbarPartonHistory&& rhs) = delete;
     CalcTtbarPartonHistory& operator = (const CalcTtbarPartonHistory& rhs) = delete;
 
-    void ttbarHistorySaver(const xAOD::TruthParticleContainer* truthParticles, xAOD::PartonHistory* ttbarPartonHistory);
-
-    virtual StatusCode execute();
+  protected:
+    virtual StatusCode runHistorySaver(const xAOD::TruthParticleContainer* truthParticles,
+                                       xAOD::PartonHistory* ttbarPartonHistory) override;
   };
 }
 

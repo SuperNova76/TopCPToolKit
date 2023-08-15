@@ -5,9 +5,18 @@
 namespace top {
   using PartonHistoryUtils::decorateWithMPtPhi; // should this be used instead of the namespace?
   //using CalcTtbarPartonHistory::ttbarHistorySaver;
-  CalcTTZPartonHistory::CalcTTZPartonHistory(const std::string& name) : CalcTtbarPartonHistory(name) {}
+  CalcTTZPartonHistory::CalcTTZPartonHistory(const std::string& name) :
+    CalcTtbarPartonHistory(name, {"TruthTop", "TruthBosonsWithDecayParticles", "HardScatterParticles"})
+    {}
 
-  void CalcTTZPartonHistory::zHistorySaver(const xAOD::TruthParticleContainer* truthParticles,
+  StatusCode CalcTTZPartonHistory::runHistorySaver(const xAOD::TruthParticleContainer* truthParticles,
+                                                   xAOD::PartonHistory* ttbarPartonHistory) {
+    ATH_CHECK(CalcTtbarPartonHistory::runHistorySaver(truthParticles, ttbarPartonHistory));
+    ATH_CHECK(zHistorySaver(truthParticles, ttbarPartonHistory));
+    return StatusCode::SUCCESS;
+  }
+
+  StatusCode CalcTTZPartonHistory::zHistorySaver(const xAOD::TruthParticleContainer* truthParticles,
                                                  xAOD::PartonHistory* ttbarPartonHistory) {
     ttbarPartonHistory->IniVarZ();
     TLorentzVector Z;
@@ -40,6 +49,7 @@ namespace top {
     }  // if
 
     ttbarPartonHistory->auxdecor< int >("MC_Z_AncestryCorrupted") = static_cast<int>(m_ancestry_corrupted);
+    return StatusCode::SUCCESS;
   }
 
   bool CalcTTZPartonHistory::getZ(const xAOD::TruthParticleContainer* truthParticles,
@@ -145,47 +155,5 @@ namespace top {
       }
     }
     return nullptr;
-  }
-
-  StatusCode CalcTTZPartonHistory::execute() {
-    // Get the Truth Particles
-    const xAOD::TruthParticleContainer* truthParticles(nullptr);
-
-    // To obtain both tops and the Z boson, we need the collections for both
-    if (!evtStore()->contains<xAOD::TruthParticleContainer>("AT_TTZPartonHistory_TruthParticles")) {
-      std::vector<std::string> collections = {"TruthTop", "TruthBosonsWithDecayParticles", "HardScatterParticles"};
-      ATH_CHECK(buildContainerFromMultipleCollections(collections,"AT_TTZPartonHistory_TruthParticles"));
-      ATH_CHECK(evtStore()->retrieve(truthParticles, "AT_TTZPartonHistory_TruthParticles"));
-      //This is necessary (see CalcTopPartonHistory for more information)
-      ATH_CHECK(linkBosonCollections());
-    }
-    else {
-      ATH_CHECK(evtStore()->retrieve(truthParticles, "AT_TTZPartonHistory_TruthParticles"));
-      
-    }
-
-
-    // Create the partonHistory xAOD object
-    //cppcheck-suppress uninitvar
-    xAOD::PartonHistoryAuxContainer* partonAuxCont = new xAOD::PartonHistoryAuxContainer {};
-    //cppcheck-suppress uninitvar
-    xAOD::PartonHistoryContainer* partonCont = new xAOD::PartonHistoryContainer {};
-    partonCont->setStore(partonAuxCont);
-    //cppcheck-suppress uninitvar
-    xAOD::PartonHistory* ttbarPartonHistory = new xAOD::PartonHistory {};
-    partonCont->push_back(ttbarPartonHistory);
-
-    // Recover the parton history for ttbar events
-    //CalcTtbarPartonHistory::ttbarHistorySaver(truthParticles, ttbarPartonHistory);
-    ttbarHistorySaver(truthParticles, ttbarPartonHistory);
-    zHistorySaver(truthParticles, ttbarPartonHistory);
-
-    // Save to StoreGate / TStore
-    std::string outputSGKey = "TopPartonHistoryTTZ_NOSYS";
-
-    StatusCode save = evtStore()->tds()->record(partonCont, outputSGKey);
-    if (!save) return StatusCode::FAILURE;
-
-    return StatusCode::SUCCESS;
   }
 } // namespace top

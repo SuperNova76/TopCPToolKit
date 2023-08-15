@@ -4,10 +4,12 @@
 namespace top {
   using PartonHistoryUtils::decorateWithMPtPhi;
 
-  CalcTtbarLightPartonHistory::CalcTtbarLightPartonHistory(const std::string& name) : CalcTopPartonHistory(name) {}
+  CalcTtbarLightPartonHistory::CalcTtbarLightPartonHistory(const std::string& name) :
+    CalcTopPartonHistory(name)
+    {}
 
-  void CalcTtbarLightPartonHistory::ttbarHistorySaver(const xAOD::TruthParticleContainer* truthParticles,
-                                                      xAOD::PartonHistory* ttbarPartonHistory) {
+  StatusCode CalcTtbarLightPartonHistory::runHistorySaver(const xAOD::TruthParticleContainer* truthParticles,
+                                                          xAOD::PartonHistory* ttbarPartonHistory) {
     ttbarPartonHistory->IniVarTtbarLight();
 
     TLorentzVector t_before, t_after, t_after_SC;
@@ -97,44 +99,6 @@ namespace top {
       ttbarPartonHistory->auxdecor< int >("MC_Wdecay2_from_tbar_pdgId") = WmDecay2_pdgId;
       fillEtaBranch(ttbarPartonHistory, "MC_Wdecay2_from_tbar_eta", WmDecay2);
     }//if
-  }
-
-  StatusCode CalcTtbarLightPartonHistory::execute() {
-    // Get the Truth Particles
-    const xAOD::TruthParticleContainer* truthParticles(nullptr);
-
-    //in DAOD_PHYS we don't have the truth particles container
-    //the functions ued in this class always start from the top, so it's enough to do the following
-    if (!evtStore()->contains<xAOD::TruthParticleContainer>("AT_TTbarPartonHistory_TruthParticles")) {
-      std::vector<std::string> collections = {"TruthTop"};
-      ATH_CHECK(buildContainerFromMultipleCollections(collections,"AT_TTbarPartonHistory_TruthParticles"));
-      ATH_CHECK(evtStore()->retrieve(truthParticles, "AT_TTbarPartonHistory_TruthParticles"));
-      //we need to be able to navigate from the Ws to their decayProducts, see CalcTopPartonHistory.h for details
-      ATH_CHECK(linkBosonCollections());
-    }
-    else {
-      ATH_CHECK(evtStore()->retrieve(truthParticles, "AT_TTbarPartonHistory_TruthParticles"));
-    }
-
-    // Create the partonHistory xAOD object
-    //cppcheck-suppress uninitvar
-    xAOD::PartonHistoryAuxContainer* partonAuxCont = new xAOD::PartonHistoryAuxContainer {};
-    //cppcheck-suppress uninitvar
-    xAOD::PartonHistoryContainer* partonCont = new xAOD::PartonHistoryContainer {};
-    partonCont->setStore(partonAuxCont);
-    //cppcheck-suppress uninitvar
-    xAOD::PartonHistory* ttbarPartonHistory = new xAOD::PartonHistory {};
-    partonCont->push_back(ttbarPartonHistory);
-
-    // Recover the parton history for ttbar events
-    ttbarHistorySaver(truthParticles, ttbarPartonHistory);
-
-    // Save to StoreGate / TStore
-    std::string outputSGKey = "TopPartonHistoryTtbarLight_NOSYS";
-
-    StatusCode save = evtStore()->tds()->record(ttbarPartonHistory, outputSGKey);
-    if (!save) return StatusCode::FAILURE;
-
     return StatusCode::SUCCESS;
   }
 }

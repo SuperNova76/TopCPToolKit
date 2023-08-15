@@ -17,9 +17,9 @@ namespace top {
     CalcTtbarLightPartonHistory(CalcTtbarLightPartonHistory&& rhs) = delete;
     CalcTtbarLightPartonHistory& operator = (const CalcTtbarLightPartonHistory& rhs) = delete;
 
-    void ttbarHistorySaver(const xAOD::TruthParticleContainer* truthParticles, xAOD::PartonHistory* ttbarPartonHistory);
-
-    virtual StatusCode execute();
+  protected:
+    virtual StatusCode runHistorySaver(const xAOD::TruthParticleContainer* truthParticles,
+                                       xAOD::PartonHistory* ttbarPartonHistory) final;
   };
 }
 

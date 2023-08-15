@@ -9,6 +9,7 @@
 #pragma link C++ nestedclass;
 
 #pragma link C++ class xAOD::PartonHistory+;
+#pragma link C++ class xAOD::PartonHistoryAux+;
 #pragma link C++ class xAOD::PartonHistoryContainer+;
 #pragma link C++ class xAOD::PartonHistoryAuxContainer+;
 
