@@ -16,9 +16,6 @@ namespace top {
     CalcTTZPartonHistory(const CalcTTZPartonHistory& rhs) = delete;
     CalcTTZPartonHistory(CalcTTZPartonHistory&& rhs) = delete;
     CalcTTZPartonHistory& operator = (const CalcTTZPartonHistory& rhs) = delete;
-
-    void zHistorySaver(const xAOD::TruthParticleContainer* truthParticles,
-                       xAOD::PartonHistory* ttbarPartonHistory);
     
     //Store the four-momentum of the associated Z boson and its decay products
     bool getZ(const xAOD::TruthParticleContainer* truthParticles,
@@ -31,9 +28,15 @@ namespace top {
 
     //Return particle with same flavour and opposite sign from same vertex
     const xAOD::TruthParticle* getFlavourSibling(const xAOD::TruthParticle* particle);
-    
-    virtual StatusCode execute();
 
+  protected:
+    virtual StatusCode runHistorySaver(const xAOD::TruthParticleContainer* truthParticles,
+                                       xAOD::PartonHistory* ttbarPartonHistory) override;
+
+    // on top of ttbar stuff in runHistorySaver, run also the truth Z-finding
+    StatusCode zHistorySaver(const xAOD::TruthParticleContainer* truthParticles,
+                             xAOD::PartonHistory* ttbarPartonHistory);
+    
   private:
     bool m_ancestry_corrupted;
   };

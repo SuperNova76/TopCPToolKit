@@ -17,7 +17,8 @@ namespace top {
   class CalcTopPartonHistory: public asg::AsgTool {
 
   public:
-    explicit CalcTopPartonHistory(const std::string& name);
+    explicit CalcTopPartonHistory(const std::string& name,
+                                  std::vector<std::string> truthCollections = {"TruthTop"});
     virtual ~CalcTopPartonHistory() {};
 
     CalcTopPartonHistory(const CalcTopPartonHistory& rhs) = delete;
@@ -64,6 +65,16 @@ namespace top {
     virtual StatusCode execute();
 
   protected:
+
+    const std::vector<std::string> m_truthCollections;
+    std::string m_topPartonsSGKey; // name of the output PartonHistory container to be stored in eventStore
+
+    // this method is used to perform the linking of various TRUTH3 particle containers for TopPartons to work
+    virtual StatusCode linkTruthContainers(const xAOD::TruthParticleContainer* &tp);
+
+    // this is the method that runs the actual parton history reconstruction
+    virtual StatusCode runHistorySaver(const xAOD::TruthParticleContainer* truthParticles,
+                                       xAOD::PartonHistory* ttbarPartonHistory) = 0;
 
     void fillEtaBranch(xAOD::PartonHistory* partonHistory, std:: string branchName, TLorentzVector& tlv);
 

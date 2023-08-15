@@ -12,6 +12,10 @@ namespace xAOD {
     SG::AuxElement() {
   }
 
+  PartonHistoryAux::PartonHistoryAux() :
+    AuxInfoBase() {
+    }
+
   //Initialize variables for ttbar events
   void PartonHistory::IniVarTtbar() {
     //ttbar variables

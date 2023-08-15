@@ -5,9 +5,12 @@
 
 namespace top {
 
-  CalcTopPartonHistory::CalcTopPartonHistory(const std::string& name) :
-    asg::AsgTool(name)
+  CalcTopPartonHistory::CalcTopPartonHistory(const std::string& name, std::vector<std::string> truthCollection) :
+    asg::AsgTool(name),
+    m_truthCollections(truthCollection)
   {
+    declareProperty("outputSGKey", m_topPartonsSGKey = "TopPartonHistoryTtbar",
+                    "Store Gate output name for the TopPartonHistory object");
   }
   
   StatusCode CalcTopPartonHistory::buildContainerFromMultipleCollections(const std::vector<std::string> &collections, const std::string& out_contName)
@@ -15,11 +18,11 @@ namespace top {
     ConstDataVector<DataVector<xAOD::TruthParticle_v1> > *out_cont = new ConstDataVector<DataVector<xAOD::TruthParticle_v1> > (SG::VIEW_ELEMENTS);
 
     for(const std::string& collection : collections)
-      {
-	const xAOD::TruthParticleContainer* cont=nullptr;
-	ATH_CHECK(evtStore()->retrieve(cont,collection));
-	for(const xAOD::TruthParticle* p : *cont) out_cont->push_back(p);
-      }
+    {
+      const xAOD::TruthParticleContainer* cont=nullptr;
+      ATH_CHECK(evtStore()->retrieve(cont,collection));
+      for(const xAOD::TruthParticle* p : *cont) out_cont->push_back(p);
+    }
 
     //we give control of the container to the store, because in this way we are able to retrieve it as a const data vector, see https://twiki.cern.ch/twiki/bin/view/AtlasComputing/DataVector#ConstDataVector
     StatusCode save = evtStore()->tds()->record(out_cont,out_contName);
@@ -32,6 +35,7 @@ namespace top {
   {
     return decorateCollectionWithLinksToAnotherCollection("TruthBoson","TruthBosonsWithDecayParticles","AT_linkToTruthBosonsWithDecayParticles");
   }
+
   StatusCode CalcTopPartonHistory::decorateCollectionWithLinksToAnotherCollection(const std::string &collectionToDecorate, const std::string &collectionToLink, const std::string &nameOfDecoration)
   {
     const xAOD::TruthParticleContainer* cont1(nullptr);
@@ -40,20 +44,20 @@ namespace top {
     ATH_CHECK(evtStore()->retrieve(cont2,collectionToLink));
 
     for(const xAOD::TruthParticle *p : *cont1)
+    {
+      
+      const xAOD::TruthParticle* link =0;
+      for(const xAOD::TruthParticle *p2 : *cont2)
       {
+        if(p->pdgId()==p2->pdgId() && p->barcode()==p2->barcode())
+        {
+          link=p2;
+          break;
+        }
+      } 
+      p->auxdecor<const xAOD::TruthParticle*>(nameOfDecoration)=link;
       
-	const xAOD::TruthParticle* link =0;
-	for(const xAOD::TruthParticle *p2 : *cont2)
-	  {
-	    if(p->pdgId()==p2->pdgId() && p->barcode()==p2->barcode())
-	      {
-		link=p2;
-		break;
-	      }
-	  } 
-	p->auxdecor<const xAOD::TruthParticle*>(nameOfDecoration)=link;
-      
-      }
+    }
     return StatusCode::SUCCESS;
   }
   
@@ -639,37 +643,40 @@ namespace top {
   }
 
   StatusCode CalcTopPartonHistory::execute() {
-    // Get the Truth Particles
-    const xAOD::TruthParticleContainer* truthParticles(nullptr);
+    const xAOD::TruthParticleContainer *truthParticles {nullptr};
+    ATH_CHECK(linkTruthContainers(truthParticles));
 
+    // Create the partonHistory xAOD object
+    //cppcheck-suppress uninitvar
+    xAOD::PartonHistory* partonHistory = new xAOD::PartonHistory {};
+    //cppcheck-suppress uninitvar
+    xAOD::PartonHistoryAux* partonHistoryAux = new xAOD::PartonHistoryAux {};
+    partonHistory->setStore(partonHistoryAux);
+
+    ATH_CHECK(runHistorySaver(truthParticles, partonHistory));
+
+    // Save to StoreGate / TStore
+    StatusCode save = evtStore()->tds()->record(partonHistory, m_topPartonsSGKey);
+    StatusCode saveAux = evtStore()->tds()->record(partonHistoryAux, m_topPartonsSGKey + "Aux.");
+    if (!save || !saveAux) return StatusCode::FAILURE;
+
+    return StatusCode::SUCCESS;
+  }
+
+  StatusCode CalcTopPartonHistory::linkTruthContainers(const xAOD::TruthParticleContainer* &tp) {
     //in DAOD_PHYS we don't have the truth particles container
     //the functions ued in this class always start from the top, so it's enough to do the following
-    if (!evtStore()->contains<xAOD::TruthParticleContainer>("AT_TTbarPartonHistory_TruthParticles")) {
+    const std::string &truthParticlesSGKey = m_topPartonsSGKey + "_TruthParticles";
+    if (!evtStore()->contains<xAOD::TruthParticleContainer>(truthParticlesSGKey)) {
       std::vector<std::string> collections = {"TruthTop"};
-      ATH_CHECK(buildContainerFromMultipleCollections(collections,"AT_TTbarPartonHistory_TruthParticles"));
-      ATH_CHECK(evtStore()->retrieve(truthParticles, "AT_TTbarPartonHistory_TruthParticles"));
+      ATH_CHECK(buildContainerFromMultipleCollections(collections, truthParticlesSGKey));
+      ATH_CHECK(evtStore()->retrieve(tp, truthParticlesSGKey));
       //we need to be able to navigate from the Ws to their decayProducts, see CalcTopPartonHistory.h for details
       ATH_CHECK(linkBosonCollections());
     }
     else {
-      ATH_CHECK(evtStore()->retrieve(truthParticles, "AT_TTbarPartonHistory_TruthParticles"));
+      ATH_CHECK(evtStore()->retrieve(tp, truthParticlesSGKey));
     }
-
-    // Create the partonHistory xAOD object
-    //cppcheck-suppress uninitvar
-    xAOD::PartonHistoryAuxContainer* partonAuxCont = new xAOD::PartonHistoryAuxContainer {};
-    //cppcheck-suppress uninitvar
-    xAOD::PartonHistoryContainer* partonCont = new xAOD::PartonHistoryContainer {};
-    partonCont->setStore(partonAuxCont);
-    //cppcheck-suppress uninitvar
-    xAOD::PartonHistory* partonHistory = new xAOD::PartonHistory {};
-    partonCont->push_back(partonHistory);
-
-    // Save to StoreGate / TStore
-    std::string outputSGKey = "TopPartonHistoryTop_NOSYS";
-
-    StatusCode save = evtStore()->tds()->record(partonHistory, outputSGKey);
-    if (!save) return StatusCode::FAILURE;
 
     return StatusCode::SUCCESS;
   }

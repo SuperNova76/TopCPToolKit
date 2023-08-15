@@ -13,25 +13,26 @@ namespace top {
     ANA_MSG_INFO("  - topPartonScheme: " << m_topPartonScheme);
 
     if (m_topPartonScheme == "Ttbar") {
-      m_topPartonHistory = std::unique_ptr<top::CalcTopPartonHistory> (new top::CalcTtbarPartonHistory("top::CalcTtbarPartonHistory"));
+      m_topPartonHistory = std::make_unique<CalcTtbarPartonHistory>("top::CalcTtbarPartonHistory");
     }
     else if (m_topPartonScheme == "TtbarLight") {
-      m_topPartonHistory = std::unique_ptr<top::CalcTopPartonHistory> (new top::CalcTtbarLightPartonHistory("top::CalcTtbarLightPartonHistory"));
+      m_topPartonHistory = std::make_unique<CalcTtbarLightPartonHistory>("top::CalcTtbarLightPartonHistory");
     }
     else if (m_topPartonScheme == "TTZ") {
-      m_topPartonHistory = std::unique_ptr<top::CalcTopPartonHistory> (new top::CalcTTZPartonHistory("top::CalcTTZPartonHistory"));
+      m_topPartonHistory = std::make_unique<CalcTTZPartonHistory>("top::CalcTTZPartonHistory");
     }
     else {
       ANA_MSG_ERROR("  ==> topPartonScheme " << m_topPartonScheme << " is not recognised! aborting.");
       return StatusCode::FAILURE;
     }
+    ANA_CHECK(m_topPartonHistory->setProperty("outputSGKey", "TopPartonHistory" + m_topPartonScheme + "_NOSYS"));
 
     return StatusCode::SUCCESS;
   }
 
   StatusCode RunPartonHistoryAlg::execute() {
 
-    ATH_CHECK(m_topPartonHistory->execute());
+    ANA_CHECK(m_topPartonHistory->execute());
 
     return StatusCode::SUCCESS;
   }

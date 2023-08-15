@@ -313,6 +313,7 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
     configAccumulator = ConfigAccumulator(dataType, algSeq, isPhyslite=False, geometry=geometry)
     configSeq.fullConfigure(configAccumulator)
 
+
 def makeTruthConfiguration(metadata, algSeq, debugHistograms):
     configSeq = ConfigSequence()
 
@@ -364,6 +365,7 @@ def makeTruthConfiguration(metadata, algSeq, debugHistograms):
     # put everything together
     configAccumulator = ConfigAccumulator(dataType, algSeq, isPhyslite=False, geometry=geometry)
     configSeq.fullConfigure(configAccumulator)
+
 
 def makeParticleLevelConfiguration(metadata, algSeq, debugHistograms):
     configSeq = ConfigSequence()
