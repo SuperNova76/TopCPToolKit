@@ -20,7 +20,7 @@ namespace top {
     for(const std::string& collection : collections)
     {
       const xAOD::TruthParticleContainer* cont=nullptr;
-      ATH_CHECK(evtStore()->retrieve(cont,collection));
+      ANA_CHECK(evtStore()->retrieve(cont,collection));
       for(const xAOD::TruthParticle* p : *cont) out_cont->push_back(p);
     }
 
@@ -40,8 +40,8 @@ namespace top {
   {
     const xAOD::TruthParticleContainer* cont1(nullptr);
     const xAOD::TruthParticleContainer* cont2(nullptr);
-    ATH_CHECK(evtStore()->retrieve(cont1,collectionToDecorate));
-    ATH_CHECK(evtStore()->retrieve(cont2,collectionToLink));
+    ANA_CHECK(evtStore()->retrieve(cont1,collectionToDecorate));
+    ANA_CHECK(evtStore()->retrieve(cont2,collectionToLink));
 
     for(const xAOD::TruthParticle *p : *cont1)
     {
@@ -644,7 +644,7 @@ namespace top {
 
   StatusCode CalcTopPartonHistory::execute() {
     const xAOD::TruthParticleContainer *truthParticles {nullptr};
-    ATH_CHECK(linkTruthContainers(truthParticles));
+    ANA_CHECK(linkTruthContainers(truthParticles));
 
     // Create the partonHistory xAOD object
     //cppcheck-suppress uninitvar
@@ -653,7 +653,7 @@ namespace top {
     xAOD::PartonHistoryAux* partonHistoryAux = new xAOD::PartonHistoryAux {};
     partonHistory->setStore(partonHistoryAux);
 
-    ATH_CHECK(runHistorySaver(truthParticles, partonHistory));
+    ANA_CHECK(runHistorySaver(truthParticles, partonHistory));
 
     // Save to StoreGate / TStore
     StatusCode save = evtStore()->tds()->record(partonHistory, m_topPartonsSGKey);
@@ -669,13 +669,13 @@ namespace top {
     const std::string &truthParticlesSGKey = m_topPartonsSGKey + "_TruthParticles";
     if (!evtStore()->contains<xAOD::TruthParticleContainer>(truthParticlesSGKey)) {
       std::vector<std::string> collections = {"TruthTop"};
-      ATH_CHECK(buildContainerFromMultipleCollections(collections, truthParticlesSGKey));
-      ATH_CHECK(evtStore()->retrieve(tp, truthParticlesSGKey));
+      ANA_CHECK(buildContainerFromMultipleCollections(collections, truthParticlesSGKey));
+      ANA_CHECK(evtStore()->retrieve(tp, truthParticlesSGKey));
       //we need to be able to navigate from the Ws to their decayProducts, see CalcTopPartonHistory.h for details
-      ATH_CHECK(linkBosonCollections());
+      ANA_CHECK(linkBosonCollections());
     }
     else {
-      ATH_CHECK(evtStore()->retrieve(tp, truthParticlesSGKey));
+      ANA_CHECK(evtStore()->retrieve(tp, truthParticlesSGKey));
     }
 
     return StatusCode::SUCCESS;

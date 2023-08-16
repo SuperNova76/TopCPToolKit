@@ -184,7 +184,7 @@ StatusCode TtbarNNLORecursiveRew::initialize()
     } // end loop over systematics
 
     // finally build the cache of systematics indexed against our SystVar enum
-    ATH_CHECK( buildCachedSystematics() );
+    ANA_CHECK( buildCachedSystematics() );
 
     // and add them to the registry
     CP::SystematicRegistry& registry = CP::SystematicRegistry::getInstance();
@@ -235,15 +235,15 @@ StatusCode TtbarNNLORecursiveRew::buildCachedSystematics()
         // handle different types of systematics
         if ( sysname.find("Up") != std::string::npos ) {
             sysname.erase(sysname.find("Up"), 2);
-            ATH_CHECK( m_calibCache.add( CP::SystematicVariation( (sysPrefix + sysname).c_str(), 1), thisSystVar) );
+            ANA_CHECK( m_calibCache.add( CP::SystematicVariation( (sysPrefix + sysname).c_str(), 1), thisSystVar) );
         }
         else if ( sysname.find("Down") != std::string::npos ) {
             sysname.erase(sysname.find("Down"), 2);
-            ATH_CHECK( m_calibCache.add( CP::SystematicVariation( (sysPrefix + sysname).c_str(), -1), thisSystVar ) ); 
+            ANA_CHECK( m_calibCache.add( CP::SystematicVariation( (sysPrefix + sysname).c_str(), -1), thisSystVar ) );
         }
         else {
             // one-point systematic
-            ATH_CHECK( m_calibCache.add( CP::SystematicVariation( (sysPrefix + sysname).c_str()), thisSystVar ) );
+            ANA_CHECK( m_calibCache.add( CP::SystematicVariation( (sysPrefix + sysname).c_str()), thisSystVar ) );
         }
     }
 
@@ -395,7 +395,7 @@ double TtbarNNLORecursiveRew::GetSysWeight(const CP::SystematicSet& sys, double 
 {
     // switch to the appropriate systematic variation
     const NNLORewEnums::SystVar *systVar {nullptr};
-    ATH_CHECK( m_calibCache.get(sys, systVar) );
+    ANA_CHECK( m_calibCache.get(sys, systVar) );
 
     m_systVar = *systVar;
 
