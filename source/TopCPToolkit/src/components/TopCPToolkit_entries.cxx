@@ -3,6 +3,7 @@
 */
 
 #include <TopCPToolkit/ExtraParticleDecorationAlg.h>
+#include<TopCPToolkit/LeptonSFCalculatorAlg.h>
 #include <TopCPToolkit/EventSelectionTestAlg.h>
 #include <TopCPToolkit/KLFitterAlg.h>
 #include <TopCPToolkit/KLFitterFinalizeOutputAlg.h>

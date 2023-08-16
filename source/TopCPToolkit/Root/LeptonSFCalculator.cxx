@@ -1,11 +1,11 @@
-#include "TopCPToolkit/LeptonSFCalculator.h"
+#include "TopCPToolkit/LeptonSFCalculatorAlg.h"
 
 namespace top {
-  LeptonSFCalculator::LeptonSFCalculator(const std::string &name, ISvcLocator *pSvcLocator)
+  LeptonSFCalculatorAlg::LeptonSFCalculatorAlg(const std::string &name, ISvcLocator *pSvcLocator)
     : EL::AnaAlgorithm(name, pSvcLocator) {
   }
 
-  StatusCode LeptonSFCalculator::initialize() {
+  StatusCode LeptonSFCalculatorAlg::initialize() {
 
     ANA_CHECK(m_electronsHandle.initialize(m_systematicsList));
     ANA_CHECK(m_muonsHandle.initialize(m_systematicsList));
@@ -28,7 +28,7 @@ namespace top {
     return StatusCode::SUCCESS;
   }
 
-  StatusCode LeptonSFCalculator::execute() {
+  StatusCode LeptonSFCalculatorAlg::execute() {
     for (const auto& syst : m_systematicsList.systematicsVector()) {
       const xAOD::EventInfo *evtInfo {nullptr};
       ANA_CHECK(m_eventInfoHandle.retrieve(evtInfo, syst));
@@ -60,7 +60,7 @@ namespace top {
     return StatusCode::SUCCESS;
   }
 
-  StatusCode LeptonSFCalculator::finalize() {
+  StatusCode LeptonSFCalculatorAlg::finalize() {
     return StatusCode::SUCCESS;
   }
 }

@@ -2,7 +2,7 @@
 #define TOPCPTOOLKIT_DICT_H
 
 #include "TopCPToolkit/ExtraParticleDecorationAlg.h"
-#include "TopCPToolkit/LeptonSFCalculator.h"
+#include "TopCPToolkit/LeptonSFCalculatorAlg.h"
 #include "TopCPToolkit/EventSelectionTestAlg.h"
 #include "TopCPToolkit/KLFitterAlg.h"
 #include "TopCPToolkit/KLFitterResult.h"

@@ -13,9 +13,9 @@
 #include <xAODEventInfo/EventInfo.h>
 
 namespace top {
-  class LeptonSFCalculator : public EL::AnaAlgorithm {
+  class LeptonSFCalculatorAlg : public EL::AnaAlgorithm {
   public:
-    LeptonSFCalculator(const std::string &name, ISvcLocator *pSvcLocator);
+    LeptonSFCalculatorAlg(const std::string &name, ISvcLocator *pSvcLocator);
     virtual StatusCode initialize() final;
     virtual StatusCode execute() final;
     virtual StatusCode finalize() final;

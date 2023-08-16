@@ -195,12 +195,11 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
     # TODO this does not yet work with the OutputAnalysisConfig
     reco_branches += ['EventInfo.trigPassed_' + t + ' -> trigPassed_' + t for t in individual_triggers]
 
-    # our own analysis with custom decorations
-    from TopCPToolkit.TtbarAnalysisConfig import TtbarAnalysisConfig
-    cfg = TtbarAnalysisConfig()
+    # a single lepton SF
+    from TopCPToolkit.LeptonSFCalculatorConfig import LeptonSFCalculatorConfig
+    cfg = LeptonSFCalculatorConfig()
     cfg.setOptionValue('electrons', 'AnaElectrons.tight')
     cfg.setOptionValue('muons', 'AnaMuons.tight')
-    cfg.setOptionValue('jets', 'AnaJets.baselineSel&&jvt_selection')
     cfg.setOptionValue('lepton_postfix', 'tight')
     configSeq.append(cfg)
 
