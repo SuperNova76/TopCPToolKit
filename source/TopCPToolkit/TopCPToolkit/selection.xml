@@ -3,7 +3,7 @@
   <!-- This file contains a list of all classes for which a dictionary
        should be created. -->
 
-  <class name="top::TtbarCPalgoAnalysis" />
+  <class name="top::ExtraParticleDecorationAlg" />
   <class name="top::LeptonSFCalculator" />
   <class name="top::RunPartonHistoryAlg" />
   <class name="top::ParticleLevelAlg" />
