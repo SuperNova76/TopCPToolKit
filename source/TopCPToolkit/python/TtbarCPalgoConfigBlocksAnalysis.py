@@ -209,8 +209,14 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
     ]
 
     from TopCPToolkit.ExtraParticleDecorationConfig import ExtraParticleDecorationConfig
-    cfg = ExtraParticleDecorationConfig()
+    cfg = ExtraParticleDecorationConfig('El')
     cfg.setOptionValue('particles', 'AnaElectrons')
+    configSeq.append(cfg)
+    cfg = ExtraParticleDecorationConfig('Mu')
+    cfg.setOptionValue('particles', 'AnaMuons')
+    configSeq.append(cfg)
+    cfg = ExtraParticleDecorationConfig('Jet')
+    cfg.setOptionValue('particles', 'AnaJets')
     configSeq.append(cfg)
 
     # object thinning
