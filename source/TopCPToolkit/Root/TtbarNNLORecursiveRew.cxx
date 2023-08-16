@@ -50,7 +50,7 @@ StatusCode TtbarNNLORecursiveRew::initialize()
     m_calibCache.initialize(
         std::move(affSysts),
         [this] (const CP::SystematicSet& sys, NNLORewEnums::SystVar& systvar) {
-            ATH_MSG_WARNING("Mapping for " << sys.name() << "missing, defaulting to no systematic.");
+            ANA_MSG_WARNING("Mapping for " << sys.name() << "missing, defaulting to no systematic.");
             systvar = NNLORewEnums::SystVar::NoSyst;
             return StatusCode::SUCCESS;
         }
@@ -138,7 +138,7 @@ StatusCode TtbarNNLORecursiveRew::initialize()
                 && m_type == NNLORewEnums::RewType::Rew2D
             )
         ) {
-            ATH_MSG_INFO("Unsupported systematic variation " << NNLORewEnums::systVarToStr(thisSystVar) << " for reweighting of type " << NNLORewEnums::rewTypeToStr(m_type) << ". Will be ignored.");
+            ANA_MSG_INFO("Unsupported systematic variation " << NNLORewEnums::systVarToStr(thisSystVar) << " for reweighting of type " << NNLORewEnums::rewTypeToStr(m_type) << ". Will be ignored.");
             // here we treat it as nominal
             sysStr = "";
             suffix = m_suffix;
@@ -152,8 +152,8 @@ StatusCode TtbarNNLORecursiveRew::initialize()
 
         // open the relevant file
         std::unique_ptr<TFile> f ( TFile::Open((m_dir+"/RecursiveReweighting__"+smpStr+sysStr+suffix+".root").c_str()) );
-        ATH_MSG_INFO("Opening NNLO reweighting file " << f->GetName());
-        if ( !f ) ATH_MSG_ERROR("Cannot open the file! Aborting.");
+        ANA_MSG_INFO("Opening NNLO reweighting file " << f->GetName());
+        if ( !f ) ANA_MSG_ERROR("Cannot open the file! Aborting.");
 
         // put the necessary histograms in our vectors
         std::string histname;
@@ -163,7 +163,7 @@ StatusCode TtbarNNLORecursiveRew::initialize()
             // NNLO predictions
             histname = "h_" + m_rewMap[thisSystVar][i_rew];
             auto tmp_nnlo = dynamic_cast<TH1*>( f->Get(histname.c_str()) );
-            if ( !tmp_nnlo ) ATH_MSG_ERROR("Could not retrieve NNLO histogram " << histname << "! Aborting.");
+            if ( !tmp_nnlo ) ANA_MSG_ERROR("Could not retrieve NNLO histogram " << histname << "! Aborting.");
             this_h_nnlo.emplace_back(tmp_nnlo);
             this_h_nnlo[i_rew]->SetDirectory(nullptr);
 
@@ -171,7 +171,7 @@ StatusCode TtbarNNLORecursiveRew::initialize()
             if ( i_rew == 0 ) histname = "h_" + m_rewMap[thisSystVar][i_rew] + "_" + smpStr;
             else              histname = "h_" + m_rewMap[thisSystVar][i_rew] + "_" + smpStr + "_rew_" + std::to_string(i_rew-1);
             auto tmp_mc = dynamic_cast<TH1*>( f->Get(histname.c_str()) );
-            if ( !tmp_mc ) ATH_MSG_ERROR("Could not retrieve MC histogram " << histname << "! Aborting.");
+            if ( !tmp_mc ) ANA_MSG_ERROR("Could not retrieve MC histogram " << histname << "! Aborting.");
             this_h_mc.emplace_back(tmp_mc);
             this_h_mc[i_rew]->SetDirectory(nullptr);
         }
@@ -189,7 +189,7 @@ StatusCode TtbarNNLORecursiveRew::initialize()
     // and add them to the registry
     CP::SystematicRegistry& registry = CP::SystematicRegistry::getInstance();
     if ( !registry.registerSystematics(*this) ) {
-        ATH_MSG_ERROR("Unable to register the systematics!");
+        ANA_MSG_ERROR("Unable to register the systematics!");
         return StatusCode::FAILURE;
     }
 
@@ -207,7 +207,7 @@ StatusCode TtbarNNLORecursiveRew::buildCachedSystematics()
 
     // No systematic to register if the sample is not nominal!
     if ( m_sampleId != NNLORewEnums::SampleId::Nominal ) {
-        ATH_MSG_INFO("Running on alternative sample of type " << NNLORewEnums::sampleIdToStr(m_sampleId) << " for which there are no systematic.");
+        ANA_MSG_INFO("Running on alternative sample of type " << NNLORewEnums::sampleIdToStr(m_sampleId) << " for which there are no systematic.");
         return StatusCode::SUCCESS;
     }
 
@@ -375,7 +375,7 @@ void TtbarNNLORecursiveRew::SetInverted3D(std::vector<std::string>& rewList, int
         rewList.emplace_back( "TTbarPt" );
     }
     else{
-        ATH_MSG_ERROR("Invalid argument for SetInverted3D: " << i << " (valid options are 1, 2, 3, 4, 5)");
+        ANA_MSG_ERROR("Invalid argument for SetInverted3D: " << i << " (valid options are 1, 2, 3, 4, 5)");
     }
 }
 
