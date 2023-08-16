@@ -9,7 +9,7 @@ class TtbarAnalysisConfig(ConfigBlock):
         self.addOption('electrons', None, type=str)
         self.addOption('muons', None, type=str)
         self.addOption('jets', None, type=str)
-        self.addOption('particles', None, type=str)
+        #self.addOption('particles', None, type=str)
         self.addOption('lepton_postfix', None, type=str)
 
     def makeAlgs(self, config):
@@ -17,7 +17,7 @@ class TtbarAnalysisConfig(ConfigBlock):
         muons, muonSelection = config.readNameAndSelection(self.muons)
         jets, jetSelection = config.readNameAndSelection(self.jets)
 
-        particles, selection = config.readNameAndSelection(self.particles)
+        #particles, selection = config.readNameAndSelection(self.particles)
 
         # alg = config.createAlgorithm('top::TtbarCPalgoAnalysis', 'customTtbarDecorations')
         # # alg.electrons = electrons

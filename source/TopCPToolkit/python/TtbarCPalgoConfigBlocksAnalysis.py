@@ -201,13 +201,17 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
     cfg.setOptionValue('electrons', 'AnaElectrons.tight')
     cfg.setOptionValue('muons', 'AnaMuons.tight')
     cfg.setOptionValue('jets', 'AnaJets.baselineSel&&jvt_selection')
-    cfg.setOptionValue('particles', 'AnaElectrons.tight')
     cfg.setOptionValue('lepton_postfix', 'tight')
     configSeq.append(cfg)
 
     reco_branches += [
         'EventInfo.leptonSF_tight_%SYS% -> weight_leptonSF_tight_%SYS%',
     ]
+
+    from TopCPToolkit.ExtraParticleDecorationConfig import ExtraParticleDecorationConfig
+    cfg = ExtraParticleDecorationConfig()
+    cfg.setOptionValue('particles', 'AnaElectrons')
+    configSeq.append(cfg)
 
     # object thinning
     from AsgAnalysisAlgorithms.AsgAnalysisConfig import makeOutputThinningConfig
