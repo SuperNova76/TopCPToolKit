@@ -9,6 +9,7 @@ class TtbarAnalysisConfig(ConfigBlock):
         self.addOption('electrons', None, type=str)
         self.addOption('muons', None, type=str)
         self.addOption('jets', None, type=str)
+        self.addOption('particles', None, type=str)
         self.addOption('lepton_postfix', None, type=str)
 
     def makeAlgs(self, config):
@@ -16,14 +17,19 @@ class TtbarAnalysisConfig(ConfigBlock):
         muons, muonSelection = config.readNameAndSelection(self.muons)
         jets, jetSelection = config.readNameAndSelection(self.jets)
 
-        alg = config.createAlgorithm('top::TtbarCPalgoAnalysis', 'customTtbarDecorations')
-        alg.electrons = electrons
-        alg.muons = muons
-        alg.jets = jets
+        particles, selection = config.readNameAndSelection(self.particles)
 
-        config.addOutputVar(electrons, 'e_%SYS%', 'e')
-        config.addOutputVar(muons, 'e_%SYS%', 'e')
-        config.addOutputVar(jets, 'e_%SYS%', 'e')
+        alg = config.createAlgorithm('top::TtbarCPalgoAnalysis', 'customTtbarDecorations')
+        # alg.electrons = electrons
+        # alg.muons = muons
+        # alg.jets = jets
+        alg.particles = particles
+
+        # config.addOutputVar(self.electrons.split(".")[0], 'e_%SYS%', 'e')
+        # config.addOutputVar(self.muons.split(".")[0], 'e_%SYS%', 'e')
+        # config.addOutputVar(self.jets.split(".")[0], 'e_%SYS%', 'e')
+
+        config.addOutputVar(self.particles.split(".")[0], 'e_%SYS%', 'e')
 
         alg = config.createAlgorithm('top::LeptonSFCalculator', 'leptonSFCalculator')
         alg.electrons = electrons
