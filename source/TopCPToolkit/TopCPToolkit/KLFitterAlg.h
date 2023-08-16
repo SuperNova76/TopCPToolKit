@@ -1,5 +1,5 @@
-#ifndef TTBARCPALGOANALYSIS_KLFITTERALG_H_
-#define TTBARCPALGOANALYSIS_KLFITTERALG_H_
+#ifndef TOPCPTOOLKIT_KLFITTERALG_H_
+#define TOPCPTOOLKIT_KLFITTERALG_H_
 
 #include <SystematicsHandles/SysReadHandle.h>
 #include <SelectionHelpers/SysReadSelectionHandle.h>

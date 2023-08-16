@@ -195,6 +195,28 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
     # TODO this does not yet work with the OutputAnalysisConfig
     reco_branches += ['EventInfo.trigPassed_' + t + ' -> trigPassed_' + t for t in individual_triggers]
 
+    # a single lepton SF
+    from TopCPToolkit.LeptonSFCalculatorConfig import LeptonSFCalculatorConfig
+    cfg = LeptonSFCalculatorConfig()
+    cfg.setOptionValue('electrons', 'AnaElectrons.tight')
+    cfg.setOptionValue('muons', 'AnaMuons.tight')
+    cfg.setOptionValue('lepton_postfix', 'tight')
+    configSeq.append(cfg)
+
+    reco_branches += [
+        'EventInfo.leptonSF_tight_%SYS% -> weight_leptonSF_tight_%SYS%',
+    ]
+
+    from TopCPToolkit.ExtraParticleDecorationConfig import ExtraParticleDecorationConfig
+    cfg = ExtraParticleDecorationConfig('El')
+    cfg.setOptionValue('particles', 'AnaElectrons')
+    configSeq.append(cfg)
+    cfg = ExtraParticleDecorationConfig('Mu')
+    cfg.setOptionValue('particles', 'AnaMuons')
+    configSeq.append(cfg)
+    cfg = ExtraParticleDecorationConfig('Jet')
+    cfg.setOptionValue('particles', 'AnaJets')
+    configSeq.append(cfg)
 
     # object thinning
     from AsgAnalysisAlgorithms.AsgAnalysisConfig import makeOutputThinningConfig
@@ -245,19 +267,6 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
         # 'EventInfo.ejets_%SYS% -> pass_ejets_%SYS%',
         # 'EventInfo.mujets_%SYS% -> pass_mujets_%SYS%',
         'EventInfo.eventFilterTtbar_%SYS% -> pass_event_%SYS%'
-    ]
-
-    # our own analysis with custom decorations
-    from TopCPToolkit.TtbarAnalysisConfig import TtbarAnalysisConfig
-    cfg = TtbarAnalysisConfig()
-    cfg.setOptionValue('electrons', 'AnaElectrons.tight')
-    cfg.setOptionValue('muons', 'AnaMuons.tight')
-    cfg.setOptionValue('jets', 'AnaJets.baselineSel&&jvt_selection')
-    cfg.setOptionValue('lepton_postfix', 'tight')
-    configSeq.append(cfg)
-
-    reco_branches += [
-        'EventInfo.leptonSF_tight_%SYS% -> weight_leptonSF_tight_%SYS%',
     ]
 
     from TopCPToolkit.KLFitterConfig import KLFitterConfig

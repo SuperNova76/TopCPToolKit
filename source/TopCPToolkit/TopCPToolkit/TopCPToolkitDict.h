@@ -1,8 +1,8 @@
-#ifndef TTBARCPALGOANALYSIS_DICT_H
-#define TTBARCPALGOANALYSIS_DICT_H
+#ifndef TOPCPTOOLKIT_DICT_H
+#define TOPCPTOOLKIT_DICT_H
 
-#include "TopCPToolkit/TtbarCPalgoAnalysis.h"
-#include "TopCPToolkit/LeptonSFCalculator.h"
+#include "TopCPToolkit/ExtraParticleDecorationAlg.h"
+#include "TopCPToolkit/LeptonSFCalculatorAlg.h"
 #include "TopCPToolkit/EventSelectionTestAlg.h"
 #include "TopCPToolkit/KLFitterAlg.h"
 #include "TopCPToolkit/KLFitterResult.h"
