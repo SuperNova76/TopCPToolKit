@@ -1,8 +1,8 @@
 /*
    Copyright (C) 2002-2023 CERN for the benefit of the ATLAS collaboration
  */
-#ifndef TTBARCPALGOANALYSIS_KLFITTERRESULT_H
-#define TTBARCPALGOANALYSIS_KLFITTERRESULT_H
+#ifndef TOPCPTOOLKIT_KLFITTERRESULT_H
+#define TOPCPTOOLKIT_KLFITTERRESULT_H
 
 // EDM include(s).
 #include "AthContainers/AuxElement.h"

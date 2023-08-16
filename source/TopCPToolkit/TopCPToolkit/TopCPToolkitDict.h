@@ -1,5 +1,5 @@
-#ifndef TTBARCPALGOANALYSIS_DICT_H
-#define TTBARCPALGOANALYSIS_DICT_H
+#ifndef TOPCPTOOLKIT_DICT_H
+#define TOPCPTOOLKIT_DICT_H
 
 #include "TopCPToolkit/ExtraParticleDecorationAlg.h"
 #include "TopCPToolkit/LeptonSFCalculator.h"
