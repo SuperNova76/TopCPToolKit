@@ -15,7 +15,7 @@ namespace top {
 
     m_env = std::shared_ptr<Ort::Env>(new Ort::Env(ORT_LOGGING_LEVEL_WARNING, ""));
 
-    ATH_MSG_VERBOSE("Reading SPANET prediction from " << m_spanet_path_trainedoneven << "(for odd events) and " << m_spanet_path_trainedonodd << " (for even events)");
+    ANA_MSG_VERBOSE("Reading SPANET prediction from " << m_spanet_path_trainedoneven << "(for odd events) and " << m_spanet_path_trainedonodd << " (for even events)");
 
     // any session options are set via this object
     // use single thread (single CPU core) for the model evaluation
@@ -32,13 +32,13 @@ namespace top {
     m_output_node_names = m_session_trainedoneven->GetOutputNames();
 
     if (m_verbose){
-      ATH_MSG_VERBOSE("Inputs:");
+      ANA_MSG_VERBOSE("Inputs:");
       for (long unsigned int i=0; i<m_input_node_names.size(); ++i){
-	ATH_MSG_VERBOSE(m_input_node_names[i]);
+	ANA_MSG_VERBOSE(m_input_node_names[i]);
       }
-      ATH_MSG_VERBOSE("Outputs:");
+      ANA_MSG_VERBOSE("Outputs:");
       for (long unsigned int i=0; i<m_output_node_names.size(); ++i){
-	ATH_MSG_VERBOSE(m_output_node_names[i] << " ");
+	ANA_MSG_VERBOSE(m_output_node_names[i] << " ");
       }
     }
  
@@ -51,40 +51,40 @@ namespace top {
     m_NUM_FEATURES = m_input_shapes[0][2];
 
     if (m_verbose) {
-      ATH_MSG_VERBOSE("input shapes = ");
+      ANA_MSG_VERBOSE("input shapes = ");
       for (long unsigned int i=0; i < m_input_shapes.size(); ++i){
-	ATH_MSG_VERBOSE(m_input_node_names[i] << ": " << m_input_shapes[i].size());
+	ANA_MSG_VERBOSE(m_input_node_names[i] << ": " << m_input_shapes[i].size());
 
 	Ort::TypeInfo type_info = m_session_trainedoneven->GetInputTypeInfo(i);
 	auto tensor_info = type_info.GetTensorTypeAndShapeInfo();
 	ONNXTensorElementDataType type = tensor_info.GetElementType();
 	std::vector<int64_t> dims = tensor_info.GetShape();
 
-	ATH_MSG_VERBOSE(" : "<<" type= "<<type << ", shape = [");
+	ANA_MSG_VERBOSE(" : "<<" type= "<<type << ", shape = [");
 	for (long unsigned int j=0; j < dims.size(); ++j){
-	  ATH_MSG_VERBOSE(dims[j]);
+	  ANA_MSG_VERBOSE(dims[j]);
 	}
-	ATH_MSG_VERBOSE("]");
+	ANA_MSG_VERBOSE("]");
       }
     }
     // // output shapes are stored exactly the same as input shapes.
     // // In our example, we will have a single element = vector of length 2 with values {1, 1}, corresponding to a 1x1 output tensor shape.
     m_output_shapes = m_session_trainedoneven->GetOutputShapes();
     if (m_verbose) {
-      ATH_MSG_VERBOSE("output shapes = ");
+      ANA_MSG_VERBOSE("output shapes = ");
       for (long unsigned int i=0; i < m_output_shapes.size(); ++i){
-	ATH_MSG_VERBOSE(m_output_node_names[i] << ": " << m_output_shapes[i].size());
+	ANA_MSG_VERBOSE(m_output_node_names[i] << ": " << m_output_shapes[i].size());
 
 	Ort::TypeInfo type_info = m_session_trainedoneven->GetOutputTypeInfo(i);
 	auto tensor_info = type_info.GetTensorTypeAndShapeInfo();
 	ONNXTensorElementDataType type = tensor_info.GetElementType();
 	std::vector<int64_t> dims = tensor_info.GetShape();
 
-	ATH_MSG_VERBOSE(" : "<<" type= "<<type << ", shape = [");
+	ANA_MSG_VERBOSE(" : "<<" type= "<<type << ", shape = [");
 	for (long unsigned int j=0; j < dims.size(); ++j){
-	  ATH_MSG_VERBOSE(dims[j]);
+	  ANA_MSG_VERBOSE(dims[j]);
 	}
-	ATH_MSG_VERBOSE("]");
+	ANA_MSG_VERBOSE("]");
       }
     }
   }

@@ -11,8 +11,8 @@ namespace top {
 
   StatusCode CalcTTZPartonHistory::runHistorySaver(const xAOD::TruthParticleContainer* truthParticles,
                                                    xAOD::PartonHistory* ttbarPartonHistory) {
-    ATH_CHECK(CalcTtbarPartonHistory::runHistorySaver(truthParticles, ttbarPartonHistory));
-    ATH_CHECK(zHistorySaver(truthParticles, ttbarPartonHistory));
+    ANA_CHECK(CalcTtbarPartonHistory::runHistorySaver(truthParticles, ttbarPartonHistory));
+    ANA_CHECK(zHistorySaver(truthParticles, ttbarPartonHistory));
     return StatusCode::SUCCESS;
   }
 
