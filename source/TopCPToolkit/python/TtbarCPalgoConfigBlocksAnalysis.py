@@ -284,17 +284,6 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
         cfg.setOptionValue('topology', topology)
         configSeq.append(cfg)
 
-        reco_branches += [
-            'EventInfo.'+topology+'_spanet_lep_b_index_%SYS% -> %SYS%_'+topology+'_spanet_lep_b_index',
-            'EventInfo.'+topology+'_spanet_had_b_index_%SYS% -> %SYS%_'+topology+'_spanet_had_b_index',
-            'EventInfo.'+topology+'_spanet_down_index_%SYS% -> %SYS%_'+topology+'_spanet_down_index',
-            'EventInfo.'+topology+'_spanet_up_index_%SYS% -> %SYS%_'+topology+'_spanet_up_index',
-            'EventInfo.'+topology+'_spanet_lep_top_score_%SYS% -> %SYS%_'+topology+'_spanet_lep_top_score',
-            'EventInfo.'+topology+'_spanet_had_top_score_%SYS% -> %SYS%_'+topology+'_spanet_had_top_score',
-            'EventInfo.'+topology+'_spanet_lep_top_existence_%SYS% -> %SYS%_'+topology+'_spanet_lep_top_existence',
-            'EventInfo.'+topology+'_spanet_had_top_existence_%SYS% -> %SYS%_'+topology+'_spanet_had_top_existence',
-        ]
-
     # add NTuple output config
     from AsgAnalysisAlgorithms.OutputAnalysisConfig import OutputAnalysisConfig
     cfg = OutputAnalysisConfig('reco')
