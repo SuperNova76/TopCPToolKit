@@ -82,6 +82,10 @@
 `runSelection`
 :   whether to run the JVT selection. The default is `True`.
 
+!!! success "Registers the following variables:"
+    - `weight_jvt_effSF`: the event-level JVT efficiency SF
+    - `weight_fjvt_effSF`: the event-level forward JVT efficiency SF
+
 ## [makeFTagAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagAnalysisConfig.py)
 
 `seq`

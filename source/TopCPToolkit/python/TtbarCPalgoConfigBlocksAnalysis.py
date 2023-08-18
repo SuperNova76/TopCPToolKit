@@ -78,10 +78,6 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
         makePtEtaSelectionConfig(configSeq, 'AnaJets', selectionDecoration='selectPtEta',
                                  selectionName='', minPt=25e3, maxEta=2.5)
 
-        reco_branches += [
-            'EventInfo.jvt_effSF_%SYS% -> weight_jvtSF_%SYS%'
-        ]
-
         # b-tagging
         WPs = ['FixedCutBEff_85','FixedCutBEff_77','FixedCutBEff_70','FixedCutBEff_60','Continuous']
         btagger = 'DL1dv01'
