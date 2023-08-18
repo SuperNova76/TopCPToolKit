@@ -49,10 +49,6 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
         makePtEtaSelectionConfig(configSeq, 'AnaElectrons', selectionDecoration='selectPtEta',
                                  selectionName='', minPt=25e3, maxEta=2.47)
         outputContainers['el_'] = 'OutElectrons'
-        reco_branches += [
-            'OutElectrons_NOSYS.DFCommonElectronsECIDS -> el_ECIDS',
-            'OutElectrons_NOSYS.DFCommonElectronsECIDSResult -> el_ECIDSResult',
-        ]
 
     # muons
     if use_muons:
