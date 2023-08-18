@@ -28,7 +28,7 @@ variables:
         git config user.email "atlas.top.reconstruction@cern.ch"
         git config user.name "ATLAS Top Reconstruction"
         git fetch --tags
-        git stash
+        if  [[ ! `git status --porcelain` ]]; then git stash; fi
         git checkout "tags/$(cat ${CI_PROJECT_DIR}/${ASETUP_PATH}/tag.txt)"
       else
         echo "ERROR: ${ASETUP_PATH}/tag.txt does not exist!"
