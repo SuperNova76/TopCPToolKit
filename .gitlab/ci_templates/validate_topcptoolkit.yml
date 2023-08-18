@@ -11,6 +11,7 @@ variables:
   - cd ${VAL_DIR}
   - echo ${REFERENCEFILE}
   - echo ${INPUTFILE}
+  - find ${CI_PROJECT_DIR} -type f -name "*.root"
   - python ${CI_PROJECT_DIR}/.gitlab/ci_scripts/compare_samples.py ${REFERENCEFILE} ${INPUTFILE}
 
 .restore_environment: &restore_environment
