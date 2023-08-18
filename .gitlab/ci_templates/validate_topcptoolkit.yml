@@ -62,7 +62,7 @@ validateLastWeekRun2:
   script:
     - *restore_environment
     - *run_validation
-  needs: [referenceRun2, lastweekRun2]
+  needs: [referenceRun2, lastweekRun2, lastweekTopCPToolkitTag]
 
 validateLastWeekRun3:
   rules:
@@ -77,4 +77,4 @@ validateLastWeekRun3:
   script:
     - *restore_environment
     - *run_validation
-  needs: [referenceRun3, lastweekRun3]
+  needs: [referenceRun3, lastweekRun3, lastweekTopCPToolkitTag]
