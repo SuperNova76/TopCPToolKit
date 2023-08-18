@@ -32,7 +32,7 @@ def compareLists(ref_list, new_list):
     return common, missing_in_ref, missing_in_new
 
 def compareTrees(ref_file, new_file):
-    # Compare the lists of trees from the two files, and return the common subset
+    # Compare the lists of trees from the two files, and return the common subset
     ref_trees = getTrees(ref_file)
     new_trees = getTrees(new_file)
     common, miss_ref, miss_new = compareLists(ref_trees, new_trees)

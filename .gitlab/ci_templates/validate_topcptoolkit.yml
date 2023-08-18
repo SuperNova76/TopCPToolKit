@@ -14,7 +14,13 @@ variables:
 .restore_environment: &restore_environment
   - set +e
   - source ${CI_PROJECT_DIR}/.gitlab/ci_scripts/setupATLAS.sh
-  - lsetup root
+  - echo ${ASETUP_PATH}
+  - cd ${CI_PROJECT_DIR}/${ASETUP_PATH}
+  - asetup --restore
+  - cd ${CI_PROJECT_DIR}
+  - echo ${BUILD_PATH}
+  - cd ${CI_PROJECT_DIR}/${BUILD_PATH}
+  - source */setup.sh
   - cd ${CI_PROJECT_DIR}
 
 validateRun2:
