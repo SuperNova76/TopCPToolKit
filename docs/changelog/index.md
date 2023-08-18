@@ -4,7 +4,9 @@
 
 ### Upcoming release
 
-- We now run on AB 24.2.18
+### 1.2.0 <small>August 18, 2023</small>
+
+- We run on AB 24.2.18
 - [issue #5](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/5): refactor `EventInfo` variables, now relying on `addOutputVar`
 - [issue #7](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/7): introduced continuous integration tests covering compilation and running of the code, as well as simple output validation
 - [issue #17](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/17): centralised the event-level f/JVT SFs
