@@ -9,6 +9,8 @@ variables:
   - set -e
   - mkdir ${VAL_DIR}
   - cd ${VAL_DIR}
+  - echo ${REFERENCEFILE}
+  - echo ${OUTPUTFILE}
   - python ${CI_PROJECT_DIR}/.gitlab/ci_scripts/compare_samples.py ${REFERENCEFILE} ${OUTPUTFILE}
 
 .restore_environment: &restore_environment

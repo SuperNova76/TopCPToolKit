@@ -96,6 +96,7 @@ def compareEvents(key, branches, ref_file, new_file):
     return failure
 
 if __name__ == '__main__':
+    print("Validation script called with the following arguments", sys.argv)
     if len(sys.argv) != 3:
         print(f"{red_code}The script compare_samples.py requires 2 arguments!{reset_code}")
         print("Please run it as : python compare_samples.py <reference.root> <new.root>")
