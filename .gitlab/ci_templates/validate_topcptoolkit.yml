@@ -1,0 +1,74 @@
+stages:
+  - validate
+
+variables:
+  VAL_DIR: validation
+  VAL_DIR_ABS: ${CI_PROJECT_DIR}/${VAL_DIR}
+
+.run_validation: &run_validation
+  - set -e
+  - mkdir ${VAL_DIR}
+  - cd ${VAL_DIR}
+  - python ${CI_PROJECT_DIR}/.gitlab/ci_scripts/compare_samples.py ${REFERENCEFILE} ${OUTPUTFILE}
+
+.restore_environment: &restore_environment
+  - set +e
+  - source ${CI_PROJECT_DIR}/.gitlab/ci_scripts/setupATLAS.sh
+  - lsetup root
+  - cd ${CI_PROJECT_DIR}
+
+validateRun2:
+  stage: validate
+  tags:
+    - docker
+  variables:
+    JOBNAME: job_validateRun2
+    REFERENCEFILE: ${CI_PROJECT_DIR}/referenceRun2/${RUN_DIR}/output_referenceRun2/data-ANALYSIS/output.root
+    INPUTFILE: ${CI_PROJECT_DIR}/latestABreleaseRun2/${RUN_DIR}/output_latestABreleaseRun2/data-ANALYSIS/output.root
+  script:
+    - *restore_environment
+    - *run_validation
+  needs: [referenceRun2, latestABreleaseRun2]
+
+validateRun3:
+  stage: validate
+  tags:
+    - docker
+  variables:
+    JOBNAME: job_validateRun3
+    REFERENCEFILE: ${CI_PROJECT_DIR}/referenceRun3/${RUN_DIR}/output_referenceRun3/data-ANALYSIS/output.root
+    INPUTFILE: ${CI_PROJECT_DIR}/latestABreleaseRun3/${RUN_DIR}/output_latestABreleaseRun3/data-ANALYSIS/output.root
+  script:
+    - *restore_environment
+    - *run_validation
+  needs: [referenceRun3, latestABreleaseRun3]
+
+validateLastWeekRun2:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+  stage: validate
+  tags:
+    - docker
+  variables:
+    JOBNAME: job_validateLastWeekRun2
+    REFERENCEFILE: ${CI_PROJECT_DIR}/lastweekRun2/${RUN_DIR}/output_lastweekRun2/data-ANALYSIS/output.root
+    INPUTFILE: ${CI_PROJECT_DIR}/referenceRun2/${RUN_DIR}/output_referenceRun2/data-ANALYSIS/output.root
+  script:
+    - *restore_environment
+    - *run_validation
+  needs: [referenceRun2, lastweekRun2]
+
+validateLastWeekRun3:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+  stage: validate
+  tags:
+    - docker
+  variables:
+    JOBNAME: job_validateLastWeekRun3
+    REFERENCEFILE: ${CI_PROJECT_DIR}/lastweekRun3/${RUN_DIR}/output_lastweekRun3/data-ANALYSIS/output.root
+    INPUTFILE: ${CI_PROJECT_DIR}/referenceRun3/${RUN_DIR}/output_referenceRun3/data-ANALYSIS/output.root
+  script:
+    - *restore_environment
+    - *run_validation
+  needs: [referenceRun3, lastweekRun3]

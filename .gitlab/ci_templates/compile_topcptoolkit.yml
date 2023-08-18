@@ -1,0 +1,131 @@
+image: gitlab-registry.cern.ch/atlasphys-top/reco/ci-docker-cc7
+
+stages:
+  - build
+
+variables:
+  SOURCE_DIR: source
+  SOURCE_DIR_ABS: "${CI_PROJECT_DIR}/${SOURCE_DIR}"
+  BUILD_DIR: build
+  BUILD_DIR_ABS: "${CI_PROJECT_DIR}/${BUILD_DIR}"
+
+.setup_kerberos: &setup_kerberos
+  - date
+  - echo "${EOS_ACCOUNT_PASSWORD}" | kinit ${EOS_ACCOUNT_USERNAME}@CERN.CH
+  - klist
+  - cp ${CI_PROJECT_DIR}/.gitlab/ci_scripts/custom_krb5.conf /etc/krb5.conf
+  - cp ${CI_PROJECT_DIR}/.gitlab/ci_scripts/custom_ssh.conf /etc/ssh/ssh_config
+  - echo -e "Host svn.cern.ch lxplus.cern.ch\n\tUser ${EOS_ACCOUNT_USERNAME}\n\tStrictHostKeyChecking no\n\tGSSAPIAuthentication yes\n\tGSSAPIDelegateCredentials yes\n\tProtocol 2\n\tForwardX11 no\n\tIdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
+  - cat ~/.ssh/config
+  - date
+
+.prepare_dirs: &prepare_dirs
+  - mkdir ${JOBNAME}
+  - cd ${JOBNAME}
+  - set +e
+
+.compile_topcptoolkit: &compile_topcptoolkit
+  - set -e
+  - mkdir ${BUILD_DIR}
+  - cd ${BUILD_DIR}
+  - cmake ${SOURCE_DIR_ABS}
+  - make -j4
+  - source ./*/setup.sh
+  - set +e
+  - cd ../
+
+latestABrelease:
+  stage: build
+  tags:
+    - docker
+  variables:
+    JOBNAME: job_latestABrelease
+  script:
+    - *prepare_dirs
+    - source ${CI_PROJECT_DIR}/.gitlab/ci_scripts/setup_latest_AB_release.sh
+    - *setup_kerberos
+    - *compile_topcptoolkit
+    - echo "BUILD_PATH=${JOBNAME}/${BUILD_DIR}" >> build.env
+    - echo "ASETUP_PATH=${JOBNAME}" >> build.env
+  needs: []
+  artifacts:
+    paths:
+      - ${JOBNAME}
+    name: ${BUILD_DIR}_${CI_JOB_NAME}
+    expire_in: 12h
+    reports:
+      dotenv: ./${JOBNAME}/build.env
+
+referenceTopCPToolkitTag:
+  stage: build
+  tags:
+    - docker
+  variables:
+    JOBNAME: job_referenceTag
+  script:
+    - *prepare_dirs
+    - source ${CI_PROJECT_DIR}/.gitlab/ci_scripts/setup_latest_AB_release.sh
+    - source ${CI_PROJECT_DIR}/.gitlab/ci_scripts/setup_latest_TopCPToolkitTag.sh
+    - *setup_kerberos
+    - *compile_topcptoolkit
+    - echo "BUILD_PATH=${JOBNAME}/${BUILD_DIR}" >> build.env
+    - echo "ASETUP_PATH=${JOBNAME}" >> build.env
+  needs:
+    - job: latestABrelease
+      artifacts: false
+  artifacts:
+    paths:
+      - ${JOBNAME}
+    name: ${BUILD_DIR}_${CI_JOB_NAME}
+    expire_in: 12h
+    reports:
+      dotenv: ./${JOBNAME}/build.env
+
+lastweekTopCPToolkitTag:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+  stage: build
+  tags:
+    - docker
+  variables:
+    JOBNAME: job_lastweekTag
+  script:
+    - *prepare_dirs
+    - source ${CI_PROJECT_DIR}/.gitlab/ci_scripts/setup_penultimate_AB_release.sh
+    - source ${CI_PROJECT_DIR}/.gitlab/ci_scripts/setup_latest_TopCPToolkitTag.sh
+    - *setup_kerberos
+    - *compile_topcptoolkit
+    - echo "BUILD_PATH=${JOBNAME}/${BUILD_DIR}" >> build.env
+    - echo "ASETUP_PATH=${JOBNAME}" >> build.env
+  needs:
+    - job: referenceTopCPToolkitTag
+      artifacts: false
+  artifacts:
+    paths:
+      - ${JOBNAME}
+    name: ${BUILD_DIR}_${CI_JOB_NAME}
+    expire_in: 12h
+    reports:
+      dotenv: ./${JOBNAME}/build.env
+
+latestABnightly:
+  stage: build
+  tags:
+    - docker
+  variables:
+    JOBNAME: job_latestABnightly
+  script:
+    - *prepare_dirs
+    - source ${CI_PROJECT_DIR}/.gitlab/ci_scripts/setup_latest_AB_nightly.sh
+    - *setup_kerberos
+    - *compile_topcptoolkit
+    - echo "BUILD_PATH=${JOBNAME}/${BUILD_DIR}" >> build.env
+    - echo "ASETUP_PATH=${JOBNAME}" >> build.env
+  needs: []
+  artifacts:
+    paths:
+      - ${JOBNAME}
+    name: ${BUILD_DIR}_${CI_JOB_NAME}
+    expire_in: 12h
+    reports:
+      dotenv: ./${JOBNAME}/build.env
