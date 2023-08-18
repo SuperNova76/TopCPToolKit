@@ -107,9 +107,6 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
             cfg.objectSF = f'ftag_effSF_{btagger}_{WP}_%SYS%'
             cfg.eventSF = f'btagSF_{btagger}_{WP}_%SYS%'
             configSeq.append(cfg)
-            reco_branches += [
-                f'EventInfo.btagSF_{btagger}_{WP}_%SYS% -> weight_btagSF_{btagger}_{WP}_%SYS%'
-            ]
 
         outputContainers['jet_'] = 'OutJets'
 

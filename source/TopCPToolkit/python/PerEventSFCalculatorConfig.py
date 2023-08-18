@@ -21,3 +21,5 @@ class PerEventSFCalculatorConfig(ConfigBlock):
         alg.preselection = selection
         alg.scaleFactorInputDecoration = self.objectSF
         alg.scaleFactorOutputDecoration = self.eventSF
+
+        config.addOutputVar('EventInfo', alg.scaleFactorOutputDecoration, 'weight_'+alg.scaleFactorOutputDecoration.split("_%SYS%")[0])
