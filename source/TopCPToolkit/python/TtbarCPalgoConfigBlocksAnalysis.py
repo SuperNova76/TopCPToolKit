@@ -203,10 +203,6 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
     cfg.setOptionValue('lepton_postfix', 'tight')
     configSeq.append(cfg)
 
-    reco_branches += [
-        'EventInfo.leptonSF_tight_%SYS% -> weight_leptonSF_tight_%SYS%',
-    ]
-
     from TopCPToolkit.ExtraParticleDecorationConfig import ExtraParticleDecorationConfig
     cfg = ExtraParticleDecorationConfig('El')
     cfg.setOptionValue('particles', 'AnaElectrons')
