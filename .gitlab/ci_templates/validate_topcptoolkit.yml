@@ -34,7 +34,7 @@ validateRun2:
   script:
     - *restore_environment
     - *run_validation
-  needs: [referenceRun2, latestABreleaseRun2]
+  needs: [referenceRun2, latestABreleaseRun2,lastweekTopCPToolkitTag]
 
 validateRun3:
   stage: validate
@@ -47,7 +47,7 @@ validateRun3:
   script:
     - *restore_environment
     - *run_validation
-  needs: [referenceRun3, latestABreleaseRun3]
+  needs: [referenceRun3, latestABreleaseRun3,lastweekTopCPToolkitTag]
 
 validateLastWeekRun2:
   rules:
