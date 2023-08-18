@@ -261,13 +261,6 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
     cfg.setOptionValue('jets', 'AnaJets.baselineSel&&jvt_selection')
     cfg.setOptionValue('btagDecoration', f'ftag_select_{btagger}_FixedCutBEff_77')
     configSeq.append(cfg)
-    # TODO this does not yet work with the OutputAnalysisConfig
-    # outputContainers['eventSelection_'] = 'EventInfo'
-    reco_branches += [
-        # 'EventInfo.ejets_%SYS% -> pass_ejets_%SYS%',
-        # 'EventInfo.mujets_%SYS% -> pass_mujets_%SYS%',
-        'EventInfo.eventFilterTtbar_%SYS% -> pass_event_%SYS%'
-    ]
 
     from TopCPToolkit.KLFitterConfig import KLFitterConfig
     cfg = KLFitterConfig('KLFitterResult')

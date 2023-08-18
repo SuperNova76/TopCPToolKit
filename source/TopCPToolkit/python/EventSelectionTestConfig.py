@@ -22,6 +22,6 @@ class EventSelectionTestConfig(ConfigBlock):
         alg.muJetsDecisionFlag = 'mujets_%SYS%'
         alg.eventDecisionOutputDecoration = 'eventFilterTtbar_%SYS%'
 
-        config.addOutputVar('EventInfo', 'eventFilterTtbar', 'event_pass', isEventLevel=True)
-        config.addOutputVar('EventInfo', 'ejets', 'ejets_pass', isEventLevel=True)
-        config.addOutputVar('EventInfo', 'mujets', 'mujets_pass', isEventLevel=True)
+        config.addOutputVar('EventInfo', alg.eventDecisionOutputDecoration, 'event_pass')
+        config.addOutputVar('EventInfo', alg.elJetsDecisionFlag, 'ejets_pass')
+        config.addOutputVar('EventInfo', alg.muJetsDecisionFlag, 'mujets_pass')
