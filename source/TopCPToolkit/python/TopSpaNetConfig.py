@@ -35,11 +35,11 @@ class TopSpaNetConfig(ConfigBlock):
         alg.hadronic_top_existence = self.topology+'_spanet_had_top_existence_%SYS%'
 
         if self.topology == 'TtbarLjets':
-            config.addOutputVar('EventInfo', self.topology+'_spanet_lep_b_index', self.topology+'_spanet_lep_b_index', isEventLevel=True)
-            config.addOutputVar('EventInfo', self.topology+'_spanet_had_b_index', self.topology+'_spanet_had_b_index', isEventLevel=True)
-            config.addOutputVar('EventInfo', self.topology+'_spanet_down_index', self.topology+'_spanet_down_index', isEventLevel=True)
-            config.addOutputVar('EventInfo', self.topology+'_spanet_up_index', self.topology+'_spanet_up_index', isEventLevel=True)
-            config.addOutputVar('EventInfo', self.topology+'_spanet_lep_top_score', self.topology+'_spanet_lep_top_score', isEventLevel=True)
-            config.addOutputVar('EventInfo', self.topology+'_spanet_had_top_score', self.topology+'_spanet_had_top_score', isEventLevel=True)
-            config.addOutputVar('EventInfo', self.topology+'_spanet_lep_top_existence', self.topology+'_spanet_lep_top_existence', isEventLevel=True)
-            config.addOutputVar('EventInfo', self.topology+'_spanet_had_top_existence', self.topology+'_spanet_had_top_existence', isEventLevel=True)
+            config.addOutputVar('EventInfo', alg.leptonic_b_index, self.topology+'_spanet_lep_b_index')
+            config.addOutputVar('EventInfo', alg.hadronic_b_index, self.topology+'_spanet_had_b_index')
+            config.addOutputVar('EventInfo', alg.down_index, self.topology+'_spanet_down_index')
+            config.addOutputVar('EventInfo', alg.up_index, self.topology+'_spanet_up_index')
+            config.addOutputVar('EventInfo', alg.leptonic_top_score, self.topology+'_spanet_lep_top_score')
+            config.addOutputVar('EventInfo', alg.hadronic_top_score, self.topology+'_spanet_had_top_score')
+            config.addOutputVar('EventInfo', alg.leptonic_top_existence, self.topology+'_spanet_lep_top_existence')
+            config.addOutputVar('EventInfo', alg.hadronic_top_existence, self.topology+'_spanet_had_top_existence')

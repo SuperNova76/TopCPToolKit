@@ -17,8 +17,8 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
     use_track_jets = False
     use_largeR_jets = False
 
-    outputContainers = {}  # for output NTuple config block
-    reco_branches = []
+    outputContainers = {'': 'EventInfo'}  # for output NTuple config block
+    reco_branches = ['EventInfo.mcChannelNumber -> mcChannelNumber'] # PRW provides us with eventNumber and runNumber
     met_branches = []
 
     # figure out metadata
@@ -36,13 +36,6 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
     # PRW
     commonAlgoConfig.add_PRW(configSeq, metadata, reco_branches)
 
-    # TODO this does not yet work with the OutputAnalysisConfig
-    reco_branches += [
-        'EventInfo.runNumber       -> runNumber',
-        'EventInfo.eventNumber     -> eventNumber',
-        'EventInfo.mcChannelNumber -> mcChannelNumber',
-    ]
-
     # electrons
     if use_electrons:
         from EgammaAnalysisAlgorithms.ElectronAnalysisConfig import\
@@ -56,10 +49,6 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
         makePtEtaSelectionConfig(configSeq, 'AnaElectrons', selectionDecoration='selectPtEta',
                                  selectionName='', minPt=25e3, maxEta=2.47)
         outputContainers['el_'] = 'OutElectrons'
-        reco_branches += [
-            'OutElectrons_NOSYS.DFCommonElectronsECIDS -> el_ECIDS',
-            'OutElectrons_NOSYS.DFCommonElectronsECIDSResult -> el_ECIDSResult',
-        ]
 
     # muons
     if use_muons:
@@ -107,9 +96,6 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
             cfg.objectSF = f'ftag_effSF_{btagger}_{WP}_%SYS%'
             cfg.eventSF = f'btagSF_{btagger}_{WP}_%SYS%'
             configSeq.append(cfg)
-            reco_branches += [
-                f'EventInfo.btagSF_{btagger}_{WP}_%SYS% -> weight_btagSF_{btagger}_{WP}_%SYS%'
-            ]
 
         outputContainers['jet_'] = 'OutJets'
 
@@ -192,8 +178,6 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
 
     makeTriggerAnalysisConfig(configSeq, triggerChainsPerYear=triggerChainsPerYear, noFilter=noFilter, electronWorkingPoint='Tight.Tight_VarRad', muonWorkingPoint='Tight.None',
                               electrons='AnaElectrons.tight', muons='AnaMuons.tight')
-    # TODO this does not yet work with the OutputAnalysisConfig
-    reco_branches += ['EventInfo.trigPassed_' + t + ' -> trigPassed_' + t for t in individual_triggers]
 
     # a single lepton SF
     from TopCPToolkit.LeptonSFCalculatorConfig import LeptonSFCalculatorConfig
@@ -202,10 +186,6 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
     cfg.setOptionValue('muons', 'AnaMuons.tight')
     cfg.setOptionValue('lepton_postfix', 'tight')
     configSeq.append(cfg)
-
-    reco_branches += [
-        'EventInfo.leptonSF_tight_%SYS% -> weight_leptonSF_tight_%SYS%',
-    ]
 
     from TopCPToolkit.ExtraParticleDecorationConfig import ExtraParticleDecorationConfig
     cfg = ExtraParticleDecorationConfig('El')
@@ -261,13 +241,6 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
     cfg.setOptionValue('jets', 'AnaJets.baselineSel&&jvt_selection')
     cfg.setOptionValue('btagDecoration', f'ftag_select_{btagger}_FixedCutBEff_77')
     configSeq.append(cfg)
-    # TODO this does not yet work with the OutputAnalysisConfig
-    # outputContainers['eventSelection_'] = 'EventInfo'
-    reco_branches += [
-        # 'EventInfo.ejets_%SYS% -> pass_ejets_%SYS%',
-        # 'EventInfo.mujets_%SYS% -> pass_mujets_%SYS%',
-        'EventInfo.eventFilterTtbar_%SYS% -> pass_event_%SYS%'
-    ]
 
     from TopCPToolkit.KLFitterConfig import KLFitterConfig
     cfg = KLFitterConfig('KLFitterResult')
@@ -298,17 +271,6 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
         cfg.setOptionValue('topology', topology)
         configSeq.append(cfg)
 
-        reco_branches += [
-            'EventInfo.'+topology+'_spanet_lep_b_index_%SYS% -> %SYS%_'+topology+'_spanet_lep_b_index',
-            'EventInfo.'+topology+'_spanet_had_b_index_%SYS% -> %SYS%_'+topology+'_spanet_had_b_index',
-            'EventInfo.'+topology+'_spanet_down_index_%SYS% -> %SYS%_'+topology+'_spanet_down_index',
-            'EventInfo.'+topology+'_spanet_up_index_%SYS% -> %SYS%_'+topology+'_spanet_up_index',
-            'EventInfo.'+topology+'_spanet_lep_top_score_%SYS% -> %SYS%_'+topology+'_spanet_lep_top_score',
-            'EventInfo.'+topology+'_spanet_had_top_score_%SYS% -> %SYS%_'+topology+'_spanet_had_top_score',
-            'EventInfo.'+topology+'_spanet_lep_top_existence_%SYS% -> %SYS%_'+topology+'_spanet_lep_top_existence',
-            'EventInfo.'+topology+'_spanet_had_top_existence_%SYS% -> %SYS%_'+topology+'_spanet_had_top_existence',
-        ]
-
     # add NTuple output config
     from AsgAnalysisAlgorithms.OutputAnalysisConfig import OutputAnalysisConfig
     cfg = OutputAnalysisConfig('reco')
@@ -327,7 +289,7 @@ def makeTruthConfiguration(metadata, algSeq, debugHistograms):
     configSeq = ConfigSequence()
 
     truth_branches = []
-    outputContainers = {}
+    outputContainers = {'': 'EventInfo'}
 
     # figure out metadata
     dataType = metaConfig.get_data_type(metadata)
@@ -339,7 +301,7 @@ def makeTruthConfiguration(metadata, algSeq, debugHistograms):
     # PMG TruthWeightTool
     commonAlgoConfig.add_mc_weights(configSeq, metadata, truth_branches)
 
-    # TODO this does not yet work with the OutputAnalysisConfig
+    # add all three Number variables by hand, since we don't run PRW
     truth_branches += [
         'EventInfo.runNumber       -> runNumber',
         'EventInfo.eventNumber     -> eventNumber',
@@ -358,10 +320,6 @@ def makeTruthConfiguration(metadata, algSeq, debugHistograms):
     #cfg.setOptionValue('reweightType','3D')
     #cfg.setOptionValue('sampleID', 'aMCH7')
     configSeq.append(cfg)
-    if not isRun3Geo:
-        truth_branches += [
-            'EventInfo.NNLO_'+cfg.reweightType+'_weight_%SYS% -> %SYS%_NNLO_'+cfg.reweightType+'_weight',
-        ]
 
     # add NTuple output config
     from AsgAnalysisAlgorithms.OutputAnalysisConfig import OutputAnalysisConfig
@@ -380,7 +338,7 @@ def makeParticleLevelConfiguration(metadata, algSeq, debugHistograms):
     configSeq = ConfigSequence()
 
     particleLevel_branches = []
-    outputContainers = {}
+    outputContainers = {'': 'EventInfo'}
 
     # figure out metadata
     dataType = metaConfig.get_data_type(metadata)
@@ -392,7 +350,7 @@ def makeParticleLevelConfiguration(metadata, algSeq, debugHistograms):
     # PMG TruthWeightTool
     commonAlgoConfig.add_mc_weights(configSeq, metadata, particleLevel_branches)
 
-    # TODO this does not yet work with the OutputAnalysisConfig
+    # add all three Number variables by hand, since we don't run PRW
     particleLevel_branches += [
         'EventInfo.runNumber       -> runNumber',
         'EventInfo.eventNumber     -> eventNumber',

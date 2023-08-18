@@ -82,9 +82,6 @@
 `runSelection`
 :   whether to run the JVT selection. The default is `True`.
 
-!!! tip
-    Since variables attached to `EventInfo` cannot be added automatically from the config blocks at the moment, you probably want to do it by hand for `jvt_effSF_%SYS%` and `fjvt_effSF_%SYS%`, the resulting per-event SFs.
-
 ## [makeFTagAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagAnalysisConfig.py)
 
 `seq`

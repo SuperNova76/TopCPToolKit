@@ -59,4 +59,4 @@ class TtbarNNLORecursiveRewConfig(ConfigBlock):
 
         # give appropriate names for the handles to decorate
         alg.NNLO_weight = 'NNLO_'+self.reweightType+'_weight_%SYS%'
-        config.addOutputVar('EventInfo', 'NNLO_'+self.reweightType+'_weight', 'NNLO_'+self.reweightType+'_weight', isEventLevel=True)
+        config.addOutputVar('EventInfo', 'NNLO_'+self.reweightType+'_weight', 'weight_NNLO_'+self.reweightType)

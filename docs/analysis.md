@@ -76,6 +76,4 @@ While `treeName` is straightforwardly the desired name of the output tree, some 
 - `'metVars'`: same as above, but specifically for the MET container, which contains different levels of MET. By default, the ["Final" MET term](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/AsgAnalysisAlgorithms/AsgxAODMetNTupleMakerAlg.h) is selected.
 - `'containers'`: a dictionary that maps the object containers we want to write out to some prefix used in naming branches. For instance, `{'jet_':'OutJets'}` will result in all the variables we save from the `OutJets` container being saved as `jet_something`.
 
-!!! note
-    We have to rely on `'vars'` at the moment, since the `EventInfo` container is not handled automatically yet! Therefore any event-level variable (not attached to any other object collection) needs to be saved manually. This should hopefully be fixed at some point...
 

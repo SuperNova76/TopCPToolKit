@@ -47,6 +47,3 @@ The default is `[]` (empty list).
     - `trigPassed`: whether a specific trigger is passed
     - `globalTriggerMatch`: whether the event passes trigger matching requirements
     - `globalTriggerEffSF`: the event-level global trigger efficiency SF
-
-!!! tip
-    Since variables attached to `EventInfo` cannot be added automatically from the config blocks at the moment, you need to add all of these to the output manually.

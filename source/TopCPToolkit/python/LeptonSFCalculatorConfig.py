@@ -27,4 +27,4 @@ class LeptonSFCalculatorConfig(ConfigBlock):
         alg.muonTTVASF = f'muon_TTVA_effSF_{self.lepton_postfix}_%SYS%'
         alg.event_leptonSF = f'leptonSF_{self.lepton_postfix}_%SYS%'
 
-        config.addOutputVar('EventInfo', alg.event_leptonSF, alg.event_leptonSF.split("_%SYS")[0], isEventLevel=True)
+        config.addOutputVar('EventInfo', alg.event_leptonSF, f'weight_leptonSF_{self.lepton_postfix}')
