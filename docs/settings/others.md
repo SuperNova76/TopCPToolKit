@@ -68,9 +68,6 @@ Loading the module also enables the following methods to easily set up very comm
 !!! success "Registers the following variables:"
     - `generatorWeight`: the event-level PMG generator weight
 
-!!! tip
-    Since variables attached to `EventInfo` cannot be added automatically from the config blocks at the moment, you need to add all of these to the output manually.
-
 ## [makePileupReweightingConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
 
 `seq`
