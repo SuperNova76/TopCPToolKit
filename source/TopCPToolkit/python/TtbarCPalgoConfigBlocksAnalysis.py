@@ -178,8 +178,6 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
 
     makeTriggerAnalysisConfig(configSeq, triggerChainsPerYear=triggerChainsPerYear, noFilter=noFilter, electronWorkingPoint='Tight.Tight_VarRad', muonWorkingPoint='Tight.None',
                               electrons='AnaElectrons.tight', muons='AnaMuons.tight')
-    # TODO this does not yet work with the OutputAnalysisConfig
-    reco_branches += ['EventInfo.trigPassed_' + t + ' -> trigPassed_' + t for t in individual_triggers]
 
     # a single lepton SF
     from TopCPToolkit.LeptonSFCalculatorConfig import LeptonSFCalculatorConfig
