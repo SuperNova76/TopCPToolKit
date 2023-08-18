@@ -333,10 +333,6 @@ def makeTruthConfiguration(metadata, algSeq, debugHistograms):
     #cfg.setOptionValue('reweightType','3D')
     #cfg.setOptionValue('sampleID', 'aMCH7')
     configSeq.append(cfg)
-    if not isRun3Geo:
-        truth_branches += [
-            'EventInfo.NNLO_'+cfg.reweightType+'_weight_%SYS% -> %SYS%_NNLO_'+cfg.reweightType+'_weight',
-        ]
 
     # add NTuple output config
     from AsgAnalysisAlgorithms.OutputAnalysisConfig import OutputAnalysisConfig
