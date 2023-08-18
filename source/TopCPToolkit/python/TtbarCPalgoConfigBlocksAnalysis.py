@@ -17,8 +17,8 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
     use_track_jets = False
     use_largeR_jets = False
 
-    outputContainers = {}  # for output NTuple config block
-    reco_branches = []
+    outputContainers = {'': 'EventInfo'}  # for output NTuple config block
+    reco_branches = ['EventInfo.mcChannelNumber -> mcChannelNumber'] # PRW provides us with eventNumber and runNumber
     met_branches = []
 
     # figure out metadata
@@ -35,13 +35,6 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
 
     # PRW
     commonAlgoConfig.add_PRW(configSeq, metadata, reco_branches)
-
-    # TODO this does not yet work with the OutputAnalysisConfig
-    reco_branches += [
-        'EventInfo.runNumber       -> runNumber',
-        'EventInfo.eventNumber     -> eventNumber',
-        'EventInfo.mcChannelNumber -> mcChannelNumber',
-    ]
 
     # electrons
     if use_electrons:
@@ -302,7 +295,7 @@ def makeTruthConfiguration(metadata, algSeq, debugHistograms):
     configSeq = ConfigSequence()
 
     truth_branches = []
-    outputContainers = {}
+    outputContainers = {'': 'EventInfo'}
 
     # figure out metadata
     dataType = metaConfig.get_data_type(metadata)
@@ -314,7 +307,7 @@ def makeTruthConfiguration(metadata, algSeq, debugHistograms):
     # PMG TruthWeightTool
     commonAlgoConfig.add_mc_weights(configSeq, metadata, truth_branches)
 
-    # TODO this does not yet work with the OutputAnalysisConfig
+    # add all three Number variables by hand, since we don't run PRW
     truth_branches += [
         'EventInfo.runNumber       -> runNumber',
         'EventInfo.eventNumber     -> eventNumber',
@@ -351,7 +344,7 @@ def makeParticleLevelConfiguration(metadata, algSeq, debugHistograms):
     configSeq = ConfigSequence()
 
     particleLevel_branches = []
-    outputContainers = {}
+    outputContainers = {'': 'EventInfo'}
 
     # figure out metadata
     dataType = metaConfig.get_data_type(metadata)
@@ -363,7 +356,7 @@ def makeParticleLevelConfiguration(metadata, algSeq, debugHistograms):
     # PMG TruthWeightTool
     commonAlgoConfig.add_mc_weights(configSeq, metadata, particleLevel_branches)
 
-    # TODO this does not yet work with the OutputAnalysisConfig
+    # add all three Number variables by hand, since we don't run PRW
     particleLevel_branches += [
         'EventInfo.runNumber       -> runNumber',
         'EventInfo.eventNumber     -> eventNumber',
