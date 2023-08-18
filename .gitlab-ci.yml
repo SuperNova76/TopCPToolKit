@@ -2,7 +2,10 @@ stages:
     - ".pre"
     - validation
     - pages
-    - release
+    - makerelease
+    - build
+    - run
+    - validate
     - ".post"
 
 include:
@@ -11,3 +14,9 @@ include:
       file: 'mkdocs-gitlab-pages.gitlab-ci.yml'
 # CREATE NEW RELEASES TO MATCH TAGS
     - '/.gitlab/ci_templates/release_on_tag.yml'
+# COMPILE OUR CODE
+    - '/.gitlab/ci_templates/compile_topcptoolkit.yml'
+# RUN WITH VARIOUS SETTINGS
+    - '/.gitlab/ci_templates/run_topcptoolkit.yml'
+# VALIDATE WITH RESPECT TO REFERENCES
+    - '/.gitlab/ci_templates/validate_topcptoolkit.yml'

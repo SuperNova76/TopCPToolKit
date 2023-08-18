@@ -1,0 +1,189 @@
+stages:
+  - run
+
+variables:
+  RUN_DIR: run
+  RUN_DIR_ABS: ${CI_PROJECT_DIR}/${RUN_DIR}
+
+.prepare_dirs: &prepare_dirs
+  - mkdir ${JOBNAME}
+  - cd ${JOBNAME}
+  - set +e
+
+.restore_environment: &restore_environment
+  - set +e
+  - source ${CI_PROJECT_DIR}/.gitlab/ci_scripts/setupATLAS.sh
+  - echo ${ASETUP_PATH}
+  - cd ${CI_PROJECT_DIR}/${ASETUP_PATH}
+  - asetup --restore
+  - cd ${CI_PROJECT_DIR}
+  - echo ${BUILD_PATH}
+  - cd ${CI_PROJECT_DIR}/${BUILD_PATH}
+  - source */setup.sh
+  - cd ../
+
+.switch_tags: &switch_tags
+  - >
+      if [ -f "${CI_PROJECT_DIR}/${ASETUP_PATH}/tag.txt" ]; then
+        git config user.email "atlas.top.reconstruction@cern.ch"
+        git config user.name "ATLAS Top Reconstruction"
+        git fetch --tags
+        git stash
+        git checkout "tags/$(cat ${CI_PROJECT_DIR}/${ASETUP_PATH}/tag.txt)"
+      else
+        echo "ERROR: ${ASETUP_PATH}/tag.txt does not exist!"
+        exit 1
+      fi
+
+.run_top: &run_top
+  - set -e
+  - cd ${CI_PROJECT_DIR}/${JOBNAME}
+  - mkdir ${RUN_DIR}
+  - cd ${RUN_DIR}
+  - runTop_el.py -i ${INPUTFILE} -o output_${JOBNAME} --particle --parton -e 100
+  - set +e
+  - cd ../
+
+latestABreleaseRun2:
+  stage: run
+  tags:
+    - docker
+  variables:
+    JOBNAME: job_latestABreleaseRun2
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc20.txt
+  script:
+    - *prepare_dirs
+    - *restore_environment
+    - *run_top
+  needs: [latestABrelease]
+  artifacts:
+    paths:
+      - ${JOBNAME}
+    expire_in: 12h
+
+latestABreleaseRun3:
+  stage: run
+  tags:
+    - docker
+  variables:
+    JOBNAME: job_latestABreleaseRun3
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc21.txt
+  script:
+    - *prepare_dirs
+    - *restore_environment
+    - *run_top
+  needs: [latestABrelease]
+  artifacts:
+    paths:
+      - ${JOBNAME}
+    expire_in: 12h
+
+latestABnightlyRun2:
+  stage: run
+  tags:
+    - docker
+  variables:
+    JOBNAME: job_latestABnightlyRun2
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc20.txt
+  script:
+    - *prepare_dirs
+    - *restore_environment
+    - *run_top
+  needs: [latestABnightly]
+  artifacts:
+    paths:
+      - ${JOBNAME}
+    expire_in: 12h
+
+latestABnightlyRun3:
+  stage: run
+  tags:
+    - docker
+  variables:
+    JOBNAME: job_latestABnightlyRun3
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc21.txt
+  script:
+    - *prepare_dirs
+    - *restore_environment
+    - *run_top
+  needs: [latestABnightly]
+  artifacts:
+    paths:
+      - ${JOBNAME}
+    expire_in: 12h
+
+referenceRun2:
+  stage: run
+  tags:
+    - docker
+  variables:
+    JOBNAME: job_referenceRun2
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc20.txt
+  script:
+    - *switch_tags
+    - *prepare_dirs
+    - *restore_environment
+    - *run_top
+  needs: [referenceTopCPToolkitTag]
+  artifacts:
+    paths:
+      - ${JOBNAME}
+    expire_in: 12h
+
+referenceRun3:
+  stage: run
+  tags:
+    - docker
+  variables:
+    JOBNAME: job_referenceRun3
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc21.txt
+  script:
+    - *switch_tags
+    - *prepare_dirs
+    - *restore_environment
+    - *run_top
+  needs: [referenceTopCPToolkitTag]
+  artifacts:
+    paths:
+      - ${JOBNAME}
+    expire_in: 12h
+
+lastweekRun2:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+  stage: run
+  tags:
+    - docker
+  variables:
+    JOBNAME: job_lastweekRun2
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc20.txt
+  script:
+    - *switch_tags
+    - *prepare_dirs
+    - *restore_environment
+    - *run_top
+  needs: [lastweekTopCPToolkitTag]
+  artifacts:
+    paths:
+      - ${JOBNAME}
+    expire_in: 12h
+
+lastweekRun3:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+  stage: run
+  tags:
+    - docker
+  variables:
+    JOBNAME: job_lastweekRun3
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc21.txt
+  script:
+    - *switch_tags
+    - *prepare_dirs
+    - *restore_environment
+    - *run_top
+  needs: [lastweekTopCPToolkitTag]
+  artifacts:
+    paths:
+      - ${JOBNAME}
+    expire_in: 12h
