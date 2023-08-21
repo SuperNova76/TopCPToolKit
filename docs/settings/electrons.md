@@ -50,6 +50,9 @@
 !!! warning
     ECIDS is actually not supported in release 24. It will likely become part of the DNN ID.
 
+`noEffSF`
+:   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. The default is `False`.
+
 !!! success "Registers the following variables:"
     - `select`: whether the electron passes the ID and isolation cuts
     - `reco_effSF`: the per-electron reconstruction SF

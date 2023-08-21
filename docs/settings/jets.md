@@ -109,8 +109,8 @@
 `kinematicSelection`
 :   whether to run kinematic selection. The default is `True`.
 
-`noEfficiency`
-:   whether to calculate efficiencies. The default is `False` (i.e. compute them).
+`noEffSF`
+:   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. The default is `False`.
 
 `legacyRecommendations`
 :   whether to use legacy recommendations without shallow-copied containers. The default is `False`.

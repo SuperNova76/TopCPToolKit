@@ -43,6 +43,9 @@ The default is `[]` (empty list).
 `configName`
 :   name of the block config, typically not needed here. The default is `Trigger`.
 
+`noEffSF`
+:   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. Still performs the global trigger matching (same behaviour as on data). The default is `False`.
+
 !!! success "Registers the following variables:"
     - `trigPassed`: whether a specific trigger is passed
     - `globalTriggerMatch`: whether the event passes trigger matching requirements

@@ -35,6 +35,9 @@
 `legacyRecommendations`
 :   whether to use legacy tau BDT and electron veto recommendations. The default is `False`.
 
+`noEffSF`
+:   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. The default is `False`.
+
 !!! success "Registers the following variables:"
     - `select`: whether the tau passes the ID cuts
     - `effSF`: the per-tau reconstruction SF

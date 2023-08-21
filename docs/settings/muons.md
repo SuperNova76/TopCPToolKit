@@ -38,6 +38,12 @@
 `systematicsBreakdown`
 :   enables the full breakdown of efficiency SF systematics (1 NP per uncertainty source, instead of 1 NP in total). The default is `False`.
 
+`noEffSF`
+:   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. The default is `False`.
+
+`onlyRecoEffSF`
+:   same as `noEffSF`, but retains the ID scale factor. Experimental! only useful for CI tests. The default is `False`.
+
 !!! success "Registers the following variables:"
     - `select`: whether the muon passes the quality and isolation cuts
     - `reco_effSF`: the per-muon reconstruction SF
