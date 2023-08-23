@@ -13,22 +13,25 @@
 :   use the forward JVT decision in the calculation. The default is `False`.
 
 `treatPUJets`
-: whether to treat pile-up jets in the MET significance calculation. The default is `False`.
+:   whether to treat pile-up jets in the MET significance calculation. The default is `False`.
+
+`setMuonJetEMScale`
+:   enables the handling of muons in jets for the MET calculation. Should be turned off for analyses where muons are not reconstructed at all. The default is `True`.
 
 `jets`
-: the input jet container.
+:   the input jet container.
 
 `electrons`
-: the input electron container, with a possible selection, in the format `container` or `container.selection`.
+:   the input electron container, with a possible selection, in the format `container` or `container.selection`.
 
 `muons`
-: the input muon container, with a possible selection, in the format `container` or `container.selection`.
+:   the input muon container, with a possible selection, in the format `container` or `container.selection`.
 
 `photons`
-: the input photon container, with a possible selection, in the format `container` or `container.selection`.
+:   the input photon container, with a possible selection, in the format `container` or `container.selection`.
 
 `taus`
-: the input tau container, with a possible selection, in the format `container` or `container.selection`.
+:   the input tau container, with a possible selection, in the format `container` or `container.selection`.
 
 !!! note
     Defining a jet container is mandatory, but all other input containers are optional.

@@ -47,6 +47,9 @@
 `recomputeIsEM`
 :   whether to rerun the cut-based selection. The default is `False`, i.e. to use derivation flags.
 
+`noEffSF`
+:   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. The default is `False`.
+
 !!! success "Registers the following variables:"
     - `select`: whether the photon passes the ID and isolation cuts
     - `id_effSF`: the per-photon ID SF
