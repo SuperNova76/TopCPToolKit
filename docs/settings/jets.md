@@ -15,6 +15,9 @@
 `runGhostMuonAssociation`
 :   whether to set up the jet-ghost-muon association algorithm [`CP::JetGhostMuonAssociationAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/JetAnalysisAlgorithms/Root/JetGhostMuonAssociationAlg.cxx). The default is `False`.
 
+`runTruthJetTagging`
+:   whether to set up the jet truth tagging algorithm [`CP::JetTruthTagAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/JetAnalysisAlgorithms/Root/JetTruthTagAlg.cxx). The default is `True`.
+
 !!! success "Registers the following variables:"
     - `pt`: jet $p_\mathrm{T}$
     - `m`: jet mass
@@ -54,7 +57,7 @@
     Not all combinations of `reduction` and `JEROption` are valid! Please refer to the [JetETmiss twiki](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/JetUncertaintiesRel22).
 
 !!! success "Registers the following variables:"
-    - `jvtEfficiency`: the per-jet JVT efficiency SF
+    - `jvtEfficiency`: the per-jet JVT efficiency SF (also for fJVT!)
 
 ### Additional options for large-R jets
 
