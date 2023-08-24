@@ -1,5 +1,5 @@
-#ifndef EVENT_SELECTOR_NOBJECTSELECTORALG_H
-#define EVENT_SELECTOR_NOBJECTSELECTORALG_H
+#ifndef EVENT_SELECTOR_NOBJECTPTELECTORALG_H
+#define EVENT_SELECTOR_NOBJECTPTELECTORALG_H
 
 // Algorithm includes
 #include <AnaAlgorithm/AnaAlgorithm.h>
@@ -17,10 +17,10 @@
 
 namespace top {
 
-  class NObjectSelectorAlg final : public EL::AnaAlgorithm {
+  class NObjectPtSelectorAlg final : public EL::AnaAlgorithm {
 
     public:
-      NObjectSelectorAlg(const std::string &name, ISvcLocator *pSvcLocator);
+      NObjectPtSelectorAlg(const std::string &name, ISvcLocator *pSvcLocator);
       virtual StatusCode initialize() override;
       virtual StatusCode execute() override;
       virtual StatusCode finalize() override;
@@ -59,4 +59,4 @@ namespace top {
   }; // class
 } // namespace top
 
-#endif // EVENT_SELECTOR_NOBJECTSELECTORALG_H
+#endif // EVENT_SELECTOR_NOBJECTPTELECTORALG_H

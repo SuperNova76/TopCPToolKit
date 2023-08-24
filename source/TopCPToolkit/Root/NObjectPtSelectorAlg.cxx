@@ -1,8 +1,8 @@
-#include "TopEventSelection/NObjectSelectorAlg.h"
+#include "TopEventSelection/NObjectPtSelectorAlg.h"
 
 namespace top {
 
-  NObjectSelectorAlg::NObjectSelectorAlg(const std::string &name, ISvcLocator *pSvcLocator)
+  NObjectPtSelectorAlg::NObjectPtSelectorAlg(const std::string &name, ISvcLocator *pSvcLocator)
     : EL::AnaAlgorithm(name, pSvcLocator)
     , m_ptmin(0.)
     , m_sign("SetMe")
@@ -13,7 +13,7 @@ namespace top {
       declareProperty ("count", m_count, "count value");
     }
 
-  StatusCode NObjectSelectorAlg::initialize() {
+  StatusCode NObjectPtSelectorAlg::initialize() {
     ANA_CHECK(m_objectsHandle.initialize(m_systematicsList));
     ANA_CHECK(m_objectSelection.initialize(m_systematicsList, m_objectsHandle, SG::AllowEmpty));
     ANA_CHECK(m_eventInfoHandle.initialize(m_systematicsList));
@@ -27,7 +27,7 @@ namespace top {
     return StatusCode::SUCCESS;
   }
 
-  StatusCode NObjectSelectorAlg::execute() {
+  StatusCode NObjectPtSelectorAlg::execute() {
     for (const auto &sys : m_systematicsList.systematicsVector()) {
       // retrieve the EventInfo
       const xAOD::EventInfo *evtInfo = nullptr;
@@ -61,7 +61,7 @@ namespace top {
     return StatusCode::SUCCESS;
   }
 
-  StatusCode NObjectSelectorAlg::finalize() {
+  StatusCode NObjectPtSelectorAlg::finalize() {
     return StatusCode::SUCCESS;
   }
 } // namespace top

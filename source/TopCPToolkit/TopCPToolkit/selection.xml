@@ -4,7 +4,7 @@
        should be created. -->
 
   <class name="top::ExtraParticleDecorationAlg" />
-  <class name="top::NObjectSelectorAlg" />
+  <class name="top::NObjectPtSelectorAlg" />
   <class name="top::METSelectorAlg" />
   <class name="top::MWTSelectorAlg" />
   <class name="top::METMWTSelectorAlg" />

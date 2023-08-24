@@ -2,7 +2,7 @@
 #define TOPCPTOOLKIT_DICT_H
 
 #include "TopCPToolkit/ExtraParticleDecorationAlg.h"
-#include "TopEventSelection/NObjectSelectorAlg.h"
+#include "TopEventSelection/NObjectPtSelectorAlg.h"
 #include "TopEventSelection/METSelectorAlg.h"
 #include "TopEventSelection/MWTSelectorAlg.h"
 #include "TopEventSelection/METMWTSelectorAlg.h"

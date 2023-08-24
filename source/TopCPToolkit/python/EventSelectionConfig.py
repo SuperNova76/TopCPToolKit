@@ -163,7 +163,7 @@ class EventSelectionConfig(ConfigBlock):
         if len(items) != 4 and len(items) != 5:
             self.raise_misconfig(text, "number of arguments")
         thisalg = f'{self.name}_NEL_{self.step}'
-        alg = config.createAlgorithm('top::NObjectSelectorAlg', thisalg)
+        alg = config.createAlgorithm('top::NObjectPtSelectorAlg', thisalg)
         alg.particles, alg.objectSelection = config.readNameAndSelection(self.electrons)
         alg.eventPreselection = f'{self.currentDecoration}'
         if len(items) == 4:
@@ -189,7 +189,7 @@ class EventSelectionConfig(ConfigBlock):
         if len(items) != 4 and len(items) != 5:
             self.raise_misconfig(text, "number of arguments")
         thisalg = f'{self.name}_NMU_{self.step}'
-        alg = config.createAlgorithm('top::NObjectSelectorAlg', thisalg)
+        alg = config.createAlgorithm('top::NObjectPtSelectorAlg', thisalg)
         alg.particles, alg.objectSelection = config.readNameAndSelection(self.muons)
         alg.eventPreselection = f'{self.currentDecoration}'
         if len(items) == 4:
@@ -215,7 +215,7 @@ class EventSelectionConfig(ConfigBlock):
         if len(items) != 4 and len(items) != 5:
             self.raise_misconfig(text, "number of arguments")
         thisalg = f'{self.name}_NJET_{self.step}'
-        alg = config.createAlgorithm('top::NObjectSelectorAlg', thisalg)
+        alg = config.createAlgorithm('top::NObjectPtSelectorAlg', thisalg)
         alg.particles, alg.objectSelection = config.readNameAndSelection(self.jets)
         alg.eventPreselection = f'{self.currentDecoration}'
         if len(items) == 4:
@@ -241,7 +241,7 @@ class EventSelectionConfig(ConfigBlock):
         if len(items) != 3 and len(items) != 4:
             self.raise_misconfig(text, "number of arguments")
         thisalg = f'{self.name}_NBJET_{self.step}'
-        alg = config.createAlgorithm('top::NObjectSelectorAlg', thisalg)
+        alg = config.createAlgorithm('top::NObjectPtSelectorAlg', thisalg)
         particles, selection = config.readNameAndSelection(self.jets)
         alg.particles = particles
         alg.objectSelection = f'{selection}&&{self.btagDecoration},as_char'
