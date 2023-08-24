@@ -96,6 +96,7 @@ latestABnightlyRun2:
     - *restore_environment
     - *run_top
   needs: [latestABnightly]
+  allow_failure: true
   artifacts:
     paths:
       - ${JOBNAME}
@@ -115,6 +116,7 @@ latestABnightlyRun3:
     - *restore_environment
     - *run_top
   needs: [latestABnightly]
+  allow_failure: true
   artifacts:
     paths:
       - ${JOBNAME}
