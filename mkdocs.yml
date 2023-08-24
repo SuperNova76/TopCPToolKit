@@ -72,4 +72,5 @@ nav:
         - Truth content config blocks: settings/truth.md
         - Ntupling config blocks: settings/ntupling.md
         - Other useful config blocks and methods: settings/others.md
+        - Event selection: settings/eventselection.md
         - Experimental: settings/experimental.md

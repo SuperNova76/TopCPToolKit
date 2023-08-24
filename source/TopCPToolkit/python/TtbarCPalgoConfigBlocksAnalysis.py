@@ -84,7 +84,7 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
         from FTagAnalysisAlgorithms.FTagAnalysisConfig import makeFTagAnalysisConfig
         for WP in WPs:
             # suppress CDI warnings due to missing SFs
-            makeFTagAnalysisConfig(configSeq, 'AnaJets', btagWP=WP, noEfficiency=False,
+            makeFTagAnalysisConfig(configSeq, 'AnaJets', btagWP=WP, noEffSF=False,
                                    btagger=btagger, kinematicSelection=True, postfix='')
             # calculate per-event b-tagging SF (alternative to storing per-jet SFs)
             cfg = PerEventSFCalculatorConfig(f'btagSFCalc_{btagger}_{WP}')
@@ -228,15 +228,45 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
                                  selectionName='track_jets',
                                  outputName='OutTrackJets')
 
-    # event selection algorithm with crude l+jets ttbar selection
-    # exactly one el or mu, >=4 jets, >= 2 b-tags
-    from TopCPToolkit.EventSelectionTestConfig import EventSelectionTestConfig
-    cfg = EventSelectionTestConfig()
-    cfg.setOptionValue('electrons', 'AnaElectrons.tight')
-    cfg.setOptionValue('muons', 'AnaMuons.tight')
-    cfg.setOptionValue('jets', 'AnaJets.baselineSel&&jvt_selection')
-    cfg.setOptionValue('btagDecoration', f'ftag_select_{btagger}_FixedCutBEff_77')
-    configSeq.append(cfg)
+    from TopCPToolkit.EventSelectionConfig import makeMultipleEventSelectionConfigs
+    mycuts = {
+        'SUBcommon': """
+JET_N_BTAG >= 2
+JET_N_BTAG DL1dv01:FixedCutBEff_70 >= 1
+JET_N 25000 >= 4
+MET >= 20000
+MWT < 170000
+MET+MWT > 40000
+SAVE
+""",
+        'ejets': """
+IMPORT SUBcommon
+EL_N 5000 >= 1
+EL_N tight 5000 >= 1
+MU_N 5000 == 0
+SAVE
+""",
+        'mujets': """
+EL_N 5000 == 0
+MU_N 20000 > 0
+IMPORT SUBcommon
+SAVE
+""",
+        'dilep': """
+EL_N 5000 >= 2
+MLL >= 10000
+OS
+MLLWINDOW 80000 100000
+SAVE
+""",
+        'supertight': """
+JET_N 1000000 >= 1
+SAVE
+"""
+    }
+    makeMultipleEventSelectionConfigs(configSeq, electrons="AnaElectrons.loose", muons ="AnaMuons.tight", met="AnaMET",
+                                      jets="AnaJets.baselineSel&&jvt_selection", btagDecoration=f'ftag_select_{btagger}_FixedCutBEff_85',
+                                      preselection=None, selectionCutsDict = mycuts, noFilter=noFilter)
 
     from TopCPToolkit.KLFitterConfig import KLFitterConfig
     cfg = KLFitterConfig('KLFitterResult')
@@ -249,8 +279,8 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
     cfg.setOptionValue('btaggingMethod', 'kWorkingPoint')
     cfg.setOptionValue('btagger', btagger)
     cfg.setOptionValue('btagWP', 'FixedCutBEff_77')
-    selectionRegionsConfig = 'selectionName:ejets, leptonType: kElectron;'\
-        'selectionName:mujets, leptonType: kMuon'
+    selectionRegionsConfig = 'selectionName:pass_ejets, leptonType: kElectron;'\
+        'selectionName:pass_mujets, leptonType: kMuon'
     cfg.setOptionValue('selectionRegionsConfig', selectionRegionsConfig)
     configSeq.append(cfg)
 
@@ -263,9 +293,10 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
         cfg.setOptionValue('muons', 'AnaMuons.tight')
         cfg.setOptionValue('jets', 'AnaJets.baselineSel&&jvt_selection')
         cfg.setOptionValue('met', 'AnaMET')
-        cfg.setOptionValue('eventSelection', 'eventFilterTtbar')
+        cfg.setOptionValue('eventSelection', 'pass_ejets_%SYS%||pass_mujets_%SYS%')
         cfg.setOptionValue('topology', topology)
         configSeq.append(cfg)
+
 
     # add NTuple output config
     from AsgAnalysisAlgorithms.OutputAnalysisConfig import OutputAnalysisConfig

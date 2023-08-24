@@ -34,7 +34,7 @@ namespace top {
     ANA_CHECK(m_muonSelection.initialize(m_systematicsList, m_muonsHandle, SG::AllowEmpty));
     ANA_CHECK(m_jetSelection.initialize(m_systematicsList, m_jetsHandle, SG::AllowEmpty));
 
-    ANA_CHECK(m_selection.initialize(m_systematicsList, m_eventInfoHandle));
+    ANA_CHECK(m_selection.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
 
     ANA_CHECK(m_lep_b_idx_decor.initialize(m_systematicsList, m_eventInfoHandle));
     ANA_CHECK(m_had_b_idx_decor.initialize(m_systematicsList, m_eventInfoHandle));
@@ -89,7 +89,7 @@ namespace top {
     m_had_top_exist_decor.set(*evtInfo, -999., sys);
     m_lep_top_exist_decor.set(*evtInfo, -999., sys);
 
-    if (!m_selection.get(*evtInfo, sys))
+    if (m_selection && !m_selection.getBool(*evtInfo, sys))
       return StatusCode::SUCCESS;
 
     // retrieve objects

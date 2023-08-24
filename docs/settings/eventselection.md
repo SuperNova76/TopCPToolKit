@@ -1,0 +1,95 @@
+## [makeEventSelectionConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/EventSelectionConfig.py)
+
+Performs a single event selection. To define multiple selection regions, see [makeMultipleEventSelectionConfigs](/settings/eventselection/#makemultipleeventselectionconfigs) below.
+
+`seq`
+:   the config sequence.
+
+`electrons`
+:   the input electron container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
+
+`muons`
+:   the input muon container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
+
+`jets`
+:   the input jet container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
+
+`met`
+:   the input MET container. The default is `''` (empty string).
+
+`btagDecoration`
+:   the b-tagging decoration to use when defining b-jets. The default is `''` (empty string).
+
+`preselection`
+:   the event-wise selection flag to start this event selection from. The default is `''` (empty string).
+
+`selectionCuts`
+:   a single string listing one selection cut per line. See [available keywords]().
+
+`noFilter`
+:   do not apply an event filter. The default is `False`, i.e. remove events not passing the full list of selection cuts.
+
+`debugMode`
+:   whether to create an output branch for every single line of the selection cuts. The default is `False` (only saves the final decision).
+
+## [makeMultipleEventSelectionConfigs](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/EventSelectionConfig.py)
+
+Performs multiple event selections, split into separate regions and subregions. A final logical OR of all region selections is used as event filter. The arguments below are the same as for [makeEventSelectionConfig](/settings/eventselection/#makeeventselectionconfig), except for `selectionCutsDict`!
+
+`seq`
+:   the config sequence.
+
+`electrons`
+:   the input electron container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
+
+`muons`
+:   the input muon container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
+
+`jets`
+:   the input jet container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
+
+`met`
+:   the input MET container. The default is `''` (empty string).
+
+`btagDecoration`
+:   the b-tagging decoration to use when defining b-jets. The default is `''` (empty string).
+
+`preselection`
+:   the event-wise selection flag to start this event selection from. The default is `''` (empty string).
+
+`selectionCutsDicts`
+:   a dictionary of (keys) region names and (values) strings listing one selection cut per line. See [available keywords](). A region name starting with `SUB` is treated as a subregion (not saved, can be imported from another selection).
+
+`noFilter`
+:   do not apply an event filter. The default is `False`, i.e. remove events not passing the full list of selection cuts.
+
+`debugMode`
+:   whether to create an output branch for every single line of the selection cuts. The default is `False` (only saves the final decision).
+
+## Available keywords
+
+The keywords listed in the table below can be used together with their respective options to define a selection cut (one per line).
+In most cases, it might be beneficial to define multiple selection regions.
+We then distinguish between subregions (whose name starts with `SUB`), that are not filtered on but still provide a decision flag, from normal regions, which are used in the final filtering.
+Regions can import the decision flag of these subregions (see `IMPORT`) to avoid duplicating selection cuts in multiple places.
+
+The symbol `$` below is a placeholder for any of the following comparison operators: `>=`, `>`, `==`, `<`, `<=`.
+
+| **Keyword** | **Options** | **Effect** |
+| ----------- | ----------- | ---------- |
+| `EL_N` | `ptmin $ ref` <br>`sel ptmin $ ref` | Compares (`$`) the number of electrons with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify a different electron selection. |
+| `MU_N` | `ptmin $ ref` <br>`sel ptmin $ ref` | Compares (`$`) the number of muons with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify a different muon selection. |
+| `JET_N` | `ptmin $ ref` <br>`sel ptmin $ ref` | Compares (`$`) the number of jets with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify a different jet selection. |
+| `JET_N_BTAG` | `$ ref` <br>`tagger:WP $ ref` | Compares (`$`) the number of b-tagged jets to `ref`.<br>Use `tagger:WP` to specify a different b-tagging configuration. |
+| `MET` | `$ ref` | Compares (`$`) the MET to `ref` (in MeV). |
+| `MWT` | `$ ref` | Compares (`$`) the transverse mass of the W boson<br>(lepton+MET system) to `ref` (in MeV). |
+| `MET+MWT` | `$ ref` | Compares (`$`) the sum of the MET and the transverse mass<br>of the W boson(lepton+MET system) to `ref` (in MeV). |
+| `MLL` | `$ ref` | Compares (`$`) the dilepton invariant mass to `ref` (in MeV). |
+| `MLLWINDOW` | `high low` | Selects the event if `MLL < high || MLL > low` (in MeV). |
+| `OS` | None | Selects the event if it contains two opposite-sign leptons. |
+| `SS` | None | Selects the event if it contains two same-sign leptons. |
+| `SAVE` | None | Saves the current selection (can be retrieved as `pass_<region>_%SYS%`). |
+| `IMPORT` | `subreg` | Applies the selection cuts defined in another region `subreg`. |
+
+!!! tip "Applying $m(\ell,\ell)$ window cuts, or vetos"
+    To select OSSF dilepton events in a 10 GeV window of the Z boson mass, run `MLLWINDOW 101 81`. To veto them (e.g. for a purer $t\bar{t}$ selection), run `MLLWINDOW 81 101`.

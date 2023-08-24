@@ -4,6 +4,14 @@
        should be created. -->
 
   <class name="top::ExtraParticleDecorationAlg" />
+  <class name="top::NObjectSelectorAlg" />
+  <class name="top::METSelectorAlg" />
+  <class name="top::MWTSelectorAlg" />
+  <class name="top::METMWTSelectorAlg" />
+  <class name="top::MLLSelectorAlg" />
+  <class name="top::MLLWindowSelectorAlg" />
+  <class name="top::ChargeSelectorAlg" />
+  <class name="top::SaveFilterAlg" />
   <class name="top::LeptonSFCalculatorAlg" />
   <class name="top::RunPartonHistoryAlg" />
   <class name="top::ParticleLevelAlg" />
@@ -12,7 +20,6 @@
   <class name="top::KLFitterResultContainer" />
   <class name="top::KLFitterResultAuxContainer" />
   <class name="top::KLFitterFinalizeOutputAlg" />
-  <class name="top::EventSelectionTestAlg" />
   <class name="top::RunSpaNetAlg" />
   <class name="top::RunTtbarNNLORecursiveRewAlg" />
    
