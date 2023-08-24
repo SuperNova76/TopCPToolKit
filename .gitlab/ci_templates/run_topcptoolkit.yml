@@ -45,6 +45,8 @@ variables:
   - cd ../
 
 latestABreleaseRun2:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
   stage: run
   tags:
     - docker
@@ -62,6 +64,8 @@ latestABreleaseRun2:
     expire_in: 12h
 
 latestABreleaseRun3:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
   stage: run
   tags:
     - docker
@@ -79,6 +83,8 @@ latestABreleaseRun3:
     expire_in: 12h
 
 latestABnightlyRun2:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
   stage: run
   tags:
     - docker
@@ -96,6 +102,8 @@ latestABnightlyRun2:
     expire_in: 12h
 
 latestABnightlyRun3:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
   stage: run
   tags:
     - docker
@@ -113,6 +121,8 @@ latestABnightlyRun3:
     expire_in: 12h
 
 referenceRun2:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
   stage: run
   tags:
     - docker
@@ -131,6 +141,8 @@ referenceRun2:
     expire_in: 12h
 
 referenceRun3:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
   stage: run
   tags:
     - docker

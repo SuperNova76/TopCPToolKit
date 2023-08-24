@@ -26,6 +26,8 @@ variables:
   - cd ${CI_PROJECT_DIR}
 
 validateRun2:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
   stage: validate
   tags:
     - docker
@@ -39,6 +41,8 @@ validateRun2:
   needs: [referenceRun2, latestABreleaseRun2, latestABrelease]
 
 validateRun3:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
   stage: validate
   tags:
     - docker
