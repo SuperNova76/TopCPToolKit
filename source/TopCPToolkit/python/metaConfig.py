@@ -5,7 +5,9 @@ _campaigns_AMITag = {
     Campaign.MC20a: 'r13167',
     Campaign.MC20d: 'r13144',
     Campaign.MC20e: 'r13145',
-    Campaign.MC21a: 'r13829'
+    Campaign.MC21a: 'r13829',
+    Campaign.MC23a: 'r14622',
+    Campaign.MC23c: 'r14799',
 }
 
 _campaigns_R2 = [
@@ -13,7 +15,7 @@ _campaigns_R2 = [
 ]
 
 _campaigns_R3 = [
-    Campaign.MC21a, Campaign.MC23a
+    Campaign.MC21a, Campaign.MC23a, Campaign.MC23c,
 ]
 
 _campaign_GRL = {
@@ -23,7 +25,9 @@ _campaign_GRL = {
     ],
     Campaign.MC20d: ['GoodRunsLists/data17_13TeV/20180619/data17_13TeV.periodAllYear_DetStatus-v99-pro22-01_Unknown_PHYS_StandardGRL_All_Good_25ns_Triggerno17e33prim.xml'],
     Campaign.MC20e: ['GoodRunsLists/data18_13TeV/20190318/data18_13TeV.periodAllYear_DetStatus-v102-pro22-04_Unknown_PHYS_StandardGRL_All_Good_25ns_Triggerno17e33prim.xml'],
-    Campaign.MC21a: ['GoodRunsLists/data22_13p6TeV/20221123/data22_13p6TeV.periodFH_DetStatus-v108-pro28-01_MERGED_PHYS_StandardGRL_All_Good_25ns.xml']
+    Campaign.MC21a: ['GoodRunsLists/data22_13p6TeV/20221123/data22_13p6TeV.periodFH_DetStatus-v108-pro28-01_MERGED_PHYS_StandardGRL_All_Good_25ns.xml'],
+    Campaign.MC23a: ['GoodRunsLists/data22_13p6TeV/20221123/data22_13p6TeV.periodFH_DetStatus-v108-pro28-01_MERGED_PHYS_StandardGRL_All_Good_25ns.xml'],
+    Campaign.MC23c: ['GoodRunsLists/data23_13p6TeV/20230712/data23_13p6TeV.periodAllYear_DetStatus-v110-pro31-05_MERGED_PHYS_StandardGRL_All_Good_25ns.xml']
 }
 
 def parse_input_filelist(path):
