@@ -15,7 +15,7 @@ _campaigns_R2 = [
 ]
 
 _campaigns_R3 = [
-    Campaign.MC21a, Campaign.MC23a, Campaign.MC23c
+    Campaign.MC21a, Campaign.MC23a, Campaign.MC23c,
 ]
 
 _campaign_GRL = {
