@@ -1,6 +1,6 @@
 from ROOT import TFile, TTree, gROOT
 gROOT.SetBatch(True)
-import sys
+import sys, math
 
 orange_code = "\033[38;5;202m"
 blue_code   = "\033[38;5;39m"
@@ -88,6 +88,10 @@ def compareEvents(key, branches, ref_file, new_file):
             ref_value = getattr(ref_tree, branch)
             new_value = getattr(new_tree, branch)
             if ref_value != new_value:
+                # !!! Exceptions !!!
+                # SPA-Net floating point error
+                if "spanet_had_top_score" in branch:
+                    if math.isclose(ref_value, new_value, rel_tol=1e-6): continue
                 print(f"{orange_code}Warning: Branch {branch} differs for event {getattr(ref_tree,'eventNumber')}:{reset_code}")
                 print(f"{orange_code}  --> reference:{reset_code} {ref_value}")
                 print(f"{orange_code}  --> new file: {reset_code} {new_value}")

@@ -35,6 +35,8 @@ variables:
   - cd ../
 
 latestABrelease:
+  rules:
+    - when: always
   stage: build
   tags:
     - docker
@@ -57,6 +59,8 @@ latestABrelease:
       dotenv: ./${JOBNAME}/build.env
 
 referenceTopCPToolkitTag:
+  rules:
+    - when: always
   stage: build
   tags:
     - docker
@@ -109,6 +113,8 @@ lastweekTopCPToolkitTag:
       dotenv: ./${JOBNAME}/build.env
 
 latestABnightly:
+  rules:
+    - when: always
   stage: build
   tags:
     - docker
