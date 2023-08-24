@@ -35,6 +35,8 @@ variables:
   - cd ../
 
 latestABrelease:
+  rules:
+    - when: always
   stage: build
   tags:
     - docker
