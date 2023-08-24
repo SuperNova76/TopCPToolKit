@@ -284,7 +284,7 @@ namespace top {
     const xAOD::EventInfo *evtInfo = nullptr;
     ANA_CHECK(m_eventInfoHandle.retrieve(evtInfo, sys));
 
-    if (!m_selection.get(*evtInfo, sys))
+    if (!m_selection.getBool(*evtInfo, sys))
       return StatusCode::SUCCESS;
 
     const xAOD::ElectronContainer *electrons = nullptr;
@@ -561,7 +561,7 @@ namespace top {
 
       //Set name hash. This is because it seems std::string is not supported by AuxContainers...
       std::hash<std::string> hash_string;
-      result->setSelectionCode(hash_string(m_selection.getName(sys)));
+      result->setSelectionCode(hash_string(sys.name()));
 
       unsigned int ConvergenceStatusBitWord = m_myFitter->ConvergenceStatus();
       bool MinuitDidNotConverge = (ConvergenceStatusBitWord & m_myFitter->MinuitDidNotConvergeMask) != 0;

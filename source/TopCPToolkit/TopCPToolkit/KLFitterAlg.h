@@ -96,7 +96,7 @@ namespace top {
       this, "result", "KLFitterResult_%SYS%", "the output KLFitterResultContainer"
     };
 
-    CP::SysReadDecorHandle<char> m_selection {
+    CP::SysReadSelectionHandle m_selection {
       this, "selectionDecorationName", "", "Name of the selection on which this KLFitter instance is allowed to run"
     };
 

@@ -74,7 +74,7 @@ namespace top {
       this, "eventInfo", "EventInfo", "the EventInfo container to read selection decisions from"
 	};
 
-    CP::SysReadDecorHandle<char> m_selection {
+    CP::SysReadSelectionHandle m_selection {
       this, "eventSelection", "", "Name of the selection on which this SPA-Net instance is allowed to run"
 	};
 

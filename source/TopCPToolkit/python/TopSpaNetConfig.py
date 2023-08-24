@@ -21,7 +21,7 @@ class TopSpaNetConfig(ConfigBlock):
         alg.muons, alg.muonSelection = config.readNameAndSelection(self.muons)
         alg.jets, alg.jetSelection = config.readNameAndSelection(self.jets)
         alg.met = config.readName(self.met)
-        alg.eventSelection = self.eventSelection + '_%SYS%'
+        alg.eventSelection = self.eventSelection
         alg.topology = self.topology
 
         # give appropriate names for the handles to decorate

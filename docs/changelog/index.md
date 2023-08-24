@@ -4,6 +4,10 @@
 
 ### Upcoming release
 
+- We run on AB 24.2.19
+- [issue #18](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/18): minor update to docs (`noEffSF` option, MET)
+- [issue #19](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/19): added text-based event selection
+
 ### 1.2.0 <small>August 18, 2023</small>
 
 - We run on AB 24.2.18
