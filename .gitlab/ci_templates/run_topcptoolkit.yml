@@ -61,10 +61,11 @@ latestABreleaseRun2:
     - *restore_environment
     - *run_top
   needs: [latestABrelease]
+  allow_failure: true
   artifacts:
     paths:
       - ${JOBNAME}
-    expire_in: 12h
+    expire_in: 2h
 
 latestABreleaseRun3:
   rules:
@@ -80,10 +81,11 @@ latestABreleaseRun3:
     - *restore_environment
     - *run_top
   needs: [latestABrelease]
+  allow_failure: true
   artifacts:
     paths:
       - ${JOBNAME}
-    expire_in: 12h
+    expire_in: 2h
 
 latestABnightlyRun2:
   rules:
@@ -103,7 +105,7 @@ latestABnightlyRun2:
   artifacts:
     paths:
       - ${JOBNAME}
-    expire_in: 12h
+    expire_in: 2h
 
 latestABnightlyRun3:
   rules:
@@ -123,7 +125,7 @@ latestABnightlyRun3:
   artifacts:
     paths:
       - ${JOBNAME}
-    expire_in: 12h
+    expire_in: 2h
 
 referenceRun2:
   rules:
@@ -143,7 +145,7 @@ referenceRun2:
   artifacts:
     paths:
       - ${JOBNAME}
-    expire_in: 12h
+    expire_in: 2h
 
 referenceRun3:
   rules:
@@ -163,7 +165,7 @@ referenceRun3:
   artifacts:
     paths:
       - ${JOBNAME}
-    expire_in: 12h
+    expire_in: 2h
 
 lastweekRun2:
   rules:
@@ -183,7 +185,7 @@ lastweekRun2:
   artifacts:
     paths:
       - ${JOBNAME}
-    expire_in: 12h
+    expire_in: 2h
 
 lastweekRun3:
   rules:
@@ -203,4 +205,4 @@ lastweekRun3:
   artifacts:
     paths:
       - ${JOBNAME}
-    expire_in: 12h
+    expire_in: 2h

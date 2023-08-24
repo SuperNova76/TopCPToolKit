@@ -54,7 +54,7 @@ latestABrelease:
     paths:
       - ${JOBNAME}
     name: ${BUILD_DIR}_${CI_JOB_NAME}
-    expire_in: 12h
+    expire_in: 2h
     reports:
       dotenv: ./${JOBNAME}/build.env
 
@@ -81,7 +81,7 @@ referenceTopCPToolkitTag:
     paths:
       - ${JOBNAME}
     name: ${BUILD_DIR}_${CI_JOB_NAME}
-    expire_in: 12h
+    expire_in: 2h
     reports:
       dotenv: ./${JOBNAME}/build.env
 
@@ -108,7 +108,7 @@ lastweekTopCPToolkitTag:
     paths:
       - ${JOBNAME}
     name: ${BUILD_DIR}_${CI_JOB_NAME}
-    expire_in: 12h
+    expire_in: 2h
     reports:
       dotenv: ./${JOBNAME}/build.env
 
@@ -132,6 +132,6 @@ latestABnightly:
     paths:
       - ${JOBNAME}
     name: ${BUILD_DIR}_${CI_JOB_NAME}
-    expire_in: 12h
+    expire_in: 2h
     reports:
       dotenv: ./${JOBNAME}/build.env
