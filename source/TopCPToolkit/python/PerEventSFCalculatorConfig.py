@@ -15,11 +15,12 @@ class PerEventSFCalculatorConfig(ConfigBlock):
         self.addOption('eventSF', '', type=str)
 
     def makeAlgs(self, config):
-        particles, selection = config.readNameAndSelection(self.particles)
-        alg = config.createAlgorithm('CP::AsgEventScaleFactorAlg', self.algName)
-        alg.particles = particles
-        alg.preselection = selection
-        alg.scaleFactorInputDecoration = self.objectSF
-        alg.scaleFactorOutputDecoration = self.eventSF
+        if config.dataType() != 'data':
+            particles, selection = config.readNameAndSelection(self.particles)
+            alg = config.createAlgorithm('CP::AsgEventScaleFactorAlg', self.algName)
+            alg.particles = particles
+            alg.preselection = selection
+            alg.scaleFactorInputDecoration = self.objectSF
+            alg.scaleFactorOutputDecoration = self.eventSF
 
-        config.addOutputVar('EventInfo', alg.scaleFactorOutputDecoration, 'weight_'+alg.scaleFactorOutputDecoration.split("_%SYS%")[0])
+            config.addOutputVar('EventInfo', alg.scaleFactorOutputDecoration, 'weight_'+alg.scaleFactorOutputDecoration.split("_%SYS%")[0])

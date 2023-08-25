@@ -84,12 +84,11 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
             makeFTagAnalysisConfig(configSeq, 'AnaJets', btagWP=WP, noEffSF=False,
                                    btagger=btagger, kinematicSelection=True, postfix='')
             # calculate per-event b-tagging SF (alternative to storing per-jet SFs)
-            if dataType != 'data':
-                cfg = PerEventSFCalculatorConfig(f'btagSFCalc_{btagger}_{WP}')
-                cfg.particles = 'AnaJets.baselineSel'
-                cfg.objectSF = f'ftag_effSF_{btagger}_{WP}_%SYS%'
-                cfg.eventSF = f'btagSF_{btagger}_{WP}_%SYS%'
-                configSeq.append(cfg)
+            cfg = PerEventSFCalculatorConfig(f'btagSFCalc_{btagger}_{WP}')
+            cfg.particles = 'AnaJets.baselineSel'
+            cfg.objectSF = f'ftag_effSF_{btagger}_{WP}_%SYS%'
+            cfg.eventSF = f'btagSF_{btagger}_{WP}_%SYS%'
+            configSeq.append(cfg)
 
         outputContainers['jet_'] = 'OutJets'
 
@@ -174,13 +173,12 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
                               electrons='AnaElectrons.tight', muons='AnaMuons.tight')
 
     # a single lepton SF
-    if dataType != 'data':
-        from TopCPToolkit.LeptonSFCalculatorConfig import LeptonSFCalculatorConfig
-        cfg = LeptonSFCalculatorConfig()
-        cfg.setOptionValue('electrons', 'AnaElectrons.tight')
-        cfg.setOptionValue('muons', 'AnaMuons.tight')
-        cfg.setOptionValue('lepton_postfix', 'tight')
-        configSeq.append(cfg)
+    from TopCPToolkit.LeptonSFCalculatorConfig import LeptonSFCalculatorConfig
+    cfg = LeptonSFCalculatorConfig()
+    cfg.setOptionValue('electrons', 'AnaElectrons.tight')
+    cfg.setOptionValue('muons', 'AnaMuons.tight')
+    cfg.setOptionValue('lepton_postfix', 'tight')
+    configSeq.append(cfg)
 
     from TopCPToolkit.ExtraParticleDecorationConfig import ExtraParticleDecorationConfig
     cfg = ExtraParticleDecorationConfig('El')
