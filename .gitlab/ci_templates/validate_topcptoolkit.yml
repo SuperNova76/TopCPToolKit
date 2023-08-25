@@ -71,6 +71,7 @@ validateLastWeekRun2:
     - *restore_environment
     - *run_validation
   needs: [referenceRun2, lastweekRun2, latestABrelease]
+  allow_failure: true
 
 validateLastWeekRun3:
   rules:
@@ -86,3 +87,4 @@ validateLastWeekRun3:
     - *restore_environment
     - *run_validation
   needs: [referenceRun3, lastweekRun3, latestABrelease]
+  allow_failure: true

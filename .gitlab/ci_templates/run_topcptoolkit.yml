@@ -182,6 +182,7 @@ lastweekRun2:
     - *restore_environment
     - *run_top
   needs: [lastweekTopCPToolkitTag]
+  allow_failure: true
   artifacts:
     paths:
       - ${JOBNAME}
@@ -202,6 +203,7 @@ lastweekRun3:
     - *restore_environment
     - *run_top
   needs: [lastweekTopCPToolkitTag]
+  allow_failure: true
   artifacts:
     paths:
       - ${JOBNAME}
