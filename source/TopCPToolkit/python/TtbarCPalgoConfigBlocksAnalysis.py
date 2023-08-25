@@ -23,9 +23,7 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
 
     # figure out metadata
     dataType = metaConfig.get_data_type(metadata)
-    campaign = metaConfig.get_campaign(metadata)
-    isRun3Geo = metaConfig.isRun3(campaign)
-    geometry = metaConfig.get_LHCgeometry(campaign)
+    geometry = metaConfig.get_LHCgeometry(metadata)
 
     # primary vertex ,event cleaning (jet clean loosebad) and GoodRunsList selection
     commonAlgoConfig.add_event_cleaning(configSeq, metadata)
@@ -56,7 +54,6 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
             makeMuonCalibrationConfig, makeMuonWorkingPointConfig
         WPLoose = 'Medium.NonIso'
         WPTight = 'Medium.Tight_VarRad'
-        # TODO -- isRun3Geo flag
         makeMuonCalibrationConfig(configSeq, 'AnaMuons')
         makeMuonWorkingPointConfig(configSeq, 'AnaMuons', workingPoint=WPLoose, postfix='loose')
         makeMuonWorkingPointConfig(configSeq, 'AnaMuons', workingPoint=WPTight, postfix='tight', systematicBreakdown = True)
@@ -87,11 +84,12 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
             makeFTagAnalysisConfig(configSeq, 'AnaJets', btagWP=WP, noEffSF=False,
                                    btagger=btagger, kinematicSelection=True, postfix='')
             # calculate per-event b-tagging SF (alternative to storing per-jet SFs)
-            cfg = PerEventSFCalculatorConfig(f'btagSFCalc_{btagger}_{WP}')
-            cfg.particles = 'AnaJets.baselineSel'
-            cfg.objectSF = f'ftag_effSF_{btagger}_{WP}_%SYS%'
-            cfg.eventSF = f'btagSF_{btagger}_{WP}_%SYS%'
-            configSeq.append(cfg)
+            if dataType != 'data':
+                cfg = PerEventSFCalculatorConfig(f'btagSFCalc_{btagger}_{WP}')
+                cfg.particles = 'AnaJets.baselineSel'
+                cfg.objectSF = f'ftag_effSF_{btagger}_{WP}_%SYS%'
+                cfg.eventSF = f'btagSF_{btagger}_{WP}_%SYS%'
+                configSeq.append(cfg)
 
         outputContainers['jet_'] = 'OutJets'
 
@@ -176,12 +174,13 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
                               electrons='AnaElectrons.tight', muons='AnaMuons.tight')
 
     # a single lepton SF
-    from TopCPToolkit.LeptonSFCalculatorConfig import LeptonSFCalculatorConfig
-    cfg = LeptonSFCalculatorConfig()
-    cfg.setOptionValue('electrons', 'AnaElectrons.tight')
-    cfg.setOptionValue('muons', 'AnaMuons.tight')
-    cfg.setOptionValue('lepton_postfix', 'tight')
-    configSeq.append(cfg)
+    if dataType != 'data':
+        from TopCPToolkit.LeptonSFCalculatorConfig import LeptonSFCalculatorConfig
+        cfg = LeptonSFCalculatorConfig()
+        cfg.setOptionValue('electrons', 'AnaElectrons.tight')
+        cfg.setOptionValue('muons', 'AnaMuons.tight')
+        cfg.setOptionValue('lepton_postfix', 'tight')
+        configSeq.append(cfg)
 
     from TopCPToolkit.ExtraParticleDecorationConfig import ExtraParticleDecorationConfig
     cfg = ExtraParticleDecorationConfig('El')
@@ -320,9 +319,8 @@ def makeTruthConfiguration(metadata, algSeq, debugHistograms):
 
     # figure out metadata
     dataType = metaConfig.get_data_type(metadata)
-    campaign = metaConfig.get_campaign(metadata)
-    isRun3Geo = metaConfig.isRun3(campaign)
-    geometry = metaConfig.get_LHCgeometry(campaign)
+    isRun3Geo = metaConfig.isRun3(metadata)
+    geometry = metaConfig.get_LHCgeometry(metadata)
     dsid = metaConfig.get_mc_channel_number(metadata)
 
     # PMG TruthWeightTool
@@ -369,10 +367,7 @@ def makeParticleLevelConfiguration(metadata, algSeq, debugHistograms):
 
     # figure out metadata
     dataType = metaConfig.get_data_type(metadata)
-    campaign = metaConfig.get_campaign(metadata)
-    isRun3Geo = metaConfig.isRun3(campaign)
-    geometry = metaConfig.get_LHCgeometry(campaign)
-    dsid = metaConfig.get_mc_channel_number(metadata)
+    geometry = metaConfig.get_LHCgeometry(metadata)
 
     # PMG TruthWeightTool
     commonAlgoConfig.add_mc_weights(configSeq, metadata, particleLevel_branches)

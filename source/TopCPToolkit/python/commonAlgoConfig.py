@@ -35,21 +35,21 @@ def makeRecoSequence(analysisName, metadata, debugHistograms=True, noSystematics
 def add_event_cleaning(configSeq, metadata, runEventCleaning=True):
     # primary vertex ,event cleaning (jet clean loosebad) and GoodRunsList selection
     from AsgAnalysisAlgorithms.EventCleaningConfig import makeEventCleaningConfig
-    campaign = metaConfig.get_campaign(metadata)
-    GRLFiles = metaConfig.get_grl(campaign)
+    is_data = (metaConfig.get_data_type(metadata) == 'data')
+    if is_data:
+        GRLFiles = [metaConfig.get_grl(metadata)]
     makeEventCleaningConfig(configSeq,
                             runPrimaryVertexSelection=True,
                             runEventCleaning=runEventCleaning,
-                            userGRLFiles=GRLFiles)
+                            userGRLFiles=(GRLFiles if is_data else None))
 
 
 def add_mc_weights(configSeq, metadata, branches):
     # run PMG TruthWeightTool on MC only
     dataType = metaConfig.get_data_type(metadata)
-    campaign = metaConfig.get_campaign(metadata)
-    isRun3 = metaConfig.isRun3(campaign)
+    isRun3 = metaConfig.isRun3(metadata)
     if dataType != 'data':
-        runNumber = metaConfig.get_mc_run_number(metadata)
+        runNumber = metaConfig.get_run_number(metadata)
         from AsgAnalysisAlgorithms.AsgAnalysisConfig import makeGeneratorAnalysisConfig
         makeGeneratorAnalysisConfig(configSeq,
                                     saveCutBookkeepers=True,
@@ -67,6 +67,8 @@ def add_mc_weights(configSeq, metadata, branches):
 def add_PRW(configSeq, metadata, branches):
     from AsgAnalysisAlgorithms.AsgAnalysisConfig import makePileupReweightingConfig
     dataType = metaConfig.get_data_type(metadata)
+    if dataType == 'data':
+        return
     campaign = metaConfig.get_campaign(metadata)
     makePileupReweightingConfig(configSeq,
                                 campaign=campaign,

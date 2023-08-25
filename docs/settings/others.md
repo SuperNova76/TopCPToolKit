@@ -8,17 +8,20 @@ Loading this module enables the following methods to access the metadata:
 `get_campaign( FileMetaData )`
 :   returns the MC campaign as a `Campaigns.Utils.Campaign` object.
 
-`isRun3( Campaigns.Utils.Campaign )`
+`get_data_year( FileMetaData )`
+:   returns the year of data-taking based on runNumber reported from FileMetaData.
+
+`isRun3( FileMetaData )`
 :   returns `True` if the input MC campaign belongs to Run 3.
 
-`get_LHCgeometry( Campaigns.Utils.Campaign )`
+`get_LHCgeometry( FileMetaData )`
 :   returns the LHC Run information as a `AthenaConfiguration.Enums.LHCPeriod` object.
 
-`get_grl( Campaigns.Utils.Campaign )`
-:   returns the list of GRL files (list of strings) corresponding to the input MC campaign.
+`get_grl( FileMetaData )`
+:   returns the list of GRL files (list of strings) corresponding to the year of data taking (determined from runNumber).
 
-`get_mc_run_number( FileMetaData )`
-:   returns the MC runNumber.
+`get_run_number( FileMetaData )`
+:   returns the runNumber of data sample or the per-sub-campaign constant runNumber for MC (e.g. 284500 for MC20a).
 
 `get_mc_channel_number( FileMetaData )`
 :   returns the MC channelNumber.
@@ -35,7 +38,7 @@ Loading the module also enables the following methods to easily set up very comm
 :   wraps around [`makeGeneratorAnalysisConfig`](#makeGeneratorAnalysisConfig), allowing to retrieve the correct output branches. Automates the MC runNumber retrieval.
 
 `add_PRW`
-:   wraps around [`makePileupReweightingConfig`](#makePileupReweightingConfig), allowing to retrieve the correct output branches. Automates the PRW settings.
+:   wraps around [`makePileupReweightingConfig`](#makePileupReweightingConfig), allowing to retrieve the correct output branches. Automates the PRW settings. NOTE that the PRW tools setup is automatically skipped when we detect data instead of MC sample.
 
 ## [makeEventCleaningConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/EventCleaningConfig.py)
 
