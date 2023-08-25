@@ -2,12 +2,25 @@ from Campaigns.Utils import Campaign
 from AthenaConfiguration.Enums import LHCPeriod
 
 _campaigns_AMITag = {
-    Campaign.MC20a: 'r13167',
-    Campaign.MC20d: 'r13144',
-    Campaign.MC20e: 'r13145',
-    Campaign.MC21a: 'r13829',
-    Campaign.MC23a: 'r14622',
-    Campaign.MC23c: 'r14799',
+    # NOTE this assumes that samples use "standard" r-tag (for MC), or if you want to use it for data
+    # you have to put in all sorts of tags you find for various runs
+    Campaign.MC20a: ['r13167'],
+    Campaign.MC20d: ['r13144'],
+    Campaign.MC20e: ['r13145'],
+    Campaign.MC21a: ['r13829'],
+    Campaign.MC23a: ['r14622'],
+    Campaign.MC23c: ['r14799'],
+}
+
+_years_runNumbers = {
+    # for each year (dict key), provide list of [min runNumber, max runNumber)
+    # i.e. we check min runNumber <= runNumber < max runNumber 
+    2015: [0, 290000],
+    2016: [290000, 320000],
+    2017: [320000, 342000],
+    2018: [342000, 400000],
+    2022: [410000, 450000],
+    2023: [450000, 999999]
 }
 
 _campaigns_R2 = [
@@ -18,17 +31,15 @@ _campaigns_R3 = [
     Campaign.MC21a, Campaign.MC23a, Campaign.MC23c,
 ]
 
-_campaign_GRL = {
-    Campaign.MC20a: [
-        'GoodRunsLists/data15_13TeV/20170619/data15_13TeV.periodAllYear_DetStatus-v89-pro21-02_Unknown_PHYS_StandardGRL_All_Good_25ns.xml',
-        'GoodRunsLists/data16_13TeV/20180129/data16_13TeV.periodAllYear_DetStatus-v89-pro21-01_DQDefects-00-02-04_PHYS_StandardGRL_All_Good_25ns.xml'
-    ],
-    Campaign.MC20d: ['GoodRunsLists/data17_13TeV/20180619/data17_13TeV.periodAllYear_DetStatus-v99-pro22-01_Unknown_PHYS_StandardGRL_All_Good_25ns_Triggerno17e33prim.xml'],
-    Campaign.MC20e: ['GoodRunsLists/data18_13TeV/20190318/data18_13TeV.periodAllYear_DetStatus-v102-pro22-04_Unknown_PHYS_StandardGRL_All_Good_25ns_Triggerno17e33prim.xml'],
-    Campaign.MC21a: ['GoodRunsLists/data22_13p6TeV/20221123/data22_13p6TeV.periodFH_DetStatus-v108-pro28-01_MERGED_PHYS_StandardGRL_All_Good_25ns.xml'],
-    Campaign.MC23a: ['GoodRunsLists/data22_13p6TeV/20221123/data22_13p6TeV.periodFH_DetStatus-v108-pro28-01_MERGED_PHYS_StandardGRL_All_Good_25ns.xml'],
-    Campaign.MC23c: ['GoodRunsLists/data23_13p6TeV/20230712/data23_13p6TeV.periodAllYear_DetStatus-v110-pro31-05_MERGED_PHYS_StandardGRL_All_Good_25ns.xml']
+_year_GRL = {
+    2015: 'GoodRunsLists/data15_13TeV/20170619/data15_13TeV.periodAllYear_DetStatus-v89-pro21-02_Unknown_PHYS_StandardGRL_All_Good_25ns.xml',
+    2016: 'GoodRunsLists/data16_13TeV/20180129/data16_13TeV.periodAllYear_DetStatus-v89-pro21-01_DQDefects-00-02-04_PHYS_StandardGRL_All_Good_25ns.xml',
+    2017: 'GoodRunsLists/data17_13TeV/20180619/data17_13TeV.periodAllYear_DetStatus-v99-pro22-01_Unknown_PHYS_StandardGRL_All_Good_25ns_Triggerno17e33prim.xml',
+    2018: 'GoodRunsLists/data18_13TeV/20190318/data18_13TeV.periodAllYear_DetStatus-v102-pro22-04_Unknown_PHYS_StandardGRL_All_Good_25ns_Triggerno17e33prim.xml',
+    2022: 'GoodRunsLists/data22_13p6TeV/20221123/data22_13p6TeV.periodFH_DetStatus-v108-pro28-01_MERGED_PHYS_StandardGRL_All_Good_25ns.xml',
+    2023: 'GoodRunsLists/data23_13p6TeV/20230712/data23_13p6TeV.periodAllYear_DetStatus-v110-pro31-05_MERGED_PHYS_StandardGRL_All_Good_25ns.xml'
 }
+
 
 def parse_input_filelist(path):
     """
@@ -45,7 +56,7 @@ def parse_input_filelist(path):
     return files
 
 
-def get_data_type(fmd):
+def get_data_type(metadata):
     """
     Check from FileMetaData what kind of dataset is this.
     Return if this is data or mc or afii
@@ -53,56 +64,98 @@ def get_data_type(fmd):
     distinguishing different types of fast/fullsim/data overlay, etc
     """
     # TODO the actual treatment of various simulation types expected to evolve...
+    eventTypes = metadata.get('eventTypes', None)
+    if eventTypes:
+        if 'IS_DATA' in eventTypes:
+            data_type = 'data'
+        elif 'IS_SIMULATION' in eventTypes:
+            data_type = get_simulation_type(metadata)
+    else:
+        # fallback if eventTypes is not filled,
+        # we try to guess if it's data from SimulationFlavour being None
+        print('metaConfig.get_data_type: Did not find eventTypes in FileMetaData, '
+              'trying to determine the data type using SimulationFlavour')
+        return get_simulation_type(metadata)
+    return data_type
+
+
+def get_simulation_type(metadata):
+    """
+    Check SimulationFlavour from FileMetaData.
+    NOTE that this can still be data sample, denoted by SimulationFlavour == None.
+    """
     try:
-        simFlavour = fmd['SimulationFlavour']
-        if 'FullG4' in simFlavour:
+        simFlavour = metadata['SimulationFlavour']
+        if simFlavour is None:
+            data_type = 'data'
+        elif 'FullG4' in simFlavour:
             data_type = 'mc'
         elif 'ATLFAST3' in simFlavour:
             data_type = 'afii'
     except KeyError:
-        data_type = 'data'
+        raise Exception('Cannot retrieve SimulationFlavour from FileMetaData!')
     return data_type
+        
 
-
-def get_campaign(fmd):
+def get_campaign(metadata):
     try:
-        amiTags = fmd['AMITag']
+        amiTags = metadata['AMITag']
     except KeyError:
-        print('ERROR: This datasets\' FileMetaData does not contain AMITag.')
-        print('       We cannot figure out MC campaign.')
+        print('ERROR (metaConfig.get_campaign): This datasets\' FileMetaData does not contain AMITag. '
+              'We cannot figure out MC campaign.')
         raise
 
-    for cmp in _campaigns_AMITag.items():
-        if cmp[1] in amiTags:
-            return cmp[0]
+    for (cmp, tagsList) in _campaigns_AMITag.items():
+        for tag in tagsList:
+            if tag in amiTags:
+                print('metaConfig.get_campaign: Auto-detected campaign ', cmp)
+                return cmp
     raise Exception(f'AMITag {amiTags} in FileMetaData does not correspond to any implemented campaign')
 
 
-def isRun3(campaign):
-    try:
-        _campaigns_AMITag[campaign]
-    except KeyError:
-        raise Exception(f'Unrecognized campaign {campaign}')
-    return (campaign in _campaigns_R3)
+def get_data_year(metadata):
+    """
+    Try to determine the year of data-taking based on runNumber.
+    """
+    runNumber = get_run_number(metadata)
+    if runNumber == 0:
+        print('ERROR (metaConfig.get_data_year): runNumber == 0, we cannot determine data year reliably.')
+    for (year, runRange) in _years_runNumbers.items():
+        if runNumber >= runRange[0] and runNumber < runRange[1]:
+            return year
+    print(f'WARNING (metaConfig.get_data_year): runNumber {runNumber} '
+          'does not correspond to any of the defined years of data taking!')
+    return 0
 
-def get_LHCgeometry(campaign):
-    if campaign in _campaigns_R2:
-        return LHCPeriod.Run2
-    elif campaign in _campaigns_R3:
+
+def isRun3(metadata):
+    data_type = get_data_type(metadata)
+    if data_type == 'data':
+        year = get_data_year(metadata)
+        return (year >= 2022)
+    else:
+        cmp = get_campaign(metadata)
+        return (cmp in _campaigns_R3)
+
+
+def get_LHCgeometry(metadata):
+    if isRun3(metadata):
         return LHCPeriod.Run3
     else:
-        raise Exception(f'Unrecognized campaign {campaign}')
+        return LHCPeriod.Run2
 
-def get_grl(campaign):
+
+def get_grl(metadata):
+    year = get_data_year(metadata)
     try:
-        return _campaign_GRL[campaign]
+        return _year_GRL[year]
     except KeyError:
-        raise Exception(f'Unrecognized campaign {campaign}')
+        raise Exception(f'Unrecognized year for GRL {year}')
 
 
-def get_mc_run_number(fmd):
+def get_run_number(metadata):
     try:
-        runNumbers = fmd['runNumbers']
+        runNumbers = metadata['runNumbers']
         if len(runNumbers) > 1:
             print(f'WARNING: Got {len(runNumbers)} runNumbers, expecting only one.')
         return runNumbers[0]
@@ -111,9 +164,10 @@ def get_mc_run_number(fmd):
               'an indication that none of the files have any events.')
     return 0
 
-def get_mc_channel_number(fmd):
+
+def get_mc_channel_number(metadata):
     try:
-        mcChannelNumber = fmd['mc_channel_number']
+        mcChannelNumber = metadata['mc_channel_number']
         return mcChannelNumber
     except KeyError:
         print('WARNING: Got no mcProcID from inputfiles. This could be '

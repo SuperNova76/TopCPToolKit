@@ -46,9 +46,6 @@ driver = ROOT.EL.DirectDriver()
 
 # read FileMetadata
 metadata = GetFileMD(files)
-runnumbers = metadata.get('runNumbers', [0])
-simFlavour = metadata.get('SimulationFlavour', '')
-isDataOverlay = metadata.get('isDataOverlay', 0)  # TODO not yet used anywhere
 amiTags = metadata.get('AMITag', '')
 print('AMI tags from FileMetaData: ', amiTags)
 
