@@ -81,6 +81,16 @@ latestABreleaseRun2:
   needs: [latestABrelease]
   allow_failure: true
 
+latestABreleaseRun2data:
+  extends: .latest_job_template
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
+  variables:
+    JOBNAME: job_latestABreleaseRun2data
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_data18.txt
+  needs: [latestABrelease]
+  allow_failure: true
+
 latestABreleaseRun3:
   extends: .latest_job_template
   rules:
@@ -88,6 +98,16 @@ latestABreleaseRun3:
   variables:
     JOBNAME: job_latestABreleaseRun3
     INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc21.txt
+  needs: [latestABrelease]
+  allow_failure: true
+
+latestABreleaseRun3data:
+  extends: .latest_job_template
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
+  variables:
+    JOBNAME: job_latestABreleaseRun3data
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_data22.txt
   needs: [latestABrelease]
   allow_failure: true
 
