@@ -48,7 +48,7 @@ Assuming you are working on Lxplus or an equivalent setup with access to CVMFS, 
 followed by a suitable choice of AnalysisBase release:
 === "New setup"
     ```sh
-    asetup AnalysisBase,24.2.18
+    asetup AnalysisBase,24.2.19
     ```
 === "Re-use existing setup"
     ```sh
@@ -56,7 +56,7 @@ followed by a suitable choice of AnalysisBase release:
     ```
 
 !!! tip
-    AnalysisBase releases in the 24.2.x series are [listed here](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/AnalysisBaseReleaseNotes24pt2), together with the changes that went into them. Those that affect CP algorithms are tagged with `Analysis`.
+    AnalysisBase releases in the 24.2.x series are [listed here](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/AnalysisBaseReleaseNotes24pt2), together with the changes that went into them. Those that affect CP algorithms are tagged with `CPAlgorithms`.
 
 For a fresh compilation, or to include new files from the `source/` folder:
 === "Simple"
