@@ -47,164 +47,144 @@ variables:
   - set +e
   - cd ../
 
-latestABreleaseRun2:
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
+.base_job_template:
   stage: run
   tags:
     - docker
+  artifacts:
+    paths:
+      - ${JOBNAME}
+    expire_in: 2h
+
+.latest_job_template:
+  extends: .base_job_template
+  script:
+    - *prepare_dirs
+    - *restore_environment
+    - *run_top
+
+.reference_job_template:
+  extends: .base_job_template
+  script:
+    - *switch_tags
+    - *prepare_dirs
+    - *restore_environment
+    - *run_top
+
+latestABreleaseRun2:
+  extends: .latest_job_template
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
   variables:
     JOBNAME: job_latestABreleaseRun2
     INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc20.txt
-  script:
-    - *prepare_dirs
-    - *restore_environment
-    - *run_top
   needs: [latestABrelease]
   allow_failure: true
-  artifacts:
-    paths:
-      - ${JOBNAME}
-    expire_in: 2h
 
-latestABreleaseRun3:
+latestABreleaseRun2data:
+  extends: .latest_job_template
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
-  stage: run
-  tags:
-    - docker
+  variables:
+    JOBNAME: job_latestABreleaseRun2data
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_data18.txt
+  needs: [latestABrelease]
+  allow_failure: true
+
+latestABreleaseRun3:
+  extends: .latest_job_template
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
   variables:
     JOBNAME: job_latestABreleaseRun3
     INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc21.txt
-  script:
-    - *prepare_dirs
-    - *restore_environment
-    - *run_top
   needs: [latestABrelease]
   allow_failure: true
-  artifacts:
-    paths:
-      - ${JOBNAME}
-    expire_in: 2h
 
-latestABnightlyRun2:
+latestABreleaseRun3data:
+  extends: .latest_job_template
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
-  stage: run
-  tags:
-    - docker
+  variables:
+    JOBNAME: job_latestABreleaseRun3data
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_data22.txt
+  needs: [latestABrelease]
+  allow_failure: true
+
+latestABnightlyRun2:
+  extends: .latest_job_template
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
   variables:
     JOBNAME: job_latestABnightlyRun2
     INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc20.txt
-  script:
-    - *prepare_dirs
-    - *restore_environment
-    - *run_top
   needs: [latestABnightly]
   allow_failure: true
-  artifacts:
-    paths:
-      - ${JOBNAME}
-    expire_in: 2h
 
 latestABnightlyRun3:
+  extends: .latest_job_template
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
-  stage: run
-  tags:
-    - docker
   variables:
     JOBNAME: job_latestABnightlyRun3
     INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc21.txt
-  script:
-    - *prepare_dirs
-    - *restore_environment
-    - *run_top
   needs: [latestABnightly]
   allow_failure: true
-  artifacts:
-    paths:
-      - ${JOBNAME}
-    expire_in: 2h
 
-referenceRun2:
+latestABnightlyRun2data:
+  extends: .latest_job_template
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
-  stage: run
-  tags:
-    - docker
+  variables:
+    JOBNAME: job_latestABnightlyRun2data
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_data18.txt
+  needs: [latestABnightly]
+  allow_failure: true
+
+latestABnightlyRun3data:
+  extends: .latest_job_template
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
+  variables:
+    JOBNAME: job_latestABnightlyRun3data
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_data22.txt
+  needs: [latestABnightly]
+  allow_failure: true
+
+referenceRun2:
+  extends: .reference_job_template
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
   variables:
     JOBNAME: job_referenceRun2
     INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc20.txt
-  script:
-    - *switch_tags
-    - *prepare_dirs
-    - *restore_environment
-    - *run_top
   needs: [referenceTopCPToolkitTag]
-  artifacts:
-    paths:
-      - ${JOBNAME}
-    expire_in: 2h
 
 referenceRun3:
+  extends: .reference_job_template
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
-  stage: run
-  tags:
-    - docker
   variables:
     JOBNAME: job_referenceRun3
     INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc21.txt
-  script:
-    - *switch_tags
-    - *prepare_dirs
-    - *restore_environment
-    - *run_top
   needs: [referenceTopCPToolkitTag]
-  artifacts:
-    paths:
-      - ${JOBNAME}
-    expire_in: 2h
 
 lastweekRun2:
+  extends: .reference_job_template
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
-  stage: run
-  tags:
-    - docker
   variables:
     JOBNAME: job_lastweekRun2
     INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc20.txt
-  script:
-    - *switch_tags
-    - *prepare_dirs
-    - *restore_environment
-    - *run_top
   needs: [lastweekTopCPToolkitTag]
   allow_failure: true
-  artifacts:
-    paths:
-      - ${JOBNAME}
-    expire_in: 2h
 
 lastweekRun3:
+  extends: .reference_job_template
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
-  stage: run
-  tags:
-    - docker
   variables:
     JOBNAME: job_lastweekRun3
     INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc21.txt
-  script:
-    - *switch_tags
-    - *prepare_dirs
-    - *restore_environment
-    - *run_top
   needs: [lastweekTopCPToolkitTag]
   allow_failure: true
-  artifacts:
-    paths:
-      - ${JOBNAME}
-    expire_in: 2h
