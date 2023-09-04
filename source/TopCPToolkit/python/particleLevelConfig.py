@@ -51,7 +51,6 @@ particlelevel_branch_mappings = {
         'eta                      -> eta',
         'phi                      -> phi',
         'e                        -> e',
-        'GhostBHadronsFinalCount  -> nGhosts_bHadron',
     ],
     "met": [
         'met_met                  -> met',
