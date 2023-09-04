@@ -68,7 +68,8 @@ def makeRecoConfiguration(metadata, algSeq, configSeq, debugHistograms, noFilter
         from JetAnalysisAlgorithms.JetAnalysisConfig import makeJetAnalysisConfig
         jetContainer = 'AntiKt4EMPFlowJets'
         makeJetAnalysisConfig(configSeq, 'AnaJets', jetContainer,
-                              runGhostMuonAssociation=True, runNNJvtUpdate = True,
+                              runGhostMuonAssociation=not isLite, # TEMPORARY BUG FIX
+                              runNNJvtUpdate = True,
                               JEROption='Full', reduction='Category', postfix='baselineSel')
         from JetAnalysisAlgorithms.JetJvtAnalysisConfig import makeJetJvtAnalysisConfig
         makeJetJvtAnalysisConfig(configSeq, 'AnaJets', jetContainer, enableFJvt=False)
