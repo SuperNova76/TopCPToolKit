@@ -89,6 +89,7 @@ class particleLevelConfig(ConfigBlock):
         self.addOption('jetEtaMax', None, type=float)
         self.addOption('ljetPtMin', None, type=float)
         self.addOption('ljetEtaMax', None, type=float)
+        self.addOption('ljetCollection', None, type=str)
     
     def makeAlgs(self, config):
         alg = config.createAlgorithm("top::ParticleLevelAlg", "TopParticleLevel")
@@ -135,6 +136,8 @@ class particleLevelConfig(ConfigBlock):
         if self.useTruthLargeRJets:
             container = "ParticleLevelLargeRJets"
             config = self.createAndFillOutputContainer(config, container, "ljets")
+            if self.ljetCollection: alg.ljet_collection = self.ljetCollection
+            elif config.isPhyslite(): alg.ljet_collection = 'AntiKt10TruthSoftDropBeta100Zcut10Jets'
             if self.ljetPtMin: alg.ljet_ptMin = self.ljetPtMin
             if self.ljetEtaMax: alg.ljet_etaMax = self.ljetEtaMax
         if self.useTruthMET:
