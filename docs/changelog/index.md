@@ -4,6 +4,9 @@
 
 ### Upcoming release
 
+- We run on AB 24.2.20
+- [issue #26](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/26): read MC campaign from FileMetaData
+
 ### 1.3.0 <small>August 28, 2023</small>
 
 - We run on AB 24.2.19
