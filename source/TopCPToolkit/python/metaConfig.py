@@ -2,8 +2,9 @@ from Campaigns.Utils import Campaign
 from AthenaConfiguration.Enums import LHCPeriod
 
 _campaigns_AMITag = {
-    # NOTE this assumes that samples use "standard" r-tag (for MC), or if you want to use it for data
-    # you have to put in all sorts of tags you find for various runs
+    # NOTE this is a "fallback" approach to read campaign based on standard r-tag with pile-up for
+    # MC campaigns. For non-standard reconstruction, extra r-tags have to be added here to be recognized.
+    # Recommended approach is to read mc_campaign from FileMetaData (seems to require reasonably recent p-tags)
     Campaign.MC20a: ['r13167'],
     Campaign.MC20d: ['r13144'],
     Campaign.MC20e: ['r13145'],
@@ -98,19 +99,25 @@ def get_simulation_type(metadata):
         
 
 def get_campaign(metadata):
-    try:
-        amiTags = metadata['AMITag']
-    except KeyError:
-        print('ERROR (metaConfig.get_campaign): This datasets\' FileMetaData does not contain AMITag. '
-              'We cannot figure out MC campaign.')
-        raise
+    # first try to read mc_campaign entry from FMD
+    # it seems to not be present either in old p-tags or samples before mc23 (?)
+    mc_campaign = metadata.get('mc_campaign', None)
+    if mc_campaign is not None:
+        return Campaign(mc_campaign)
+    else:
+        try:
+            amiTags = metadata['AMITag']
+        except KeyError:
+            print('ERROR (metaConfig.get_campaign): This datasets\' FileMetaData '
+                  'does not contain AMITag. We cannot figure out MC campaign.')
+            raise
 
-    for (cmp, tagsList) in _campaigns_AMITag.items():
-        for tag in tagsList:
-            if tag in amiTags:
-                print('metaConfig.get_campaign: Auto-detected campaign ', cmp)
-                return cmp
-    raise Exception(f'AMITag {amiTags} in FileMetaData does not correspond to any implemented campaign')
+        for (cmp, tagsList) in _campaigns_AMITag.items():
+            for tag in tagsList:
+                if tag in amiTags:
+                    print('metaConfig.get_campaign: Auto-detected campaign ', cmp)
+                    return cmp
+        raise Exception(f'AMITag {amiTags} in FileMetaData does not correspond to any implemented campaign')
 
 
 def get_data_year(metadata):
