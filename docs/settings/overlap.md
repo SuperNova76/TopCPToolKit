@@ -42,6 +42,18 @@
 `bJetLabel`
 :   flag to select b-jets with. If left empty, no b-jets are used in the overlap removal. The default is `''` (empty string).
 
+`doTauAntiTauJetOR`
+:   whether to set up an instance of [`ORUtils::TauAntiTauJetOverlapTool`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/AnalysisCommon/AssociationUtils/Root/TauAntiTauJetOverlapTool.cxx). The default is `False`.
+
+`antiTauIDTauLabel`
+:   flag to select the ID tau for the tau-antitau-jet overlap removal. The default is `''` (empty string).
+
+`antiTauLabel`
+:   flag to select the anti-tau for the tau-antitau-jet overlap removal. The default is `''` (empty string).
+
+`antiTauBJetLabel`
+:   flag to select b-jets for the tau-antitau-jet overlap removal. The default is `''` (empty string).
+
 `boostedLeptons`
 :   whether to enable boosted lepton overlap removal (toggles on the property `UseSlidingDR` of the [`ORUtils::EleJetOverlapTool`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/AnalysisCommon/AssociationUtils/Root/EleJetOverlapTool.cxx) and [`ORUtils::MuJetOverlapTool`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/AnalysisCommon/AssociationUtils/Root/MuJetOverlapTool.cxx) tools). The default is `False`.
 
@@ -51,3 +63,5 @@
 !!! success "Registers the following variables:"
     - `select_or`: the per-object overlap removal decision
 
+!!! tip
+    It is also possible to pass a number of systematics-independent selections (event-level or per-object) to the overlap removal procedure. These are however not available from the `makeOverlapAnalysisConfig` method, and instead users must modify the config sequence directly. More details in [athena!65523](https://gitlab.cern.ch/atlas/athena/-/merge_requests/65523).
