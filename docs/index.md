@@ -13,6 +13,7 @@ This websites serves to document the usage and main features of the framework, a
 - [Common CP algorithms](https://indico.cern.ch/event/997136/attachments/2192156/3705269/CPAlgorithms.pdf)
 - [ATLAS Software docs](https://atlassoftwaredocs.web.cern.ch/ABtutorial/cpalg_intro/)
 - [Migrating AnalysisTop to CP algorithms](https://indico.cern.ch/event/1257761/contributions/5359759/attachments/2644629/4577607/Migrating%20AT%20to%20CP%20algo.pdf)
+- [Introduction to TopCPToolkit](https://indico.cern.ch/event/1319343/contributions/5554653/attachments/2705702/4697065/Introduction%20to%20TopCPToolkit.pdf)
 
 ## Get in touch
 
