@@ -1,3 +1,11 @@
+## [makeCommonServicesConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
+
+`seq`
+:   the config sequence.
+
+`runSystematics`
+:   whether to turn on the computation of systematic variations. The default is to run them on MC.
+
 ## [metaConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/metaConfig.py)
 
 Loading this module enables the following methods to access the metadata:
@@ -38,7 +46,10 @@ Loading the module also enables the following methods to easily set up very comm
 :   wraps around [`makeGeneratorAnalysisConfig`](#makeGeneratorAnalysisConfig), allowing to retrieve the correct output branches. Automates the MC runNumber retrieval.
 
 `add_PRW`
-:   wraps around [`makePileupReweightingConfig`](#makePileupReweightingConfig), allowing to retrieve the correct output branches. Automates the PRW settings. NOTE that the PRW tools setup is automatically skipped when we detect data instead of MC sample.
+:   wraps around [`makePileupReweightingConfig`](#makePileupReweightingConfig), allowing to retrieve the correct output branches. Automates the PRW settings. 
+
+!!! note
+    The PRW tool setup is automatically skipped when we detect data instead of MC samples.
 
 ## [makeEventCleaningConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/EventCleaningConfig.py)
 
