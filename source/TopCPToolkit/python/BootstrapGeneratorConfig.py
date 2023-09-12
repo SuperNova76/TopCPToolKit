@@ -14,7 +14,7 @@ class BootstrapGeneratorConfig(ConfigBlock):
     
     def makeAlgs(self, config):
         if config.dataType() != 'data' and not self.runOnMC:
-            print("Skipping the configuration of CP::BootstrapGeneratorAlg since we are not running on data."
+            print("Skipping the configuration of CP::BootstrapGeneratorAlg since we are not running on data. "
                   "Set the option 'runOnMC' to True if you want to force the bootstrapping of MC too.")
             return
         
@@ -22,8 +22,10 @@ class BootstrapGeneratorConfig(ConfigBlock):
         alg.nReplicas = self.nReplicas
         if self.decoration:
             alg.decorationName = decoration
+        else:
+            alg.decorationName = "bootstrapWeights_%SYS%"
         
-        config.addOutputVar ('EventInfo', alg.decorationName, alg.decorationName.split("%SYS")[0], noSys=True)
+        config.addOutputVar ('EventInfo', alg.decorationName, alg.decorationName.split("_%SYS")[0], noSys=True)
 
         return
 

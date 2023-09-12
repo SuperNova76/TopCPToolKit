@@ -4,7 +4,7 @@
 
 /// @author Baptiste Ravina
 
-#include <AsgAnalysisAlgorithms/BootstrapGeneratorAlg.h>
+#include <TopCPToolkit/BootstrapGeneratorAlg.h>
 
 CP::BootstrapGeneratorAlg::BootstrapGeneratorAlg(const std::string &name,
                                                  ISvcLocator *pSvcLocator)
@@ -32,6 +32,7 @@ StatusCode CP::BootstrapGeneratorAlg::initialize()
   ANA_CHECK(m_systematicsList.initialize());
 
   m_weights = std::vector<int>(m_nReplicas);
+  m_poisson = std::poisson_distribution<int>(1);
 
   return StatusCode::SUCCESS;
 }
@@ -56,7 +57,7 @@ StatusCode CP::BootstrapGeneratorAlg::execute()
     }
 
     // decorate weights onto EventInfo
-    m_decoration.set(*eventInfo, m_weights, sys);
+    m_decoration.set(*evtInfo, m_weights, sys);
   }
 
   return StatusCode::SUCCESS;

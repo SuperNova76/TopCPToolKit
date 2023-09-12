@@ -9,6 +9,7 @@
 
 #include <AnaAlgorithm/AnaAlgorithm.h>
 #include <SystematicsHandles/SysListHandle.h>
+#include <SystematicsHandles/SysReadHandle.h>
 #include <SystematicsHandles/SysWriteDecorHandle.h>
 #include <xAODEventInfo/EventInfo.h>
 
@@ -54,16 +55,17 @@ namespace CP
   private:
     std::mt19937 m_rng;
 
-    /// \brief a Poisson distribution with central value 1
+    /// \brief a Poisson distribution
   private:
-    std::poisson_distribution<int> m_poisson(1.0);
+    std::poisson_distribution<int> m_poisson;
 
     /// \brief the vector of bootstrap replica weights
   private:
     std::vector<int> m_weights;
 
     /// \brief the output decoration
-    SysWriteDecorHandle m_decoration{
+  private:
+    SysWriteDecorHandle<std::vector<int>> m_decoration{
         this, "decorationName", "bootstrapWeights_%SYS%", "decoration name for the vector of bootstrapped weights"};
   };
 } // namespace CP
