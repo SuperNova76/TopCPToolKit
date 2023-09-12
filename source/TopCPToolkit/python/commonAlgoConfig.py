@@ -1,6 +1,7 @@
 # File for configuration of common stuff
 # includes event cleaning, GRL, PRW and MC weight
 from AnaAlgorithm.AnaAlgSequence import AnaAlgSequence
+from AnalysisAlgorithmsConfig.ConfigSequence import ConfigSequence
 from AnaAlgorithm.DualUseConfig import createAlgorithm, createService
 from TopCPToolkit import metaConfig
 
@@ -8,11 +9,11 @@ from TopCPToolkit import metaConfig
 def makeRecoSequence(analysisName, metadata, debugHistograms=True, noSystematics=False, noFilter=False):
     algSeq = AnaAlgSequence()
 
-    sysService = createService('CP::SystematicsSvc', 'SystematicsSvc', sequence=algSeq)
-    if noSystematics or metaConfig.get_data_type(metadata) == 'data':
-        sysService.sigmaRecommended = 0
-    else:
-        sysService.sigmaRecommended = 1
+    configSeq = ConfigSequence()
+
+    from AsgAnalysisAlgorithms.AsgAnalysisConfig import makeCommonServicesConfig
+    makeCommonServicesConfig(configSeq)
+    configSeq.setOptionValue('.runSystematics', not noSystematics)
 
     import importlib
     try:
@@ -20,7 +21,7 @@ def makeRecoSequence(analysisName, metadata, debugHistograms=True, noSystematics
     except ModuleNotFoundError:
         raise Exception(f'The package and module for your --analysis could not be found: {analysisName}')
     try:
-        analysisModule.makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter)
+        analysisModule.makeRecoConfiguration(metadata, algSeq, configSeq, debugHistograms, noFilter)
     except AttributeError:
         raise Exception('The analysis you specified via --analysis does not have makeRecoConfiguration method implemented.'
                         'This is needed to configure the CP algorithms')
