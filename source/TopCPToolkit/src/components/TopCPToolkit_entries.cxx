@@ -18,5 +18,6 @@
 #include <TopCPToolkit/RunPartonHistoryAlg.h>
 #include <TopCPToolkit/RunSpaNetAlg.h>
 #include <TopCPToolkit/RunTtbarNNLORecursiveRewAlg.h>
+#include <TopCPToolkit/BootstrapGeneratorAlg.h>
 
 DECLARE_COMPONENT (TtbarCPalgoAnalysis)

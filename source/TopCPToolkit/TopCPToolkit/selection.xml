@@ -22,5 +22,6 @@
   <class name="top::KLFitterFinalizeOutputAlg" />
   <class name="top::RunSpaNetAlg" />
   <class name="top::RunTtbarNNLORecursiveRewAlg" />
+  <class name="CP::BootstrapGeneratorAlg" />
    
 </lcgdict>

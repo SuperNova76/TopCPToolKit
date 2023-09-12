@@ -20,5 +20,6 @@
 #include "TopCPToolkit/ParticleLevelAlg.h"
 #include "TopCPToolkit/RunSpaNetAlg.h"
 #include "TopCPToolkit/RunTtbarNNLORecursiveRewAlg.h"
+#include "TopCPToolkit/BootstrapGeneratorAlg.h"
 
 #endif
