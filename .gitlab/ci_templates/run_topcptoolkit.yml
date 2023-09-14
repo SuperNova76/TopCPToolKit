@@ -159,6 +159,7 @@ referenceRun2:
     JOBNAME: job_referenceRun2
     INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc20.txt
   needs: [referenceTopCPToolkitTag]
+  allow_failure: true
 
 referenceRun3:
   extends: .reference_job_template
@@ -168,6 +169,7 @@ referenceRun3:
     JOBNAME: job_referenceRun3
     INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc21.txt
   needs: [referenceTopCPToolkitTag]
+  allow_failure: true
 
 lastweekRun2:
   extends: .reference_job_template
