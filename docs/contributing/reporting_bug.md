@@ -2,7 +2,7 @@ If you have discovered a bug, you can help us by submitting an issue in our [iss
 
 ## Before creating an issue
 
-### Upgrade to latest version
+### Upgrade to the latest version
 
 Chances are that the bug you discovered was already fixed in a subsequent
 version.

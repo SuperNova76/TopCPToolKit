@@ -5,8 +5,7 @@ from TopCPToolkit.PerEventSFCalculatorConfig import PerEventSFCalculatorConfig
 from TopCPToolkit import metaConfig, commonAlgoConfig
 
 
-def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
-    configSeq = ConfigSequence()
+def makeRecoConfiguration(metadata, algSeq, configSeq, debugHistograms, noFilter=False):
 
     use_electrons = True
     use_muons = True

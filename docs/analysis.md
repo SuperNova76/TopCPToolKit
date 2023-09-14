@@ -11,9 +11,11 @@ and similarly to `makeTruthSequence` and `makeParticleLevelSequence`.
 
 These methods are defined in [commonAlgoConfig.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/commonAlgoConfig.py), and you can see that they perform the following actions:
 
-- create an `AnaAlgSequence` object, a (blank) chain of algorithms to be executed;
-- check whether we are running on data: if we are, we do not need to consider systematics or truth information!
-- create an instance of the `CP::SystematicsSvc`, which will record and handle all the systematics that we need, based on the objects that we deal with;
+- create `AnaAlgSequence` and `ConfigSequence` objects, a (blank) chain of algorithms to be executed;
+- initialise the [`CommonServicesConfig`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py), which
+    - checks whether we are running on data: if we are, we do not need to consider systematics or truth information!
+    - creates an instance of the `CP::SystematicsSvc`, which will record and handle all the systematics that we need, based on the objects that we deal with;
+    - creates an instance of the `CP::SelectionNameSvc`, to handle cutflows;
 - set up the very first algorithm, the `CP::VertexSelectionAlg`, to retain only events with a reconstructed primary vertex;
 - **load and configure the requested analysis algorithms**;
 - add a final algorithm, the `CP::SysListDumperAlg`, helpful to monitor which systematics were collected.
@@ -30,8 +32,7 @@ from AnalysisAlgorithmsConfig.ConfigSequence import ConfigSequence
 from AnalysisAlgorithmsConfig.ConfigAccumulator import ConfigAccumulator
 from TopCPToolkit import metaConfig, commonAlgoConfig
 
-def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
-    configSeq = ConfigSequence()
+def makeRecoConfiguration(metadata, algSeq, configSeq, debugHistograms, noFilter=False):
 
     # ... everything you need goes here ...
 
