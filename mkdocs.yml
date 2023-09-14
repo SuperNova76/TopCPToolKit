@@ -74,3 +74,4 @@ nav:
         - Other useful config blocks and methods: settings/others.md
         - Event selection: settings/eventselection.md
         - Experimental: settings/experimental.md
+        - ONNX Wrapper: settings/onnxwrapper.md
