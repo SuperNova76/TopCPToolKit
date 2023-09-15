@@ -43,7 +43,6 @@ def add_event_cleaning(configSeq, metadata, runEventCleaning=True):
                             runPrimaryVertexSelection=True,
                             runEventCleaning=runEventCleaning,
                             userGRLFiles=(GRLFiles if is_data else None))
-    configSeq.setOptionValue('.invertFlags', [] ) # BUG FIX! related to MR !65308
 
 
 def add_mc_weights(configSeq, metadata, branches):
