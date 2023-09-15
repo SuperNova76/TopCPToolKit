@@ -23,6 +23,7 @@ def makeRecoConfiguration(metadata, algSeq, configSeq, debugHistograms, noFilter
     # figure out metadata
     dataType = metaConfig.get_data_type(metadata)
     geometry = metaConfig.get_LHCgeometry(metadata)
+    isLite   = metaConfig.isPhysLite(metadata)
 
     # primary vertex ,event cleaning (jet clean loosebad) and GoodRunsList selection
     commonAlgoConfig.add_event_cleaning(configSeq, metadata)
@@ -31,7 +32,8 @@ def makeRecoConfiguration(metadata, algSeq, configSeq, debugHistograms, noFilter
     commonAlgoConfig.add_mc_weights(configSeq, metadata, reco_branches)
 
     # PRW
-    commonAlgoConfig.add_PRW(configSeq, metadata, reco_branches)
+    if not isLite:
+        commonAlgoConfig.add_PRW(configSeq, metadata, reco_branches)
 
     # electrons
     if use_electrons:
@@ -66,7 +68,8 @@ def makeRecoConfiguration(metadata, algSeq, configSeq, debugHistograms, noFilter
         from JetAnalysisAlgorithms.JetAnalysisConfig import makeJetAnalysisConfig
         jetContainer = 'AntiKt4EMPFlowJets'
         makeJetAnalysisConfig(configSeq, 'AnaJets', jetContainer,
-                              runGhostMuonAssociation=True, runNNJvtUpdate = True,
+                              runGhostMuonAssociation=not isLite, # TEMPORARY BUG FIX
+                              runNNJvtUpdate = True,
                               JEROption='Full', reduction='Category', postfix='baselineSel')
         from JetAnalysisAlgorithms.JetJvtAnalysisConfig import makeJetJvtAnalysisConfig
         makeJetJvtAnalysisConfig(configSeq, 'AnaJets', jetContainer, enableFJvt=False)
@@ -304,7 +307,7 @@ SAVE
     configSeq.append(cfg)
 
     # put everything together
-    configAccumulator = ConfigAccumulator(dataType, algSeq, isPhyslite=False, geometry=geometry)
+    configAccumulator = ConfigAccumulator(dataType, algSeq, isPhyslite=isLite, geometry=geometry)
     configSeq.fullConfigure(configAccumulator)
 
 
@@ -315,10 +318,11 @@ def makeTruthConfiguration(metadata, algSeq, debugHistograms):
     outputContainers = {'': 'EventInfo'}
 
     # figure out metadata
-    dataType = metaConfig.get_data_type(metadata)
+    dataType  = metaConfig.get_data_type(metadata)
     isRun3Geo = metaConfig.isRun3(metadata)
-    geometry = metaConfig.get_LHCgeometry(metadata)
-    dsid = metaConfig.get_mc_channel_number(metadata)
+    isLite    = metaConfig.isPhysLite(metadata)
+    geometry  = metaConfig.get_LHCgeometry(metadata)
+    dsid      = metaConfig.get_mc_channel_number(metadata)
 
     # PMG TruthWeightTool
     commonAlgoConfig.add_mc_weights(configSeq, metadata, truth_branches)
@@ -330,18 +334,19 @@ def makeTruthConfiguration(metadata, algSeq, debugHistograms):
         'EventInfo.mcChannelNumber -> mcChannelNumber',
     ]
 
-    from TopCPToolkit.truthConfig import truthConfig
-    cfg = truthConfig()
-    cfg.setOptionValue('histories', 'Ttbar.TtbarLight')
-    configSeq.append(cfg)
-    outputContainers.update( cfg.getOutputContainers() )
+    if not isLite: # we haven't tested the parton history on PHYSLITE yet, due to other bugs in top samples
+        from TopCPToolkit.truthConfig import truthConfig
+        cfg = truthConfig()
+        cfg.setOptionValue('histories', 'Ttbar.TtbarLight')
+        configSeq.append(cfg)
+        outputContainers.update( cfg.getOutputContainers() )
 
-    # NNLO reweighting
-    from TopCPToolkit.TtbarNNLORecursiveRewConfig import TtbarNNLORecursiveRewConfig
-    cfg = TtbarNNLORecursiveRewConfig(dsid, dataType, isRun3Geo)
-    #cfg.setOptionValue('reweightType','3D')
-    #cfg.setOptionValue('sampleID', 'aMCH7')
-    configSeq.append(cfg)
+        # NNLO reweighting
+        from TopCPToolkit.TtbarNNLORecursiveRewConfig import TtbarNNLORecursiveRewConfig
+        cfg = TtbarNNLORecursiveRewConfig(dsid, dataType, isRun3Geo)
+        #cfg.setOptionValue('reweightType','3D')
+        #cfg.setOptionValue('sampleID', 'aMCH7')
+        configSeq.append(cfg)
 
     # add NTuple output config
     from AsgAnalysisAlgorithms.OutputAnalysisConfig import OutputAnalysisConfig
@@ -352,7 +357,7 @@ def makeTruthConfiguration(metadata, algSeq, debugHistograms):
     configSeq.append(cfg)
 
     # put everything together
-    configAccumulator = ConfigAccumulator(dataType, algSeq, isPhyslite=False, geometry=geometry)
+    configAccumulator = ConfigAccumulator(dataType, algSeq, isPhyslite=isLite, geometry=geometry)
     configSeq.fullConfigure(configAccumulator)
 
 
@@ -365,6 +370,7 @@ def makeParticleLevelConfiguration(metadata, algSeq, debugHistograms):
     # figure out metadata
     dataType = metaConfig.get_data_type(metadata)
     geometry = metaConfig.get_LHCgeometry(metadata)
+    isLite   = metaConfig.isPhysLite(metadata)
 
     # PMG TruthWeightTool
     commonAlgoConfig.add_mc_weights(configSeq, metadata, particleLevel_branches)
@@ -394,5 +400,5 @@ def makeParticleLevelConfiguration(metadata, algSeq, debugHistograms):
     configSeq.append(cfg)
 
     # put everything together
-    configAccumulator = ConfigAccumulator(dataType, algSeq, isPhyslite=False, geometry=geometry)
+    configAccumulator = ConfigAccumulator(dataType, algSeq, isPhyslite=isLite, geometry=geometry)
     configSeq.fullConfigure(configAccumulator)

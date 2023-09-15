@@ -134,6 +134,20 @@ def get_data_year(metadata):
           'does not correspond to any of the defined years of data taking!')
     return 0
 
+def isPhysLite(metadata):
+    """
+    Check whether the derivation format is PHYSLITE.
+    """
+    processingTags = metadata.get('processingTags', None)
+    if processingTags is not None:
+        return 'StreamDAOD_PHYSLITE' in processingTags
+    else:
+        try:
+            check = metadata['metadata_items']['StreamDAOD_PHYSLITE']
+            return True
+        except:
+            print('WARNING Could not find any information about the sample being PHYSLITE in the metadata... Will assume that it was regular PHYS.')
+    return False
 
 def isRun3(metadata):
     data_type = get_data_type(metadata)
