@@ -171,6 +171,23 @@ def makeRecoConfiguration(metadata, algSeq, configSeq, debugHistograms, noFilter
     makeTriggerAnalysisConfig(configSeq, triggerChainsPerYear=triggerChainsPerYear, noFilter=noFilter, electronWorkingPoint='Tight.Tight_VarRad', muonWorkingPoint='Tight.None',
                               electrons='AnaElectrons.tight', muons='AnaMuons.tight')
 
+    # object-based cutflow
+    from AsgAnalysisAlgorithms.AsgAnalysisConfig import makeObjectCutFlowConfig
+    if use_electrons:
+        makeObjectCutFlowConfig(configSeq, 'AnaElectrons', selectionName='tight')
+    if use_muons:
+        makeObjectCutFlowConfig(configSeq, 'AnaMuons', selectionName='tight')
+    if use_taus:
+        makeObjectCutFlowConfig(configSeq, 'AnaTauJets', selectionName='tight')
+    if use_photons:
+        makeObjectCutFlowConfig(configSeq, 'AnaPhotons', selectionName='tight')
+    if use_jets:
+        makeObjectCutFlowConfig(configSeq, 'AnaJets', selectionName='jvt')
+    if use_largeR_jets:
+        makeObjectCutFlowConfig(configSeq, 'AnaLargeRJets', selectionName='')
+    if use_track_jets:
+        makeObjectCutFlowConfig(configSeq, 'AnaTrackJets', selectionName='')
+
     # a single lepton SF
     from TopCPToolkit.LeptonSFCalculatorConfig import LeptonSFCalculatorConfig
     cfg = LeptonSFCalculatorConfig()
