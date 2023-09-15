@@ -279,7 +279,7 @@ SAVE
     }
     makeMultipleEventSelectionConfigs(configSeq, electrons="AnaElectrons.loose", muons ="AnaMuons.tight", met="AnaMET",
                                       jets="AnaJets.baselineSel&&jvt_selection", btagDecoration=f'ftag_select_{btagger}_FixedCutBEff_85',
-                                      preselection=None, selectionCutsDict = mycuts, noFilter=noFilter)
+                                      preselection=None, selectionCutsDict = mycuts, noFilter=noFilter, cutFlowHistograms=True)
 
     from TopCPToolkit.KLFitterConfig import KLFitterConfig
     cfg = KLFitterConfig('KLFitterResult')
