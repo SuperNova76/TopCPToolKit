@@ -104,6 +104,21 @@ namespace top {
     CP::SysWriteDecorHandle<float> m_had_top_detection_decor {
       this, "hadronic_top_detection", "spanet_had_top_detection_%SYS%", "Reconstruction detection probability for the hadronic top in l+jets"
 	};
+    CP::SysWriteDecorHandle<float> m_reg_nu_eta_decor {
+      this, "regressed_neutrino_eta", "spanet_reg_nu_eta_%SYS%", "Regressed value of the neutrino eta for the leptonic top in l+jets"
+  };
+    CP::SysWriteDecorHandle<float> m_reg_nu_px_decor {
+      this, "regressed_neutrino_px", "spanet_reg_nu_px_%SYS%", "Regressed value of the neutrino px for the leptonic top in l+jets"
+  };
+    CP::SysWriteDecorHandle<float> m_reg_nu_py_decor {
+      this, "regressed_neutrino_py", "spanet_reg_nu_py_%SYS%", "Regressed value of the neutrino py for the leptonic top in l+jets"
+  };
+    CP::SysWriteDecorHandle<float> m_reg_nu_pz_decor {
+      this, "regressed_neutrino_pz", "spanet_reg_nu_pz_%SYS%", "Regressed value of the neutrino pz for the leptonic top in l+jets"
+  };
+    CP::SysWriteDecorHandle<float> m_reg_ttbar_m_decor {
+      this, "regressed_ttbar_mass", "spanet_reg_ttbar_m_%SYS%", "Regressed value of the ttbar mass in l+jets"
+  };
 
   };
 

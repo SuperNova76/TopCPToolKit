@@ -19,6 +19,7 @@ namespace top {
 
     virtual std::vector<int> GetOutputIndices() override;
     virtual std::vector<float> GetOutputScores() override;
+    virtual std::vector<float> GetRegressedValues() override;
 
     // best indices
     int m_lep_b;
@@ -32,10 +33,12 @@ namespace top {
     float m_hadtop_detection;
     float m_leptop_detection;
 
-    // preliminary computation of the leptonic W boson
-    TLorentzVector m_lepton;
-    int m_lep_charge;
-    TLorentzVector m_neutrino;
+    // regressions
+    float m_regressed_nu_eta;
+    float m_regressed_nu_px;
+    float m_regressed_nu_py;
+    float m_regressed_nu_pz;
+    float m_regressed_ttbar_m;
 
   };
 } // namespace top

@@ -94,6 +94,11 @@ namespace top {
     m_lep_top_assignment_decor.set(*evtInfo, -999., sys);
     m_had_top_detection_decor.set(*evtInfo, -999., sys);
     m_lep_top_detection_decor.set(*evtInfo, -999., sys);
+    m_reg_nu_eta_decor.set(*evtInfo, -999., sys);
+    m_reg_nu_px_decor.set(*evtInfo, -999., sys);
+    m_reg_nu_py_decor.set(*evtInfo, -999., sys);
+    m_reg_nu_pz_decor.set(*evtInfo, -999., sys);
+    m_reg_ttbar_m_decor.set(*evtInfo, -999., sys);
 
     if (m_selection && !m_selection.getBool(*evtInfo, sys))
       return StatusCode::SUCCESS;
@@ -146,6 +151,24 @@ namespace top {
       m_lep_top_assignment_decor.set(*evtInfo, best_scores[1], sys);
       m_had_top_detection_decor.set(*evtInfo, best_scores[2], sys);
       m_lep_top_detection_decor.set(*evtInfo, best_scores[3], sys);
+    }
+    else if (m_topologyEnum == SpaNetEnums::Topology::TtbarLjetsNu) {
+      const std::vector<int>& best_indices = m_spanet_reco->GetOutputIndices();
+      m_lep_b_idx_decor.set(*evtInfo, best_indices[0], sys);
+      m_had_b_idx_decor.set(*evtInfo, best_indices[1], sys);
+      m_down_idx_decor.set( *evtInfo, best_indices[2], sys);
+      m_up_idx_decor.set(   *evtInfo, best_indices[3], sys);
+      const std::vector<float>& best_scores = m_spanet_reco->GetOutputScores();
+      m_had_top_assignment_decor.set(*evtInfo, best_scores[0], sys);
+      m_lep_top_assignment_decor.set(*evtInfo, best_scores[1], sys);
+      m_had_top_detection_decor.set(*evtInfo, best_scores[2], sys);
+      m_lep_top_detection_decor.set(*evtInfo, best_scores[3], sys);
+      const std::vector<float>& regressions = m_spanet_reco->GetRegressedValues();
+      m_reg_nu_eta_decor.set(*evtInfo, regressions[0], sys);
+      m_reg_nu_px_decor.set(*evtInfo, regressions[1], sys);
+      m_reg_nu_py_decor.set(*evtInfo, regressions[2], sys);
+      m_reg_nu_pz_decor.set(*evtInfo, regressions[3], sys);
+      m_reg_ttbar_m_decor.set(*evtInfo, regressions[4], sys);
     }
 
     return StatusCode::SUCCESS;

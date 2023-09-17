@@ -29,6 +29,7 @@ namespace top {
 
     virtual std::vector<int> GetOutputIndices() = 0;
     virtual std::vector<float> GetOutputScores() = 0;
+    virtual std::vector<float> GetRegressedValues() = 0;
 
     void setBtagger(std::string algorithm) { m_btagger = algorithm; };
 
