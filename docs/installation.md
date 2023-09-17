@@ -81,6 +81,9 @@ then compile and set up the new environment:
 
 And you're ready to go!
 
+!!! tip
+    Using VS Code? You may want to grab the config files we provide at `/afs/cern.ch/user/o/omajersk/public/TopCPToolKitStuff/.vscode/` (experimental!) :thinking_face:
+
 ## Expert mode: compiling against Athena
 
 !!! warning

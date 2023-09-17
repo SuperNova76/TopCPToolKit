@@ -86,116 +86,120 @@ In case one wishes to run ML inference on trained models and store the model pre
 * loading models and running inference
 * retrieving the model outputs and storing them into ntuple branches.
 
-The model inference is done using [ONNX runtime](https://onnxruntime.ai/) C++ interface. Models trained in any framework are expected to be already converted to the ONNX format. A `top::ONNXWrapper` [class](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/TopCPToolkit/ONNXWrapper.h) is provided that hides most of the ONNX runtime APIs calls behind more convenient interfaces. The user algorithm `RunCustomNNAlg` needs to contain an instance of `top::ONNXWrapper` (or an instance of a class that inherits from `top::ONNXWrapper`) for the purpose of loading models, setting inputs, running inference, and retrieving outputs. Below is a code skeleton that shows an example of using the `top::ONNXWrapper` interface for running ML inference.
-```
-namespace top {
+The model inference is done using [ONNX runtime](https://onnxruntime.ai/) C++ interface. Models trained in any framework are expected to be already converted to the ONNX format. A [`top::ONNXWrapper`](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/TopCPToolkit/ONNXWrapper.h) class is provided that hides most of the ONNX runtime API calls behind more convenient interfaces. The user algorithm `RunCustomNNAlg` needs to contain an instance of `top::ONNXWrapper` (or an instance of a class that inherits from `top::ONNXWrapper`) for the purpose of loading models, setting inputs, running inference, and retrieving outputs. Below is a code skeleton that shows an example of using the `top::ONNXWrapper` interface for running ML inference.
 
-    class RunCustomNNAlg : public EL::AnaAlgorithm {
+??? "Show me the code"
+    ```cpp
+    namespace top {
 
-        // An ONNXWrapper object
-        std::unique_ptr<ONNXWrapper> m_NN;
+        class RunCustomNNAlg : public EL::AnaAlgorithm {
 
-        // Input handlers
-        CP::SysReadHandle<xAOD::JetContainer> m_jetsHandle {
-            this, "jets", "", "the jet container to use"
-	    };
-        CP::SysReadSelectionHandle m_jetSelection {
-            this, "jetSelection", "", "the selection on the input jets"
-	    };
+            // An ONNXWrapper object
+            std::unique_ptr<ONNXWrapper> m_NN;
 
-        ...
-
-        // Output handlers
-        CP::SysWriteDecorHandle<float> m_model_pred0 {
-            this, "my_model_pred1", "my_model_pred1_%SYS%", "One of my model predictions"
-	    };
-
-        ...
-
-        // Systematics
-        CP::SysListHandle m_systematicsList {this};
-
-        // Execute
-        StatusCode execute_syst(const CP::SystematicSet &sys) {
+            // Input handlers
+            CP::SysReadHandle<xAOD::JetContainer> m_jetsHandle {
+                this, "jets", "", "the jet container to use"
+            };
+            CP::SysReadSelectionHandle m_jetSelection {
+                this, "jetSelection", "", "the selection on the input jets"
+            };
 
             ...
 
-            // Retrieve objects from containers and apply selections
-            const xAOD::JetContainer *jets = nullptr;
-            ANA_CHECK(m_jetsHandle.retrieve(jets, sys));
+            // Output handlers
+            CP::SysWriteDecorHandle<float> m_model_pred0 {
+                this, "my_model_pred1", "my_model_pred1_%SYS%", "One of my model predictions"
+            };
 
-            ConstDataVector<xAOD::JetContainer> selected_jets(SG::VIEW_ELEMENTS);
-            for (const xAOD::Jet *jet : *jets) {
-                if (m_jetSelection.getBool(*jet, sys))
-                    selected_jets.push_back(jet);
+            ...
+
+            // Systematics
+            CP::SysListHandle m_systematicsList {this};
+
+            // Execute
+            StatusCode execute_syst(const CP::SystematicSet &sys) {
+
+                ...
+
+                // Retrieve objects from containers and apply selections
+                const xAOD::JetContainer *jets = nullptr;
+                ANA_CHECK(m_jetsHandle.retrieve(jets, sys));
+
+                ConstDataVector<xAOD::JetContainer> selected_jets(SG::VIEW_ELEMENTS);
+                for (const xAOD::Jet *jet : *jets) {
+                    if (m_jetSelection.getBool(*jet, sys))
+                        selected_jets.push_back(jet);
+                }
+
+                ...
+
+                // Compute inputs from the selected objects
+                std::vector<float> input_vec = compute_inputs_from(selected_jets, ...);
+
+                // Define input shapes
+                std::vector<int64_t> input_vec = {LENGTH, WIDTH, ...};
+
+                // Add inputs and convert to tensors via the ONNXWrapper interface
+                m_NN -> clearInputs();
+                m_NN -> addInputs(input_vec, input_dims);
+
+                // Pick the right model based on eventNumber
+                // This is for avoiding evaluating the same events that are used for training.
+                // For example, the model trained using events with odd event numbers should
+                // be used for inference only on events with even event numbers.
+                unsigned imodel = getSessionIndex(eventNumber);
+
+                // run inference
+                m_NN -> evaluate(imodel);
+
+                // get model predictions
+                float* out_p = m_NN -> getOutputs<float>("my_model_output_name");
+
+                // write output to ntuple
+                m_model_pred0 = out_p[0];
+
             }
 
-            ...
+        public:
 
-            // Compute inputs from the selected objects
-            std::vector<float> input_vec = compute_inputs_from(selected_jets, ...);
-
-            // Define input shapes
-            std::vector<int64_t> input_vec = {LENGTH, WIDTH, ...};
-
-            // Add inputs and convert to tensors via the ONNXWrapper interface
-            m_NN -> clearInputs();
-            m_NN -> addInputs(input_vec, input_dims);
-
-            // Pick the right model based on eventNumber
-            // This is for avoiding evaluating the same events that are used for training. For example, the model trained using events with odd event numbers should be used for inference only on events with even event numbers.
-            unsigned imodel = getSessionIndex(eventNumber);
-
-            // run inference
-            m_NN -> evaluate(imodel);
-
-            // get model predictions
-            float* out_p = m_NN -> getOutputs<float>("my_model_output_name");
-
-            // write output to ntuple
-            m_model_pred0 = out_p[0];
-
-        }
-
-    public:
-
-        RunCustomNNAlg(const std::string &name, ISvcLocator *pSvcLocator) {
-            // do constructor stuff
-        }
-
-        virtual StatusCode initialize() override {
-
-            // initialize inputs
-            ANA_CHECK(m_jetsHandle.initialize(m_systematicsList));
-            ANA_CHECK(m_jetSelection.initialize(m_systematicsList, m_jetsHandle, SG::AllowEmpty));
-
-            ...
-
-            // initialize outputs
-            ANA_CHECK(m_model_pred0.initialize(m_systematicsList, m_eventInfoHandle));
-
-            ...
-
-            // initialize and load models
-            m_NN = std::make_unique<ONNXWrapper>("MyFavouriteNN", <filepahts_to_trained_models.onnx>, ...);
-
-            // Other initialization and configuration
-            ...
-
-            return StatusCode::SUCCESS;
-        }
-
-        virtual StatusCode execute() override {
-            for (const auto &sys : m_systematicsList.systematicsVector()) {
-                ANA_CHECK(execute_syst(sys));
+            RunCustomNNAlg(const std::string &name, ISvcLocator *pSvcLocator) {
+                // do constructor stuff
             }
-            return StatusCode::SUCCESS;
-        }
 
-        virtual StatusCode finalize() override {
-            return StatusCode::SUCCESS;
-        }
+            virtual StatusCode initialize() override {
 
-    };
-} // namespace top
-```
+                // initialize inputs
+                ANA_CHECK(m_jetsHandle.initialize(m_systematicsList));
+                ANA_CHECK(m_jetSelection.initialize(m_systematicsList, m_jetsHandle, SG::AllowEmpty));
+
+                ...
+
+                // initialize outputs
+                ANA_CHECK(m_model_pred0.initialize(m_systematicsList, m_eventInfoHandle));
+
+                ...
+
+                // initialize and load models
+                m_NN = std::make_unique<ONNXWrapper>("MyFavouriteNN", <filepahts_to_trained_models.onnx>, ...);
+
+                // Other initialization and configuration
+                ...
+
+                return StatusCode::SUCCESS;
+            }
+
+            virtual StatusCode execute() override {
+                for (const auto &sys : m_systematicsList.systematicsVector()) {
+                    ANA_CHECK(execute_syst(sys));
+                }
+                return StatusCode::SUCCESS;
+            }
+
+            virtual StatusCode finalize() override {
+                return StatusCode::SUCCESS;
+            }
+
+        };
+    } // namespace top
+    ```
