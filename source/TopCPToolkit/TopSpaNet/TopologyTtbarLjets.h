@@ -8,7 +8,7 @@ namespace top {
   class TopSpaNetTtbarLjets: public TopSpaNetTopology {
     using TopSpaNetTopology::TopSpaNetTopology;
   public:
-    TopSpaNetTtbarLjets();
+    TopSpaNetTtbarLjets(const std::string& name, std::string model_even, std::string model_odd);
 
     virtual void Predict(ConstDataVector<xAOD::ElectronContainer>& electrons,
 			 ConstDataVector<xAOD::MuonContainer>& muons,

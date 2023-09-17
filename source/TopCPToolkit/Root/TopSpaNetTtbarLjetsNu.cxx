@@ -3,7 +3,7 @@
 namespace top {
 
   TopSpaNetTtbarLjetsNu::TopSpaNetTtbarLjetsNu(const std::string& name, std::string model_even, std::string model_odd) :
-    TopSpaNetTopology(name, {model_even, model_odd})
+    TopSpaNetTopology(name, model_even, model_odd)
   {
     m_MAX_JETS = 20; 
     m_NUM_JET_FEATURES = m_input_shapes[0][2];
@@ -15,11 +15,11 @@ namespace top {
     m_NUM_GLOBAL_FEATURES = m_input_shapes[4][2];
   }
 
-  void TopSpaNetTtbarLjets::Predict(ConstDataVector<xAOD::ElectronContainer>& electrons,
-				    ConstDataVector<xAOD::MuonContainer>& muons,
-				    ConstDataVector<xAOD::JetContainer>& jets,
-				    float met_met, float met_phi,
-				    unsigned long long eventNumber) {
+  void TopSpaNetTtbarLjetsNu::Predict(ConstDataVector<xAOD::ElectronContainer>& electrons,
+				      ConstDataVector<xAOD::MuonContainer>& muons,
+				      ConstDataVector<xAOD::JetContainer>& jets,
+				      float met_met, float met_phi,
+				      unsigned long long eventNumber) {
 
     xAOD::IParticleContainer leptons(SG::VIEW_ELEMENTS);
     std::vector<int> lepton_charges;
@@ -214,16 +214,16 @@ namespace top {
     m_up = bestcol;
     m_had_b = bestrow;
 
-    m_hadtop_score = max;
-    m_leptop_score = max_lb;
+    m_hadtop_assignment = max;
+    m_leptop_assignment = max_lb;
 
     // now gxrab the spanet prob that the particle is reconstructable
-    m_hadtop_existence = *(this->getOutputs<float>("thpresence"));
-    m_leptop_existence = *(this->getOutputs<float>("tlpresence"));
+    m_hadtop_detection = *(this->getOutputs<float>("thpresence"));
+    m_leptop_detection = *(this->getOutputs<float>("tlpresence"));
 
   }
 
-  std::vector<int> TopSpaNetTtbarLjets::GetOutputIndices() {
+  std::vector<int> TopSpaNetTtbarLjetsNu::GetOutputIndices() {
 
     // indices of the best assignment
     std::vector<int> indices = {m_lep_b, m_had_b, m_down, m_up};
@@ -231,10 +231,10 @@ namespace top {
     return indices;
   }
 
-  std::vector<float> TopSpaNetTtbarLjets::GetOutputScores() {
+  std::vector<float> TopSpaNetTtbarLjetsNu::GetOutputScores() {
 
     // scores of the best assignment
-    std::vector<float> scores = {m_hadtop_score, m_leptop_score, m_hadtop_existence, m_leptop_existence};
+    std::vector<float> scores = {m_hadtop_assignment, m_leptop_assignment, m_hadtop_detection, m_leptop_detection};
 
     return scores;
   }
