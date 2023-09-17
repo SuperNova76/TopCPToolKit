@@ -234,8 +234,6 @@ JET_N_BTAG >= 2
 JET_N_BTAG DL1dv01:FixedCutBEff_70 >= 1
 JET_N 25000 >= 4
 MET >= 20000
-MWT < 170000
-MET+MWT > 40000
 SAVE
 """,
         'ejets': """
@@ -243,6 +241,8 @@ IMPORT SUBcommon
 EL_N 5000 >= 1
 EL_N tight 5000 >= 1
 MU_N 5000 == 0
+MWT < 170000
+MET+MWT > 40000
 SAVE
 """,
         'mujets': """
@@ -286,7 +286,7 @@ SAVE
     outputContainers['klfitter_'] = 'KLFitterResult'
 
     from TopCPToolkit.TopSpaNetConfig import TopSpaNetConfig
-    for topology in ['TtbarLjets']:
+    for topology in ['TtbarLjets', 'TtbarLjetsNu']:
         cfg = TopSpaNetConfig()
         cfg.setOptionValue('electrons', 'AnaElectrons.tight')
         cfg.setOptionValue('muons', 'AnaMuons.tight')

@@ -44,6 +44,11 @@ namespace top {
     ANA_CHECK(m_had_top_assignment_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
     ANA_CHECK(m_lep_top_detection_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
     ANA_CHECK(m_had_top_detection_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
+    ANA_CHECK(m_reg_nu_eta_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
+    ANA_CHECK(m_reg_nu_px_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
+    ANA_CHECK(m_reg_nu_py_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
+    ANA_CHECK(m_reg_nu_pz_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
+    ANA_CHECK(m_reg_ttbar_m_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
 
     ANA_CHECK(m_systematicsList.initialize());
 

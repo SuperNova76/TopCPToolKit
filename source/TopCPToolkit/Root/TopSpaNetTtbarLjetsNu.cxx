@@ -90,7 +90,7 @@ namespace top {
       for (int j=0; j < m_NUM_JET_FEATURES; ++j) jet_values[1][i][j] = 0.0;
     }
 
-    for (int i=0; i < m_MAX_LEPTONS; ++i){
+    for (long unsigned int i=0; i < static_cast<long unsigned int>(m_MAX_LEPTONS); ++i){
       std::vector<float> lepton_kin;
 
       if (i < leptons.size()){
@@ -128,9 +128,9 @@ namespace top {
     for (int i=0; i < m_MAX_GLOBALS; ++i){
       std::vector<float> global_kin;
 
-      global_kin.push_back(std::log(event.m_met->met() + 1));
-      global_kin.push_back(sin(event.m_met->phi()));
-      global_kin.push_back(cos(event.m_met->phi()));
+      global_kin.push_back(std::log(met_met + 1));
+      global_kin.push_back(sin(met_phi));
+      global_kin.push_back(cos(met_phi));
 
       global_masks[0][i]=1;
 

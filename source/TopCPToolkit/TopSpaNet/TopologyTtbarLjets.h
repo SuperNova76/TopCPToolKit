@@ -19,6 +19,7 @@ namespace top {
 
     virtual std::vector<int> GetOutputIndices() override;
     virtual std::vector<float> GetOutputScores() override;
+    virtual std::vector<float> GetRegressedValues() override { return {}; }; // this model doesn't actually regress!
 
     TLorentzVector getNeutrino(TLorentzVector lepton, const float met_met, const float met_phi);
 
