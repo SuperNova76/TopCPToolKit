@@ -91,17 +91,17 @@ namespace top {
     CP::SysWriteDecorHandle<int> m_up_idx_decor {
       this, "up_index", "spanet_up_index_%SYS%", "Index of the up-type jet from the hadronic W decay in l+jets"
 	};
-    CP::SysWriteDecorHandle<float> m_lep_top_score_decor {
-      this, "leptonic_top_score", "spanet_lep_top_score_%SYS%", "Reconstruction score for the leptonic top in l+jets"
+    CP::SysWriteDecorHandle<float> m_lep_top_assignment_decor {
+      this, "leptonic_top_assignment", "spanet_lep_top_assignment_%SYS%", "Reconstruction assignment probability for the leptonic top in l+jets"
 	};
-    CP::SysWriteDecorHandle<float> m_had_top_score_decor {
-      this, "hadronic_top_score", "spanet_had_top_score_%SYS%", "Reconstruction score for the hadronic top in l+jets"
+    CP::SysWriteDecorHandle<float> m_had_top_assignment_decor {
+      this, "hadronic_top_assignment", "spanet_had_top_assignment_%SYS%", "Reconstruction assignment probability for the hadronic top in l+jets"
 	};
-    CP::SysWriteDecorHandle<float> m_lep_top_exist_decor {
-      this, "leptonic_top_existence", "spanet_lep_top_existence_%SYS%", "Reconstruction existence probability for the leptonic top in l+jets"
+    CP::SysWriteDecorHandle<float> m_lep_top_detection_decor {
+      this, "leptonic_top_detection", "spanet_lep_top_detection_%SYS%", "Reconstruction detection probability for the leptonic top in l+jets"
 	};
-    CP::SysWriteDecorHandle<float> m_had_top_exist_decor {
-      this, "hadronic_top_existence", "spanet_had_top_existence_%SYS%", "Reconstruction existence probability for the hadronic top in l+jets"
+    CP::SysWriteDecorHandle<float> m_had_top_detection_decor {
+      this, "hadronic_top_detection", "spanet_had_top_detection_%SYS%", "Reconstruction detection probability for the hadronic top in l+jets"
 	};
 
   };

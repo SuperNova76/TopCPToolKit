@@ -36,14 +36,14 @@ namespace top {
 
     ANA_CHECK(m_selection.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
 
-    ANA_CHECK(m_lep_b_idx_decor.initialize(m_systematicsList, m_eventInfoHandle));
-    ANA_CHECK(m_had_b_idx_decor.initialize(m_systematicsList, m_eventInfoHandle));
-    ANA_CHECK(m_down_idx_decor.initialize(m_systematicsList, m_eventInfoHandle));
-    ANA_CHECK(m_up_idx_decor.initialize(m_systematicsList, m_eventInfoHandle));
-    ANA_CHECK(m_lep_top_score_decor.initialize(m_systematicsList, m_eventInfoHandle));
-    ANA_CHECK(m_had_top_score_decor.initialize(m_systematicsList, m_eventInfoHandle));
-    ANA_CHECK(m_lep_top_exist_decor.initialize(m_systematicsList, m_eventInfoHandle));
-    ANA_CHECK(m_had_top_exist_decor.initialize(m_systematicsList, m_eventInfoHandle));
+    ANA_CHECK(m_lep_b_idx_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
+    ANA_CHECK(m_had_b_idx_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
+    ANA_CHECK(m_down_idx_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
+    ANA_CHECK(m_up_idx_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
+    ANA_CHECK(m_lep_top_assignment_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
+    ANA_CHECK(m_had_top_assignment_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
+    ANA_CHECK(m_lep_top_detection_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
+    ANA_CHECK(m_had_top_detection_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
 
     ANA_CHECK(m_systematicsList.initialize());
 
@@ -51,6 +51,12 @@ namespace top {
       m_spanet_reco = std::unique_ptr<top::TopSpaNetTopology> (new top::TopSpaNetTtbarLjets("AsgSpaNetTool"+m_topology,
 											    "TopCPToolkit/SpaNetModels/spanet_ttbarljets_trainedoneven.onnx",
 											    "TopCPToolkit/SpaNetModels/spanet_ttbarljets_trainedonodd.onnx")
+							       );
+    }
+    else if (m_topologyEnum == SpaNetEnums::Topology::TtbarLjetsNu) {
+      m_spanet_reco = std::unique_ptr<top::TopSpaNetTopology> (new top::TopSpaNetTtbarLjetsNu("AsgSpaNetTool"+m_topology,
+											    "TopCPToolkit/SpaNetModels/spanet_ttbarljetsnu_trainedoneven.onnx",
+											    "TopCPToolkit/SpaNetModels/spanet_ttbarljetsnu_trainedonodd.onnx")
 							       );
     }
     else {
@@ -84,10 +90,10 @@ namespace top {
     m_had_b_idx_decor.set(*evtInfo, -1, sys);
     m_down_idx_decor.set(*evtInfo, -1, sys);
     m_up_idx_decor.set(*evtInfo, -1, sys);
-    m_had_top_score_decor.set(*evtInfo, -999., sys);
-    m_lep_top_score_decor.set(*evtInfo, -999., sys);
-    m_had_top_exist_decor.set(*evtInfo, -999., sys);
-    m_lep_top_exist_decor.set(*evtInfo, -999., sys);
+    m_had_top_assignment_decor.set(*evtInfo, -999., sys);
+    m_lep_top_assignment_decor.set(*evtInfo, -999., sys);
+    m_had_top_detection_decor.set(*evtInfo, -999., sys);
+    m_lep_top_detection_decor.set(*evtInfo, -999., sys);
 
     if (m_selection && !m_selection.getBool(*evtInfo, sys))
       return StatusCode::SUCCESS;
@@ -136,10 +142,10 @@ namespace top {
       m_down_idx_decor.set( *evtInfo, best_indices[2], sys);
       m_up_idx_decor.set(   *evtInfo, best_indices[3], sys);
       const std::vector<float>& best_scores = m_spanet_reco->GetOutputScores();
-      m_had_top_score_decor.set(*evtInfo, best_scores[0], sys);
-      m_lep_top_score_decor.set(*evtInfo, best_scores[1], sys);
-      m_had_top_exist_decor.set(*evtInfo, best_scores[2], sys);
-      m_lep_top_exist_decor.set(*evtInfo, best_scores[3], sys);
+      m_had_top_assignment_decor.set(*evtInfo, best_scores[0], sys);
+      m_lep_top_assignment_decor.set(*evtInfo, best_scores[1], sys);
+      m_had_top_detection_decor.set(*evtInfo, best_scores[2], sys);
+      m_lep_top_detection_decor.set(*evtInfo, best_scores[3], sys);
     }
 
     return StatusCode::SUCCESS;
