@@ -8,6 +8,8 @@ namespace top {
   class TopSpaNetTtbarLjets: public TopSpaNetTopology {
     using TopSpaNetTopology::TopSpaNetTopology;
   public:
+    TopSpaNetTtbarLjets();
+
     virtual void Predict(ConstDataVector<xAOD::ElectronContainer>& electrons,
 			 ConstDataVector<xAOD::MuonContainer>& muons,
 			 ConstDataVector<xAOD::JetContainer>& jets,
@@ -27,10 +29,10 @@ namespace top {
     int m_up;
 
     // reconstruction scores
-    float m_hadtop_score;
-    float m_leptop_score;
-    float m_hadtop_existence;
-    float m_leptop_existence;
+    float m_hadtop_assignment;
+    float m_leptop_assignment;
+    float m_hadtop_detection;
+    float m_leptop_detection;
 
     // preliminary computation of the leptonic W boson
     TLorentzVector m_lepton;
