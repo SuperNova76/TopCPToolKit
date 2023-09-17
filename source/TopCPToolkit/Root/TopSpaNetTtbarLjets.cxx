@@ -2,6 +2,13 @@
 
 namespace top {
 
+  TopSpaNetTtbarLjets::TopSpaNetTtbarLjets(const std::string& name, std::string model_even, std::string model_odd) :
+    TopSpaNetTopology(name, {model_even, model_odd})
+  {
+    m_MAX_JETS = m_input_shapes[0][1];
+    m_NUM_FEATURES = m_input_shapes[0][2];
+  }
+
   TLorentzVector TopSpaNetTtbarLjets::getNeutrino(TLorentzVector lepton, const float met_met, const float met_phi){
     // Reference for quadratic solution: https://arxiv.org/pdf/1806.05463.pdf
 
