@@ -13,6 +13,9 @@ CP::BootstrapGeneratorAlg::BootstrapGeneratorAlg(const std::string &name,
 {
   declareProperty("nReplicas", m_nReplicas,
                   "number of bootstrapped weights (toys) to generate");
+
+  m_weights.resize(m_nReplicas);
+  m_poisson = std::poisson_distribution<int>(1);
 }
 
 long long int CP::BootstrapGeneratorAlg::generateSeed(long long int eventNumber, long int runNumber, int mcChannelNumber) {
@@ -30,9 +33,6 @@ StatusCode CP::BootstrapGeneratorAlg::initialize()
   ANA_CHECK(m_eventInfoHandle.initialize(m_systematicsList));
   ANA_CHECK(m_decoration.initialize(m_systematicsList, m_eventInfoHandle));
   ANA_CHECK(m_systematicsList.initialize());
-
-  m_weights.resize(m_nReplicas);
-  m_poisson = std::poisson_distribution<int>(1);
 
   return StatusCode::SUCCESS;
 }
