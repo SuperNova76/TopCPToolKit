@@ -8,7 +8,7 @@
 
 CP::BootstrapGeneratorAlg::BootstrapGeneratorAlg(const std::string &name,
                                                  ISvcLocator *pSvcLocator)
-    : EL::AnaAlgorithm(name, pSvcLocator),
+    : EL::AnaAlgorithm(name, pSvcLocator)
     , m_nReplicas(1000)
     , m_poisson(1)
 {
