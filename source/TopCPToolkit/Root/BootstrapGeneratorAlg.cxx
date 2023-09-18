@@ -53,7 +53,7 @@ StatusCode CP::BootstrapGeneratorAlg::execute()
     // and fill it with Poisson(1)
     for (int i = 0; i < m_nReplicas; i++)
     {
-      m_weights.push_back(m_poisson(m_rng));
+      m_weights[i] = m_poisson(m_rng);
     }
 
     // decorate weights onto EventInfo
