@@ -31,7 +31,7 @@ StatusCode CP::BootstrapGeneratorAlg::initialize()
   ANA_CHECK(m_decoration.initialize(m_systematicsList, m_eventInfoHandle));
   ANA_CHECK(m_systematicsList.initialize());
 
-  m_weights = std::vector<int>(m_nReplicas);
+  m_weights.resize(m_nReplicas);
   m_poisson = std::poisson_distribution<int>(1);
 
   return StatusCode::SUCCESS;
