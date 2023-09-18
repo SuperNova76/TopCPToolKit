@@ -9,13 +9,12 @@
 CP::BootstrapGeneratorAlg::BootstrapGeneratorAlg(const std::string &name,
                                                  ISvcLocator *pSvcLocator)
     : EL::AnaAlgorithm(name, pSvcLocator),
-      m_nReplicas(1000)
+    , m_nReplicas(1000)
+    , m_poisson(1)
 {
   declareProperty("nReplicas", m_nReplicas,
                   "number of bootstrapped weights (toys) to generate");
-
   m_weights.resize(m_nReplicas);
-  m_poisson = std::poisson_distribution<int>(1);
 }
 
 long long int CP::BootstrapGeneratorAlg::generateSeed(long long int eventNumber, long int runNumber, int mcChannelNumber) {
