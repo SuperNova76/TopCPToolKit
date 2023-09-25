@@ -1,4 +1,5 @@
 from AnalysisAlgorithmsConfig.ConfigBlock import ConfigBlock
+from AsgAnalysisAlgorithms.AsgAnalysisConfig import makeEventCutFlowConfig
 
 class EventSelectionMergerConfig(ConfigBlock):
     """ConfigBlock for merging the output of various selection streams"""
@@ -20,8 +21,8 @@ class EventSelectionMergerConfig(ConfigBlock):
 class EventSelectionConfig(ConfigBlock):
     """ConfigBlock for interpreting text-based event selections"""
 
-    def __init__(self):
-        super(EventSelectionConfig, self).__init__('EventSelection')
+    def __init__(self, blockname):
+        super(EventSelectionConfig, self).__init__('EventSelection_'+blockname)
         self.addOption('name', "", type=str)
         self.addOption('electrons', "", type=str)
         self.addOption('muons', "", type=str)
@@ -34,18 +35,22 @@ class EventSelectionConfig(ConfigBlock):
         self.addOption('debugMode', False, type=bool)
         self.step = 0
         self.currentDecoration = ''
+        self.cutflow = []
 
     def makeAlgs(self, config):
         # need to re-initialize here to deal with multiple passes
         self.step = 0
         # initialize the pre-selection
         self.currentDecoration = self.preselection
+        # re-initialize the cutflow
+        self.cutflow = []
         # read the selection cuts
         if self.selectionCuts is None:
             raise ValueError ("You must provide the 'selectionCuts' option to 'EventSelectionConfig': "
                               "a single string where each line represents a different selection cut to apply in order.")
         for line in self.selectionCuts.split("\n"):
             self.interpret(line, config)
+        config.addEventCutFlow(self.name, self.getCutflow())
 
     def interpret(self, text, cfg):
         text = text.strip()
@@ -79,7 +84,7 @@ class EventSelectionConfig(ConfigBlock):
         elif "SAVE" in text.split():
             self.add_SAVE(text, cfg)
         elif "IMPORT" in text.split():
-            self.add_IMPORT(text)
+            self.add_IMPORT(text, cfg)
         else:
             raise ValueError (f"The following selection cut is not recognised! --> {text}")
 
@@ -135,14 +140,19 @@ class EventSelectionConfig(ConfigBlock):
         else:
             return test
 
+    def getCutflow(self):
+        return self.cutflow
+
     def setDecorationName(self, algorithm, config, decoration):
         algorithm.decorationName = f'{decoration}'
         self.currentDecoration = decoration
+        self.cutflow.append( decoration )
         if self.debugMode:
             config.addOutputVar('EventInfo', decoration, decoration.split("_%SYS%")[0])
+        config.addSelection('EventInfo', '', decoration)
         return
 
-    def add_IMPORT(self, text):
+    def add_IMPORT(self, text, config):
         # this is used to import a previous selection
         items = text.split()
         if items[0] != "IMPORT":
@@ -154,6 +164,9 @@ class EventSelectionConfig(ConfigBlock):
             self.currentDecoration = f'pass_{region}_%SYS%'
         else:
             self.currentDecoration = f'{self.currentDecoration}&&pass_{region}_%SYS%'
+        # for the cutflow, we need to retrieve all the cuts corresponding to this IMPORT
+        imported_cuts = [cut for cut in config.getSelectionCutFlow('EventInfo', '') if cut.startswith(region)]
+        self.cutflow += imported_cuts
         return
 
     def add_NEL_selector(self, text, config):
@@ -388,7 +401,7 @@ def makeEventSelectionConfig(seq,
                              electrons=None, muons=None, jets=None, met=None,
                              btagDecoration=None, preselection=None,
                              selectionCuts=None, noFilter=None,
-                             debugMode=None):
+                             debugMode=None, cutFlowHistograms=None):
     """Create an event selection config block
 
     Keyword arguments:
@@ -402,9 +415,10 @@ def makeEventSelectionConfig(seq,
         selectionCuts -- a string listing one selection cut per line
         noFilter -- whether to disable the event filter
         debugMode -- enables saving all intermediate decorations
+        cutFlowHistograms -- whether to toggle event cutflow histograms per systematic
     """
 
-    config = EventSelectionConfig()
+    config = EventSelectionConfig(name)
     config.setOptionValue ('name', name)
     config.setOptionValue ('electrons', electrons, noneAction='ignore')
     config.setOptionValue ('muons', muons, noneAction='ignore')
@@ -417,11 +431,16 @@ def makeEventSelectionConfig(seq,
     config.setOptionValue ('debugMode', debugMode, noneAction='ignore')
     seq.append(config)
 
+    # add event cutflow algorithm
+    if cutFlowHistograms:
+        makeEventCutFlowConfig(seq, 'EventInfo', selectionName='', postfix=name,
+                               customSelections=name)
+
 def makeMultipleEventSelectionConfigs(seq,
                                       electrons=None, muons=None, jets=None, met=None,
                                       btagDecoration=None, preselection=None,
                                       selectionCutsDict=None, noFilter=None,
-                                      debugMode=None):
+                                      debugMode=None, cutFlowHistograms=None):
     """Create multiple event selection config blocks
 
        Keyword arguments:
@@ -434,18 +453,19 @@ def makeMultipleEventSelectionConfigs(seq,
         selectionCutsDict -- a dictionary with key the name of the selection and value a string listing one selection cut per line
         noFilter -- whether to disable the event filter
         debugMode -- enables saving all intermediate decorations
+        cutFlowHistograms -- whether to toggle event cutflow histograms per region and per systematic
     """
 
     # handle the case where a user is only providing one selection
     if len(list(selectionCutsDict.keys())) == 1:
         name, selectionCuts = list(selectionCutsDict.items())[0]
-        makeEventSelectionConfig(seq, name, electrons, muons, jets, met, btagDecoration, preselection, selectionCuts, noFilter, debugMode)
+        makeEventSelectionConfig(seq, name, electrons, muons, jets, met, btagDecoration, preselection, selectionCuts, noFilter, debugMode, cutFlowHistograms)
         return
 
     # first, we generate all the individual event selections
     # !!! it's important to pass noFilter=True, to avoid applying the individual filters in series
     for name, selectionCuts in selectionCutsDict.items():
-        makeEventSelectionConfig(seq, name, electrons, muons, jets, met, btagDecoration, preselection, selectionCuts, noFilter=True, debugMode=debugMode)
+        makeEventSelectionConfig(seq, name, electrons, muons, jets, met, btagDecoration, preselection, selectionCuts, noFilter=True, debugMode=debugMode, cutFlowHistograms=cutFlowHistograms)
 
     # now we are ready to collect all the filters and apply their logical OR
     # !!! subregions (name starts with "SUB") are not used in the final filtering

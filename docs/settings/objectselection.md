@@ -43,3 +43,17 @@
 
 `configName`
 :   name of the block config, typically not needed here. The default is `Thinning`.
+
+## [makeObjectCutFlowConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
+
+`seq`
+:   the config sequence.
+
+`containerName`
+:   the name of the input container.
+
+`postfix`
+:   a postfix to apply to decorations and algorithm names. Typically not needed here.
+
+`selectionName`
+:   the name of the selection to perform the cutflow for. The default is `''` (empty string), meaning that the cutflow is performed for every object within the container. Specifying a name (e.g. `loose`) generates the cutflow only for those object that also pass that selection.
