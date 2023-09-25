@@ -1,6 +1,6 @@
 ## [makeEventSelectionConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/EventSelectionConfig.py)
 
-Performs a single event selection. To define multiple selection regions, see [makeMultipleEventSelectionConfigs](/settings/eventselection/#makemultipleeventselectionconfigs) below.
+Performs a single event selection. To define multiple selection regions, see [`makeMultipleEventSelectionConfigs`](/settings/eventselection/#makemultipleeventselectionconfigs) below.
 
 `seq`
 :   the config sequence.
@@ -32,9 +32,12 @@ Performs a single event selection. To define multiple selection regions, see [ma
 `debugMode`
 :   whether to create an output branch for every single line of the selection cuts. The default is `False` (only saves the final decision).
 
+`cutFlowHistograms`
+:   whether to generate cutflow histograms for the selection cuts (performs a call to [`makeEventCutFlowConfig`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)). The default is `False` (no histograms).
+
 ## [makeMultipleEventSelectionConfigs](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/EventSelectionConfig.py)
 
-Performs multiple event selections, split into separate regions and subregions. A final logical OR of all region selections is used as event filter. The arguments below are the same as for [makeEventSelectionConfig](/settings/eventselection/#makeeventselectionconfig), except for `selectionCutsDict`!
+Performs multiple event selections, split into separate regions and subregions. A final logical OR of all region selections is used as event filter. The arguments below are the same as for [`makeEventSelectionConfig`](/settings/eventselection/#makeeventselectionconfig), except for `selectionCutsDict`!
 
 `seq`
 :   the config sequence.
@@ -65,6 +68,9 @@ Performs multiple event selections, split into separate regions and subregions. 
 
 `debugMode`
 :   whether to create an output branch for every single line of the selection cuts. The default is `False` (only saves the final decision).
+
+`cutFlowHistograms`
+:   whether to generate cutflow histograms for the selection cuts (performs a call to [`makeEventCutFlowConfig`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)). The default is `False` (no histograms).
 
 ## Available keywords
 
