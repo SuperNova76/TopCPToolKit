@@ -25,21 +25,32 @@ class TopSpaNetConfig(ConfigBlock):
         alg.topology = self.topology
 
         # give appropriate names for the handles to decorate
-        alg.leptonic_b_index       = self.topology+'_spanet_lep_b_index_%SYS%'
-        alg.hadronic_b_index       = self.topology+'_spanet_had_b_index_%SYS%'
-        alg.down_index             = self.topology+'_spanet_down_index_%SYS%'
-        alg.up_index               = self.topology+'_spanet_up_index_%SYS%'
-        alg.leptonic_top_score     = self.topology+'_spanet_lep_top_score_%SYS%'
-        alg.hadronic_top_score     = self.topology+'_spanet_had_top_score_%SYS%'
-        alg.leptonic_top_existence = self.topology+'_spanet_lep_top_existence_%SYS%'
-        alg.hadronic_top_existence = self.topology+'_spanet_had_top_existence_%SYS%'
+        alg.leptonic_b_index        = self.topology+'_spanet_lep_b_index_%SYS%'
+        alg.hadronic_b_index        = self.topology+'_spanet_had_b_index_%SYS%'
+        alg.down_index              = self.topology+'_spanet_down_index_%SYS%'
+        alg.up_index                = self.topology+'_spanet_up_index_%SYS%'
+        alg.leptonic_top_assignment = self.topology+'_spanet_lep_top_assignment_%SYS%'
+        alg.hadronic_top_assignment = self.topology+'_spanet_had_top_assignment_%SYS%'
+        alg.leptonic_top_detection  = self.topology+'_spanet_lep_top_detection_%SYS%'
+        alg.hadronic_top_detection  = self.topology+'_spanet_had_top_detection_%SYS%'
+        alg.regressed_neutrino_eta  = self.topology+'_spanet_reg_nu_eta_%SYS%'
+        alg.regressed_neutrino_px   = self.topology+'_spanet_reg_nu_px_%SYS%'
+        alg.regressed_neutrino_py   = self.topology+'_spanet_reg_nu_py_%SYS%'
+        alg.regressed_neutrino_pz   = self.topology+'_spanet_reg_nu_pz_%SYS%'
+        alg.regressed_ttbar_mass    = self.topology+'_spanet_reg_ttbar_m_%SYS%'
 
-        if self.topology == 'TtbarLjets':
+        if self.topology == 'TtbarLjets' or self.topology == 'TtbarLjetsNu':
             config.addOutputVar('EventInfo', alg.leptonic_b_index, self.topology+'_spanet_lep_b_index')
             config.addOutputVar('EventInfo', alg.hadronic_b_index, self.topology+'_spanet_had_b_index')
             config.addOutputVar('EventInfo', alg.down_index, self.topology+'_spanet_down_index')
             config.addOutputVar('EventInfo', alg.up_index, self.topology+'_spanet_up_index')
-            config.addOutputVar('EventInfo', alg.leptonic_top_score, self.topology+'_spanet_lep_top_score')
-            config.addOutputVar('EventInfo', alg.hadronic_top_score, self.topology+'_spanet_had_top_score')
-            config.addOutputVar('EventInfo', alg.leptonic_top_existence, self.topology+'_spanet_lep_top_existence')
-            config.addOutputVar('EventInfo', alg.hadronic_top_existence, self.topology+'_spanet_had_top_existence')
+            config.addOutputVar('EventInfo', alg.leptonic_top_assignment, self.topology+'_spanet_lep_top_assignment')
+            config.addOutputVar('EventInfo', alg.hadronic_top_assignment, self.topology+'_spanet_had_top_assignment')
+            config.addOutputVar('EventInfo', alg.leptonic_top_detection, self.topology+'_spanet_lep_top_detection')
+            config.addOutputVar('EventInfo', alg.hadronic_top_detection, self.topology+'_spanet_had_top_detection')
+            if self.topology == 'TtbarLjetsNu':
+                config.addOutputVar('EventInfo', alg.regressed_neutrino_eta, self.topology+'_spanet_reg_nu_eta')
+                config.addOutputVar('EventInfo', alg.regressed_neutrino_px, self.topology+'_spanet_reg_nu_px')
+                config.addOutputVar('EventInfo', alg.regressed_neutrino_py, self.topology+'_spanet_reg_nu_py')
+                config.addOutputVar('EventInfo', alg.regressed_neutrino_pz, self.topology+'_spanet_reg_nu_pz')
+                config.addOutputVar('EventInfo', alg.regressed_ttbar_mass, self.topology+'_spanet_reg_ttbar_m')

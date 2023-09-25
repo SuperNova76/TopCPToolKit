@@ -69,7 +69,8 @@
 `topology`
 :   the SPA-Net model to run. See [possible values](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/TopSpaNet/SpaNetEnums.h).
 
-!!! success "Registers 3 types of topology-dependent variables:"
+!!! success "Registers up to 4 types of topology-dependent variables:"
     - `index`: index within a given container of the relevant particle candidate
-    - `score`: quality of the system reconstruction
-    - `existence`: likelihood of the event containing all necessary decay products to reconstruct the system
+    - `assignment`: quality of the system reconstruction
+    - `detection`: likelihood of the event containing all necessary decay products to reconstruct the system
+    - `reg`: regressed kinematic properties

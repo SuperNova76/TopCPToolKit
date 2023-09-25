@@ -29,16 +29,21 @@ namespace top {
 
     virtual std::vector<int> GetOutputIndices() = 0;
     virtual std::vector<float> GetOutputScores() = 0;
+    virtual std::vector<float> GetRegressedValues() = 0;
 
     void setBtagger(std::string algorithm) { m_btagger = algorithm; };
 
     unsigned getSessionIndex(unsigned long long eventNumber) override;
 
   protected:
-
     std::string m_btagger;
-    int m_MAX_JETS;
     int m_NUM_FEATURES;
+    int m_MAX_JETS;
+    int m_NUM_JET_FEATURES;
+    int m_MAX_LEPTONS;
+    int m_NUM_LEPTON_FEATURES;
+    int m_MAX_GLOBALS;
+    int m_NUM_GLOBAL_FEATURES;
 
   };
 } // namespace top

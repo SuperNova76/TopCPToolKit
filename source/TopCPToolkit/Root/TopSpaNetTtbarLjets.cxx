@@ -2,6 +2,13 @@
 
 namespace top {
 
+  TopSpaNetTtbarLjets::TopSpaNetTtbarLjets(const std::string& name, std::string model_even, std::string model_odd) :
+    TopSpaNetTopology(name, model_even, model_odd)
+  {
+    m_MAX_JETS = m_input_shapes[0][1];
+    m_NUM_FEATURES = m_input_shapes[0][2];
+  }
+
   TLorentzVector TopSpaNetTtbarLjets::getNeutrino(TLorentzVector lepton, const float met_met, const float met_phi){
     // Reference for quadratic solution: https://arxiv.org/pdf/1806.05463.pdf
 
@@ -237,12 +244,12 @@ namespace top {
     m_up = bestcol;
     m_had_b = bestrow;
 
-    m_hadtop_score = max;
-    m_leptop_score = max_lb;
+    m_hadtop_assignment = max;
+    m_leptop_assignment = max_lb;
 
     // now gxrab the spanet prob that the particle is reconstructable
-    m_hadtop_existence = *(this->getOutputs<float>("thpresence"));
-    m_leptop_existence = *(this->getOutputs<float>("tlpresence"));
+    m_hadtop_detection = *(this->getOutputs<float>("thpresence"));
+    m_leptop_detection = *(this->getOutputs<float>("tlpresence"));
 
   }
 
@@ -257,7 +264,7 @@ namespace top {
   std::vector<float> TopSpaNetTtbarLjets::GetOutputScores() {
 
     // scores of the best assignment
-    std::vector<float> scores = {m_hadtop_score, m_leptop_score, m_hadtop_existence, m_leptop_existence};
+    std::vector<float> scores = {m_hadtop_assignment, m_leptop_assignment, m_hadtop_detection, m_leptop_detection};
 
     return scores;
   }
