@@ -9,7 +9,7 @@
     Our good friend ChatGPT :upside_down:. And DALL-E is responsible for the avatar of the project on GitLab.
 
 
-### Warning messages
+## Warning messages
 
 ??? question "How do I fix 'The trigger you are looking for, year and mc are not consistent'?"
     If you see the following warning message repeatedly printed
@@ -33,3 +33,26 @@
         ATH_CHECK( tool->setProperty("OutputLevel", msg().level()) );
     ```
     (or equivalently for our purposes, `ANA_CHECK`).
+
+
+## Error messages
+
+??? question "I get a crash on 'Exactly two leptons are required to check whether the event is OS or SS!'"
+    This comes from your [event selection config](/settings/eventselection/#available-keywords).
+    As the error message suggests, you are trying to use either the `OS` or `SS` keywords in an event selection that is not enforcing the presence of exactly two electrons or muons.
+    Enforce it, and the error will go away.
+
+
+## Derivation formats
+
+??? question "Which derivation formats are currently supported?"
+    We support PHYS and PHYSLITE. If you would like to use this framework for CP-specific derivation formats, or have observed a breakage in a supported format, please [open an issue](/contributing/).
+
+??? question "Which p-tags are supported?"
+    We always recommend using the [latest available p-tags](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/FullListOfPtagsAndPatternsR22).
+
+
+## Unexpected output
+
+??? question "No events pass the GRL selection in this MC sample!"
+    This is because your MC sample is being treated as data. It has been observed on a few MC samples that some of the metadata is wrongly written, e.g. the `SimFlavour` field is missing in p5631 and the code is misled into defaulting to data.
