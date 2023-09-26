@@ -244,7 +244,7 @@ def makeRecoConfiguration(metadata, algSeq, configSeq, debugHistograms, noFilter
                                  selectionName='track_jets',
                                  outputName='OutTrackJets')
 
-    from TopCPToolkit.EventSelectionConfig import makeMultipleEventSelectionConfigs
+    from EventSelectionAlgorithms.EventSelectionConfig import makeMultipleEventSelectionConfigs
     mycuts = {
         'SUBcommon': """
 JET_N_BTAG >= 2
