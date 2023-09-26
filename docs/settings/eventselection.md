@@ -1,4 +1,4 @@
-## [makeEventSelectionConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/EventSelectionConfig.py)
+## [makeEventSelectionConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EventSelectionAlgorithms/python/EventSelectionConfig.py)
 
 Performs a single event selection. To define multiple selection regions, see [`makeMultipleEventSelectionConfigs`](/settings/eventselection/#makemultipleeventselectionconfigs) below.
 
@@ -35,7 +35,7 @@ Performs a single event selection. To define multiple selection regions, see [`m
 `cutFlowHistograms`
 :   whether to generate cutflow histograms for the selection cuts (performs a call to [`makeEventCutFlowConfig`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)). The default is `False` (no histograms).
 
-## [makeMultipleEventSelectionConfigs](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/EventSelectionConfig.py)
+## [makeMultipleEventSelectionConfigs](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EventSelectionAlgorithms/python/EventSelectionConfig.py)
 
 Performs multiple event selections, split into separate regions and subregions. A final logical OR of all region selections is used as event filter. The arguments below are the same as for [`makeEventSelectionConfig`](/settings/eventselection/#makeeventselectionconfig), except for `selectionCutsDict`!
 
