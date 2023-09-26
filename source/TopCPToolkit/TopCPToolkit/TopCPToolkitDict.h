@@ -2,14 +2,6 @@
 #define TOPCPTOOLKIT_DICT_H
 
 #include "TopCPToolkit/ExtraParticleDecorationAlg.h"
-#include "TopEventSelection/NObjectPtSelectorAlg.h"
-#include "TopEventSelection/METSelectorAlg.h"
-#include "TopEventSelection/MWTSelectorAlg.h"
-#include "TopEventSelection/METMWTSelectorAlg.h"
-#include "TopEventSelection/MLLSelectorAlg.h"
-#include "TopEventSelection/MLLWindowSelectorAlg.h"
-#include "TopEventSelection/ChargeSelectorAlg.h"
-#include "TopEventSelection/SaveFilterAlg.h"
 #include "TopCPToolkit/LeptonSFCalculatorAlg.h"
 #include "TopCPToolkit/KLFitterAlg.h"
 #include "TopCPToolkit/KLFitterResult.h"

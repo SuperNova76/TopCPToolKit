@@ -4,14 +4,6 @@
        should be created. -->
 
   <class name="top::ExtraParticleDecorationAlg" />
-  <class name="top::NObjectPtSelectorAlg" />
-  <class name="top::METSelectorAlg" />
-  <class name="top::MWTSelectorAlg" />
-  <class name="top::METMWTSelectorAlg" />
-  <class name="top::MLLSelectorAlg" />
-  <class name="top::MLLWindowSelectorAlg" />
-  <class name="top::ChargeSelectorAlg" />
-  <class name="top::SaveFilterAlg" />
   <class name="top::LeptonSFCalculatorAlg" />
   <class name="top::RunPartonHistoryAlg" />
   <class name="top::ParticleLevelAlg" />
