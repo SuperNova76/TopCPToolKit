@@ -91,11 +91,11 @@ The symbol `$` below is a placeholder for any of the following comparison operat
 | `MWT` | `$ ref` | Compares (`$`) the transverse mass of the W boson<br>(lepton+MET system) to `ref` (in MeV). |
 | `MET+MWT` | `$ ref` | Compares (`$`) the sum of the MET and the transverse mass<br>of the W boson(lepton+MET system) to `ref` (in MeV). |
 | `MLL` | `$ ref` | Compares (`$`) the dilepton invariant mass to `ref` (in MeV). |
-| `MLLWINDOW` | `high low` | Selects the event if `MLL < high || MLL > low` (in MeV). |
+| `MLLWINDOW` | `low high` <br> `high low` | Selects the event if `MLL > low && MLL < high` (in MeV).<br>Selects the event if `MLL < low || MLL > high` (in MeV). |
 | `OS` | None | Selects the event if it contains two opposite-sign leptons. |
 | `SS` | None | Selects the event if it contains two same-sign leptons. |
 | `SAVE` | None | Saves the current selection (can be retrieved as `pass_<region>_%SYS%`). |
 | `IMPORT` | `subreg` | Applies the selection cuts defined in another region `subreg`. |
 
 !!! tip "Applying $m(\ell,\ell)$ window cuts, or vetos"
-    To select OSSF dilepton events in a 10 GeV window of the Z boson mass, run `MLLWINDOW 101 81`. To veto them (e.g. for a purer $t\bar{t}$ selection), run `MLLWINDOW 81 101`.
+    To select OSSF dilepton events in a 10 GeV window of the $Z$ boson mass, run `MLLWINDOW 81 101`. To veto them (e.g. for a purer $t\bar{t}$ selection), run `MLLWINDOW 101 81`.
