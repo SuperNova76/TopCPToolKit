@@ -38,8 +38,6 @@ latestABrelease:
   rules:
     - when: always
   stage: build
-  tags:
-    - docker
   variables:
     JOBNAME: job_latestABrelease
   script:
@@ -62,8 +60,6 @@ referenceTopCPToolkitTag:
   rules:
     - when: always
   stage: build
-  tags:
-    - docker
   variables:
     JOBNAME: job_referenceTag
   script:
@@ -89,8 +85,6 @@ lastweekTopCPToolkitTag:
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
   stage: build
-  tags:
-    - docker
   variables:
     JOBNAME: job_lastweekTag
   script:
@@ -116,8 +110,6 @@ latestABnightly:
   rules:
     - when: always
   stage: build
-  tags:
-    - docker
   variables:
     JOBNAME: job_latestABnightly
   script:
