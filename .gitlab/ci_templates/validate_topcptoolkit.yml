@@ -30,7 +30,7 @@ validateRun2:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
   stage: validate
   tags:
-    - docker
+    - cvmfs
   variables:
     JOBNAME: job_validateRun2
     REFERENCEFILE: ${CI_PROJECT_DIR}/job_referenceRun2/${RUN_DIR}/output_job_referenceRun2/data-ANALYSIS/output.root
@@ -46,7 +46,7 @@ validateRun3:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
   stage: validate
   tags:
-    - docker
+    - cvmfs
   variables:
     JOBNAME: job_validateRun3
     REFERENCEFILE: ${CI_PROJECT_DIR}/job_referenceRun3/${RUN_DIR}/output_job_referenceRun3/data-ANALYSIS/output.root
@@ -62,7 +62,7 @@ validateLastWeekRun2:
     - if: $CI_PIPELINE_SOURCE == "schedule"
   stage: validate
   tags:
-    - docker
+    - cvmfs
   variables:
     JOBNAME: job_validateLastWeekRun2
     REFERENCEFILE: ${CI_PROJECT_DIR}/job_lastweekRun2/${RUN_DIR}/output_job_lastweekRun2/data-ANALYSIS/output.root
@@ -78,7 +78,7 @@ validateLastWeekRun3:
     - if: $CI_PIPELINE_SOURCE == "schedule"
   stage: validate
   tags:
-    - docker
+    - cvmfs
   variables:
     JOBNAME: job_validateLastWeekRun3
     REFERENCEFILE: ${CI_PROJECT_DIR}/job_lastweekRun3/${RUN_DIR}/output_job_lastweekRun3/data-ANALYSIS/output.root

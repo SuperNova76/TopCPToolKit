@@ -50,7 +50,7 @@ variables:
 .base_job_template:
   stage: run
   tags:
-    - docker
+    - cvmfs
   artifacts:
     paths:
       - ${JOBNAME}
