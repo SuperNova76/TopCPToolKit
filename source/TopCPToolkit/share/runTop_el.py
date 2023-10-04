@@ -43,6 +43,7 @@ for f in files:
 sh.add(sample)
 
 driver = ROOT.EL.DirectDriver()
+driver.options().setBool(ROOT.EL.Job.optGridReporting, True)
 
 # read FileMetadata
 metadata = GetFileMD(files)
