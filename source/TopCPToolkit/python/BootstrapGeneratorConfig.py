@@ -25,7 +25,7 @@ class BootstrapGeneratorConfig(ConfigBlock):
         else:
             alg.decorationName = "bootstrapWeights_%SYS%"
         
-        config.addOutputVar ('EventInfo', alg.decorationName, alg.decorationName.split("_%SYS")[0], noSys=True)
+        config.addOutputVar ('EventInfo', alg.decorationName, alg.decorationName.split("_%SYS%")[0], noSys=True)
 
         return
 

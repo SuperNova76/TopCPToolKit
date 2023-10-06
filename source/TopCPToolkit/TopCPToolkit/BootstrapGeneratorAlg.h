@@ -13,7 +13,7 @@
 #include <SystematicsHandles/SysWriteDecorHandle.h>
 #include <xAODEventInfo/EventInfo.h>
 
-#include <random>
+#include <TRandom3.h>
 
 namespace CP
 {
@@ -33,10 +33,10 @@ namespace CP
     StatusCode execute() override;
 
   public:
-    StatusCode finalize() override;
+    unsigned long int generateSeed(long long int eventNumber, long int runNumber, int mcChannelNumber);
 
   public:
-    long long int generateSeed(long long int eventNumber, long int runNumber, int mcChannelNumber);
+    unsigned long int fnv1a_32(const void *buffer, size_t size, unsigned long offset_basis);
 
     /// \brief the systematics list we run
   private:
@@ -53,19 +53,15 @@ namespace CP
 
     /// \brief the random number generator (Mersenne Twister)
   private:
-    std::mt19937 m_rng;
-
-    /// \brief a Poisson distribution
-  private:
-    std::poisson_distribution<int> m_poisson;
+    TRandom3 m_rng;
 
     /// \brief the vector of bootstrap replica weights
   private:
-    std::vector<int> m_weights;
+    std::vector<short int> m_weights;
 
     /// \brief the output decoration
   private:
-    SysWriteDecorHandle<std::vector<int>> m_decoration{
+    SysWriteDecorHandle<std::vector<short int>> m_decoration{
         this, "decorationName", "bootstrapWeights_%SYS%", "decoration name for the vector of bootstrapped weights"};
   };
 } // namespace CP

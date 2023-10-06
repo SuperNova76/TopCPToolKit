@@ -10,15 +10,28 @@ CP::BootstrapGeneratorAlg::BootstrapGeneratorAlg(const std::string &name,
                                                  ISvcLocator *pSvcLocator)
     : EL::AnaAlgorithm(name, pSvcLocator)
     , m_nReplicas(1000)
-    , m_poisson(1)
 {
   declareProperty("nReplicas", m_nReplicas,
                   "number of bootstrapped weights (toys) to generate");
   m_weights.resize(m_nReplicas);
 }
 
-long long int CP::BootstrapGeneratorAlg::generateSeed(long long int eventNumber, long int runNumber, int mcChannelNumber) {
-  return eventNumber ^ runNumber; // XORing may not be unique!
+unsigned long int CP::BootstrapGeneratorAlg::fnv1a_32(const void *buffer, size_t size, unsigned long offset_basis) {
+  unsigned long h = offset_basis;
+  unsigned char *p = (unsigned char *)buffer;
+  for (size_t i = 0; i < size; i++) {
+    h ^= p[i];
+    h *= prime;
+  }
+  return h;
+}
+
+unsigned long int CP::BootstrapGeneratorAlg::generateSeed(long long int eventNumber, long int runNumber, int mcChannelNumber)
+{
+  unsigned long hash = fnv1a_32(&runnumber, sizeof(runnumber), offset);
+  hash = fnv1a_32(&eventnumber, sizeof(eventnumber), hash);
+  hash = fnv1a_32(&dsid, sizeof(dsid), hash);
+  return hash;
 }
 
 StatusCode CP::BootstrapGeneratorAlg::initialize()
@@ -44,25 +57,20 @@ StatusCode CP::BootstrapGeneratorAlg::execute()
     const xAOD::EventInfo *evtInfo = nullptr;
     ANA_CHECK(m_eventInfoHandle.retrieve(evtInfo, sys));
 
-    // TO DO: generate a unique seed from runNumber, eventNumber and DSID!
-    m_rng.seed(generateSeed(evtInfo->runNumber(), evtInfo->eventNumber(), evtInfo->mcChannelNumber()));
+    // generate a unique seed from runNumber, eventNumber and DSID!
+    m_rng.setSeed(generateSeed(evtInfo->runNumber(), evtInfo->eventNumber(), evtInfo->mcChannelNumber()));
 
     // clear the vector of weights
     m_weights.clear();
     // and fill it with Poisson(1)
     for (int i = 0; i < m_nReplicas; i++)
     {
-      m_weights[i] = m_poisson(m_rng);
+      m_weights[i] = m_rng.Poisson(1);
     }
 
     // decorate weights onto EventInfo
     m_decoration.set(*evtInfo, m_weights, sys);
   }
 
-  return StatusCode::SUCCESS;
-}
-
-StatusCode CP::BootstrapGeneratorAlg::finalize()
-{
   return StatusCode::SUCCESS;
 }
