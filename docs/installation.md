@@ -1,7 +1,7 @@
 Whether you intend to run locally or on the Grid, you will need to get the [source code for TopCPToolkit](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit) and compile it against a suitable software environment.
 Here we guide you through the necessary first steps.
 
-## Getting the code
+## Getting the code
 
 Get a local copy of the git repository with:
 
@@ -30,7 +30,7 @@ git fetch -a
 git checkout tags/vX.Y.Z -b mybranch
 ```
 
-## Setting up the environment
+## Setting up the environment
 
 Assuming you are working on Lxplus or an equivalent setup with access to CVMFS, all you need is the following:
 === "Simple"
@@ -48,7 +48,7 @@ Assuming you are working on Lxplus or an equivalent setup with access to CVMFS, 
 followed by a suitable choice of AnalysisBase release:
 === "New setup"
     ```sh
-    asetup AnalysisBase,24.2.19
+    asetup AnalysisBase,24.2.23
     ```
 === "Re-use existing setup"
     ```sh
@@ -81,11 +81,41 @@ then compile and set up the new environment:
 
 And you're ready to go!
 
+### Developing in VS Code [experimental]
+
+TopCPToolkit is shipped with a VS Code configuration which is built alongside the rest of the package. To use it, setup the same Athena environment used to build the package, and then open the `TopCPToolkit` directory as a VS Code workspace. If using a different workspace, then the following lines in `.vscode/settings.json` need to be updated accordingly:
+
+```json
+"python.defaultInterpreterPath": "<path to build/ide_python>",
+"python.envFile": "<path to build/env.txt>",
+
+"python.formatting.autopep8Path": "<path to build/ide_autopep8>",
+
+"python.linting.flake8Path": "<path to build/ide_flake8>",
+```
+
+The default python interpreter will be linked to the corresponding python interpreter in Athena. This should enable code completion from Athena and from `TopCPToolkit`. If it does not, please [open an issue](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues).
+
+To **disable** the IDE configuration in the build step, change the line in `source/CMakeLists.txt` from
+
+```cmake
+set( ATLAS_ENABLE_IDE_HELPERS ON CACHE BOOL "Enable IDE helpers" )
+```
+
+to
+
+```cmake
+set( ATLAS_ENABLE_IDE_HELPERS OFF CACHE BOOL "Enable IDE helpers" )
+```
+
+<!-- !!! tip
+    Using VS Code? You may want to grab the config files we provide at `/afs/cern.ch/user/o/omajersk/public/TopCPToolKitStuff/.vscode/` (experimental!) :thinking_face: -->
+
 ## Expert mode: compiling against Athena
 
 !!! warning
     Only do this if you really have to... :slight_smile:
-    
+
     Most common use cases: you need to run with a modified version of a tool/algorithm in [Athena](https://gitlab.cern.ch/atlas/athena/).
 
 !!! tip

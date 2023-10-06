@@ -1,6 +1,6 @@
-## [makeEventSelectionConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/EventSelectionConfig.py)
+## [makeEventSelectionConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EventSelectionAlgorithms/python/EventSelectionConfig.py)
 
-Performs a single event selection. To define multiple selection regions, see [makeMultipleEventSelectionConfigs](/settings/eventselection/#makemultipleeventselectionconfigs) below.
+Performs a single event selection. To define multiple selection regions, see [`makeMultipleEventSelectionConfigs`](/settings/eventselection/#makemultipleeventselectionconfigs) below.
 
 `seq`
 :   the config sequence.
@@ -32,9 +32,12 @@ Performs a single event selection. To define multiple selection regions, see [ma
 `debugMode`
 :   whether to create an output branch for every single line of the selection cuts. The default is `False` (only saves the final decision).
 
-## [makeMultipleEventSelectionConfigs](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/EventSelectionConfig.py)
+`cutFlowHistograms`
+:   whether to generate cutflow histograms for the selection cuts (performs a call to [`makeEventCutFlowConfig`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)). The default is `False` (no histograms).
 
-Performs multiple event selections, split into separate regions and subregions. A final logical OR of all region selections is used as event filter. The arguments below are the same as for [makeEventSelectionConfig](/settings/eventselection/#makeeventselectionconfig), except for `selectionCutsDict`!
+## [makeMultipleEventSelectionConfigs](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EventSelectionAlgorithms/python/EventSelectionConfig.py)
+
+Performs multiple event selections, split into separate regions and subregions. A final logical OR of all region selections is used as event filter. The arguments below are the same as for [`makeEventSelectionConfig`](/settings/eventselection/#makeeventselectionconfig), except for `selectionCutsDict`!
 
 `seq`
 :   the config sequence.
@@ -66,6 +69,9 @@ Performs multiple event selections, split into separate regions and subregions. 
 `debugMode`
 :   whether to create an output branch for every single line of the selection cuts. The default is `False` (only saves the final decision).
 
+`cutFlowHistograms`
+:   whether to generate cutflow histograms for the selection cuts (performs a call to [`makeEventCutFlowConfig`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)). The default is `False` (no histograms).
+
 ## Available keywords
 
 The keywords listed in the table below can be used together with their respective options to define a selection cut (one per line).
@@ -85,11 +91,11 @@ The symbol `$` below is a placeholder for any of the following comparison operat
 | `MWT` | `$ ref` | Compares (`$`) the transverse mass of the W boson<br>(lepton+MET system) to `ref` (in MeV). |
 | `MET+MWT` | `$ ref` | Compares (`$`) the sum of the MET and the transverse mass<br>of the W boson(lepton+MET system) to `ref` (in MeV). |
 | `MLL` | `$ ref` | Compares (`$`) the dilepton invariant mass to `ref` (in MeV). |
-| `MLLWINDOW` | `high low` | Selects the event if `MLL < high || MLL > low` (in MeV). |
+| `MLLWINDOW` | `low high` <br> `high low` | Selects the event if `MLL > low && MLL < high` (in MeV).<br>Selects the event if `MLL < low || MLL > high` (in MeV). |
 | `OS` | None | Selects the event if it contains two opposite-sign leptons. |
 | `SS` | None | Selects the event if it contains two same-sign leptons. |
 | `SAVE` | None | Saves the current selection (can be retrieved as `pass_<region>_%SYS%`). |
 | `IMPORT` | `subreg` | Applies the selection cuts defined in another region `subreg`. |
 
 !!! tip "Applying $m(\ell,\ell)$ window cuts, or vetos"
-    To select OSSF dilepton events in a 10 GeV window of the Z boson mass, run `MLLWINDOW 101 81`. To veto them (e.g. for a purer $t\bar{t}$ selection), run `MLLWINDOW 81 101`.
+    To select OSSF dilepton events in a 10 GeV window of the $Z$ boson mass, run `MLLWINDOW 81 101`. To veto them (e.g. for a purer $t\bar{t}$ selection), run `MLLWINDOW 101 81`.

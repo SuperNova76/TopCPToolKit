@@ -20,6 +20,7 @@
 #include "TopSpaNet/SpaNetEnums.h"
 #include "TopSpaNet/TopologyBase.h"
 #include "TopSpaNet/TopologyTtbarLjets.h"
+#include "TopSpaNet/TopologyTtbarLjetsNu.h"
 
 namespace top {
 
@@ -91,18 +92,33 @@ namespace top {
     CP::SysWriteDecorHandle<int> m_up_idx_decor {
       this, "up_index", "spanet_up_index_%SYS%", "Index of the up-type jet from the hadronic W decay in l+jets"
 	};
-    CP::SysWriteDecorHandle<float> m_lep_top_score_decor {
-      this, "leptonic_top_score", "spanet_lep_top_score_%SYS%", "Reconstruction score for the leptonic top in l+jets"
+    CP::SysWriteDecorHandle<float> m_lep_top_assignment_decor {
+      this, "leptonic_top_assignment", "spanet_lep_top_assignment_%SYS%", "Reconstruction assignment probability for the leptonic top in l+jets"
 	};
-    CP::SysWriteDecorHandle<float> m_had_top_score_decor {
-      this, "hadronic_top_score", "spanet_had_top_score_%SYS%", "Reconstruction score for the hadronic top in l+jets"
+    CP::SysWriteDecorHandle<float> m_had_top_assignment_decor {
+      this, "hadronic_top_assignment", "spanet_had_top_assignment_%SYS%", "Reconstruction assignment probability for the hadronic top in l+jets"
 	};
-    CP::SysWriteDecorHandle<float> m_lep_top_exist_decor {
-      this, "leptonic_top_existence", "spanet_lep_top_existence_%SYS%", "Reconstruction existence probability for the leptonic top in l+jets"
+    CP::SysWriteDecorHandle<float> m_lep_top_detection_decor {
+      this, "leptonic_top_detection", "spanet_lep_top_detection_%SYS%", "Reconstruction detection probability for the leptonic top in l+jets"
 	};
-    CP::SysWriteDecorHandle<float> m_had_top_exist_decor {
-      this, "hadronic_top_existence", "spanet_had_top_existence_%SYS%", "Reconstruction existence probability for the hadronic top in l+jets"
+    CP::SysWriteDecorHandle<float> m_had_top_detection_decor {
+      this, "hadronic_top_detection", "spanet_had_top_detection_%SYS%", "Reconstruction detection probability for the hadronic top in l+jets"
 	};
+    CP::SysWriteDecorHandle<float> m_reg_nu_eta_decor {
+      this, "regressed_neutrino_eta", "spanet_reg_nu_eta_%SYS%", "Regressed value of the neutrino eta for the leptonic top in l+jets"
+  };
+    CP::SysWriteDecorHandle<float> m_reg_nu_px_decor {
+      this, "regressed_neutrino_px", "spanet_reg_nu_px_%SYS%", "Regressed value of the neutrino px for the leptonic top in l+jets"
+  };
+    CP::SysWriteDecorHandle<float> m_reg_nu_py_decor {
+      this, "regressed_neutrino_py", "spanet_reg_nu_py_%SYS%", "Regressed value of the neutrino py for the leptonic top in l+jets"
+  };
+    CP::SysWriteDecorHandle<float> m_reg_nu_pz_decor {
+      this, "regressed_neutrino_pz", "spanet_reg_nu_pz_%SYS%", "Regressed value of the neutrino pz for the leptonic top in l+jets"
+  };
+    CP::SysWriteDecorHandle<float> m_reg_ttbar_m_decor {
+      this, "regressed_ttbar_mass", "spanet_reg_ttbar_m_%SYS%", "Regressed value of the ttbar mass in l+jets"
+  };
 
   };
 

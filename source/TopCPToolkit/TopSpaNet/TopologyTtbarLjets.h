@@ -8,6 +8,8 @@ namespace top {
   class TopSpaNetTtbarLjets: public TopSpaNetTopology {
     using TopSpaNetTopology::TopSpaNetTopology;
   public:
+    TopSpaNetTtbarLjets(const std::string& name, std::string model_even, std::string model_odd);
+
     virtual void Predict(ConstDataVector<xAOD::ElectronContainer>& electrons,
 			 ConstDataVector<xAOD::MuonContainer>& muons,
 			 ConstDataVector<xAOD::JetContainer>& jets,
@@ -17,6 +19,7 @@ namespace top {
 
     virtual std::vector<int> GetOutputIndices() override;
     virtual std::vector<float> GetOutputScores() override;
+    virtual std::vector<float> GetRegressedValues() override { return {}; }; // this model doesn't actually regress!
 
     TLorentzVector getNeutrino(TLorentzVector lepton, const float met_met, const float met_phi);
 
@@ -27,10 +30,10 @@ namespace top {
     int m_up;
 
     // reconstruction scores
-    float m_hadtop_score;
-    float m_leptop_score;
-    float m_hadtop_existence;
-    float m_leptop_existence;
+    float m_hadtop_assignment;
+    float m_leptop_assignment;
+    float m_hadtop_detection;
+    float m_leptop_detection;
 
     // preliminary computation of the leptonic W boson
     TLorentzVector m_lepton;

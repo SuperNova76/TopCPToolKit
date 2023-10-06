@@ -2,6 +2,13 @@
 
 namespace top {
 
+  TopSpaNetTtbarLjets::TopSpaNetTtbarLjets(const std::string& name, std::string model_even, std::string model_odd) :
+    TopSpaNetTopology(name, model_even, model_odd)
+  {
+    m_MAX_JETS = m_input_shapes[0][1];
+    m_NUM_FEATURES = m_input_shapes[0][2];
+  }
+
   TLorentzVector TopSpaNetTtbarLjets::getNeutrino(TLorentzVector lepton, const float met_met, const float met_phi){
     // Reference for quadratic solution: https://arxiv.org/pdf/1806.05463.pdf
 
@@ -152,22 +159,20 @@ namespace top {
     // create a vector of 64-bit integers with the input tensor dimension
     std::vector<int64_t> input_tensor_dims = {2, m_MAX_JETS, m_NUM_FEATURES}; // TODO: Fix this when the batching is sorted out
 
-    // where to allocate the tensors
-    auto m_memory_info = Ort::MemoryInfo::CreateCpu(OrtArenaAllocator, OrtMemTypeDefault);
-
     // create the Ort::Value tensor storing floats.
     // The data is taken from the input_values vector.
     // The dimensions of the tensor are specified based on the input_tensor_dims.
-    std::vector<Ort::Value> input_tensors;
+
+    this->clearInputs();
+
     int input_size = 1;
     for (unsigned long int i=0; i < input_tensor_dims.size(); ++i){
       input_size = input_size*input_tensor_dims[i];
     }
-    input_tensors.push_back(
-			    Ort::Value::CreateTensor<float>(m_memory_info, **input_values, input_size, // two stars because 3d array (?)
-							    input_tensor_dims.data(), input_tensor_dims.size()
-							    )
-			    );
+
+    this->addInputs(
+      **input_values, input_size, input_tensor_dims.data(), input_tensor_dims.size()
+    );
 
     std::vector<int64_t> input_tensor_dims_mask = {2, m_MAX_JETS};
     int mask_size = 1;
@@ -175,21 +180,16 @@ namespace top {
       mask_size = mask_size*input_tensor_dims_mask[i];
     }
 
-
-    input_tensors.push_back(
-			    Ort::Value::CreateTensor<bool>(m_memory_info, *input_masks, mask_size, input_tensor_dims_mask.data(), input_tensor_dims_mask.size() )
-			    );
+    this->addInputs(
+      *input_masks, mask_size, input_tensor_dims_mask.data(), input_tensor_dims_mask.size()
+    );
 
     // make sure we are using the right network!
-    auto session = m_session_trainedoneven;
-    if (eventNumber % 2 == 0)
-      session = m_session_trainedonodd;
+    unsigned imodel = getSessionIndex(eventNumber);
+    this->evaluate(imodel);
 
-    std::vector<Ort::Value> output_tensors = session->Run(
-							  m_input_node_names, input_tensors, m_output_node_names, Ort::RunOptions{nullptr}
-							  );
     // now read the output
-    auto thpred = output_tensors.at(0).GetTensorMutableData<float>(); // TODO: Might be nice to avoid hard coding this?
+    auto thpred = this->getOutputs<float>("thpred"); // TODO: Might be nice to avoid hard coding this?
     //int n = sizeof(thpred)/sizeof(thpred[0]);
     float max = -999;
     const int NUM_JETS = jets.size();
@@ -219,7 +219,7 @@ namespace top {
 
     ANA_MSG_VERBOSE("EventNo: " << eventNumber <<  ", Max = " << max << ", indx = " << bestrow << "," << bestcol << "," << bestz);
 
-    float* tlpred = output_tensors.at(3).GetTensorMutableData<float>();
+    float* tlpred = this->getOutputs<float>("tlpred");
 
     int bestlb = -1;
     float max_lb = -999;
@@ -244,12 +244,12 @@ namespace top {
     m_up = bestcol;
     m_had_b = bestrow;
 
-    m_hadtop_score = max;
-    m_leptop_score = max_lb;
+    m_hadtop_assignment = max;
+    m_leptop_assignment = max_lb;
 
     // now gxrab the spanet prob that the particle is reconstructable
-    m_hadtop_existence = *output_tensors.at(1).GetTensorMutableData<float>();
-    m_leptop_existence = *output_tensors.at(4).GetTensorMutableData<float>();
+    m_hadtop_detection = *(this->getOutputs<float>("thpresence"));
+    m_leptop_detection = *(this->getOutputs<float>("tlpresence"));
 
   }
 
@@ -264,7 +264,7 @@ namespace top {
   std::vector<float> TopSpaNetTtbarLjets::GetOutputScores() {
 
     // scores of the best assignment
-    std::vector<float> scores = {m_hadtop_score, m_leptop_score, m_hadtop_existence, m_leptop_existence};
+    std::vector<float> scores = {m_hadtop_assignment, m_leptop_assignment, m_hadtop_detection, m_leptop_detection};
 
     return scores;
   }

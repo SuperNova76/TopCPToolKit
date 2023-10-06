@@ -39,7 +39,7 @@ latestABrelease:
     - when: always
   stage: build
   tags:
-    - docker
+    - cvmfs
   variables:
     JOBNAME: job_latestABrelease
   script:
@@ -63,7 +63,7 @@ referenceTopCPToolkitTag:
     - when: always
   stage: build
   tags:
-    - docker
+    - cvmfs
   variables:
     JOBNAME: job_referenceTag
   script:
@@ -90,7 +90,7 @@ lastweekTopCPToolkitTag:
     - if: $CI_PIPELINE_SOURCE == "schedule"
   stage: build
   tags:
-    - docker
+    - cvmfs
   variables:
     JOBNAME: job_lastweekTag
   script:
@@ -117,7 +117,7 @@ latestABnightly:
     - when: always
   stage: build
   tags:
-    - docker
+    - cvmfs
   variables:
     JOBNAME: job_latestABnightly
   script:

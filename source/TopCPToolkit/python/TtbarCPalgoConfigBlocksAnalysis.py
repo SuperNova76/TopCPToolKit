@@ -5,8 +5,7 @@ from TopCPToolkit.PerEventSFCalculatorConfig import PerEventSFCalculatorConfig
 from TopCPToolkit import metaConfig, commonAlgoConfig
 
 
-def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
-    configSeq = ConfigSequence()
+def makeRecoConfiguration(metadata, algSeq, configSeq, debugHistograms, noFilter=False):
 
     use_electrons = True
     use_muons = True
@@ -24,6 +23,7 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
     # figure out metadata
     dataType = metaConfig.get_data_type(metadata)
     geometry = metaConfig.get_LHCgeometry(metadata)
+    isLite   = metaConfig.isPhysLite(metadata)
 
     # primary vertex ,event cleaning (jet clean loosebad) and GoodRunsList selection
     commonAlgoConfig.add_event_cleaning(configSeq, metadata)
@@ -32,7 +32,8 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
     commonAlgoConfig.add_mc_weights(configSeq, metadata, reco_branches)
 
     # PRW
-    commonAlgoConfig.add_PRW(configSeq, metadata, reco_branches)
+    if not isLite:
+        commonAlgoConfig.add_PRW(configSeq, metadata, reco_branches)
 
     # electrons
     if use_electrons:
@@ -67,7 +68,8 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
         from JetAnalysisAlgorithms.JetAnalysisConfig import makeJetAnalysisConfig
         jetContainer = 'AntiKt4EMPFlowJets'
         makeJetAnalysisConfig(configSeq, 'AnaJets', jetContainer,
-                              runGhostMuonAssociation=True, runNNJvtUpdate = True,
+                              runGhostMuonAssociation=not isLite, # TEMPORARY BUG FIX
+                              runNNJvtUpdate = True,
                               JEROption='Full', reduction='Category', postfix='baselineSel')
         from JetAnalysisAlgorithms.JetJvtAnalysisConfig import makeJetJvtAnalysisConfig
         makeJetJvtAnalysisConfig(configSeq, 'AnaJets', jetContainer, enableFJvt=False)
@@ -172,6 +174,23 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
     makeTriggerAnalysisConfig(configSeq, triggerChainsPerYear=triggerChainsPerYear, noFilter=noFilter, electronWorkingPoint='Tight.Tight_VarRad', muonWorkingPoint='Tight.None',
                               electrons='AnaElectrons.tight', muons='AnaMuons.tight')
 
+    # object-based cutflow
+    from AsgAnalysisAlgorithms.AsgAnalysisConfig import makeObjectCutFlowConfig
+    if use_electrons:
+        makeObjectCutFlowConfig(configSeq, 'AnaElectrons', selectionName='tight')
+    if use_muons:
+        makeObjectCutFlowConfig(configSeq, 'AnaMuons', selectionName='tight')
+    if use_taus:
+        makeObjectCutFlowConfig(configSeq, 'AnaTauJets', selectionName='tight')
+    if use_photons:
+        makeObjectCutFlowConfig(configSeq, 'AnaPhotons', selectionName='tight')
+    if use_jets:
+        makeObjectCutFlowConfig(configSeq, 'AnaJets', selectionName='jvt')
+    if use_largeR_jets:
+        makeObjectCutFlowConfig(configSeq, 'AnaLargeRJets', selectionName='')
+    if use_track_jets:
+        makeObjectCutFlowConfig(configSeq, 'AnaTrackJets', selectionName='')
+
     # a single lepton SF
     from TopCPToolkit.LeptonSFCalculatorConfig import LeptonSFCalculatorConfig
     cfg = LeptonSFCalculatorConfig()
@@ -225,15 +244,13 @@ def makeRecoConfiguration(metadata, algSeq, debugHistograms, noFilter=False):
                                  selectionName='track_jets',
                                  outputName='OutTrackJets')
 
-    from TopCPToolkit.EventSelectionConfig import makeMultipleEventSelectionConfigs
+    from EventSelectionAlgorithms.EventSelectionConfig import makeMultipleEventSelectionConfigs
     mycuts = {
         'SUBcommon': """
 JET_N_BTAG >= 2
 JET_N_BTAG DL1dv01:FixedCutBEff_70 >= 1
 JET_N 25000 >= 4
 MET >= 20000
-MWT < 170000
-MET+MWT > 40000
 SAVE
 """,
         'ejets': """
@@ -241,6 +258,8 @@ IMPORT SUBcommon
 EL_N 5000 >= 1
 EL_N tight 5000 >= 1
 MU_N 5000 == 0
+MWT < 170000
+MET+MWT > 40000
 SAVE
 """,
         'mujets': """
@@ -253,7 +272,7 @@ SAVE
 EL_N 5000 >= 2
 MLL >= 10000
 OS
-MLLWINDOW 80000 100000
+MLLWINDOW 100000 80000
 SAVE
 """,
         'supertight': """
@@ -263,7 +282,7 @@ SAVE
     }
     makeMultipleEventSelectionConfigs(configSeq, electrons="AnaElectrons.loose", muons ="AnaMuons.tight", met="AnaMET",
                                       jets="AnaJets.baselineSel&&jvt_selection", btagDecoration=f'ftag_select_{btagger}_FixedCutBEff_85',
-                                      preselection=None, selectionCutsDict = mycuts, noFilter=noFilter)
+                                      preselection=None, selectionCutsDict = mycuts, noFilter=noFilter, cutFlowHistograms=True)
 
     from TopCPToolkit.KLFitterConfig import KLFitterConfig
     cfg = KLFitterConfig('KLFitterResult')
@@ -284,7 +303,7 @@ SAVE
     outputContainers['klfitter_'] = 'KLFitterResult'
 
     from TopCPToolkit.TopSpaNetConfig import TopSpaNetConfig
-    for topology in ['TtbarLjets']:
+    for topology in ['TtbarLjets', 'TtbarLjetsNu']:
         cfg = TopSpaNetConfig()
         cfg.setOptionValue('electrons', 'AnaElectrons.tight')
         cfg.setOptionValue('muons', 'AnaMuons.tight')
@@ -307,7 +326,7 @@ SAVE
     configSeq.append(cfg)
 
     # put everything together
-    configAccumulator = ConfigAccumulator(dataType, algSeq, isPhyslite=False, geometry=geometry)
+    configAccumulator = ConfigAccumulator(dataType, algSeq, isPhyslite=isLite, geometry=geometry)
     configSeq.fullConfigure(configAccumulator)
 
 
@@ -318,10 +337,11 @@ def makeTruthConfiguration(metadata, algSeq, debugHistograms):
     outputContainers = {'': 'EventInfo'}
 
     # figure out metadata
-    dataType = metaConfig.get_data_type(metadata)
+    dataType  = metaConfig.get_data_type(metadata)
     isRun3Geo = metaConfig.isRun3(metadata)
-    geometry = metaConfig.get_LHCgeometry(metadata)
-    dsid = metaConfig.get_mc_channel_number(metadata)
+    isLite    = metaConfig.isPhysLite(metadata)
+    geometry  = metaConfig.get_LHCgeometry(metadata)
+    dsid      = metaConfig.get_mc_channel_number(metadata)
 
     # PMG TruthWeightTool
     commonAlgoConfig.add_mc_weights(configSeq, metadata, truth_branches)
@@ -333,18 +353,19 @@ def makeTruthConfiguration(metadata, algSeq, debugHistograms):
         'EventInfo.mcChannelNumber -> mcChannelNumber',
     ]
 
-    from TopCPToolkit.truthConfig import truthConfig
-    cfg = truthConfig()
-    cfg.setOptionValue('histories', 'Ttbar.TtbarLight')
-    configSeq.append(cfg)
-    outputContainers.update( cfg.getOutputContainers() )
+    if not isLite: # we haven't tested the parton history on PHYSLITE yet, due to other bugs in top samples
+        from TopCPToolkit.truthConfig import truthConfig
+        cfg = truthConfig()
+        cfg.setOptionValue('histories', 'Ttbar.TtbarLight')
+        configSeq.append(cfg)
+        outputContainers.update( cfg.getOutputContainers() )
 
-    # NNLO reweighting
-    from TopCPToolkit.TtbarNNLORecursiveRewConfig import TtbarNNLORecursiveRewConfig
-    cfg = TtbarNNLORecursiveRewConfig(dsid, dataType, isRun3Geo)
-    #cfg.setOptionValue('reweightType','3D')
-    #cfg.setOptionValue('sampleID', 'aMCH7')
-    configSeq.append(cfg)
+        # NNLO reweighting
+        from TopCPToolkit.TtbarNNLORecursiveRewConfig import TtbarNNLORecursiveRewConfig
+        cfg = TtbarNNLORecursiveRewConfig(dsid, dataType, isRun3Geo)
+        #cfg.setOptionValue('reweightType','3D')
+        #cfg.setOptionValue('sampleID', 'aMCH7')
+        configSeq.append(cfg)
 
     # add NTuple output config
     from AsgAnalysisAlgorithms.OutputAnalysisConfig import OutputAnalysisConfig
@@ -355,7 +376,7 @@ def makeTruthConfiguration(metadata, algSeq, debugHistograms):
     configSeq.append(cfg)
 
     # put everything together
-    configAccumulator = ConfigAccumulator(dataType, algSeq, isPhyslite=False, geometry=geometry)
+    configAccumulator = ConfigAccumulator(dataType, algSeq, isPhyslite=isLite, geometry=geometry)
     configSeq.fullConfigure(configAccumulator)
 
 
@@ -368,6 +389,7 @@ def makeParticleLevelConfiguration(metadata, algSeq, debugHistograms):
     # figure out metadata
     dataType = metaConfig.get_data_type(metadata)
     geometry = metaConfig.get_LHCgeometry(metadata)
+    isLite   = metaConfig.isPhysLite(metadata)
 
     # PMG TruthWeightTool
     commonAlgoConfig.add_mc_weights(configSeq, metadata, particleLevel_branches)
@@ -397,5 +419,5 @@ def makeParticleLevelConfiguration(metadata, algSeq, debugHistograms):
     configSeq.append(cfg)
 
     # put everything together
-    configAccumulator = ConfigAccumulator(dataType, algSeq, isPhyslite=False, geometry=geometry)
+    configAccumulator = ConfigAccumulator(dataType, algSeq, isPhyslite=isLite, geometry=geometry)
     configSeq.fullConfigure(configAccumulator)

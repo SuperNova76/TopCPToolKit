@@ -55,6 +55,16 @@ lcg_generate_env( SH_FILE ${CMAKE_BINARY_DIR}/${ATLAS_PLATFORM}/env_setup.sh )
 install( FILES ${CMAKE_BINARY_DIR}/${ATLAS_PLATFORM}/env_setup.sh
    DESTINATION . )
 
+# Setup IDE integration
+# as in athena
+set( ATLAS_ENABLE_IDE_HELPERS ON CACHE BOOL "Enable IDE helpers" )
+if( ATLAS_ENABLE_IDE_HELPERS )
+   set( ATLAS_IDEHELPERSCRIPTS_SETUP
+      "${CMAKE_SOURCE_DIR}/../.vscode/IDEHelperScripts/Setup.cmake"
+      CACHE FILEPATH "Setup file for the IDE / VS Code helpers" )
+   include( "${ATLAS_IDEHELPERSCRIPTS_SETUP}" )
+endif()
+
 # Set up CPack. This call makes sure that an RPM or TGZ file can be created
 # from the built project. Used by Panda to send the project to the grid worker
 # nodes.

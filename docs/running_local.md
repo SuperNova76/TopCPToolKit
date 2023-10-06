@@ -22,6 +22,67 @@ This may not be what you want to do, so read on below to see what you can change
 The output ntuple file is saved under `output/data-ANALYSIS/output.root`.
 The CutBookkeeper histograms are available in `output/hist-output.root`.
 
+### Cutflows
+
+The CutBookkeeper histograms serve the dual purpose of keeping track of the MC sum of weights (for later cross section normalisation) and representing cutflows.
+We distinguish between two types of cutflows: _object-wise_ and _event-wise_.
+
+**_Object_-wise cutflows** are handled internally from the common CP algorithms associated to each object (electrons, muons, jets, etc.) and decorate systematic-dependent flags onto them at each step of the calibration, identification, isolation... processes.
+In order to obtain these cutflow histograms in the output, a specific algorithm config is needed (see [`makeObjectCutFlowConfig`](/settings/objectselection/#makeobjectcutflowconfig)).
+You may then write e.g.
+```python
+# object-based cutflow
+from AsgAnalysisAlgorithms.AsgAnalysisConfig import makeObjectCutFlowConfig
+makeObjectCutFlowConfig(configSeq, 'AnaElectrons', selectionName='tight')
+```
+to enable the cutflow histograms for `tight` electrons.
+You will find them in `output/hist-output.root`, as `cflow_OBJECT_PRESELECTION_SYSTEMATIC`.
+Each bin is filled with the number of objects passing the corresponding selection cut, which is stored as the bin label.
+
+**_Event_-wise cutflows** can technically be generated independently using the [`EventCutFlowBlock`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py), but the expected use case is in conjonction with the [event selection config](/settings/eventselection/).
+In that case, you just need to pass the `cutFlowHistograms=True` argument to the relevant config block (typically [`makeMultipleEventSelectionConfig`](/settings/eventselection/#makemultipleeventselectionconfigs)).
+You will also find them in `output/hist-output.root`, as `cflow_EventInfo__SELECTION_SYSTEMATIC`.
+Each selection region defines its own cutflow.
+
+!!! warning "Issue with the representation of the `IMPORT` keyword"
+    There is an inherent limitation to the current setup for event-wise cutflows: if your selection calls a preselection with the `IMPORT` keyword, all we can do is insert the cutflow histogram corresponding to that particular preselection into the one for the selection. This means that:
+
+    - if your selection _starts with_ `IMPORT`, you will see the correct cutflow;
+    - if it _doesn't_, you will your cutflow go down as the first few cuts are applied, then a jump back to the original number of events when you reach the `IMPORT`
+    keyword.
+
+    In the latter case, the number of events you see in the bins corresponding to the preselection do not actually represent the number of events after your initial cuts + the preselection cuts.
+    The correct behaviour resumes afterwards, when the preselection cuts are done.
+    In any case, please note that the event filtering itself (and the corresponding event flag in the output tree) is fine.
+    This is just a representation issue with the cutflow histograms.
+
+### Sum of weights
+
+Another type of CutBookkeeper histograms is stored in the `output/hist-output.root`, with name `CutBookkeeper_DSID_RUN_SYSTEMATIC`.
+Such histograms contain 3 bins recording information about _all the events seen_ when processing the input files for a given job:
+
+1. the total number of events
+1. the sum of weights
+1. the sum of squared weights
+
+Since MC generator weight variations are not expected to conserve the nominal inclusive cross section associated with a given MC sample, it is necessary to provide such a histogram for each variation.
+
+When projecting to a histogram representing the number of expected events, the following formula ensures the proper normalisation:
+
+$$ \sigma_\text{eff} \cdot \mathcal{L} \cdot \dfrac{w_i}{\sum_i w_i} $$
+
+with $\mathcal{L}$ the integrated luminosity, $\sigma_\text{eff}$ the effective cross section (generator cross section times filtering efficiency times k-factor, with these numbers provided in the [PMG](https://atlas-groupdata.web.cern.ch/atlas-groupdata/dev/PMGTools/PMGxsecDB_mc16.txt) or [TDP](https://atlas-groupdata.web.cern.ch/atlas-groupdata/dev/AnalysisTop/TopDataPreparation/) databases), $w_i$ the appropriate MC event weight (branch in the output tree), and $\sum_i w_i$ the sum of weights from the corresponding CutBookkeeper histogram.
+
+### List of systematics
+
+There are multiple ways one could retrieve the list of systematics run by the various algorithms.
+The most robust one is to rely on the [`CP::SysListDumperAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/Root/SysListDumperAlg.cxx), an instance of which is automatically set up when running TopCPToolkit (see [commonAlgoConfig.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/commonAlgoConfig.py)).
+
+In the same `output/hist-output.root`, it generates an empty histogram `listOfSystematics` whose bin labels are the various systematics (including `NOSYS` to represent the nominal calibrations).
+
+!!! tip
+    The systematic names are _exactly_ those provided by the various CP tools.
+
 ## Command line options
 
 Only the text file with the input samples and the location of the output directory are required to run `runTop_el.py`.
