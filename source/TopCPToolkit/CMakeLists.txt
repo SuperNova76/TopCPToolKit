@@ -14,14 +14,12 @@ atlas_add_library(
   TopParticleLevel/*.h
   TopSpaNet/*.h
   TopNNLOReweighter/*.h
-  TopEventSelection/*.h
   Root/*.cxx
   INCLUDE_DIRS
   ${KLFITTER_INCLUDE_DIRS}
   ${ONNXRUNTIME_INCLUDE_DIRS}
   PUBLIC_HEADERS
   TopCPToolkit
-  TopEventSelection
   TopPartons
   TopParticleLevel
   TopSpaNet
