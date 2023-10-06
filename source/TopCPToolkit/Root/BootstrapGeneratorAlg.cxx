@@ -28,9 +28,9 @@ unsigned long int CP::BootstrapGeneratorAlg::fnv1a_32(const void *buffer, size_t
 
 unsigned long int CP::BootstrapGeneratorAlg::generateSeed(long long int eventNumber, long int runNumber, int mcChannelNumber)
 {
-  unsigned long hash = fnv1a_32(&runnumber, sizeof(runnumber), offset);
-  hash = fnv1a_32(&eventnumber, sizeof(eventnumber), hash);
-  hash = fnv1a_32(&dsid, sizeof(dsid), hash);
+  unsigned long hash = fnv1a_32(&runNumber, sizeof(runNumber), offset);
+  hash = fnv1a_32(&eventNumber, sizeof(eventNumber), hash);
+  hash = fnv1a_32(&mcChannelNumber, sizeof(mcChannelNumber), hash);
   return hash;
 }
 
@@ -58,7 +58,7 @@ StatusCode CP::BootstrapGeneratorAlg::execute()
     ANA_CHECK(m_eventInfoHandle.retrieve(evtInfo, sys));
 
     // generate a unique seed from runNumber, eventNumber and DSID!
-    m_rng.setSeed(generateSeed(evtInfo->runNumber(), evtInfo->eventNumber(), evtInfo->mcChannelNumber()));
+    m_rng.SetSeed(generateSeed(evtInfo->eventNumber(), evtInfo->runNumber(), evtInfo->mcChannelNumber()));
 
     // clear the vector of weights
     m_weights.clear();
@@ -72,5 +72,10 @@ StatusCode CP::BootstrapGeneratorAlg::execute()
     m_decoration.set(*evtInfo, m_weights, sys);
   }
 
+  return StatusCode::SUCCESS;
+}
+
+StatusCode CP::BootstrapGeneratorAlg::finalize()
+{
   return StatusCode::SUCCESS;
 }
