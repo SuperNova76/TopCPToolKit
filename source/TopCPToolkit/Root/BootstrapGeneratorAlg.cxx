@@ -60,8 +60,6 @@ StatusCode CP::BootstrapGeneratorAlg::execute()
     // generate a unique seed from runNumber, eventNumber and DSID!
     m_rng.SetSeed(generateSeed(evtInfo->eventNumber(), evtInfo->runNumber(), evtInfo->mcChannelNumber()));
 
-    // clear the vector of weights
-    m_weights.clear();
     // and fill it with Poisson(1)
     for (int i = 0; i < m_nReplicas; i++)
     {

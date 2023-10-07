@@ -21,7 +21,7 @@ class BootstrapGeneratorConfig(ConfigBlock):
         alg = config.createAlgorithm( 'CP::BootstrapGeneratorAlg', 'BootstrapGenerator')
         alg.nReplicas = self.nReplicas
         if self.decoration:
-            alg.decorationName = decoration
+            alg.decorationName = self.decoration
         else:
             alg.decorationName = "bootstrapWeights_%SYS%"
         
