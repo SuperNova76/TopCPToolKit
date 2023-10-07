@@ -64,11 +64,11 @@ namespace CP
 
     /// \brief the vector of bootstrap replica weights
   private:
-    std::vector<int> m_weights;
+    std::vector<short int> m_weights;
 
     /// \brief the output decoration
   private:
-    SysWriteDecorHandle<std::vector<int>> m_decoration{
+    SysWriteDecorHandle<std::vector<short int>> m_decoration{
         this, "decorationName", "bootstrapWeights_%SYS%", "decoration name for the vector of bootstrapped weights"};
   };
 } // namespace CP

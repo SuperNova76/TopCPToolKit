@@ -13,7 +13,6 @@ CP::BootstrapGeneratorAlg::BootstrapGeneratorAlg(const std::string &name,
 {
   declareProperty("nReplicas", m_nReplicas,
                   "number of bootstrapped weights (toys) to generate");
-  m_weights.resize(m_nReplicas);
 }
 
 unsigned long int CP::BootstrapGeneratorAlg::fnv1a_32(const void *buffer, size_t size, unsigned long offset_basis) {
@@ -41,6 +40,7 @@ StatusCode CP::BootstrapGeneratorAlg::initialize()
     ANA_MSG_ERROR("The number of bootstrapped weights (toys) cannot be negative!");
     return StatusCode::FAILURE;
   }
+  m_weights.resize(m_nReplicas);
 
   ANA_CHECK(m_eventInfoHandle.initialize(m_systematicsList));
   ANA_CHECK(m_decoration.initialize(m_systematicsList, m_eventInfoHandle));
