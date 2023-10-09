@@ -101,3 +101,17 @@ Loading the module also enables the following methods to easily set up very comm
 
 `userPileupConfigs`
 :   user-provided PRW files. Alternative to auto-configuration.
+
+## [makeBootstrapGeneratorConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/BootstrapGeneratorConfig.py)
+
+`seq`
+:   the config sequence.
+
+`nReplicas`
+:   the number (int) of bootstrap replicas to generate. The default is 1000.
+
+`decoration`
+:   the name of the output vector branch containing the bootstrapped weights. The default is `bootstrapWeights`.
+
+`runOnMC`
+:   toggle to force running on MC samples. The default is `False`, i.e. run only on data.
