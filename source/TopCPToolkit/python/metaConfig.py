@@ -212,19 +212,19 @@ def get_generator_info(metadata):
                 continue
             columns = line.split()
             if columns[0].isdigit() and int(columns[0]) == dsid:
-                if len(columns) == 4:
+                if len(columns) == 5:
                     # we have both FTAG and JES
                     result[0] = columns[-2].strip()
                     result[1] = columns[-1].strip()
-                elif len(columns) == 3:
+                elif len(columns) == 4:
                     # we have only FTAG
                     result[0] = columns[-1].strip()
     return result
 
 
 def get_generator_FTAG(metadata):
-    return get_generator_info[0]
+    return get_generator_info(metadata)[0]
 
 
 def get_generator_JES(metadata):
-    return get_generator_info[1]
+    return get_generator_info(metadata)[1]
