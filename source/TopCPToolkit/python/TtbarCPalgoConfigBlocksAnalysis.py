@@ -24,6 +24,8 @@ def makeRecoConfiguration(metadata, algSeq, configSeq, debugHistograms, noFilter
     dataType = metaConfig.get_data_type(metadata)
     geometry = metaConfig.get_LHCgeometry(metadata)
     isLite   = metaConfig.isPhysLite(metadata)
+    ftag_gen  = metaConfig.get_generator_FTAG(metadata)
+
 
     # primary vertex ,event cleaning (jet clean loosebad) and GoodRunsList selection
     commonAlgoConfig.add_event_cleaning(configSeq, metadata)
@@ -83,7 +85,7 @@ def makeRecoConfiguration(metadata, algSeq, configSeq, debugHistograms, noFilter
         from FTagAnalysisAlgorithms.FTagAnalysisConfig import makeFTagAnalysisConfig
         for WP in WPs:
             # suppress CDI warnings due to missing SFs
-            makeFTagAnalysisConfig(configSeq, 'AnaJets', btagWP=WP, noEffSF=False,
+            makeFTagAnalysisConfig(configSeq, 'AnaJets', btagWP=WP, noEffSF=False, generator=ftag_gen,
                                    btagger=btagger, kinematicSelection=True, postfix='')
             # calculate per-event b-tagging SF (alternative to storing per-jet SFs)
             cfg = PerEventSFCalculatorConfig(f'btagSFCalc_{btagger}_{WP}')

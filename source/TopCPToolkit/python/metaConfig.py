@@ -1,5 +1,6 @@
 from Campaigns.Utils import Campaign
 from AthenaConfiguration.Enums import LHCPeriod
+from PathResolver import PathResolver
 
 _campaigns_AMITag = {
     # NOTE this is a "fallback" approach to read campaign based on standard r-tag with pile-up for
@@ -194,3 +195,36 @@ def get_mc_channel_number(metadata):
         print('WARNING: Got no mcProcID from inputfiles. This could be '
               'an indication that none of the files have any events/')
     return 0
+
+
+def get_generator_info(metadata):
+    result = ['default', 'default'] # FTAG MC-MC, JES flavour
+    dsid = get_mc_channel_number(metadata)
+    if dsid == 0:
+        print('WARNING: Unable to get generator information from inputfiles.')
+    if isRun3(metadata):
+        tdpFile = 'dev/AnalysisTop/TopDataPreparation/XSection-MC21-13p6TeV.data'
+    else:
+        tdpFile = 'dev/AnalysisTop/TopDataPreparation/XSection-MC16-13TeV_JESinfo.data'
+    with open(PathResolver.FindCalibFile(tdpFile), 'r') as _f:
+        for line in _f:
+            if not line.strip() or line.startswith('#'):
+                continue
+            columns = line.split()
+            if columns[0].isdigit() and int(columns[0]) == dsid:
+                if len(columns) == 4:
+                    # we have both FTAG and JES
+                    result[0] = columns[-2].strip()
+                    result[1] = columns[-1].strip()
+                elif len(columns) == 3:
+                    # we have only FTAG
+                    result[0] = columns[-1].strip()
+    return result
+
+
+def get_generator_FTAG(metadata):
+    return get_generator_info[0]
+
+
+def get_generator_JES(metadata):
+    return get_generator_info[1]
