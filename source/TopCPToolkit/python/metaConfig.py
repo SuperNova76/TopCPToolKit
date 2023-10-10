@@ -244,7 +244,7 @@ def get_generator_FTAG(metadata):
         result = tdpTranslation[get_generator_info(metadata)[0]]
         return result
     except KeyError:
-        raise Exception('Unrecognised FTAG MC-to-MC generator setup {}, aborting.'.format(get_generator_info()[0]))
+        raise Exception('Unrecognised FTAG MC-to-MC generator setup {}, aborting.'.format(get_generator_info(metadata)[0]))
 
 
 def get_generator_JES(metadata):
