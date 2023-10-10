@@ -223,7 +223,25 @@ def get_generator_info(metadata):
 
 
 def get_generator_FTAG(metadata):
-    return get_generator_info(metadata)[0]
+    # we have to translate between what's in TDP and what's expected by FTAG
+    # https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/TopPhys/TopPhysUtils/TopDataPreparation/Root/SampleXsection.cxx#0150
+    tdpTranslation = {
+        'herwig': 'Herwig7',
+        'herwigpp': 'Herwig7',
+        'pythia8': 'default',
+        'sherpa': 'Sherpa221',
+        'sherpa21': 'Sherpa221',
+        'amcatnlopythia8': 'amc@NLO',
+        'herwigpp713': 'Herwig713',
+        'sherpa228': 'Sherpa228',
+        'sherpa2210': 'Sherpa2210',
+        'herwigpp721': 'Herwig721',
+    }
+    try:
+        result = tdpTranslation[get_generator_info(metadata)[0]]
+        return result
+    except KeyError:
+        raise Exception('Unrecognised FTAG MC-to-MC generator setup {}, aborting.'.format(get_generator_info[0]))
 
 
 def get_generator_JES(metadata):
