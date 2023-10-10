@@ -24,7 +24,10 @@ def makeRecoConfiguration(metadata, algSeq, configSeq, debugHistograms, noFilter
     dataType = metaConfig.get_data_type(metadata)
     geometry = metaConfig.get_LHCgeometry(metadata)
     isLite   = metaConfig.isPhysLite(metadata)
-    ftag_gen = metaConfig.get_generator_FTAG(metadata)
+    if dataType == 'data':
+        ftag_gen = 'default'
+    else:
+        ftag_gen = metaConfig.get_generator_FTAG(metadata)
 
 
     # primary vertex ,event cleaning (jet clean loosebad) and GoodRunsList selection
