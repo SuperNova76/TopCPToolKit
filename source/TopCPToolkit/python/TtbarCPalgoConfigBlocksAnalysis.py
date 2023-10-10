@@ -313,7 +313,7 @@ SAVE
         cfg.setOptionValue('topology', topology)
         configSeq.append(cfg)
 
-    from TopCPToolkit.BootstrapGeneratorConfig import makeBootstrapGeneratorConfig
+    from AsgAnalysisAlgorithms.BootstrapGeneratorConfig import makeBootstrapGeneratorConfig
     makeBootstrapGeneratorConfig(configSeq, nReplicas=2000, runOnMC=True)
 
     # add NTuple output config
