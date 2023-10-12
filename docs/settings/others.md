@@ -102,7 +102,7 @@ Loading the module also enables the following methods to easily set up very comm
 `userPileupConfigs`
 :   user-provided PRW files. Alternative to auto-configuration.
 
-## [makeBootstrapGeneratorConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/BootstrapGeneratorConfig.py)
+## [makeBootstrapGeneratorConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/BootstrapGeneratorConfig.py)
 
 `seq`
 :   the config sequence.
