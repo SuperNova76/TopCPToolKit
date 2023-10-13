@@ -1,5 +1,6 @@
 from Campaigns.Utils import Campaign
 from AthenaConfiguration.Enums import LHCPeriod
+from PathResolver import PathResolver
 
 _campaigns_AMITag = {
     # NOTE this is a "fallback" approach to read campaign based on standard r-tag with pile-up for
@@ -194,3 +195,57 @@ def get_mc_channel_number(metadata):
         print('WARNING: Got no mcProcID from inputfiles. This could be '
               'an indication that none of the files have any events/')
     return 0
+
+
+def get_generator_info(metadata):
+    result = ['default', 'default'] # FTAG MC-MC, JES flavour
+    dsid = get_mc_channel_number(metadata)
+    if dsid == 0:
+        print('WARNING: Unable to get generator information from inputfiles.')
+    if isRun3(metadata):
+        tdpFile = 'dev/AnalysisTop/TopDataPreparation/XSection-MC21-13p6TeV.data'
+    else:
+        tdpFile = 'dev/AnalysisTop/TopDataPreparation/XSection-MC16-13TeV_JESinfo.data'
+    with open(PathResolver.FindCalibFile(tdpFile), 'r') as _f:
+        for line in _f:
+            if not line.strip() or line.startswith('#'):
+                continue
+            columns = line.split()
+            if columns[0].isdigit() and int(columns[0]) == dsid:
+                if len(columns) == 5:
+                    # we have both FTAG and JES
+                    result[0] = columns[-2].strip()
+                    result[1] = columns[-1].strip()
+                elif len(columns) == 4:
+                    # we have only FTAG
+                    result[0] = columns[-1].strip()
+    return result
+
+
+def get_generator_FTAG(metadata):
+    # we have to translate between what's in TDP and what's expected by FTAG
+    # https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/TopPhys/TopPhysUtils/TopDataPreparation/Root/SampleXsection.cxx#0150
+    # https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagAnalysisConfig.py
+    # https://twiki.cern.ch/twiki/bin/view/AtlasProtected/BTagRecommendationsRelease22#Calibration_pre_recommendations
+    tdpTranslation = {
+        'herwig': 'Herwig7',
+        'herwigpp': 'Herwig7',
+        'pythia8': 'default',
+        'sherpa': 'Sherpa221',
+        'sherpa21': 'Sherpa221',
+        'amcatnlopythia8': 'amcAtNLOPythia',
+        'herwigpp713': 'Herwig713',
+        'sherpa228': 'Sherpa228',
+        'sherpa2210': 'Sherpa2210',
+        'sherpa2212': 'Sherpa2212',
+        'herwigpp721': 'Herwig721',
+    }
+    try:
+        result = tdpTranslation[get_generator_info(metadata)[0]]
+        return result
+    except KeyError:
+        raise Exception('Unrecognised FTAG MC-to-MC generator setup {}, aborting.'.format(get_generator_info(metadata)[0]))
+
+
+def get_generator_JES(metadata):
+    return get_generator_info(metadata)[1]
