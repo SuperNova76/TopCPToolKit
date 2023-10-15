@@ -83,6 +83,21 @@ In the same `output/hist-output.root`, it generates an empty histogram `listOfSy
 !!! tip
     The systematic names are _exactly_ those provided by the various CP tools.
 
+### Filtering systematics
+
+It is possible to not run on every single systematic that would otherwise be set up automatically by the systematics service.
+For that, you need to edit the `filterSystematics` property of the [`CommonServicesConfig`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py).
+This is a [regexp](https://regex101.com/) string that is by default set to `(.*)`, i.e. matches all systematics.
+Any valid regexp string can be passed: any systematic name that matches will be accepted and run.
+
+For example:
+
+- `".*(JER|PRW).*?"` will **select only those systematics that contains** "JER" (jet energy resolution) or "PRW" (pileup reweighting) in their name, or the empty string (the `?` at the end) corresponding to nominal.
+- `"(?:(?!JER|PRW).)*"` will **veto any systematic that doesn't contain** "JER" or "PRW" in their name, but still accept the empty string.
+
+!!! warning
+    The CP algorithms always require the nominal variation (empty string, turned into "NOSYS" internally) to be available within the list of systematics.
+
 ## Command line options
 
 Only the text file with the input samples and the location of the output directory are required to run `runTop_el.py`.
