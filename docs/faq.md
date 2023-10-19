@@ -50,6 +50,7 @@
     ```
     As suggested, please update your Run 3 sample by choosing a more recent p-tag, or edit the `MuonSelectionTool` config.
 
+
 ## Derivation formats
 
 ??? question "Which derivation formats are currently supported?"
@@ -58,11 +59,18 @@
 ??? question "Which p-tags are supported?"
     We always recommend using the [latest available p-tags](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/FullListOfPtagsAndPatternsR22).
 
+??? question "How can I check the metadata present in my sample?"
+    After setting up an AnalysisBase release, you can run
+    ```
+    meta-reader -m peeker --hideContentList --hideTrigger <file>
+    ```
+    on a given DxAOD file to printout the metadata that is available to TopCPToolkit.
 
 ## Unexpected output
 
 ??? question "No events pass the GRL selection in this MC sample!"
     This is because your MC sample is being treated as data. It has been observed on a few MC samples that some of the metadata is wrongly written, e.g. the `SimFlavour` field is missing in p5631 and the code is misled into defaulting to data.
+
 
 ## Analysis use-cases
 
