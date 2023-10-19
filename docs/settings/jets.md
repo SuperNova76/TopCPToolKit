@@ -49,14 +49,14 @@
 `runFJvtEfficiency`
 :   whether to calculate the forward JVT efficiency. The default is `False`.
 
-`reduction`
+`systematicsModelJES`
 :   the NP reduction scheme to use for JES: `All`, `Global`, `Category`, `Scenario`. The default is `Global`.
 
-`JEROption`
+`systematicsModelJER`
 :   the NP reduction scheme to use for JER: `All`, `Full`, `Simple`. The default is `Simple`.
 
 !!! note
-    Not all combinations of `reduction` and `JEROption` are valid! Please refer to the [JetETmiss twiki](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/JetUncertaintiesRel22).
+    Not all combinations of `systematicsModelJES` and `systematicsModelJER` are valid! Please refer to the [JetETmiss twiki](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/JetUncertaintiesRel22).
 
 !!! success "Registers the following variables:"
     - `jvtEfficiency`: the per-jet JVT efficiency SF (also for fJVT!)
