@@ -358,19 +358,18 @@ def makeTruthConfiguration(metadata, algSeq, debugHistograms):
         'EventInfo.mcChannelNumber -> mcChannelNumber',
     ]
 
-    if not isLite: # we haven't tested the parton history on PHYSLITE yet, due to other bugs in top samples
-        from TopCPToolkit.truthConfig import truthConfig
-        cfg = truthConfig()
-        cfg.setOptionValue('histories', 'Ttbar.TtbarLight')
-        configSeq.append(cfg)
-        outputContainers.update( cfg.getOutputContainers() )
+    from TopCPToolkit.truthConfig import truthConfig
+    cfg = truthConfig()
+    cfg.setOptionValue('histories', 'Ttbar.TtbarLight')
+    configSeq.append(cfg)
+    outputContainers.update( cfg.getOutputContainers() )
 
-        # NNLO reweighting
-        from TopCPToolkit.TtbarNNLORecursiveRewConfig import TtbarNNLORecursiveRewConfig
-        cfg = TtbarNNLORecursiveRewConfig(dsid, dataType, isRun3Geo)
-        #cfg.setOptionValue('reweightType','3D')
-        #cfg.setOptionValue('sampleID', 'aMCH7')
-        configSeq.append(cfg)
+    # NNLO reweighting
+    from TopCPToolkit.TtbarNNLORecursiveRewConfig import TtbarNNLORecursiveRewConfig
+    cfg = TtbarNNLORecursiveRewConfig(dsid, dataType, isRun3Geo)
+    #cfg.setOptionValue('reweightType','3D')
+    #cfg.setOptionValue('sampleID', 'aMCH7')
+    configSeq.append(cfg)
 
     # add NTuple output config
     from AsgAnalysisAlgorithms.OutputAnalysisConfig import OutputAnalysisConfig
