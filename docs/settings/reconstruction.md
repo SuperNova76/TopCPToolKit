@@ -1,4 +1,11 @@
-## [KLFitterConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/KLFitterConfig.py)
+## Make-methods
+
+!!! warning
+    No such method exist yet for top reconstruction algorithms!
+
+## Config blocks
+
+### [KLFitterConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/KLFitterConfig.py)
 
 `electrons`
 :   the input electron container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
@@ -46,7 +53,7 @@
 !!! note
     The source code and documentation for KLFitter are available from [github](https://github.com/KLFitter/KLFitter).
 
-## [TopSpaNetConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/TopSpaNetConfig.py)
+### [TopSpaNetConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/TopSpaNetConfig.py)
 
 `btagger`
 :   b-tagging algorithm to use, if only one is needed. The default is `DL1dv01`.

@@ -1,4 +1,6 @@
-## [ONNXWrapper](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/TopCPToolkit/ONNXWrapper.h)
+## C++ classes
+
+### [ONNXWrapper](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/TopCPToolkit/ONNXWrapper.h)
 
 `ONNXWrapper(const std::string& name, const std::vector<std::string>& filepaths_model_cv)`
 :   Constructor of ONNXWrapper.
