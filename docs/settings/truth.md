@@ -1,4 +1,11 @@
-## [truthConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/truthConfig.py)
+## Make-methods
+
+!!! warning
+    No such method exist yet for truth-related algorithms!
+
+## Config blocks
+
+### [truthConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/truthConfig.py)
 
 `histories`
 :   parton-level interpretations of the MC truth record. Multiple histories can be provided as `history1.history2.etc`. See [possible values](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/truthConfig.py) (keys of the `truth_branches` dictionary).
@@ -6,7 +13,7 @@
 !!! success "Registers history-dependent variables:"
     - in the format `history_MC_resonance_variable` (no systematics)
 
-## [particleLevelConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/particleLevelConfig.py)
+### [particleLevelConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/particleLevelConfig.py)
 
 `useTruthElectrons`
 :   whether to use electrons. The default is `True`.
@@ -98,7 +105,7 @@
     - `nGhosts_bHadron`: number of ghost-matched b-hadrons in the jet (no systematics)
     - `nGhosts_cHadron`: number of ghost-matched c-hadrons in the jet (no systematics)
 
-## [TtbarNNLORecursiveRewConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/TtbarNNLORecursiveRewConfig.py)
+### [TtbarNNLORecursiveRewConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/TtbarNNLORecursiveRewConfig.py)
 
 `sampleID`
 :   force the DSID (string) to be used to configure the reweighting. The default is `AutoConfig`, i.e. use the file metadata.

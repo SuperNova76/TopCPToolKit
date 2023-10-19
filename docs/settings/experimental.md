@@ -1,4 +1,11 @@
-## [ExtraParticleDecorationConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/ExtraParticleDecorationConfig.py)
+## Make-methods
+
+!!! warning
+    No such method exist for experimental algorithms!
+
+## Config blocks
+
+### [ExtraParticleDecorationConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/ExtraParticleDecorationConfig.py)
 
 Allows to add generic particle decorations and save them as output variables.
 
@@ -8,7 +15,7 @@ Allows to add generic particle decorations and save them as output variables.
 !!! success "Registers the following variables:"
     - `e`: object $E$
 
-## [LeptonSFCalculatorConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/LeptonSFCalculatorConfig.py)
+### [LeptonSFCalculatorConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/LeptonSFCalculatorConfig.py)
 
 Computes the per-event lepton (electrons and muons) scale factors.
 

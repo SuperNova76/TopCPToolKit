@@ -1,4 +1,6 @@
-## [makeEventSelectionConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EventSelectionAlgorithms/python/EventSelectionConfig.py)
+## Make-methods
+
+### [makeEventSelectionConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EventSelectionAlgorithms/python/EventSelectionConfig.py)
 
 Performs a single event selection. To define multiple selection regions, see [`makeMultipleEventSelectionConfigs`](/settings/eventselection/#makemultipleeventselectionconfigs) below.
 
@@ -35,7 +37,7 @@ Performs a single event selection. To define multiple selection regions, see [`m
 `cutFlowHistograms`
 :   whether to generate cutflow histograms for the selection cuts (performs a call to [`makeEventCutFlowConfig`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)). The default is `False` (no histograms).
 
-## [makeMultipleEventSelectionConfigs](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EventSelectionAlgorithms/python/EventSelectionConfig.py)
+### [makeMultipleEventSelectionConfigs](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EventSelectionAlgorithms/python/EventSelectionConfig.py)
 
 Performs multiple event selections, split into separate regions and subregions. A final logical OR of all region selections is used as event filter. The arguments below are the same as for [`makeEventSelectionConfig`](/settings/eventselection/#makeeventselectionconfig), except for `selectionCutsDict`!
 
@@ -71,6 +73,65 @@ Performs multiple event selections, split into separate regions and subregions. 
 
 `cutFlowHistograms`
 :   whether to generate cutflow histograms for the selection cuts (performs a call to [`makeEventCutFlowConfig`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)). The default is `False` (no histograms).
+
+## Config blocks
+
+### [EventSelectionConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EventSelectionAlgorithms/python/EventSelectionConfig.py)
+
+`name`
+:   the name of the event selection, used to uniquely identify the `EventSelectionConfig` block.
+
+`electrons`
+:   the input electron container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
+
+`muons`
+:   the input muon container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
+
+`jets`
+:   the input jet container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
+
+`met`
+:   the input MET container. The default is `''` (empty string).
+
+`btagDecoration`
+:   the b-tagging decoration to use when defining b-jets. The default is `''` (empty string).
+
+`preselection`
+:   the event-wise selection flag to start this event selection from. The default is `''` (empty string).
+
+`selectionCuts`
+:   a single string listing one selection cut per line. See [available keywords]().
+
+`noFilter`
+:   do not apply an event filter. The default is `False`, i.e. remove events not passing the full list of selection cuts.
+
+`debugMode`
+:   whether to create an output branch for every single line of the selection cuts. The default is `False` (only saves the final decision).
+
+### [EventSelectionMergerConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EventSelectionAlgorithms/python/EventSelectionConfig.py)
+
+`selections`
+:   the selection decisions (list of strings) to unify into a final decision (internally: `selection_1 || selection_2 || ...`). The default is `[]` (empty list).
+
+`noFilter`
+:   do not apply an event filter. The default is `False`, i.e. remove events not passing the full list of selection cuts.
+
+!!! tip
+    The `selections` field expects expressions like `"pass_{name}_%SYS%"` for some selection `name`.
+
+### [EventCutFlowBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
+
+`containerName`
+:   the name of the input container, typically `EventInfo`.
+
+`selectionName`
+:   the name of an optional selection decoration to use.
+
+`postfix`
+:   a postfix to apply in the naming of cutflow histograms. Set it when defining multiple cutflows.
+
+`customSelections`
+:   the selections for which to generate cutflow histograms. If a single string, corresponding to a particular event selection, the event cutflow for that selection will be looked up. If a list of strings, will use explicitly those selections. If left blank, all selections attached to the container will be looked up.
 
 ## Available keywords
 
