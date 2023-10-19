@@ -56,13 +56,6 @@ def add_mc_weights(configSeq, metadata, branches):
                                     saveCutBookkeepers=True,
                                     runNumber=runNumber,
                                     cutBookkeepersSystematics=True)
-        branches += [
-            'EventInfo.generatorWeight_%SYS% -> weight_mc_%SYS%'
-        ]
-        if not isRun3:
-            branches += [
-                'EventInfo.beamSpotWeight -> weight_beamspot'
-            ]
 
 
 def add_PRW(configSeq, metadata, branches):
@@ -74,8 +67,6 @@ def add_PRW(configSeq, metadata, branches):
     makePileupReweightingConfig(configSeq,
                                 campaign=campaign,
                                 useDefaultConfig=True)
-    if dataType != 'data':
-        branches += ['EventInfo.PileupWeight_%SYS% -> weight_pileup_%SYS%']
 
 def makeTruthSequence(analysisName, metadata, debugHistograms=True, noSystematics=False):
     algSeq = AnaAlgSequence()

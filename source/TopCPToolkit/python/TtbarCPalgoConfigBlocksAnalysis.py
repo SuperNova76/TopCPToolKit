@@ -17,7 +17,7 @@ def makeRecoConfiguration(metadata, algSeq, configSeq, debugHistograms, noFilter
     use_largeR_jets = False
 
     outputContainers = {'': 'EventInfo'}  # for output NTuple config block
-    reco_branches = ['EventInfo.mcChannelNumber -> mcChannelNumber'] # PRW provides us with eventNumber and runNumber
+    reco_branches = []
     met_branches = []
 
     # figure out metadata
