@@ -19,8 +19,8 @@ runTop_el.py -i inputs.txt -o output
 which will **process the entire sample** with the **default analysis** setup, at **detector-level only**, and **including all systematics and event filters**.
 This may not be what you want to do, so read on below to see what you can change.
 
-The output ntuple file is saved under `output/data-ANALYSIS/output.root`.
-The CutBookkeeper histograms are available in `output/hist-output.root`.
+The output ntuple file is saved in the local directory as `output.root`.
+The CutBookkeeper histograms are available in the same file.
 
 ### Cutflows
 
@@ -58,7 +58,7 @@ Each selection region defines its own cutflow.
 
 ### Sum of weights
 
-Another type of CutBookkeeper histograms is stored in the `output/hist-output.root`, with name `CutBookkeeper_DSID_RUN_SYSTEMATIC`.
+Another type of CutBookkeeper histograms is stored in the `output.root`, with name `CutBookkeeper_DSID_RUN_SYSTEMATIC`.
 Such histograms contain 3 bins recording information about _all the events seen_ when processing the input files for a given job:
 
 1. the total number of events
@@ -78,7 +78,7 @@ with $\mathcal{L}$ the integrated luminosity, $\sigma_\text{eff}$ the effective 
 There are multiple ways one could retrieve the list of systematics run by the various algorithms.
 The most robust one is to rely on the [`CP::SysListDumperAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/Root/SysListDumperAlg.cxx), an instance of which is automatically set up when running TopCPToolkit (see [commonAlgoConfig.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/commonAlgoConfig.py)).
 
-In the same `output/hist-output.root`, it generates an empty histogram `listOfSystematics` whose bin labels are the various systematics (including `NOSYS` to represent the nominal calibrations).
+In the same `output.root`, it generates an empty histogram `listOfSystematics` whose bin labels are the various systematics (including `NOSYS` to represent the nominal calibrations).
 
 !!! tip
     The systematic names are _exactly_ those provided by the various CP tools.
@@ -100,7 +100,7 @@ For example:
 
 ## Command line options
 
-Only the text file with the input samples and the location of the output directory are required to run `runTop_el.py`.
+Only the text file with the input samples and the name of the output file are required to run `runTop_el.py`.
 All other flags are optional and listed in the table below. You can also run
 ```sh
 runTop_el.py -h

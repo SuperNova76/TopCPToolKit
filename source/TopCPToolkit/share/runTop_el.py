@@ -9,8 +9,8 @@ import os, shutil
 p = ArgumentParser('Run EventLoop with CP algorithms in local input')
 p.add_argument('-i', '--input-list', required=True,
                help='Path to text file with input DAOD files to process.')
-p.add_argument('-o', '--output-path', required=True,
-               help='Path to output directory to be created.')
+p.add_argument('-o', '--output-name', required=True,
+               help='Name of the output file (without .root)')
 p.add_argument('-e', '--max-events', type=int, required=False, default=-1,
                help='Number of events to run over. Set to -1 to run over all events.')
 p.add_argument('-a', '--analysis', type=str,
@@ -51,16 +51,21 @@ amiTags = metadata.get('AMITag', '')
 print('AMI tags from FileMetaData: ', amiTags)
 
 dataType = metaConfig.get_data_type(metadata)
+campaign = metaConfig.get_campaign(metadata).value if dataType != 'data' else metaConfig.get_data_year(metadata)
+dsid = metaConfig.get_mc_channel_number(metadata)
 maxEvents = args.max_events
 
 #output stream name in EventLoop
 outputStreamName = 'ANALYSIS'
 # outfile is the standard output file from EventLoop
-outfile = f'{args.output_path}/data-{outputStreamName}/{sample_name}.root'
+outfile = f'{args.output_name}/data-{outputStreamName}/{sample_name}.root'
 # these are temporary files to merge outputs from the reco, particle-level and parton sequences
 recofile = f'{sample_name}_reco.root'
 partonfile = f'{sample_name}_truth.root'
 particlefile = f'{sample_name}_pl.root'
+histofile = f'{args.output_name}/hist-{sample_name}.root'
+# the final file to keep
+finalfile = f'{args.output_name}.root'
 
 job = ROOT.EL.Job()
 job.sampleHandler(sh)
@@ -76,10 +81,10 @@ for alg in algSeq:
     job.algsAdd(alg)
     pass
 job.outputAdd(ROOT.EL.OutputStream(outputStreamName))
-driver.submit(job, args.output_path)
+driver.submit(job, args.output_name)
 
-if args.parton or args.particle:
-    shutil.move(outfile, recofile)
+shutil.move(outfile, recofile)
+shutil.move(histofile, 'only_reco_histograms.root')
 
 if args.parton:
     from TopCPToolkit.commonAlgoConfig import makeTruthSequence
@@ -95,7 +100,7 @@ if args.parton:
         job.algsAdd(alg)
         pass
     job.outputAdd(ROOT.EL.OutputStream(outputStreamName))
-    driver.submit(job, args.output_path)
+    driver.submit(job, args.output_name)
     shutil.move(outfile, partonfile)
 
 if args.particle:
@@ -112,15 +117,32 @@ if args.particle:
         job.algsAdd(alg)
         pass
     job.outputAdd(ROOT.EL.OutputStream(outputStreamName))
-    driver.submit(job, args.output_path)
+    driver.submit(job, args.output_name)
     shutil.move(outfile, particlefile)
 
 if args.parton and not args.particle:
-    os.system(f'hadd {outfile} {recofile} {partonfile}')
-    os.system(f'rm {recofile} {partonfile}')
+    os.system(f'hadd -f {finalfile} only_reco_histograms.root {recofile} {partonfile}')
+    os.system(f'rm {recofile} {partonfile} only_reco_histograms.root')
 elif not args.parton and args.particle:
-    os.system(f'hadd {outfile} {recofile} {particlefile}')
-    os.system(f'rm {recofile} {particlefile}')
+    os.system(f'hadd -f {finalfile} only_reco_histograms.root {recofile} {particlefile}')
+    os.system(f'rm {recofile} {particlefile} only_reco_histograms.root')
 elif args.parton and args.particle:
-    os.system(f'hadd {outfile} {recofile} {particlefile} {partonfile}')
-    os.system(f'rm {recofile} {partonfile} {particlefile}')
+    os.system(f'hadd -f {finalfile} only_reco_histograms.root {recofile} {particlefile} {partonfile}')
+    os.system(f'rm {recofile} {partonfile} {particlefile} only_reco_histograms.root')
+else:
+    os.system(f'hadd -f {finalfile} only_reco_histograms.root {recofile} ')
+    os.system(f'rm {recofile} only_reco_histograms.root')
+os.system(f'rm -rf {args.output_name}')
+
+##############
+## METADATA ##
+##############
+
+f = ROOT.TFile(f'{finalfile}', "UPDATE")
+t_datatype = ROOT.TNamed("dataType", str(dataType))
+t_campaign = ROOT.TNamed("campaign", str(campaign))
+t_dsid = ROOT.TNamed("dsid", str(dsid))
+t_datatype.Write()
+t_campaign.Write()
+t_dsid.Write()
+f.Close()
