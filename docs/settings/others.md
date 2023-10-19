@@ -58,6 +58,13 @@ _Returns an instance of [`CommonServicesConfig`](/settings/others/#commonservice
 `userPileupConfigs`
 :   user-provided PRW files. Alternative to auto-configuration.
 
+!!! success "Registers the following variables:"
+    - `eventNumber`: the event number (no systematics)
+    - `runNumber`: the run number (no systematics)
+    - `mcChannelNumber`: the MC channel number or DSID (no systematics)
+    - `weight_pileup`: the weight for pileup reweighting
+    - `weight_beamspot`: the weight to correct the beamspot size in Run 2 (no systematics)
+
 ### [makeBootstrapGeneratorConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/BootstrapGeneratorConfig.py)
 
 `seq`
@@ -139,6 +146,13 @@ _Returns an instance of [`CommonServicesConfig`](/settings/others/#commonservice
 `userPileupConfigs`
 :   user-provided PRW files. Alternative to auto-configuration.
 
+!!! success "Registers the following variables:"
+    - `eventNumber`: the event number (no systematics)
+    - `runNumber`: the run number (no systematics)
+    - `mcChannelNumber`: the MC channel number or DSID (no systematics)
+    - `weight_pileup`: the weight for pileup reweighting
+    - `weight_beamspot`: the weight to correct the beamspot size in Run 2 (no systematics)
+
 ### [BootstrapGeneratorConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/BootstrapGeneratorConfig.py)
 
 `nReplicas`
@@ -150,7 +164,7 @@ _Returns an instance of [`CommonServicesConfig`](/settings/others/#commonservice
 `runOnMC`
 :   toggle to force running on MC samples. The default is `False`, i.e. run only on data.
 
-## TopCPToolkit modules
+## TopCPToolkit modules
 
 ### [metaConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/metaConfig.py)
 

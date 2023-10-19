@@ -75,7 +75,7 @@ def makeRecoConfiguration(metadata, algSeq, configSeq, debugHistograms, noFilter
         makeJetAnalysisConfig(configSeq, 'AnaJets', jetContainer,
                               runGhostMuonAssociation=not isLite, # TEMPORARY BUG FIX
                               runNNJvtUpdate = True,
-                              JEROption='Full', reduction='Category', postfix='baselineSel')
+                              systematicsModelJER='Full', systematicsModelJES='Category', postfix='baselineSel')
         from JetAnalysisAlgorithms.JetJvtAnalysisConfig import makeJetJvtAnalysisConfig
         makeJetJvtAnalysisConfig(configSeq, 'AnaJets', jetContainer, enableFJvt=False)
 
