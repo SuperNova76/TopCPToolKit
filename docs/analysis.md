@@ -4,7 +4,6 @@ There, we find calls such as
 from TopCPToolkit.commonAlgoConfig import makeRecoSequence
 algSeq = makeRecoSequence(args.analysis, flags,
                           noSystematics=args.no_systematics,
-                          debugHistograms=not args.no_debug_histograms,
                           noFilter=args.no_filter)
 ```
 and similarly to `makeTruthSequence` and `makeParticleLevelSequence`.
@@ -32,7 +31,7 @@ from AnalysisAlgorithmsConfig.ConfigSequence import ConfigSequence
 from AnalysisAlgorithmsConfig.ConfigAccumulator import ConfigAccumulator
 from TopCPToolkit import metaConfig, commonAlgoConfig
 
-def makeRecoConfiguration(flags, algSeq, configSeq, debugHistograms, noFilter=False):
+def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
 
     # ... everything you need goes here ...
 

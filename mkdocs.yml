@@ -56,7 +56,6 @@ nav:
             - Requesting a feature: contributing/requesting_feature.md
             - Proposing a new algorithm: contributing/proposing_algorithm.md
             - Suggesting an improvement: contributing/suggesting_improvement.md
-        - FAQ: faq.md
     - Settings:
         - settings/index.md
         - Electrons: settings/electrons.md
@@ -76,3 +75,4 @@ nav:
         - Metadata-based autoconfiguration flags: settings/configflags.md
         - Experimental: settings/experimental.md
         - ONNX Wrapper: settings/onnxwrapper.md
+    - FAQ: faq.md

@@ -113,13 +113,12 @@ runTop_el.py -h
 | `--parton`              | False                                          | Toggles the parton-level analysis. |
 | `--particle`            | False                                          | Toggles the particle-level analysis. |
 | `--no-systematics`      | False                                          | Toggles off the computation of systematics. |
-| `--no-debug-histograms` | False                                          | Toggles off the saving of debugging histograms. |
 | `--no-filter`           | False                                          | Save all events regardless of analysis filters (still saves the decision). |
 
 Here are a few use cases:
 === "Typical analysis"
     ```sh
-    runTop_el.py -i inputs.txt -o output --parton --particle --no-debug-histograms -a TopCPToolkit.MyCustomAnalysis
+    runTop_el.py -i inputs.txt -o output --parton --particle -a TopCPToolkit.MyCustomAnalysis
     ```
 === "Developer, no systs"
     ```sh

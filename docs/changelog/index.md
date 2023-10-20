@@ -5,8 +5,23 @@
 ### Upcoming release
 
 - [issue #34](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/34): MMC algorithm for di-tau mass reconstruction
+- [issue #43](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/43): transition to the text-based config model
+- [issue #51](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/51): update the event selection example
+- [issue #54](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/54): adapt PRW configuration to use central config block
+
+### 1.7.0 <small>October 20, 2023</small>
+- We run on AB 24.2.27
 - [issue #42](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/42): migration of the bootstrapping algorithm to Athena
+- [issue #44](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/44): MC-MC b-tagging SFs
+- [issue #45](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/45): documentation for systematics filtering
+- [issue #46](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/46): various user-friendly improvements
 - [issue #47](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/47): switch metadata autoconfiguration to config flags
+- [issue #48](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/48): improve the interface of the NNLO reweighter
+- [issue #49](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/49): option to disable re-calibration on PHYSLITE
+- [issue #50](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/50): document all the config blocks (not just make-methods!)
+- [issue #52](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/52): simplify the output structure and store metadata
+- [issue #53](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/53): adapt to single-file output also on the Grid
+
 
 ### 1.6.0 <small>October 10, 2023</small>
 
