@@ -352,7 +352,7 @@ def makeTruthConfiguration(flags, algSeq, debugHistograms):
 
     # NNLO reweighting
     from TopCPToolkit.TtbarNNLORecursiveRewConfig import TtbarNNLORecursiveRewConfig
-    cfg = TtbarNNLORecursiveRewConfig(flags.Input.MCChannelNumber, flags.Input.isRun3)
+    cfg = TtbarNNLORecursiveRewConfig()
     #cfg.setOptionValue('reweightType','3D')
     #cfg.setOptionValue('sampleID', 'aMCH7')
     configSeq.append(cfg)

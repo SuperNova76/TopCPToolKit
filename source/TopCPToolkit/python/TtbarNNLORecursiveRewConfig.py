@@ -1,14 +1,13 @@
 from AnalysisAlgorithmsConfig.ConfigBlock import ConfigBlock
 from AnalysisAlgorithmsConfig.ConfigAccumulator import DataType
+from AthenaConfiguration.Enums import LHCPeriod
 
 
 class TtbarNNLORecursiveRewConfig(ConfigBlock):
     """ConfigBlock for ttbar NNLO reweighting algorithms"""
 
-    def __init__(self, mcChannelNumber, isRun3Geo=False):
+    def __init__(self):
         super(TtbarNNLORecursiveRewConfig, self).__init__('RunTtbarNNLORecursiveRewAlg')
-        self.mcChannelNumber = mcChannelNumber
-        self.isRun3 = isRun3Geo
         self.addOption('sampleID', 'AutoConfig', type=str)
         self.addOption('reweightType', '2D', type=str)
         self.addOption('reweightPath', 'dev/AnalysisTop/TTbarNNLOReweighter', type=str)
@@ -19,7 +18,7 @@ class TtbarNNLORecursiveRewConfig(ConfigBlock):
         if config.dataType() is DataType.Data:
             return
         
-        if self.isRun3:
+        if config.geometry() == LHCPeriod.Run3:
             print("Run 3 NNLO ttbar reweighting is not supported yet! skipping the algorithm.")
             return
         
@@ -42,13 +41,13 @@ class TtbarNNLORecursiveRewConfig(ConfigBlock):
         }
         if self.sampleID == 'AutoConfig':
             for key, value in map_sampleID.items():
-                if self.mcChannelNumber in value:
+                if config.dsid() in value:
                     self.sampleID = key
                     break
             else:
                 # this sample is not supported for reweighting:
                 # simply don't set up the algorithm
-                print("Sample with DSID", self.mcChannelNumber, "is not supported for ttbar NNLO reweighting, skipping the algorithm.")
+                print(f"Sample with DSID {config.dsid()} is not supported for ttbar NNLO reweighting, skipping the algorithm.")
                 return
 
         alg = config.createAlgorithm('top::RunTtbarNNLORecursiveRewAlg', 'RunTtbarNNLORecursiveRewAlg'+self.reweightType)
