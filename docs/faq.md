@@ -1,3 +1,5 @@
+# Frequently Asked Questions
+
 *The FAQ will be filled progressively as user questions come in!*
 
 ## General

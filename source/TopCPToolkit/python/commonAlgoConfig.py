@@ -7,7 +7,7 @@ from AnalysisAlgorithmsConfig.ConfigAccumulator import DataType
 from TopCPToolkit import metaConfig
 
 
-def makeRecoSequence(analysisName, flags, debugHistograms=True, noSystematics=False, noFilter=False):
+def makeRecoSequence(analysisName, flags, noSystematics=False, noFilter=False):
     algSeq = AnaAlgSequence()
 
     configSeq = ConfigSequence()
@@ -22,7 +22,7 @@ def makeRecoSequence(analysisName, flags, debugHistograms=True, noSystematics=Fa
     except ModuleNotFoundError:
         raise Exception(f'The package and module for your --analysis could not be found: {analysisName}')
     try:
-        analysisModule.makeRecoConfiguration(flags, algSeq, configSeq, debugHistograms, noFilter)
+        analysisModule.makeRecoConfiguration(flags, algSeq, configSeq, noFilter)
     except AttributeError:
         raise Exception('The analysis you specified via --analysis does not have makeRecoConfiguration method implemented.'
                         'This is needed to configure the CP algorithms')
@@ -70,7 +70,7 @@ def add_PRW(configSeq, flags, branches):
                                 campaign=flags.Input.MCCampaign,
                                 useDefaultConfig=True)
 
-def makeTruthSequence(analysisName, flags, debugHistograms=True, noSystematics=False):
+def makeTruthSequence(analysisName, flags, noSystematics=False):
     algSeq = AnaAlgSequence()
 
     if flags.Input.DataType is DataType.Data:
@@ -91,7 +91,7 @@ def makeTruthSequence(analysisName, flags, debugHistograms=True, noSystematics=F
     except ModuleNotFoundError:
         raise Exception(f'The package and module for your --analysis could not be found: {analysisName}')
     try:
-        analysisModule.makeTruthConfiguration(flags, algSeq, debugHistograms)
+        analysisModule.makeTruthConfiguration(flags, algSeq)
     except AttributeError:
         raise Exception('The analysis you specified via --analysis does not have makeTruthConfiguration method implemented.'
                         'This is needed to configure the CP algorithms')
@@ -102,7 +102,7 @@ def makeTruthSequence(analysisName, flags, debugHistograms=True, noSystematics=F
 
     return algSeq
 
-def makeParticleLevelSequence(analysisName, flags, debugHistograms=True, noSystematics=False):
+def makeParticleLevelSequence(analysisName, flags, noSystematics=False):
     algSeq = AnaAlgSequence()
 
     if flags.Input.DataType is DataType.Data:
@@ -123,7 +123,7 @@ def makeParticleLevelSequence(analysisName, flags, debugHistograms=True, noSyste
     except ModuleNotFoundError:
         raise Exception(f'The package and module for your --analysis could not be found: {analysisName}')
     try:
-        analysisModule.makeParticleLevelConfiguration(flags, algSeq, debugHistograms)
+        analysisModule.makeParticleLevelConfiguration(flags, algSeq)
     except AttributeError:
         raise Exception('The analysis you specified via --analysis does not have makeParticleLevelConfiguration method implemented.'
                         'This is needed to configure the CP algorithms')

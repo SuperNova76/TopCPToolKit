@@ -48,7 +48,7 @@ Assuming you are working on Lxplus or an equivalent setup with access to CVMFS, 
 followed by a suitable choice of AnalysisBase release:
 === "New setup"
     ```sh
-    asetup AnalysisBase,24.2.25
+    asetup AnalysisBase,24.2.X
     ```
 === "Re-use existing setup"
     ```sh

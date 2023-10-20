@@ -5,7 +5,7 @@ from TopCPToolkit.PerEventSFCalculatorConfig import PerEventSFCalculatorConfig
 from TopCPToolkit import metaConfig, commonAlgoConfig
 
 
-def makeRecoConfiguration(flags, algSeq, configSeq, debugHistograms, noFilter=False):
+def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
 
     use_electrons = True
     use_muons = True
@@ -328,7 +328,7 @@ SAVE
     configSeq.fullConfigure(configAccumulator)
 
 
-def makeTruthConfiguration(flags, algSeq, debugHistograms):
+def makeTruthConfiguration(flags, algSeq):
     configSeq = ConfigSequence()
 
     truth_branches = []
@@ -372,7 +372,7 @@ def makeTruthConfiguration(flags, algSeq, debugHistograms):
     configSeq.fullConfigure(configAccumulator)
 
 
-def makeParticleLevelConfiguration(flags, algSeq, debugHistograms):
+def makeParticleLevelConfiguration(flags, algSeq):
     configSeq = ConfigSequence()
 
     particleLevel_branches = []

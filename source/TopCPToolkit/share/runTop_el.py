@@ -25,8 +25,6 @@ p.add_argument('--particle', action='store_true',
                help='Whether to run particle level')
 p.add_argument('--no-systematics', action='store_true',
                help='Configure the job to run with no systematics.')
-p.add_argument('--no-debug-histograms', action='store_true',
-               help='Configure the job to run with no debugging histograms')
 p.add_argument('--no-filter', action='store_true',
                help='Skip filtering of events due to event selection (selection flags are still stored.)')
 
@@ -76,7 +74,6 @@ job.options().setString(ROOT.EL.Job.optSubmitDirMode, 'overwrite')
 from TopCPToolkit.commonAlgoConfig import makeRecoSequence
 algSeq = makeRecoSequence(args.analysis, flags,
                           noSystematics=args.no_systematics,
-                          debugHistograms=not args.no_debug_histograms,
                           noFilter=args.no_filter)
 print(algSeq)
 for alg in algSeq:
@@ -95,8 +92,7 @@ if args.parton:
     job.options().setDouble(ROOT.EL.Job.optMaxEvents, maxEvents)
     job.options().setString(ROOT.EL.Job.optSubmitDirMode, 'overwrite')
     algSeq = makeTruthSequence(args.analysis, flags,
-                               noSystematics=args.no_systematics,
-                               debugHistograms=not args.no_debug_histograms)
+                               noSystematics=args.no_systematics)
     print(algSeq)
     for alg in algSeq:
         job.algsAdd(alg)
@@ -112,8 +108,7 @@ if args.particle:
     job.options().setDouble(ROOT.EL.Job.optMaxEvents, maxEvents)
     job.options().setString(ROOT.EL.Job.optSubmitDirMode, 'overwrite')
     algSeq = makeParticleLevelSequence(args.analysis, flags,
-                                       noSystematics=args.no_systematics,
-                                       debugHistograms=not args.no_debug_histograms)
+                                       noSystematics=args.no_systematics)
     print(algSeq)
     for alg in algSeq:
         job.algsAdd(alg)

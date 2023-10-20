@@ -4,8 +4,8 @@ TopCPToolkit is an ntuple production framework for Run 2 and Run 3 analyses, dev
 It is built around **common CP and analysis algorithms** in release 24, and meant as the successor to [AnalysisTop](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/TopxAODStartGuideR21).
 This websites serves to document the usage and main features of the framework, as well as provide links to references and other resources.
 
-!!! warning
-    The code and the website are currently under heavy development.
+!!! tip
+    This code is being continuously developed.
     We advise subgroup conveners and analysis contacts to appoint only experienced people to design analysis workflows and prepare ntuple productions with it.
 
 ## References
