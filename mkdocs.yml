@@ -73,5 +73,6 @@ nav:
         - Truth content: settings/truth.md
         - Output ntuple: settings/ntupling.md
         - Other useful blocks and methods: settings/others.md
+        - Metadata-based autoconfiguration flags: settings/configflags.md
         - Experimental: settings/experimental.md
         - ONNX Wrapper: settings/onnxwrapper.md

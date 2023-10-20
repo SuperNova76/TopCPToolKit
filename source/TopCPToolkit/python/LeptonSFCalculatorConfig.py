@@ -1,4 +1,5 @@
 from AnalysisAlgorithmsConfig.ConfigBlock import ConfigBlock
+from AnalysisAlgorithmsConfig.ConfigAccumulator import DataType
 
 
 class LeptonSFCalculatorConfig(ConfigBlock):
@@ -14,7 +15,7 @@ class LeptonSFCalculatorConfig(ConfigBlock):
         electrons, electronSelection = config.readNameAndSelection(self.electrons)
         muons, muonSelection = config.readNameAndSelection(self.muons)
 
-        if config.dataType() != 'data':
+        if config.dataType() is not DataType.Data:
             alg = config.createAlgorithm('top::LeptonSFCalculatorAlg', 'leptonSFCalculator')
             alg.electrons = electrons
             alg.electronSelection = electronSelection

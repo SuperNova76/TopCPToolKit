@@ -168,31 +168,8 @@ _Returns an instance of [`CommonServicesConfig`](/settings/others/#commonservice
 
 ### [metaConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/metaConfig.py)
 
-Loading this module enables the following methods to access the metadata:
-
-`get_data_type( FileMetaData )`
-:   returns the data type as a string, one of `'mc'`, `'afii'` or `'data'`.
-
-`get_campaign( FileMetaData )`
-:   returns the MC campaign as a `Campaigns.Utils.Campaign` object.
-
-`get_data_year( FileMetaData )`
-:   returns the year of data-taking based on runNumber reported from FileMetaData.
-
-`isRun3( FileMetaData )`
-:   returns `True` if the input MC campaign belongs to Run 3.
-
-`get_LHCgeometry( FileMetaData )`
-:   returns the LHC Run information as a `AthenaConfiguration.Enums.LHCPeriod` object.
-
-`get_grl( FileMetaData )`
-:   returns the list of GRL files (list of strings) corresponding to the year of data taking (determined from runNumber).
-
-`get_run_number( FileMetaData )`
-:   returns the runNumber of data sample or the per-sub-campaign constant runNumber for MC (e.g. 284500 for MC20a).
-
-`get_mc_channel_number( FileMetaData )`
-:   returns the MC channelNumber.
+This module is responsible for loading additional metadata and should not be called by the end user. It appends additional metadata
+information into configuration flags. The configuration flags are documented in the [Metadata-based autoconfiguration flags](/settings/configflags) section.
 
 ### [commonAlgoConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/commonAlgoConfig.py)
 
@@ -204,9 +181,3 @@ Loading the module also enables the following methods to easily set up very comm
 
 `add_mc_weights`
 :   wraps around [`makeGeneratorAnalysisConfig`](#makeGeneratorAnalysisConfig), allowing to retrieve the correct output branches. Automates the MC runNumber retrieval.
-
-`add_PRW`
-:   wraps around [`makePileupReweightingConfig`](#makePileupReweightingConfig), allowing to retrieve the correct output branches. Automates the PRW settings. 
-
-!!! note
-    The PRW tool setup is automatically skipped when we detect data instead of MC samples.

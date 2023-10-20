@@ -2,7 +2,7 @@ To understand how to write a custom analysis configuration, it's instructive to 
 There, we find calls such as
 ```python
 from TopCPToolkit.commonAlgoConfig import makeRecoSequence
-algSeq = makeRecoSequence(args.analysis, metadata,
+algSeq = makeRecoSequence(args.analysis, flags,
                           noSystematics=args.no_systematics,
                           debugHistograms=not args.no_debug_histograms,
                           noFilter=args.no_filter)
@@ -32,7 +32,7 @@ from AnalysisAlgorithmsConfig.ConfigSequence import ConfigSequence
 from AnalysisAlgorithmsConfig.ConfigAccumulator import ConfigAccumulator
 from TopCPToolkit import metaConfig, commonAlgoConfig
 
-def makeRecoConfiguration(metadata, algSeq, configSeq, debugHistograms, noFilter=False):
+def makeRecoConfiguration(flags, algSeq, configSeq, debugHistograms, noFilter=False):
 
     # ... everything you need goes here ...
 
