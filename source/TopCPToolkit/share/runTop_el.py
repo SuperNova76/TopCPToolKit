@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
+from AthenaConfiguration.AllConfigFlags import initConfigFlags
 from AthenaConfiguration.AutoConfigFlags import GetFileMD
+from AnalysisAlgorithmsConfig.ConfigAccumulator import DataType
 from argparse import ArgumentParser
 from TopCPToolkit import metaConfig
 import ROOT
@@ -46,13 +48,13 @@ driver = ROOT.EL.DirectDriver()
 driver.options().setBool(ROOT.EL.Job.optGridReporting, True)
 
 # read FileMetadata
+flags = initConfigFlags()
+flags.Input.Files = files
 metadata = GetFileMD(files)
-amiTags = metadata.get('AMITag', '')
-print('AMI tags from FileMetaData: ', amiTags)
+metaConfig.populate_config_flags(flags, metadata)
+flags.lock()
+print('AMI tags from FileMetaData: ', flags.Input.AMITag)
 
-dataType = metaConfig.get_data_type(metadata)
-campaign = metaConfig.get_campaign(metadata).value if dataType != 'data' else metaConfig.get_data_year(metadata)
-dsid = metaConfig.get_mc_channel_number(metadata)
 maxEvents = args.max_events
 
 #output stream name in EventLoop
@@ -72,7 +74,7 @@ job.sampleHandler(sh)
 job.options().setDouble(ROOT.EL.Job.optMaxEvents, maxEvents)
 job.options().setString(ROOT.EL.Job.optSubmitDirMode, 'overwrite')
 from TopCPToolkit.commonAlgoConfig import makeRecoSequence
-algSeq = makeRecoSequence(args.analysis, metadata,
+algSeq = makeRecoSequence(args.analysis, flags,
                           noSystematics=args.no_systematics,
                           debugHistograms=not args.no_debug_histograms,
                           noFilter=args.no_filter)
@@ -92,7 +94,7 @@ if args.parton:
     job.sampleHandler(sh)
     job.options().setDouble(ROOT.EL.Job.optMaxEvents, maxEvents)
     job.options().setString(ROOT.EL.Job.optSubmitDirMode, 'overwrite')
-    algSeq = makeTruthSequence(args.analysis, metadata,
+    algSeq = makeTruthSequence(args.analysis, flags,
                                noSystematics=args.no_systematics,
                                debugHistograms=not args.no_debug_histograms)
     print(algSeq)
@@ -109,7 +111,7 @@ if args.particle:
     job.sampleHandler(sh)
     job.options().setDouble(ROOT.EL.Job.optMaxEvents, maxEvents)
     job.options().setString(ROOT.EL.Job.optSubmitDirMode, 'overwrite')
-    algSeq = makeParticleLevelSequence(args.analysis, metadata,
+    algSeq = makeParticleLevelSequence(args.analysis, flags,
                                        noSystematics=args.no_systematics,
                                        debugHistograms=not args.no_debug_histograms)
     print(algSeq)
@@ -139,9 +141,13 @@ os.system(f'rm -rf {args.output_name}')
 ##############
 
 f = ROOT.TFile(f'{finalfile}', "UPDATE")
-t_datatype = ROOT.TNamed("dataType", str(dataType))
+t_datatype = ROOT.TNamed("dataType", str(flags.Input.DataType.value))
+if flags.Input.DataType != DataType.Data:
+    campaign = flags.Input.MCCampaign.value
+else:
+    campaign = flags.Input.DataYear
 t_campaign = ROOT.TNamed("campaign", str(campaign))
-t_dsid = ROOT.TNamed("dsid", str(dsid))
+t_dsid = ROOT.TNamed("dsid", str(flags.Input.MCChannelNumber))
 t_datatype.Write()
 t_campaign.Write()
 t_dsid.Write()

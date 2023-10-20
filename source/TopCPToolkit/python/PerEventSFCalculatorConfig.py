@@ -1,4 +1,5 @@
 from AnalysisAlgorithmsConfig.ConfigBlock import ConfigBlock
+from AnalysisAlgorithmsConfig.ConfigAccumulator import DataType
 
 
 class PerEventSFCalculatorConfig(ConfigBlock):
@@ -15,7 +16,7 @@ class PerEventSFCalculatorConfig(ConfigBlock):
         self.addOption('eventSF', '', type=str)
 
     def makeAlgs(self, config):
-        if config.dataType() != 'data':
+        if config.dataType() is not DataType.Data:
             particles, selection = config.readNameAndSelection(self.particles)
             alg = config.createAlgorithm('CP::AsgEventScaleFactorAlg', self.algName)
             alg.particles = particles

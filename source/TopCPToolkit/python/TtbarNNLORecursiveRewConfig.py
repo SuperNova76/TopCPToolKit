@@ -1,13 +1,13 @@
 from AnalysisAlgorithmsConfig.ConfigBlock import ConfigBlock
+from AnalysisAlgorithmsConfig.ConfigAccumulator import DataType
 
 
 class TtbarNNLORecursiveRewConfig(ConfigBlock):
     """ConfigBlock for ttbar NNLO reweighting algorithms"""
 
-    def __init__(self, mcChannelNumber, datatype, isRun3Geo=False):
+    def __init__(self, mcChannelNumber, isRun3Geo=False):
         super(TtbarNNLORecursiveRewConfig, self).__init__('RunTtbarNNLORecursiveRewAlg')
         self.mcChannelNumber = mcChannelNumber
-        self.datatype = datatype
         self.isRun3 = isRun3Geo
         self.addOption('sampleID', 'AutoConfig', type=str)
         self.addOption('reweightType', '2D', type=str)
@@ -16,7 +16,7 @@ class TtbarNNLORecursiveRewConfig(ConfigBlock):
 
     def makeAlgs(self, config):
         # don't run on data!
-        if self.datatype == 'data':
+        if config.dataType() is DataType.Data:
             return
         
         if self.isRun3:
