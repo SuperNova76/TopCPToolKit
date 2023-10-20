@@ -202,12 +202,10 @@ def submit(config, allSamples):
         CMTCONFIG = os.getenv("CMTCONFIG")
         cmd += f'--useAthenaPackages --cmtConfig={CMTCONFIG} \\\n'
         cmd += '--writeInputToTxt=IN:in.txt \\\n'
-        cmd += f'--outputs={config.outputName}_ntup:output_ntup.root,{config.outputName}_hist:output_hist.root \\\n'
+        cmd += f'--outputs={config.outputName}:{config.outputName}.root \\\n'
         # write the --exec commands includes moving the output such that panda can pick it up
         cmd += '--exec="'
         cmd += f'{config.code} -i in.txt -o {config.outputName}'
-        cmd += f' && mv {config.outputName}/data-ANALYSIS/output.root output_ntup.root'
-        cmd += f' && mv {config.outputName}/hist-output.root output_hist.root'
         cmd += '" \\\n'
 
         # you might really hate a certain site
