@@ -99,8 +99,8 @@
 `containerName`
 :   the name of the input container.
 
-`postfix`
-:   a postfix to apply to decorations and algorithm names. Typically not needed here.
+`selectionName`
+:   a postfix to apply to decorations and algorithm names. Typically not needed here as internally the string `f"{btagger}_{btagWP}"` is used.
 
 `btagger`
 :   the flavour tagging algorithm: `DL1dv01`, `GN2v00`. The default is `DL1r`.
@@ -162,8 +162,8 @@
 `containerName`
 :   the name of the input container.
 
-`postfix`
-:   a postfix to apply to decorations and algorithm names. Typically not needed here.
+`selectionName`
+:   a postfix to apply to decorations and algorithm names. Typically not needed here as internally the string `f"{btagger}_{btagWP}"` is used.
 
 `btagger`
 :   the flavour tagging algorithm: `DL1dv01`, `GN2v00`. The default is `DL1r`.

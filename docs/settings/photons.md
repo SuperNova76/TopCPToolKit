@@ -40,8 +40,11 @@
 `containerName`
 :   the name of the input container.
 
+`selectionName`
+:   the name of the photon selection to define (e.g. `tight` or `loose`).
+
 `postfix`
-:   a postfix to apply to decorations and algorithm names. Useful here to distinguish between different photon definitions.
+:   a postfix to apply to decorations and algorithm names. Typically not needed here as `selectionName` is used internally.
 
 `workingPoint`
 :   the ID and isolation WPs to use. Pass them in the format `quality.isolation`. Supported ID WPs: `Tight`, `Loose`. Supported isolation WPs: `FixedCutLoose`, `FixedCutTight`, `TightCaloOnly`, `NonIso`.
@@ -95,8 +98,11 @@
 `containerName`
 :   the name of the input container.
 
+`selectionName`
+:   the name of the photon selection to define (e.g. `tight` or `loose`).
+
 `postfix`
-:   a postfix to apply to decorations and algorithm names. Useful here to distinguish between different photon definitions.
+:   a postfix to apply to decorations and algorithm names. Typically not needed here as `selectionName` is used internally.
 
 `qualityWP`
 :   the ID WP (string) to use. Supported ID WPs: `Tight`, `Loose`.

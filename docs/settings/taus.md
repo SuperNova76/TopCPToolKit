@@ -28,8 +28,11 @@
 `containerName`
 :   the name of the input container.
 
+`selectionName`
+:   the name of the tau selection to define (e.g. `tight` or `loose`).
+
 `postfix`
-:   a postfix to apply to decorations and algorithm names. Useful here to distinguish between different tau definitions.
+:   a postfix to apply to decorations and algorithm names. Typically not needed here as `selectionName` is used internally.
 
 `workingPoint`
 :   the ID WP to use (single string). Supported ID WPs: `Tight`, `Medium`, `Loose`, `VeryLoose`, `NoID`.
@@ -68,8 +71,11 @@
 `containerName`
 :   the name of the input container.
 
+`selectionName`
+:   the name of the tau selection to define (e.g. `tight` or `loose`).
+
 `postfix`
-:   a postfix to apply to decorations and algorithm names. Useful here to distinguish between different tau definitions.
+:   a postfix to apply to decorations and algorithm names. Typically not needed here as `selectionName` is used internally.
 
 `quality`
 :   the ID WP (string) to use. Supported ID WPs: `Tight`, `Medium`, `Loose`, `VeryLoose`, `NoID`.
