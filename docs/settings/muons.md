@@ -28,8 +28,11 @@
 `containerName`
 :   the name of the input container.
 
+`selectionName`
+:   the name of the muon selection to define (e.g. `tight` or `loose`).
+
 `postfix`
-:   a postfix to apply to decorations and algorithm names. Useful here to distinguish between different muon definitions.
+:   a postfix to apply to decorations and algorithm names. Typically not needed here as `selectionName` is used internally.
 
 `workingPoint`
 :   the ID and isolation WPs to use. Pass them in the format `quality.isolation`. Supported ID WPs: `Tight`, `Medium`, `Loose`, `LowPt`, `HighPt`. Supported isolation WPs: `PflowLoose_VarRad`, `PflowTight_VarRad`, `Loose_VarRad`, `Tight_VarRad`, `NonIso`.
@@ -83,8 +86,11 @@
 `containerName`
 :   the name of the input container.
 
+`selectionName`
+:   the name of the muon selection to define (e.g. `tight` or `loose`).
+
 `postfix`
-:   a postfix to apply to decorations and algorithm names. Useful here to distinguish between different muon definitions.
+:   a postfix to apply to decorations and algorithm names. Typically not needed here as `selectionName` is used internally.
 
 `quality`
 :   the ID WP (string) to use. Supported ID WPs: `Tight`, `Medium`, `Loose`, `LowPt`, `HighPt`.

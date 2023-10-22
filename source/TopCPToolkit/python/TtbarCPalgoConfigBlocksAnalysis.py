@@ -37,8 +37,8 @@ def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
         WPLoose = 'TightLH.NonIso'  # no isolation
         WPTight = 'TightLH.Tight_VarRad'
         makeElectronCalibrationConfig(configSeq, 'AnaElectrons', crackVeto=True)
-        makeElectronWorkingPointConfig(configSeq, 'AnaElectrons', WPLoose, chargeIDSelection=False, postfix='loose')
-        makeElectronWorkingPointConfig(configSeq, 'AnaElectrons', WPTight, chargeIDSelection=False, postfix='tight')
+        makeElectronWorkingPointConfig(configSeq, 'AnaElectrons', WPLoose, chargeIDSelection=False, selectionName='loose')
+        makeElectronWorkingPointConfig(configSeq, 'AnaElectrons', WPTight, chargeIDSelection=False, selectionName='tight')
         # TODO -- this probably not correct -- is it track or cluster eta ?
         makePtEtaSelectionConfig(configSeq, 'AnaElectrons', selectionDecoration='selectPtEta',
                                  selectionName='', minPt=25e3, maxEta=2.47)
@@ -51,8 +51,8 @@ def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
         WPLoose = 'Medium.NonIso'
         WPTight = 'Medium.Tight_VarRad'
         makeMuonCalibrationConfig(configSeq, 'AnaMuons')
-        makeMuonWorkingPointConfig(configSeq, 'AnaMuons', workingPoint=WPLoose, postfix='loose')
-        makeMuonWorkingPointConfig(configSeq, 'AnaMuons', workingPoint=WPTight, postfix='tight', systematicBreakdown = True)
+        makeMuonWorkingPointConfig(configSeq, 'AnaMuons', workingPoint=WPLoose, selectionName='loose')
+        makeMuonWorkingPointConfig(configSeq, 'AnaMuons', workingPoint=WPTight, selectionName='tight', systematicBreakdown = True)
         # TODO -- eta cut probably wrong
         makePtEtaSelectionConfig(configSeq, 'AnaMuons', selectionDecoration='selectPtEta',
                                  selectionName='', minPt=25e3, maxEta=2.5)
@@ -80,7 +80,7 @@ def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
             # suppress CDI warnings due to missing SFs
             makeFTagAnalysisConfig(configSeq, 'AnaJets', btagWP=WP, noEffSF=False,
                                    generator=flags.Analysis.FTAGMCMCGenerator,
-                                   btagger=btagger, kinematicSelection=True, postfix='')
+                                   btagger=btagger, kinematicSelection=True, selectionName='')
             # calculate per-event b-tagging SF (alternative to storing per-jet SFs)
             cfg = PerEventSFCalculatorConfig(f'btagSFCalc_{btagger}_{WP}')
             cfg.particles = 'AnaJets.baselineSel'
@@ -115,9 +115,9 @@ def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
             makePhotonCalibrationConfig, makePhotonWorkingPointConfig
         makePhotonCalibrationConfig(configSeq, 'AnaPhotons', recomputeIsEM=False)
         makePhotonWorkingPointConfig(configSeq, 'AnaPhotons', 'Tight.FixedCutTight',
-                                     postfix = 'tight', recomputeIsEM=False)
+                                     selectionName = 'tight', recomputeIsEM=False)
         makePhotonWorkingPointConfig(configSeq, 'AnaPhotons', 'Loose.Undefined',
-                                     postfix = 'loose', recomputeIsEM=False)
+                                     selectionName = 'loose', recomputeIsEM=False)
         makePtEtaSelectionConfig(configSeq, 'AnaPhotons', selectionDecoration='selectPtEta',
                                  selectionName='', minPt=25e3, maxEta=2.5)
         outputContainers['ph_'] = 'OutPhotons'
@@ -127,7 +127,7 @@ def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
         from TauAnalysisAlgorithms.TauAnalysisConfig import\
             makeTauCalibrationConfig, makeTauWorkingPointConfig
         makeTauCalibrationConfig(configSeq, 'AnaTauJets')
-        makeTauWorkingPointConfig(configSeq, 'AnaTauJets', workingPoint='Tight', postfix='tight')
+        makeTauWorkingPointConfig(configSeq, 'AnaTauJets', workingPoint='Tight', selectionName='tight')
         makePtEtaSelectionConfig(configSeq, 'AnaTauJets',
                                  selectionDecoration='selectPtEta',
                                  selectionName='', minPt=25e3, maxEta=2.5)
