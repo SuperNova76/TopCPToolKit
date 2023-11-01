@@ -60,20 +60,6 @@ def add_mc_weights(configSeq, flags, branches):
                                     cutBookkeepersSystematics=True)
 
 
-def add_PRW(configSeq, flags, branches):
-    from AsgAnalysisAlgorithms.AsgAnalysisConfig import makePileupReweightingConfig
-    dataType = flags.Input.DataType
-    if dataType is DataType.Data:
-        branches += [
-            'EventInfo.runNumber -> runNumber',
-            'EventInfo.eventNumber -> eventNumber'
-        ]
-        return
-    makePileupReweightingConfig(configSeq,
-                                campaign=flags.Input.MCCampaign,
-                                useDefaultConfig=True)
-
-
 def makeTruthSequence(analysisName, flags, noSystematics=False):
     algSeq = AnaAlgSequence()
 
