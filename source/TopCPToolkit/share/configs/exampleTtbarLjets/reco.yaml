@@ -1,0 +1,336 @@
+CommonServices: {}
+
+PileupReweighting: {}
+
+EventCleaning:
+    runEventCleaning: True
+
+Jets:
+  - containerName: 'AnaJets'
+    jetCollection: 'AntiKt4EMPFlowJets'
+    runJvtUpdate: False
+    runNNJvtUpdate: True
+    runGhostMuonAssociation: True
+    systematicsModelJES: 'Category'
+    systematicsModelJER: 'Full'
+    postfix: 'baselineSel'
+    JVT: {}
+    PtEtaSelection:
+        minPt: 25000.0
+        maxEta: 2.5
+    FlavourTagging:
+      - btagger: 'DL1dv01'
+        btagWP: 'FixedCutBEff_85'
+        generator: 'autoconfig'
+        minPt: 25000.0
+      - btagger: 'DL1dv01'
+        btagWP: 'FixedCutBEff_77'
+        generator: 'autoconfig'
+        minPt: 25000.0
+      - btagger: 'DL1dv01'
+        btagWP: 'FixedCutBEff_70'
+        generator: 'autoconfig'
+        minPt: 25000.0
+      - btagger: 'DL1dv01'
+        btagWP: 'FixedCutBEff_60'
+        generator: 'autoconfig'
+        minPt: 25000.0
+      - btagger: 'DL1dv01'
+        btagWP: 'Continuous'
+        generator: 'autoconfig'
+        minPt: 25000.0
+
+PerEventBtagSF:
+  - name: 'btagSFCalc_DL1dv01_FixedCutBEff_85'
+    particles: 'AnaJets.baselineSel'
+    objectSF: 'ftag_effSF_DL1dv01_FixedCutBEff_85_%SYS%'
+    eventSF: 'btagSF_DL1dv01_FixedCutBEff_85_%SYS%'
+  - name: 'btagSFCalc_DL1dv01_FixedCutBEff_77'
+    particles: 'AnaJets.baselineSel'
+    objectSF: 'ftag_effSF_DL1dv01_FixedCutBEff_77_%SYS%'
+    eventSF: 'btagSF_DL1dv01_FixedCutBEff_77_%SYS%'
+  - name: 'btagSFCalc_DL1dv01_FixedCutBEff_70'
+    particles: 'AnaJets.baselineSel'
+    objectSF: 'ftag_effSF_DL1dv01_FixedCutBEff_70_%SYS%'
+    eventSF: 'btagSF_DL1dv01_FixedCutBEff_70_%SYS%'
+  - name: 'btagSFCalc_DL1dv01_FixedCutBEff_60'
+    particles: 'AnaJets.baselineSel'
+    objectSF: 'ftag_effSF_DL1dv01_FixedCutBEff_60_%SYS%'
+    eventSF: 'btagSF_DL1dv01_FixedCutBEff_60_%SYS%'
+  - name: 'btagSFCalc_DL1dv01_Continuous'
+    particles: 'AnaJets.baselineSel'
+    objectSF: 'ftag_effSF_DL1dv01_Continuous_%SYS%'
+    eventSF: 'btagSF_DL1dv01_Continuous_%SYS%'
+
+
+Electrons:
+  - containerName: 'AnaElectrons'
+    crackVeto: True
+    WorkingPoint:
+      - selectionName: 'loose'
+        likelihoodWP: 'TightLH'
+        isolationWP: 'NonIso'
+      - selectionName: 'tight'
+        likelihoodWP: 'TightLH'
+        isolationWP: 'Tight_VarRad'
+    PtEtaSelection:
+        minPt: 25000.0
+        maxEta: 2.47
+
+# Photons:
+#   - containerName: 'AnaPhotons'
+#     recomputeIsEM: False
+#     WorkingPoint:
+#       - selectionName: 'loose'
+#         qualityWP: 'Loose'
+#         isolationWP: 'Undefined'
+#         recomputeIsEM: False
+#       - selectionName: 'tight'
+#         qualityWP: 'Tight'
+#         isolationWP: 'FixedCutTight'
+#         recomputeIsEM: False
+#     PtEtaSelection:
+#         minPt: 25000.0
+#         maxEta: 2.5
+
+Muons:
+  - containerName: 'AnaMuons'
+    WorkingPoint:
+      - selectionName: 'loose'
+        quality: 'Medium'
+        isolation: 'NonIso'
+      - selectionName: 'tight'
+        quality: 'Medium'
+        isolation: 'Tight_VarRad'
+        systematicBreakdown: True
+    PtEtaSelection:
+        minPt: 25000.0
+        maxEta: 2.5
+
+# TauJets:
+#   - containerName: 'AnaTauJets'
+#     WorkingPoint:
+#       - selectionName: 'tight'
+#         quality: 'Tight'
+#     PtEtaSelection:
+#         minPt: 25000.0
+#         maxEta: 2.5
+
+GeneratorLevelAnalysis: {}
+
+# containerName and postfix must be defined in their respective blocks
+MissingET:
+  - containerName: 'AnaMET'
+    # Format should follow Object: '<containerName>.<postfix>'
+    jets: 'AnaJets'
+    #taus: 'AnaTauJets.tight'
+    electrons: 'AnaElectrons.tight'
+    #photons: 'AnaPhotons.tight&&selectPtEta'
+    muons: 'AnaMuons.tight'
+
+# containerName and postfix must be defined in their respective blocks
+OverlapRemoval:
+  inputLabel: 'preselectOR'
+  outputLabel: 'passesOR'
+  # Format should follow Object: '<containerName>.<postfix>'
+  jets: 'AnaJets.baselineSel&&jvt_selection'
+  #taus: 'AnaTauJets.tight'
+  electrons: 'AnaElectrons.tight'
+  #photons: 'AnaPhotons.tight'
+  muons: 'AnaMuons.tight'
+
+ObjectCutFlow:
+  - containerName: 'AnaElectrons'
+    selectionName: 'tight'
+  - containerName: 'AnaMuons'
+    selectionName: 'tight'
+  # - containerName: 'AnaTauJets'
+  #   selectionName: 'tight'
+  # - containerName: 'AnaPhotons'
+  #   selectionName: 'tight'
+  - containerName: 'AnaJets'
+    selectionName: 'jvt'
+
+Thinning:
+  - containerName: 'AnaJets'
+    outputName: 'OutJets'
+    selectionName: 'baselineSel&&jvt_selection'
+  - containerName: 'AnaElectrons'
+    outputName: 'OutElectrons'
+    selectionName: 'tight||loose'
+  # - containerName: 'AnaPhotons'
+  #   outputName: 'OutPhotons'
+  #   selectionName: 'tight||loose'
+  - containerName: 'AnaMuons'
+    outputName: 'OutMuons'
+    selectionName: 'tight||loose'
+  # - containerName: 'AnaTauJets'
+  #   outputName: 'OutTauJets'
+  #   selectionName: 'tight'
+
+LeptonSF:
+  - electrons: 'AnaElectrons.tight'
+    muons: 'AnaMuons.tight'
+    lepton_postfix: 'tight'
+
+ExtraParticleDecoration:
+   - name: 'El'
+     particles: 'AnaElectrons'
+   - name: 'Mu'
+     particles: 'AnaMuons'
+   - name: 'Jets'
+     particles: 'AnaJets'
+
+Trigger:
+    triggerChainsPerYear:
+        '2015':
+            - 'HLT_e24_lhmedium_L1EM20VH || HLT_e60_lhmedium || HLT_e120_lhloose'
+            - 'HLT_mu20_iloose_L1MU15 || HLT_mu50'
+        '2016':
+            - 'HLT_e26_lhtight_nod0_ivarloose || HLT_e60_lhmedium_nod0 || HLT_e140_lhloose_nod0'
+            - 'HLT_mu26_ivarmedium || HLT_mu50'
+        '2017':
+            - 'HLT_e26_lhtight_nod0_ivarloose || HLT_e60_lhmedium_nod0 || HLT_e140_lhloose_nod0'
+            - 'HLT_mu26_ivarmedium || HLT_mu50'
+        '2018':
+            - 'HLT_e26_lhtight_nod0_ivarloose || HLT_e60_lhmedium_nod0 || HLT_e140_lhloose_nod0'
+            - 'HLT_mu26_ivarmedium || HLT_mu50'
+        '2022':
+            - 'HLT_e26_lhtight_ivarloose_L1EM22VHI || HLT_e60_lhmedium_L1EM22VHI || HLT_e140_lhloose_L1EM22VHI'
+            - 'HLT_mu26_ivarmedium_L1MU14FCH || HLT_mu50_L1MU14FCH'
+    noFilter: False
+    electrons: 'AnaElectrons.tight'
+    muons: 'AnaMuons.tight'
+    electronID: 'Tight'
+    electronIsol: 'Tight_VarRad'
+    muonID: 'Tight'
+
+EventSelection:
+  - name: 'SUBcommon'
+    electrons: 'AnaElectrons.loose'
+    muons: 'AnaMuons.tight'
+    jets: 'AnaJets.baselineSel&&jvt_selection'
+    met: 'AnaMET'
+    btagDecoration: 'ftag_select_DL1dv01_FixedCutBEff_85'
+    noFilter: True
+    selectionCuts: |
+      JET_N_BTAG >= 2
+      JET_N_BTAG DL1dv01:FixedCutBEff_70 >= 1
+      JET_N 25000 >= 4
+      MET >= 20000
+      SAVE
+  - name: 'ejets'
+    electrons: 'AnaElectrons.loose'
+    muons: 'AnaMuons.tight'
+    jets: 'AnaJets.baselineSel&&jvt_selection'
+    met: 'AnaMET'
+    btagDecoration: 'ftag_select_DL1dv01_FixedCutBEff_85'
+    noFilter: True
+    selectionCuts: |
+      IMPORT SUBcommon
+      EL_N 5000 >= 1
+      EL_N tight 5000 >= 1
+      MU_N 5000 == 0
+      MWT < 170000
+      MET+MWT > 40000
+      SAVE
+  - name: 'mujets'
+    electrons: 'AnaElectrons.loose'
+    muons: 'AnaMuons.tight'
+    jets: 'AnaJets.baselineSel&&jvt_selection'
+    met: 'AnaMET'
+    btagDecoration: 'ftag_select_DL1dv01_FixedCutBEff_85'
+    noFilter: True
+    selectionCuts: |
+      EL_N 5000 == 0
+      MU_N 20000 > 0
+      IMPORT SUBcommon
+      SAVE
+  - name: 'dilep'
+    electrons: 'AnaElectrons.loose'
+    muons: 'AnaMuons.tight'
+    jets: 'AnaJets.baselineSel&&jvt_selection'
+    met: 'AnaMET'
+    btagDecoration: 'ftag_select_DL1dv01_FixedCutBEff_85'
+    noFilter: True
+    selectionCuts: |
+      EL_N 5000 >= 2
+      MLL >= 10000
+      OS
+      MLLWINDOW 100000 80000
+      SAVE
+  - name: 'supertight'
+    electrons: 'AnaElectrons.loose'
+    muons: 'AnaMuons.tight'
+    jets: 'AnaJets.baselineSel&&jvt_selection'
+    met: 'AnaMET'
+    btagDecoration: 'ftag_select_DL1dv01_FixedCutBEff_85'
+    noFilter: True
+    selectionCuts: |
+      JET_N 1000000 >= 1
+      SAVE
+
+EventSelectionMerger:
+  selections:
+    - 'pass_ejets_%SYS%'
+    - 'pass_mujets_%SYS%'
+    - 'pass_dilep_%SYS%'
+    - 'pass_supertight_%SYS%'
+  noFilter: False
+
+EventCutFlow:
+  - postfix: 'ejets'
+    customSelections: 'ejets'
+  - postfix: 'mujets'
+    customSelections: 'mujets'
+  - postfix: 'dilep'
+    customSelections: 'dilep'
+  - postfix: 'supertight'
+    customSelections: 'supertight'
+
+KLFitter:
+  - containerName: 'KLFitterResult'
+    electrons: 'AnaElectrons.tight'
+    muons: 'AnaMuons.tight'
+    jets: 'AnaJets.baselineSel&&jvt_selection'
+    met: 'AnaMET'
+    likelihoodType: 'ttbar'
+    jetSelectionMode: 'kBtagPriorityFourJets'
+    btaggingMethod: 'kWorkingPoint'
+    btagger: 'DL1dv01'
+    btagWP: 'FixedCutBEff_77'
+    selectionRegionsConfig: 'selectionName:pass_ejets, leptonType: kElectron;selectionName:pass_mujets, leptonType: kMuon'
+
+SpaNet:
+  - topology: 'TtbarLjets'
+    electrons: 'AnaElectrons.tight'
+    muons: 'AnaMuons.tight'
+    jets: 'AnaJets.baselineSel&&jvt_selection'
+    met: 'AnaMET'
+    eventSelection: 'pass_ejets_%SYS%||pass_mujets_%SYS%'
+  - topology: 'TtbarLjetsNu'
+    electrons: 'AnaElectrons.tight'
+    muons: 'AnaMuons.tight'
+    jets: 'AnaJets.baselineSel&&jvt_selection'
+    met: 'AnaMET'
+    eventSelection: 'pass_ejets_%SYS%||pass_mujets_%SYS%'
+
+Bootstraps:
+  nReplicas: 2000
+  runOnMC: True
+
+# After configuring each container, many variables will be saved automatically.
+Output:
+  treeName: 'reco'
+  vars: []
+  metVars: []
+  containers:
+      # Format should follow: '<suffix>:<output container>'
+      mu_: 'OutMuons'
+      el_: 'OutElectrons'
+      # ph_: 'OutPhotons'
+      # tau_: 'OutTauJets'
+      jet_: 'OutJets'
+      met_: 'AnaMET'
+      klfitter_: 'KLFitterResult'
+      '': 'EventInfo'

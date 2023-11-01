@@ -27,6 +27,10 @@ p.add_argument('--no-systematics', action='store_true',
                help='Configure the job to run with no systematics.')
 p.add_argument('--no-filter', action='store_true',
                help='Skip filtering of events due to event selection (selection flags are still stored.)')
+p.add_argument('-t', '--text-config', type=str,
+               default=None,
+               help='Name of the analysis to run. Should be a directory containing reco.yaml,'
+               'and optionally particle.yaml and parton.yaml.')
 
 args = p.parse_args()
 
@@ -71,10 +75,15 @@ job = ROOT.EL.Job()
 job.sampleHandler(sh)
 job.options().setDouble(ROOT.EL.Job.optMaxEvents, maxEvents)
 job.options().setString(ROOT.EL.Job.optSubmitDirMode, 'overwrite')
-from TopCPToolkit.commonAlgoConfig import makeRecoSequence
-algSeq = makeRecoSequence(args.analysis, flags,
-                          noSystematics=args.no_systematics,
-                          noFilter=args.no_filter)
+if args.text_config:
+    from TopCPToolkit.commonAlgoConfig import makeTextBasedSequence
+    algSeq = makeTextBasedSequence(args.text_config, 'reco', flags,
+                                   noSystematics=args.no_systematics)
+else:
+    from TopCPToolkit.commonAlgoConfig import makeRecoSequence
+    algSeq = makeRecoSequence(args.analysis, flags,
+                            noSystematics=args.no_systematics,
+                            noFilter=args.no_filter)
 print(algSeq)
 for alg in algSeq:
     job.algsAdd(alg)
@@ -86,13 +95,18 @@ shutil.move(outfile, recofile)
 shutil.move(histofile, 'only_reco_histograms.root')
 
 if args.parton:
-    from TopCPToolkit.commonAlgoConfig import makeTruthSequence
     job = ROOT.EL.Job()
     job.sampleHandler(sh)
     job.options().setDouble(ROOT.EL.Job.optMaxEvents, maxEvents)
     job.options().setString(ROOT.EL.Job.optSubmitDirMode, 'overwrite')
-    algSeq = makeTruthSequence(args.analysis, flags,
-                               noSystematics=args.no_systematics)
+    if args.text_config:
+        from TopCPToolkit.commonAlgoConfig import makeTextBasedSequence
+        algSeq = makeTextBasedSequence(args.text_config, 'parton', flags,
+                                       noSystematics=args.no_systematics)
+    else:
+        from TopCPToolkit.commonAlgoConfig import makeTruthSequence
+        algSeq = makeTruthSequence(args.analysis, flags,
+                                   noSystematics=args.no_systematics)
     print(algSeq)
     for alg in algSeq:
         job.algsAdd(alg)
@@ -102,13 +116,18 @@ if args.parton:
     shutil.move(outfile, partonfile)
 
 if args.particle:
-    from TopCPToolkit.commonAlgoConfig import makeParticleLevelSequence
     job = ROOT.EL.Job()
     job.sampleHandler(sh)
     job.options().setDouble(ROOT.EL.Job.optMaxEvents, maxEvents)
     job.options().setString(ROOT.EL.Job.optSubmitDirMode, 'overwrite')
-    algSeq = makeParticleLevelSequence(args.analysis, flags,
+    if args.text_config:
+        from TopCPToolkit.commonAlgoConfig import makeTextBasedSequence
+        algSeq = makeTextBasedSequence(args.text_config, 'particle', flags,
                                        noSystematics=args.no_systematics)
+    else:
+        from TopCPToolkit.commonAlgoConfig import makeParticleLevelSequence
+        algSeq = makeParticleLevelSequence(args.analysis, flags,
+                                           noSystematics=args.no_systematics)
     print(algSeq)
     for alg in algSeq:
         job.algsAdd(alg)

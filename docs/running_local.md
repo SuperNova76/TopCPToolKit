@@ -98,9 +98,19 @@ For example:
 !!! warning
     The CP algorithms always require the nominal variation (empty string, turned into "NOSYS" internally) to be available within the list of systematics.
 
+## Using a text-based config file
+
+Any sequence of algorithmic config blocks, that we have so far implicitly assumed to be written as a pythonic **analysis module** (we'll define those [later on](analysis/#analysis-modules)) and loaded up with the `-a` flag of `runTop_el.py`, can be translated into a text-based format, specifically using the YAML language. One can then run
+
+```sh
+runTop_el.py -i inputs.txt -o output -t exampleTtbarLjets
+```
+
+Here the `-t` flag points the driver to the folder [`share/configs/exampleTtbarLjets`](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/tree/main/source/TopCPToolkit/share/configs/exampleTtbarLjets). Up to three config files can be present in that folder and will be automatically looked up: `reco.yaml`, `particle.yaml` and `parton.yaml`. These correspond to detector-level, particle-level and parton-level analysis configurations respectively.
+
 ## Command line options
 
-Only the text file with the input samples and the name of the output file are required to run `runTop_el.py`.
+At minima, only the text file with the input samples and the name of the output file are required to run `runTop_el.py`.
 All other flags are optional and listed in the table below. You can also run
 ```sh
 runTop_el.py -h
@@ -110,6 +120,7 @@ runTop_el.py -h
 | ---------- | ----------- | --------- |
 | `--max-events`<br>`-e`  | -1                                             | Specify the number of events to run over. |
 | `--analysis`<br>`-a`    | `TopCPToolkit.TtbarCPalgoConfigBlocksAnalysis` | Specify the analysis module to run as `package.moduleName`. |
+| `--text-config`<br>`-t` | None                                           | Specify the text config to run as `folderName`. Alternative to loading an analysis module. |
 | `--parton`              | False                                          | Toggles the parton-level analysis. |
 | `--particle`            | False                                          | Toggles the particle-level analysis. |
 | `--no-systematics`      | False                                          | Toggles off the computation of systematics. |

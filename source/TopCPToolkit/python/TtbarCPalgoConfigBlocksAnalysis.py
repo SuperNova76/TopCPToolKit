@@ -63,7 +63,7 @@ def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
         from JetAnalysisAlgorithms.JetAnalysisConfig import makeJetAnalysisConfig
         jetContainer = 'AntiKt4EMPFlowJets'
         makeJetAnalysisConfig(configSeq, 'AnaJets', jetContainer,
-                              runGhostMuonAssociation=not flags.Input.isPHYSLITE, # TEMPORARY BUG FIX
+                              runGhostMuonAssociation=True,
                               runNNJvtUpdate = True,
                               systematicsModelJER='Full', systematicsModelJES='Category', postfix='baselineSel')
         from JetAnalysisAlgorithms.JetJvtAnalysisConfig import makeJetJvtAnalysisConfig
@@ -78,8 +78,8 @@ def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
         from FTagAnalysisAlgorithms.FTagAnalysisConfig import makeFTagAnalysisConfig
         for WP in WPs:
             # suppress CDI warnings due to missing SFs
-            makeFTagAnalysisConfig(configSeq, 'AnaJets', btagWP=WP, noEffSF=False,
-                                   generator=flags.Analysis.FTAGMCMCGenerator,
+            makeFTagAnalysisConfig(configSeq, 'AnaJets', btagWP=WP, noEffSF=False, minPt=25e3,
+                                   generator="autoconfig",
                                    btagger=btagger, kinematicSelection=True, selectionName='')
             # calculate per-event b-tagging SF (alternative to storing per-jet SFs)
             cfg = PerEventSFCalculatorConfig(f'btagSFCalc_{btagger}_{WP}')
@@ -322,9 +322,10 @@ SAVE
     configSeq.append(cfg)
 
     # put everything together
-    configAccumulator = ConfigAccumulator(flags.Input.DataType, algSeq,
+    configAccumulator = ConfigAccumulator(algSeq, flags.Input.DataType,
                                           isPhyslite=flags.Input.isPHYSLITE,
-                                          geometry=flags.Input.LHCPeriod)
+                                          geometry=flags.Input.LHCPeriod,
+                                          autoconfigFromFlags=flags)
     configSeq.fullConfigure(configAccumulator)
 
 
@@ -366,9 +367,10 @@ def makeTruthConfiguration(flags, algSeq):
     configSeq.append(cfg)
 
     # put everything together
-    configAccumulator = ConfigAccumulator(flags.Input.DataType, algSeq,
+    configAccumulator = ConfigAccumulator(algSeq, flags.Input.DataType,
                                           isPhyslite=flags.Input.isPHYSLITE,
-                                          geometry=flags.Input.LHCPeriod)
+                                          geometry=flags.Input.LHCPeriod,
+                                          autoconfigFromFlags=flags)
     configSeq.fullConfigure(configAccumulator)
 
 
@@ -406,7 +408,8 @@ def makeParticleLevelConfiguration(flags, algSeq):
     configSeq.append(cfg)
 
     # put everything together
-    configAccumulator = ConfigAccumulator(flags.Input.DataType, algSeq,
+    configAccumulator = ConfigAccumulator(algSeq, flags.Input.DataType,
                                           isPhyslite=flags.Input.isPHYSLITE,
-                                          geometry=flags.Input.LHCPeriod)
+                                          geometry=flags.Input.LHCPeriod,
+                                          autoconfigFromFlags=flags)
     configSeq.fullConfigure(configAccumulator)
