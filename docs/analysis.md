@@ -19,7 +19,7 @@ These methods are defined in [commonAlgoConfig.py](https://gitlab.cern.ch/atlasp
 - **load and configure the requested analysis algorithms**;
 - add a final algorithm, the `CP::SysListDumperAlg`, helpful to monitor which systematics were collected.
 
-It's the statement in bold that is of interest to us: we need to define an *analysis module*, and equip it with the necessary `makeRecoConfiguration` (equivalently, `makeTruthConfiguration` or `makeParticleLevelConfiguration`) method.
+It's the statement in bold that is of interest to us. There are **two possible approaches**: we can either define an *analysis module*, and equip it with the necessary `makeRecoConfiguration` (equivalently, `makeTruthConfiguration` or `makeParticleLevelConfiguration`) method, or we can go for a *text-based config*.
 
 ## Analysis modules
 
@@ -202,3 +202,73 @@ The model inference is done using [ONNX runtime](https://onnxruntime.ai/) C++ in
         };
     } // namespace top
     ```
+
+## Text-based (YAML) configs
+
+While the YAML config to schedule algorithms is a seemingly completely different approach, it's just another level of abstraction: CP tools are set up by algorithms, which are configured in blocks, and registering these blocks with the [`TextConfig`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AnalysisAlgorithmsConfig/python/ConfigText.py) object allows to manipulate them in the YAML file. Therefore, everything we've discussed up until this point for config blocks and analysis modules, still applies.
+
+### Adding blocks to the config
+
+In [commonAlgoConfig.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/blob/main/source/TopCPToolkit/python/commonAlgoConfig.py), we define the `makeTextBasedSequence` function, which will ultimately set up an instance of `ConfigAccumulator` as before. Crucially, we also declare all possible config blocks: either by calling the Athena method [`addDefaultAlgs`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AnalysisAlgorithmsConfig/python/ConfigText.py), or by adding manually those blocks defined only in TopCPToolkit. Below is an example for the NNLO $t\bar{t}$ reweighting algorithm:
+
+```python
+from TopCPToolkit.TtbarNNLORecursiveRewConfig import TtbarNNLORecursiveRewConfig
+config.addAlgConfigBlock(algName='TtbarNNLO',
+                         alg=TtbarNNLORecursiveRewConfig, pos='Output')
+```
+
+In this example, we match the `TtbarNNLORecursiveRewConfig` config block with the name `TtbarNNLO`, which is how we'll refer to that block in the YAML config. The `pos='Output'` argument is a technical requirement, to make sure that this custom block is inserted in the list of all possible blocks *before* the `Output` block, as that one needs to know about all other blocks in order to correctly write the output branches to file.
+
+A similar operation allows us to define the common services and PMG weights (in [`addDefaultAlgs`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AnalysisAlgorithmsConfig/python/ConfigText.py)), as well as the truth parton histories. We can then write our example parton-level YAML config as:
+```yaml
+CommonServices: {}
+
+GeneratorLevelAnalysis: {}
+
+PartonHistory:
+  - histories: 'Ttbar.TtbarLight'
+
+TtbarNNLO: {}
+
+# After configuring each container, many variables will be saved automatically.
+Output:
+  treeName: 'truth'
+  vars:
+    - 'EventInfo.mcChannelNumber -> mcChannelNumber'
+    - 'EventInfo.runNumber -> runNumber'
+    - 'EventInfo.eventNumber -> eventNumber'
+  containers:
+      # Format should follow: '<suffix>:<output container>'
+      '': 'EventInfo'
+      'Ttbar_': 'TopPartonHistoryTtbar'
+      'TtbarLight_': 'TopPartonHistoryTtbarLight'
+```
+
+### A few pointers for writing a YAML config
+
+First off, and most obviously, make yourself familiar with the [YAML language](https://www.cloudbees.com/blog/yaml-tutorial-everything-you-need-get-started). The text config we are writing is essentially a big nested directory, with strings and lists of strings.
+
+The minimal setup for your config must include the blocks `CommonServices` and `Output`.
+In some cases, you may be able to rely entirely on the default settings for these config blocks.
+This is done by passing an empty dictionary:
+```yaml
+GeneratorLevelAnalysis: {}
+```
+
+- Before a block can be called, it has to be declared (see previous section).
+- A block that is not explicitly called in the config will not be set up. 
+- Blocks are set up with their default arguments, unless otherwise specified: this is what we write in our YAML config, an overload of the default arguments.
+
+With these simple rules in mind, you are ready to write your own config!
+
+!!! tip "Expert mode"
+    A subtlety in the algorithm sequence that will be generated, is that it depends not on the order in which you call the blocks in the config, but rather on the **order in which their defaults are set up**. This is the purpose of the `pos` argument described earlier. We suggest to use `pos='Output'`, i.e. always inserting your new blocks before the `Output` one, as a generic solution. Of course, if you introduce two new blocks, the output of one is needed to configure the other, you must ensure that the ordering is correct!
+
+### Example YAML configs
+
+Example configs are available at [`share/configs/`](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/tree/main/source/TopCPToolkit/share/configs/), and real analyses can be archived there as well.
+They should be arranged as up to three config files (`reco.yaml`, `particle.yaml` and `parton.yaml`) within a single subdirectory, with an explicit enough name.
+
+We currently have:
+
+- [`exampleTtbarLjets`](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/tree/main/source/TopCPToolkit/share/configs/exampleTtbarLjets): an example $t\bar{t}\to\ell$+jets analysis, only for demonstration purposes.

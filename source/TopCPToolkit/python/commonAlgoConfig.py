@@ -2,9 +2,12 @@
 # includes event cleaning, GRL, PRW and MC weight
 from AnaAlgorithm.AnaAlgSequence import AnaAlgSequence
 from AnalysisAlgorithmsConfig.ConfigSequence import ConfigSequence
+from AnalysisAlgorithmsConfig.ConfigAccumulator import ConfigAccumulator
+from AnalysisAlgorithmsConfig.ConfigText import TextConfig, addDefaultAlgs
 from AnaAlgorithm.DualUseConfig import createAlgorithm, createService
 from AnalysisAlgorithmsConfig.ConfigAccumulator import DataType
 from TopCPToolkit import metaConfig
+from PathResolver import PathResolver
 
 
 def makeRecoSequence(analysisName, flags, noSystematics=False, noFilter=False):
@@ -70,6 +73,7 @@ def add_PRW(configSeq, flags, branches):
                                 campaign=flags.Input.MCCampaign,
                                 useDefaultConfig=True)
 
+
 def makeTruthSequence(analysisName, flags, noSystematics=False):
     algSeq = AnaAlgSequence()
 
@@ -98,7 +102,7 @@ def makeTruthSequence(analysisName, flags, noSystematics=False):
 
     # Add an histogram to keep track of all the systematic names
     algSeq += createAlgorithm('CP::SysListDumperAlg', 'SystematicsPrinter')
-    algSeq.SystematicsPrinter.histogramName = 'listOfSystematics'
+    algSeq.SystematicsPrinter.histogramName = 'listOfSystematicsPartonLevel'
 
     return algSeq
 
@@ -130,7 +134,72 @@ def makeParticleLevelSequence(analysisName, flags, noSystematics=False):
 
     # Add an histogram to keep track of all the systematic names
     algSeq += createAlgorithm('CP::SysListDumperAlg', 'SystematicsPrinter')
-    algSeq.SystematicsPrinter.histogramName = 'listOfSystematics'
+    algSeq.SystematicsPrinter.histogramName = 'listOfSystematicsParticleLevel'
 
+
+    return algSeq
+
+def makeTextBasedSequence(analysisName, filename, flags, noSystematics=False):
+    algSeq = AnaAlgSequence()
+
+    if flags.Input.DataType is DataType.Data and filename in ['particle','parton']:
+        return algSeq
+
+    yamlconfig = PathResolver.FindCalibFile(f'TopCPToolkit/configs/{analysisName}/{filename}.yaml')
+    config = TextConfig(yamlconfig)
+
+    print(">>> Configuration file read in:")
+    config.printConfig()
+
+    print(">>> Adding default algorithms")
+    addDefaultAlgs(config, dataType=flags.Input.DataType,
+                   isPhyslite=flags.Input.isPHYSLITE, noPhysliteBroken=True,
+                   noSystematics=noSystematics)
+
+    # ==============================
+    # INSERT CUSTOM BLOCKS BELOW
+    # it's a good idea to keep "pos='Output'" to make sure the custom block
+    # is configured *before* the Output one, so custom containers are
+    # treated properly.
+
+    from TopCPToolkit.PerEventSFCalculatorConfig import PerEventSFCalculatorConfig
+    config.addAlgConfigBlock(algName='PerEventBtagSF',
+                             alg=PerEventSFCalculatorConfig, pos='Output')
+    from TopCPToolkit.LeptonSFCalculatorConfig import LeptonSFCalculatorConfig
+    config.addAlgConfigBlock(algName='LeptonSF',
+                             alg=LeptonSFCalculatorConfig, pos='Output')
+    from TopCPToolkit.ExtraParticleDecorationConfig import ExtraParticleDecorationConfig
+    config.addAlgConfigBlock(algName='ExtraParticleDecoration',
+                             alg=ExtraParticleDecorationConfig, pos='Output')
+    from TopCPToolkit.KLFitterConfig import KLFitterConfig
+    config.addAlgConfigBlock(algName='KLFitter',
+                             alg=KLFitterConfig, pos='Output')
+    from TopCPToolkit.TopSpaNetConfig import TopSpaNetConfig
+    config.addAlgConfigBlock(algName='SpaNet',
+                             alg=TopSpaNetConfig, pos='Output')
+    from TopCPToolkit.particleLevelConfig import particleLevelConfig
+    config.addAlgConfigBlock(algName='ParticleLevel',
+                             alg=particleLevelConfig, pos='Output')
+    from TopCPToolkit.truthConfig import truthConfig
+    config.addAlgConfigBlock(algName='PartonHistory',
+                             alg=truthConfig, pos='Output')
+    from TopCPToolkit.TtbarNNLORecursiveRewConfig import TtbarNNLORecursiveRewConfig
+    config.addAlgConfigBlock(algName='TtbarNNLO',
+                             alg=TtbarNNLORecursiveRewConfig, pos='Output')
+
+    # END OF CUSTOM BLOCKS
+    # ===============================
+    config.printAlgs(printOpts=True)
+
+    print(">>> Configuring algorithms based on YAML file")
+    configSeq = config.configure()
+
+    print(">>> Configuration used:")
+    config.printConfig()
+
+    configAccumulator = ConfigAccumulator(dataType=flags.Input.DataType, campaign=flags.Input.MCCampaign,
+                                          geometry=flags.Input.LHCPeriod, autoconfigFromFlags=flags,
+                                          algSeq=algSeq, isPhyslite=flags.Input.isPHYSLITE)
+    configSeq.fullConfigure(configAccumulator)
 
     return algSeq

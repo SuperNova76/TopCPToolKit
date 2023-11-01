@@ -18,6 +18,8 @@ def getTrees(inputfile):
         if isinstance(obj, TTree):
             trees.append(key.GetName())
 
+    trees = [x for x in trees if "EventLoop" not in x]
+
     return trees
 
 def compareLists(ref_list, new_list):
@@ -56,7 +58,7 @@ def compareBranches(key, ref_file, new_file):
     new_branches = [branch.GetName() for branch in new_tree.GetListOfBranches()]
     common, miss_ref, miss_new = compareLists(ref_branches, new_branches)
     if miss_ref or miss_new:
-        print(f"{orange_code}Warning: the number of TBranches differs between the new file and the reference file.{reset_code}")
+        print(f"{orange_code}Warning: the number of TBranches differs between the new file and the reference file for TTree {key}.{reset_code}")
         if miss_ref:
             print(f"{orange_code}  --> the following are missing from the reference file:{reset_code} {miss_ref}")
         if miss_new:

@@ -33,8 +33,8 @@ validateRun2:
     - cvmfs
   variables:
     JOBNAME: job_validateRun2
-    REFERENCEFILE: ${CI_PROJECT_DIR}/job_referenceRun2/${RUN_DIR}/output_job_referenceRun2/data-ANALYSIS/output.root
-    INPUTFILE: ${CI_PROJECT_DIR}/job_latestABreleaseRun2/${RUN_DIR}/output_job_latestABreleaseRun2/data-ANALYSIS/output.root
+    REFERENCEFILE: ${CI_PROJECT_DIR}/job_referenceRun2/${RUN_DIR}/output_job_referenceRun2.root
+    INPUTFILE: ${CI_PROJECT_DIR}/job_latestABreleaseRun2/${RUN_DIR}/output_job_latestABreleaseRun2.root
   script:
     - *restore_environment
     - *run_validation
@@ -49,8 +49,8 @@ validateRun3:
     - cvmfs
   variables:
     JOBNAME: job_validateRun3
-    REFERENCEFILE: ${CI_PROJECT_DIR}/job_referenceRun3/${RUN_DIR}/output_job_referenceRun3/data-ANALYSIS/output.root
-    INPUTFILE: ${CI_PROJECT_DIR}/job_latestABreleaseRun3/${RUN_DIR}/output_job_latestABreleaseRun3/data-ANALYSIS/output.root
+    REFERENCEFILE: ${CI_PROJECT_DIR}/job_referenceRun3/${RUN_DIR}/output_job_referenceRun3.root
+    INPUTFILE: ${CI_PROJECT_DIR}/job_latestABreleaseRun3/${RUN_DIR}/output_job_latestABreleaseRun3.root
   script:
     - *restore_environment
     - *run_validation
@@ -65,8 +65,8 @@ validateLastWeekRun2:
     - cvmfs
   variables:
     JOBNAME: job_validateLastWeekRun2
-    REFERENCEFILE: ${CI_PROJECT_DIR}/job_lastweekRun2/${RUN_DIR}/output_job_lastweekRun2/data-ANALYSIS/output.root
-    INPUTFILE: ${CI_PROJECT_DIR}/job_referenceRun2/${RUN_DIR}/output_job_referenceRun2/data-ANALYSIS/output.root
+    REFERENCEFILE: ${CI_PROJECT_DIR}/job_lastweekRun2/${RUN_DIR}/output_job_lastweekRun2.root
+    INPUTFILE: ${CI_PROJECT_DIR}/job_referenceRun2/${RUN_DIR}/output_job_referenceRun2.root
   script:
     - *restore_environment
     - *run_validation
@@ -81,10 +81,42 @@ validateLastWeekRun3:
     - cvmfs
   variables:
     JOBNAME: job_validateLastWeekRun3
-    REFERENCEFILE: ${CI_PROJECT_DIR}/job_lastweekRun3/${RUN_DIR}/output_job_lastweekRun3/data-ANALYSIS/output.root
-    INPUTFILE: ${CI_PROJECT_DIR}/job_referenceRun3/${RUN_DIR}/output_job_referenceRun3/data-ANALYSIS/output.root
+    REFERENCEFILE: ${CI_PROJECT_DIR}/job_lastweekRun3/${RUN_DIR}/output_job_lastweekRun3.root
+    INPUTFILE: ${CI_PROJECT_DIR}/job_referenceRun3/${RUN_DIR}/output_job_referenceRun3.root
   script:
     - *restore_environment
     - *run_validation
   needs: [referenceRun3, lastweekRun3, latestABrelease]
+  allow_failure: true
+
+validateYAMLRun2:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
+  stage: validate
+  tags:
+    - cvmfs
+  variables:
+    JOBNAME: job_validateYAMLRun2
+    REFERENCEFILE: ${CI_PROJECT_DIR}/job_latestABnightlyRun2/${RUN_DIR}/output_job_latestABnightlyRun2.root
+    INPUTFILE: ${CI_PROJECT_DIR}/job_latestABnightlyRun2YAML/${RUN_DIR}/output_job_latestABnightlyRun2YAML.root
+  script:
+    - *restore_environment
+    - *run_validation
+  needs: [latestABnightlyRun2, latestABnightlyRun2YAML, latestABnightly]
+  allow_failure: true
+
+validateYAMLRun3:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
+  stage: validate
+  tags:
+    - cvmfs
+  variables:
+    JOBNAME: job_validateYAMLRun3
+    REFERENCEFILE: ${CI_PROJECT_DIR}/job_latestABnightlyRun3/${RUN_DIR}/output_job_latestABnightlyRun3.root
+    INPUTFILE: ${CI_PROJECT_DIR}/job_latestABnightlyRun3YAML/${RUN_DIR}/output_job_latestABnightlyRun3YAML.root
+  script:
+    - *restore_environment
+    - *run_validation
+  needs: [latestABnightlyRun3, latestABnightlyRun3YAML, latestABnightly]
   allow_failure: true

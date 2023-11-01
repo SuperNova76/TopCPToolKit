@@ -47,6 +47,15 @@ variables:
   - set +e
   - cd ../
 
+.run_top_yaml: &run_top_yaml
+  - set -e
+  - cd ${CI_PROJECT_DIR}/${JOBNAME}
+  - mkdir ${RUN_DIR}
+  - cd ${RUN_DIR}
+  - runTop_el.py -i ${INPUTFILE} -o output_${JOBNAME} --particle --parton -e 100 -t exampleTtbarLjets
+  - set +e
+  - cd ../
+
 .base_job_template:
   stage: run
   tags:
@@ -62,6 +71,13 @@ variables:
     - *prepare_dirs
     - *restore_environment
     - *run_top
+
+.latest_job_yaml_template:
+  extends: .base_job_template
+  script:
+    - *prepare_dirs
+    - *restore_environment
+    - *run_top_yaml
 
 .reference_job_template:
   extends: .base_job_template
@@ -189,4 +205,24 @@ lastweekRun3:
     JOBNAME: job_lastweekRun3
     INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc21.txt
   needs: [lastweekTopCPToolkitTag]
+  allow_failure: true
+
+latestABnightlyRun2YAML:
+  extends: .latest_job_yaml_template
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
+  variables:
+    JOBNAME: job_latestABnightlyRun2YAML
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc20.txt
+  needs: [latestABnightly]
+  allow_failure: true
+
+latestABnightlyRun3YAML:
+  extends: .latest_job_yaml_template
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
+  variables:
+    JOBNAME: job_latestABnightlyRun3YAML
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc21.txt
+  needs: [latestABnightly]
   allow_failure: true
