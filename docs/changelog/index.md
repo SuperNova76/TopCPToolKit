@@ -5,9 +5,13 @@
 ### Upcoming release
 
 - [issue #34](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/34): MMC algorithm for di-tau mass reconstruction
-- [issue #43](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/43): transition to the text-based config model
 - [issue #51](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/51): update the event selection example
+
+### 2.0.0 <small>November 1, 2023</small>
+- We run on AB 24.2.28
+- [issue #43](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/43): transition to the text-based config model
 - [issue #54](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/54): adapt PRW configuration to use central config block
+- [issue #55](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/55): rename `postfix` to `selectionName` in config blocks for object working points
 
 ### 1.7.0 <small>October 20, 2023</small>
 - We run on AB 24.2.27

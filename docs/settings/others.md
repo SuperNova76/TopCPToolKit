@@ -173,7 +173,7 @@ information into configuration flags. The configuration flags are documented in 
 
 ### [commonAlgoConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/commonAlgoConfig.py)
 
-This module contains the master sequencing functions `makeRecoSequence` / `makeTruthSequence` / `makeParticleLevelSequence`, as [explained earlier](/analysis#analysis-modules).
+This module contains the master sequencing functions `makeRecoSequence` / `makeTruthSequence` / `makeParticleLevelSequence` / `makeTextBasedSequence`, as [explained earlier](/analysis#analysis-modules).
 Loading the module also enables the following methods to easily set up very common algorithms:
 
 `add_event_cleaning`
