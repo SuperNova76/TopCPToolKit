@@ -28,7 +28,10 @@ def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
 
     # PRW
     if not flags.Input.isPHYSLITE:
-        commonAlgoConfig.add_PRW(configSeq, flags, reco_branches)
+        from AsgAnalysisAlgorithms.AsgAnalysisConfig import makePileupReweightingConfig
+        makePileupReweightingConfig(configSeq,
+                                    campaign=flags.Input.MCCampaign,
+                                    useDefaultConfig=True)
 
     # electrons
     if use_electrons:
