@@ -6,7 +6,7 @@ This websites serves to document the usage and main features of the framework, a
 
 !!! tip
     This code is being continuously developed.
-    We advise subgroup conveners and analysis contacts to appoint only experienced people to design analysis workflows and prepare ntuple productions with it.
+    Prior experience in designing analysis workflows and preparing ntuple productions is desirable.
 
 ## References
 
@@ -14,13 +14,16 @@ This websites serves to document the usage and main features of the framework, a
 - [ATLAS Software docs](https://atlassoftwaredocs.web.cern.ch/ABtutorial/cpalg_intro/)
 - [Migrating AnalysisTop to CP algorithms](https://indico.cern.ch/event/1257761/contributions/5359759/attachments/2644629/4577607/Migrating%20AT%20to%20CP%20algo.pdf)
 - [Introduction to TopCPToolkit](https://indico.cern.ch/event/1319343/contributions/5554653/attachments/2705702/4697065/Introduction%20to%20TopCPToolkit.pdf)
+- [Tips on data management and workflow](https://indico.cern.ch/event/1276819/contributions/5531897/attachments/2733586/4752675/data-management-workflow.pdf)
+- The recommended [`FastFrames` histogramming package](https://gitlab.cern.ch/atlas-amglab/fastframes)
 
 ## Get in touch
 
-While we are in the testing phase, contact points are limited to
+Please consider
 
-- the private [Mattermost channel](https://mattermost.web.cern.ch/top-analysis/channels/topcptoolkit-support)
+- the public [Mattermost channel](https://mattermost.web.cern.ch/top-analysis/channels/topcptoolkit-support)
 - the [issues page](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues)
+- [contributing to the code](/contributing)
 
 ## Main developers
 
