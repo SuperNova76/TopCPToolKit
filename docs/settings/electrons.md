@@ -78,7 +78,10 @@
 :   whether to perform LAr crack veto, i.e. remove electrons within $1.37<\vert\eta\vert<1.52$. The default is `False`.
 
 `ptSelectionOutput`
-:   whether or not to apply the default $p_\mathrm{T} > 4.5$ GeV cut to calibrated electrons. The default is `False`.
+:   whether or not to apply a minimum $p_\mathrm{T}$ cut to calibrated electrons. The default is `False`.
+
+`minPt`
+:   the minimum $p_\mathrm{T}$ cut to apply to calibrated electrons. The default is 4.5 GeV.
 
 `isolationCorrection`
 :   whether or not to perform isolation corrections (leakage corrections), i.e. set up an instance of [`CP::EgammaIsolationCorrectionAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/Root/EgammaIsolationCorrectionAlg.cxx).
