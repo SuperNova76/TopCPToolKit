@@ -30,7 +30,7 @@
 :   the input jet container, with a possible selection, in the format `container` or `container.selection`.
 
 `taus`
-:   the input tau container, with a possible selection, in the format `container` or `container.selection`.
+:   the input tau-jet container, with a possible selection, in the format `container` or `container.selection`.
 
 `photons`
 :   the input photon container, with a possible selection, in the format `container` or `container.selection`.
@@ -48,10 +48,10 @@
 :   whether to set up an instance of [`ORUtils::TauAntiTauJetOverlapTool`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/AnalysisCommon/AssociationUtils/Root/TauAntiTauJetOverlapTool.cxx). The default is `False`.
 
 `antiTauIDTauLabel`
-:   flag to select the ID tau for the tau-antitau-jet overlap removal. The default is `''` (empty string).
+:   flag to select the ID tau-jet for the tau-antitau-jet overlap removal. The default is `''` (empty string).
 
 `antiTauLabel`
-:   flag to select the anti-tau for the tau-antitau-jet overlap removal. The default is `''` (empty string).
+:   flag to select the anti-tau-jet for the tau-antitau-jet overlap removal. The default is `''` (empty string).
 
 `antiTauBJetLabel`
 :   flag to select b-jets for the tau-antitau-jet overlap removal. The default is `''` (empty string).
@@ -109,10 +109,10 @@
 :   a possible selection on the jet container.
 
 `taus`
-:   the input tau container.
+:   the input tau-jet container.
 
 `tausSelectionName`
-:   a possible selection on the tau container.
+:   a possible selection on the tau-jet container.
 
 `photons`
 :   the input photon container.
@@ -136,10 +136,10 @@
 :   whether to set up an instance of [`ORUtils::TauAntiTauJetOverlapTool`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/AnalysisCommon/AssociationUtils/Root/TauAntiTauJetOverlapTool.cxx). The default is `False`.
 
 `antiTauIDTauLabel`
-:   flag to select the ID tau for the tau-antitau-jet overlap removal. The default is `''` (empty string).
+:   flag to select the ID tau-jet for the tau-antitau-jet overlap removal. The default is `''` (empty string).
 
 `antiTauLabel`
-:   flag to select the anti-tau for the tau-antitau-jet overlap removal. The default is `''` (empty string).
+:   flag to select the anti-tau-jet for the tau-antitau-jet overlap removal. The default is `''` (empty string).
 
 `antiTauBJetLabel`
 :   flag to select b-jets for the tau-antitau-jet overlap removal. The default is `''` (empty string).
