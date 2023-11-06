@@ -43,7 +43,7 @@ variables:
   - cd ${CI_PROJECT_DIR}/${JOBNAME}
   - mkdir ${RUN_DIR}
   - cd ${RUN_DIR}
-  - runTop_el.py -i ${INPUTFILE} -o output_${JOBNAME} --particle --parton -e 100
+  - runTop_el.py -i ${INPUTFILE} -o output_${JOBNAME} --particle --parton -e 100 1> log_TopCPToolkit.txt
   - set +e
   - cd ../
 
@@ -52,7 +52,7 @@ variables:
   - cd ${CI_PROJECT_DIR}/${JOBNAME}
   - mkdir ${RUN_DIR}
   - cd ${RUN_DIR}
-  - runTop_el.py -i ${INPUTFILE} -o output_${JOBNAME} --particle --parton -e 100 -t exampleTtbarLjets
+  - runTop_el.py -i ${INPUTFILE} -o output_${JOBNAME} --particle --parton -e 100 -t exampleTtbarLjets 1> log_TopCPToolkit.txt
   - set +e
   - cd ../
 
@@ -64,6 +64,7 @@ variables:
     paths:
       - ${JOBNAME}
     expire_in: 2h
+    when: always
 
 .latest_job_template:
   extends: .base_job_template
