@@ -33,7 +33,7 @@
 :   the input photon container, with a possible selection, in the format `container` or `container.selection`.
 
 `taus`
-:   the input tau container, with a possible selection, in the format `container` or `container.selection`.
+:   the input tau-jet container, with a possible selection, in the format `container` or `container.selection`.
 
 !!! note
     Defining a jet container is mandatory, but all other input containers are optional.
@@ -81,7 +81,7 @@
 :   the input photon container, with a possible selection, in the format `container` or `container.selection`.
 
 `taus`
-:   the input tau container, with a possible selection, in the format `container` or `container.selection`.
+:   the input tau-jet container, with a possible selection, in the format `container` or `container.selection`.
 
 `invisible`
 :   any input container to be treated as invisible particles, in the format `container` (no selection).

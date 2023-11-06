@@ -15,10 +15,10 @@
 :   whether to rerun truth matching (sets up an instance of [`CP::TauTruthMatchingAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TauAnalysisAlgorithms/Root/TauTruthMatchingAlg.cxx)). The default is `True`.
 
 !!! success "Registers the following variables:"
-    - `pt`: tau $p_\mathrm{T}$
-    - `eta`: tau $\eta$ (no systematics)
-    - `phi`: tau $\phi$ (no systematics)
-    - `charge`: tau charge (no systematics)
+    - `pt`: tau-jet $p_\mathrm{T}$
+    - `eta`: tau-jet $\eta$ (no systematics)
+    - `phi`: tau-jet $\phi$ (no systematics)
+    - `charge`: tau-jet charge (no systematics)
 
 ### [makeTauWorkingPointConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TauAnalysisAlgorithms/python/TauAnalysisConfig.py)
 
@@ -29,7 +29,7 @@
 :   the name of the input container.
 
 `selectionName`
-:   the name of the tau selection to define (e.g. `tight` or `loose`).
+:   the name of the tau-jet selection to define (e.g. `tight` or `loose`).
 
 `postfix`
 :   a postfix to apply to decorations and algorithm names. Typically not needed here as `selectionName` is used internally.
@@ -38,14 +38,14 @@
 :   the ID WP to use (single string). Supported ID WPs: `Tight`, `Medium`, `Loose`, `VeryLoose`, `NoID`.
 
 `legacyRecommendations`
-:   whether to use legacy tau BDT and electron veto recommendations. The default is `False`.
+:   whether to use legacy tau-jet BDT and electron veto recommendations. The default is `False`.
 
 `noEffSF`
 :   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. The default is `False`.
 
 !!! success "Registers the following variables:"
-    - `select`: whether the tau passes the ID cuts
-    - `effSF`: the per-tau reconstruction SF
+    - `select`: whether the tau-jet passes the ID cuts
+    - `effSF`: the per-tau-jet reconstruction SF
 
 ## Config blocks
 
@@ -61,10 +61,10 @@
 :   whether to rerun truth matching (sets up an instance of [`CP::TauTruthMatchingAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TauAnalysisAlgorithms/Root/TauTruthMatchingAlg.cxx)). The default is `True`.
 
 !!! success "Registers the following variables:"
-    - `pt`: tau $p_\mathrm{T}$
-    - `eta`: tau $\eta$ (no systematics)
-    - `phi`: tau $\phi$ (no systematics)
-    - `charge`: tau charge (no systematics)
+    - `pt`: tau-jet $p_\mathrm{T}$
+    - `eta`: tau-jet $\eta$ (no systematics)
+    - `phi`: tau-jet $\phi$ (no systematics)
+    - `charge`: tau-jet charge (no systematics)
 
 ### [TauWorkingPointConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TauAnalysisAlgorithms/python/TauAnalysisConfig.py)
 
@@ -72,7 +72,7 @@
 :   the name of the input container.
 
 `selectionName`
-:   the name of the tau selection to define (e.g. `tight` or `loose`).
+:   the name of the tau-jet selection to define (e.g. `tight` or `loose`).
 
 `postfix`
 :   a postfix to apply to decorations and algorithm names. Typically not needed here as `selectionName` is used internally.
@@ -81,11 +81,11 @@
 :   the ID WP (string) to use. Supported ID WPs: `Tight`, `Medium`, `Loose`, `VeryLoose`, `NoID`.
 
 `legacyRecommendations`
-:   whether to use legacy tau BDT and electron veto recommendations. The default is `False`.
+:   whether to use legacy tau-jet BDT and electron veto recommendations. The default is `False`.
 
 `noEffSF`
 :   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. The default is `False`.
 
 !!! success "Registers the following variables:"
-    - `select`: whether the tau passes the ID cuts
-    - `effSF`: the per-tau reconstruction SF
+    - `select`: whether the tau-jet passes the ID cuts
+    - `effSF`: the per-tau-jet reconstruction SF

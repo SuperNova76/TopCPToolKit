@@ -16,6 +16,12 @@ Performs a single event selection. To define multiple selection regions, see [`m
 `jets`
 :   the input jet container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
 
+`photons`
+:   the input photon container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
+
+`taus`
+:   the input tau-jet container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
+
 `met`
 :   the input MET container. The default is `''` (empty string).
 
@@ -53,6 +59,12 @@ Performs multiple event selections, split into separate regions and subregions. 
 `jets`
 :   the input jet container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
 
+`photons`
+:   the input photon container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
+
+`taus`
+:   the input tau-jet container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
+
 `met`
 :   the input MET container. The default is `''` (empty string).
 
@@ -89,6 +101,12 @@ Performs multiple event selections, split into separate regions and subregions. 
 
 `jets`
 :   the input jet container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
+
+`photons`
+:   the input photon container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
+
+`taus`
+:   the input tau-jet container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
 
 `met`
 :   the input MET container. The default is `''` (empty string).
@@ -148,6 +166,8 @@ The symbol `$` below is a placeholder for any of the following comparison operat
 | `MU_N` | `ptmin $ ref` <br>`sel ptmin $ ref` | Compares (`$`) the number of muons with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify a different muon selection. |
 | `JET_N` | `ptmin $ ref` <br>`sel ptmin $ ref` | Compares (`$`) the number of jets with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify a different jet selection. |
 | `JET_N_BTAG` | `$ ref` <br>`tagger:WP $ ref` | Compares (`$`) the number of b-tagged jets to `ref`.<br>Use `tagger:WP` to specify a different b-tagging configuration. |
+| `PH_N` | `ptmin $ ref` <br>`sel ptmin $ ref` | Compares (`$`) the number of photons with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify a different photon selection. |
+| `TAU_N` | `ptmin $ ref` <br>`sel ptmin $ ref` | Compares (`$`) the number of tau-jets with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify a different tau-jet selection. |
 | `MET` | `$ ref` | Compares (`$`) the MET to `ref` (in MeV). |
 | `MWT` | `$ ref` | Compares (`$`) the transverse mass of the W boson<br>(lepton+MET system) to `ref` (in MeV). |
 | `MET+MWT` | `$ ref` | Compares (`$`) the sum of the MET and the transverse mass<br>of the W boson(lepton+MET system) to `ref` (in MeV). |
