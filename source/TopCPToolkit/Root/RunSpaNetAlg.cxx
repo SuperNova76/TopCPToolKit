@@ -54,14 +54,14 @@ namespace top {
 
     if (m_topologyEnum == SpaNetEnums::Topology::TtbarLjets) {
       m_spanet_reco = std::unique_ptr<top::TopSpaNetTopology> (new top::TopSpaNetTtbarLjets("AsgSpaNetTool"+m_topology,
-											    "TopCPToolkit/SpaNetModels/spanet_ttbarljets_trainedoneven.onnx",
-											    "TopCPToolkit/SpaNetModels/spanet_ttbarljets_trainedonodd.onnx")
+											    "dev/AnalysisTop/SpaNetModels/spanet_ttbarljets_trainedoneven.onnx",
+											    "dev/AnalysisTop/SpaNetModels/spanet_ttbarljets_trainedonodd.onnx")
 							       );
     }
     else if (m_topologyEnum == SpaNetEnums::Topology::TtbarLjetsNu) {
       m_spanet_reco = std::unique_ptr<top::TopSpaNetTopology> (new top::TopSpaNetTtbarLjetsNu("AsgSpaNetTool"+m_topology,
-											    "TopCPToolkit/SpaNetModels/spanet_ttbarljetsnu_trainedoneven.onnx",
-											    "TopCPToolkit/SpaNetModels/spanet_ttbarljetsnu_trainedonodd.onnx")
+											    "dev/AnalysisTop/SpaNetModels/spanet_ttbarljetsnu_trainedoneven.onnx",
+											    "dev/AnalysisTop/SpaNetModels/spanet_ttbarljetsnu_trainedonodd.onnx")
 							       );
     }
     else {
