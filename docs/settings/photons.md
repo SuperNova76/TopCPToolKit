@@ -83,10 +83,14 @@
 :   whether to recompute the photon shower shape fudge corrections (sets up an instance of [`CP::PhotonShowerShapeFudgeAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/Root/PhotonShowerShapeFudgeAlg.cxx)). The default is `False`, i.e. to use derivation variables.
 
 `ptSelectionOutput`
-:  whether or not to apply the default $p_\mathrm{T} > 10$ GeV cut to calibrated photons. The default is `False`.
+:  whether or not to apply a minimum $p_\mathrm{T}$ cut to calibrated photons. The default is `False`.
+
+`minPt`
+:   the minimum $p_\mathrm{T}$ cut to apply to calibrated photons. The default is 10 GeV.
 
 `recalibratePhyslite`
 :   whether to run the [`CP::EgammaCalibrationAndSmearingAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/Root/EgammaCalibrationAndSmearingAlg.cxx) on PHYSLITE derivations. The default is `True`.
+
 
 !!! success "Registers the following variables:"
     - `pt`: photon $p_\mathrm{T}$
