@@ -32,10 +32,12 @@ atlas_add_library(
   xAODJet
   xAODEgamma
   xAODMuon
+  xAODTau
   xAODTruth
   xAODCore
   PathResolver
   FourMomUtils
+  DiTauMassToolsLib
   FTagAnalysisInterfacesLib
   SystematicsHandlesLib
   SelectionHelpersLib

@@ -172,6 +172,9 @@ def makeTextBasedSequence(analysisName, filename, flags, noSystematics=False):
     from TopCPToolkit.TtbarNNLORecursiveRewConfig import TtbarNNLORecursiveRewConfig
     config.addAlgConfigBlock(algName='TtbarNNLO',
                              alg=TtbarNNLORecursiveRewConfig, pos='Output')
+    from TopCPToolkit.DiTauMassConfig import DiTauMassConfig
+    config.addAlgConfigBlock(algName='DiTauMMC',
+                             alg=DiTauMassConfig, pos='Output')
 
     # END OF CUSTOM BLOCKS
     # ===============================
