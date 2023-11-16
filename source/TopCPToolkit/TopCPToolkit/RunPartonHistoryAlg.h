@@ -15,6 +15,7 @@
 #include "TopPartons/CalcTtbarPartonHistory.h"
 #include "TopPartons/CalcTtbarLightPartonHistory.h"
 #include "TopPartons/CalcTTZPartonHistory.h"
+#include "TopPartons/CalcTthPartonHistory.h"
 
 namespace top {
 
