@@ -668,8 +668,7 @@ namespace top {
     //the functions ued in this class always start from the top, so it's enough to do the following
     const std::string &truthParticlesSGKey = m_topPartonsSGKey + "_TruthParticles";
     if (!evtStore()->contains<xAOD::TruthParticleContainer>(truthParticlesSGKey)) {
-      std::vector<std::string> collections = {"TruthTop"};
-      ANA_CHECK(buildContainerFromMultipleCollections(collections, truthParticlesSGKey));
+      ANA_CHECK(buildContainerFromMultipleCollections(m_truthCollections, truthParticlesSGKey));
       ANA_CHECK(evtStore()->retrieve(tp, truthParticlesSGKey));
       //we need to be able to navigate from the Ws to their decayProducts, see CalcTopPartonHistory.h for details
       ANA_CHECK(linkBosonCollections());
