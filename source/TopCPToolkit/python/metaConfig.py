@@ -80,10 +80,6 @@ def populate_config_flags(flags, metadata):
     flags.addFlag('Input.LHCPeriod', get_LHCgeometry)
     flags.addFlag('Input.isRun3', isRun3)
     flags.addFlag('Input.isPHYSLITE', isPhysLite)
-    flags.addFlag('Analysis.FTAGMCMCGenerator',
-                  'default' if is_data else get_generator_FTAG)
-    flags.addFlag('Analysis.JESMCMCGenerator',
-                  'default' if is_data else get_generator_JES)
 
 
 def get_data_type(flags):
@@ -111,7 +107,6 @@ def get_campaign_fallback(flags):
     for (cmp, tagsList) in _campaigns_AMITag.items():
         for tag in tagsList:
             if tag in amiTags:
-                print('metaConfig.get_campaign: Auto-detected campaign ', cmp)
                 return cmp
     raise Exception(f'AMITag {amiTags} in FileMetaData does not correspond to any implemented campaign')
 
@@ -164,54 +159,22 @@ def get_grl(flags):
         raise Exception(f'Unrecognized year for GRL {year}')
 
 
-def get_generator_info(flags):
-    result = ['default', 'default'] # FTAG MC-MC, JES flavour
-    if flags.Input.MCChannelNumber == 0:
-        print('WARNING: Unable to get generator information from inputfiles.')
-    if flags.Input.isRun3:
-        tdpFile = 'dev/AnalysisTop/TopDataPreparation/XSection-MC21-13p6TeV.data'
-    else:
-        tdpFile = 'dev/AnalysisTop/TopDataPreparation/XSection-MC16-13TeV_JESinfo.data'
-    with open(PathResolver.FindCalibFile(tdpFile), 'r') as _f:
-        for line in _f:
-            if not line.strip() or line.startswith('#'):
-                continue
-            columns = line.split()
-            if columns[0].isdigit() and int(columns[0]) == flags.Input.MCChannelNumber:
-                if len(columns) == 5:
-                    # we have both FTAG and JES
-                    result[0] = columns[-2].strip()
-                    result[1] = columns[-1].strip()
-                elif len(columns) == 4:
-                    # we have only FTAG
-                    result[0] = columns[-1].strip()
-    return result
-
-
-def get_generator_FTAG(flags):
-    # we have to translate between what's in TDP and what's expected by FTAG
-    # https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/TopPhys/TopPhysUtils/TopDataPreparation/Root/SampleXsection.cxx#0150
-    # https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagAnalysisConfig.py
-    # https://twiki.cern.ch/twiki/bin/view/AtlasProtected/BTagRecommendationsRelease22#Calibration_pre_recommendations
-    tdpTranslation = {
-        'herwig': 'Herwig7',
-        'herwigpp': 'Herwig7',
-        'pythia8': 'default',
-        'sherpa': 'Sherpa221',
-        'sherpa21': 'Sherpa221',
-        'amcatnlopythia8': 'amcAtNLOPythia',
-        'herwigpp713': 'Herwig713',
-        'sherpa228': 'Sherpa228',
-        'sherpa2210': 'Sherpa2210',
-        'sherpa2212': 'Sherpa2212',
-        'herwigpp721': 'Herwig721',
-    }
-    try:
-        result = tdpTranslation[get_generator_info(flags)[0]]
-        return result
-    except KeyError:
-        raise Exception('Unrecognised FTAG MC-to-MC generator setup {}, aborting.'.format(get_generator_info(flags)[0]))
-
-
-def get_generator_JES(flags):
-    return get_generator_info(flags)[1]
+def pretty_print(flags):
+    """
+    Print all the relevant flags we have set up, both from the
+    metadata and from our fall-back options.
+    """
+    print("="*73)
+    print("="*20, "TOPCPTOOLKIT FLAG CONFIGURATION", "="*20)
+    print("="*73)
+    print(" "*2, "DataType:       ", flags.Input.DataType)
+    print(" "*2, "LHCPeriod:      ", flags.Input.LHCPeriod)
+    print(" "*2, "RunNumber:      ", flags.Input.RunNumber)
+    print(" "*2, "MCChannelNumber:", flags.Input.MCChannelNumber)
+    print(" "*2, "RunNumberAsInt: ", flags.Input.RunNumberAsInt)
+    print(" "*2, "AMITag:         ", flags.Input.AMITag)
+    print(" "*2, "isRun3:         ", flags.Input.isRun3)
+    print(" "*2, "isPHYSLITE:     ", flags.Input.isPHYSLITE)
+    print(" "*2, "MCCampaign:     ", flags.Input.MCCampaign)
+    print(" "*2, "GeneratorInfo:  ", flags.Input.GeneratorsInfo)
+    print("="*73)
