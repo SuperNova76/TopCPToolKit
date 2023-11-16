@@ -55,7 +55,7 @@ flags.Input.Files = files
 metadata = GetFileMD(files)
 metaConfig.populate_config_flags(flags, metadata)
 flags.lock()
-print('AMI tags from FileMetaData: ', flags.Input.AMITag)
+metaConfig.pretty_print(flags)
 
 maxEvents = args.max_events
 

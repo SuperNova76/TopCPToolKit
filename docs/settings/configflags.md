@@ -18,6 +18,12 @@ Below is a (non-exhaustive) list of the most common flags, which are used in Top
     - `isRun3` -- boolean, true if file corresponds to Run-3 data/MC, false for Run-2
     - `isPHYSLITE` -- boolean, true if the file is in PHYSLITE derivation format
     - `MCCampaign` -- [Campaign](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/Tools/Campaigns/python/Utils.py#0003) enum, for example mc23a, mc20a, etc.
-- `Analysis`
-    - `FTAGMCMCGenerator` -- name of the generator used for configuring flavour tagging MC-MC scale factors
-    - `JESMCMCGenerator` -- name of the generator used for configuring precision JES flavour MC-MC scale factors
+    - `GeneratorsInfo` -- a dictionary of the MC generator names and versions
+
+You can get a printout of this information by calling
+
+```python
+metaConfig.pretty_print(flags)
+```
+
+which is done in [runTop_el.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/share/runTop_el.py), at the start of the job.
