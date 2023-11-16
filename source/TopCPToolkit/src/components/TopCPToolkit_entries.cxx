@@ -10,5 +10,6 @@
 #include <TopCPToolkit/RunPartonHistoryAlg.h>
 #include <TopCPToolkit/RunSpaNetAlg.h>
 #include <TopCPToolkit/RunTtbarNNLORecursiveRewAlg.h>
+#include <TopCPToolkit/DiTauMassCalculatorAlg.h>
 
 DECLARE_COMPONENT (TtbarCPalgoAnalysis)

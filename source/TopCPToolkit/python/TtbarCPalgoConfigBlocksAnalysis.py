@@ -312,6 +312,18 @@ SAVE
         cfg.setOptionValue('topology', topology)
         configSeq.append(cfg)
 
+    if use_taus:
+        from TopCPToolkit.DiTauMassConfig import DiTauMassConfig
+        cfg = DiTauMassConfig()
+        cfg.setOptionValue('electrons', 'AnaElectrons.tight')
+        cfg.setOptionValue('muons', 'AnaMuons.tight')
+        cfg.setOptionValue('taus', 'AnaTauJets.tight')
+        cfg.setOptionValue('jets', 'AnaJets.baselineSel&&jvt_selection')
+        cfg.setOptionValue('met', 'AnaMET')
+        cfg.setOptionValue('eventSelection', '')
+        cfg.setOptionValue('saveExtraVariables', True)
+        configSeq.append(cfg)
+
     from AsgAnalysisAlgorithms.BootstrapGeneratorConfig import makeBootstrapGeneratorConfig
     makeBootstrapGeneratorConfig(configSeq, nReplicas=2000, runOnMC=True)
 

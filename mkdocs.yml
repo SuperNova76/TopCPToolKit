@@ -68,7 +68,7 @@ nav:
         - Overlap removal: settings/overlap.md
         - Object selection: settings/objectselection.md
         - Event selection: settings/eventselection.md
-        - Top reconstruction: settings/reconstruction.md
+        - Event reconstruction: settings/reconstruction.md
         - Truth content: settings/truth.md
         - Output ntuple: settings/ntupling.md
         - Other useful blocks and methods: settings/others.md

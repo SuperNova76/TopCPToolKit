@@ -315,6 +315,15 @@ SpaNet:
     met: 'AnaMET'
     eventSelection: 'pass_ejets_%SYS%||pass_mujets_%SYS%'
 
+# DiTauMMC:
+#   - electrons: 'AnaElectrons.tight'
+#     muons: 'AnaMuons.tight'
+#     taus: 'AnaTauJets.tight'
+#     jets: 'AnaJets.baselineSel&&jvt_selection'
+#     met: 'AnaMET'
+#     eventSelection: ''
+#     saveExtraVariables: True
+
 Bootstraps:
   nReplicas: 2000
   runOnMC: True
