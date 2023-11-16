@@ -254,21 +254,23 @@ SAVE
 """,
         'ejets': """
 IMPORT SUBcommon
-EL_N 5000 >= 1
-EL_N tight 5000 >= 1
-MU_N 5000 == 0
+EL_N 25000 >= 1
+EL_N tight 25000 == 1
+MU_N 25000 == 0
 MWT < 170000
 MET+MWT > 40000
 SAVE
 """,
         'mujets': """
-EL_N 5000 == 0
-MU_N 20000 > 0
+EL_N 25000 == 0
+MU_N 25000 > 0
+MU_N 25000 == 1
 IMPORT SUBcommon
 SAVE
 """,
         'dilep': """
-EL_N 5000 >= 2
+EL_N 25000 == 2
+MU_N 25000 == 0
 MLL >= 10000
 OS
 MLLWINDOW 100000 80000
