@@ -24,6 +24,9 @@ namespace top {
     else if (m_topPartonScheme == "Tth") {
       m_topPartonHistory = std::make_unique<CalcTthPartonHistory>("top::CalcTthPartonHistory");
     }
+    else if (m_topPartonScheme == "Tzq") {
+      m_topPartonHistory = std::make_unique<CalcTzqPartonHistory>("top::CalcTzqPartonHistory");
+    }
     else {
       ANA_MSG_ERROR("  ==> topPartonScheme " << m_topPartonScheme << " is not recognised! aborting.");
       return StatusCode::FAILURE;
