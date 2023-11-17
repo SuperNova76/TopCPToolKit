@@ -348,3 +348,9 @@ Output:
       klfitter_: 'KLFitterResult'
       '': 'EventInfo'
   systematicsHistogram: 'listOfSystematics'
+  commands:
+      # Turn output branches on and off with 'enable' and 'disable'
+      - disable jet_.*_eff.*
+      - disable jet_jvtEfficiency.*
+      - disable trigPassed_HLT.*
+      - enable trigPassed_HLT_e.*

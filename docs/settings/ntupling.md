@@ -33,3 +33,6 @@
 
 !!! tip
     We recommend using the string `'listOfSystematics'` for interfacing with [`FastFrames`](https://gitlab.cern.ch/atlas-amglab/fastframes).
+
+`commands`
+:   a list of strings containing commands (regexp strings prefaced by the keywords `enable` or `disable`) to turn on/off the writing of branches to the output ntuple. The default is `None` (no modification to the scheduled output branches).
