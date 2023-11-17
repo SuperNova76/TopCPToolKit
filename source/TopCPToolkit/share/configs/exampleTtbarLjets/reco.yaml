@@ -289,6 +289,8 @@ EventCutFlow:
     customSelections: 'dilep'
   - postfix: 'supertight'
     customSelections: 'supertight'
+  - postfix: 'SUBcommon'
+    customSelections: 'SUBcommon'
 
 KLFitter:
   - containerName: 'KLFitterResult'
@@ -345,3 +347,4 @@ Output:
       met_: 'AnaMET'
       klfitter_: 'KLFitterResult'
       '': 'EventInfo'
+  systematicsHistogram: 'listOfSystematics'
