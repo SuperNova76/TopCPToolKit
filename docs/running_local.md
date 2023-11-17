@@ -1,4 +1,4 @@
-After a successful compilation, you now have access to `runTop_el.py` on the command line: it's [this script](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/share/runTop_el.py).
+After a successful compilation, you now have access to `runTop_el.py` on the command line: it's [this script](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/bin/runTop_el.py).
 It's recommended to run the code in a dedicated directory, such as the top-level `run` folder we created earlier.
 
 ## Running locally
@@ -106,7 +106,7 @@ Any sequence of algorithmic config blocks, that we have so far implicitly assume
 runTop_el.py -i inputs.txt -o output -t exampleTtbarLjets
 ```
 
-Here the `-t` flag points the driver to the folder [`share/configs/exampleTtbarLjets`](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/tree/main/source/TopCPToolkit/share/configs/exampleTtbarLjets). Up to three config files can be present in that folder and will be automatically looked up: `reco.yaml`, `particle.yaml` and `parton.yaml`. These correspond to detector-level, particle-level and parton-level analysis configurations respectively.
+Here the `-t` flag points the driver to the folder [`share/configs/exampleTtbarLjets`](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/tree/main/source/TopCPToolkit/share/configs/exampleTtbarLjets). Up to three config files can be present in that folder and will be automatically looked up: `reco.yaml`, `particle.yaml` and `parton.yaml`. These correspond to detector-level, particle-level and parton-level analysis configurations respectively. You can either pass an absolute or relative path to that folder, or, as in the example above, point to config folder registered in TopCPToolkit.
 
 ## Command line options
 

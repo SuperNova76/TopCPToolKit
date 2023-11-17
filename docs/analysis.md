@@ -1,4 +1,4 @@
-To understand how to write a custom analysis configuration, it's instructive to first take a look at [`runTop_el.py`](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/share/runTop_el.py).
+To understand how to write a custom analysis configuration, it's instructive to first take a look at [`runTop_el.py`](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/bin/runTop_el.py).
 There, we find calls such as
 ```python
 from TopCPToolkit.commonAlgoConfig import makeRecoSequence

@@ -56,7 +56,7 @@ atlas_add_dictionary(
 # TopCPToolkitLib) endif ()
 
 # Install files from the package:
-atlas_install_joboptions(share/*.py)
 atlas_install_python_modules(python/*.py)
-atlas_install_scripts(share/runTop_el.py)
+atlas_install_joboptions(bin/*.py)
+atlas_install_scripts(bin/runTop_el.py)
 atlas_install_data(share/*)
