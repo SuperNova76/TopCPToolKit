@@ -98,6 +98,16 @@ For example:
 !!! warning
     The CP algorithms always require the nominal variation (empty string, turned into "NOSYS" internally) to be available within the list of systematics.
 
+### Filtering output branches
+
+It is also possible to remove branches from the output ntuple. This is often needed to save space, as many CP algorithms may declare output variables that you do not need. For that, we can pass a number of commands to the aptly-named `commands` property of the [`OutputAnalysisConfig`](https://gitlab.cern.ch/atlas/athena/-/blob/main/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/OutputAnalysisConfig.py).
+These are [regexp](https://regex101.com/) strings prefaced by `enable` or `disable`.
+
+For example:
+
+- `"disable jet_.*_eff.*"` will **remove the per-jet efficiency SFs**, which may be desirable when you're already saving their product as a per-event variable (e.g. JVT, b-tagging)
+- `"disable trigPassed_HLT.*"` followed by `"enable trigPassed_HLT_e.*"`  will **keep only the electron trigger decisions**.
+
 ## Using a text-based config file
 
 Any sequence of algorithmic config blocks, that we have so far implicitly assumed to be written as a pythonic **analysis module** (we'll define those [later on](analysis/#analysis-modules)) and loaded up with the `-a` flag of `runTop_el.py`, can be translated into a text-based format, specifically using the YAML language. One can then run

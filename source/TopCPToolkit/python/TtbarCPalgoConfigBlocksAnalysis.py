@@ -336,6 +336,12 @@ SAVE
     cfg.setOptionValue('vars', reco_branches)
     cfg.setOptionValue('metVars', met_branches)
     cfg.setOptionValue('containers', outputContainers)
+    cfg.setOptionValue('commands',
+                       ['disable jet_.*_eff.*',
+                        'disable jet_jvtEfficiency.*',
+                        'disable trigPassed_HLT.*',
+                        'enable trigPassed_HLT_e.*']
+                   )
     configSeq.append(cfg)
 
     # put everything together
