@@ -1,4 +1,4 @@
-from ROOT import TFile, TTree, gROOT
+from ROOT import TFile, TTree, gROOT, TH1
 gROOT.SetBatch(True)
 import sys, math
 
@@ -21,6 +21,19 @@ def getTrees(inputfile):
     trees = [x for x in trees if "EventLoop" not in x]
 
     return trees
+
+def getHistograms(inputfile):
+    # Return the list of histograms within the input file
+    histos = []
+    # Get the list of keys in the file
+    keys = inputfile.GetListOfKeys()
+    # Loop over the keys and extract TH1 objects
+    for key in keys:
+        obj = key.ReadObj()
+        if isinstance(obj, TH1):
+            histos.append(obj.GetName())
+
+    return histos
 
 def compareLists(ref_list, new_list):
     # Compare the two lists of strings, and return the common subset
@@ -46,6 +59,42 @@ def compareTrees(ref_file, new_file):
             print(f"{orange_code}  --> the following are missing from the new file:{reset_code} {miss_new}")
     if common:
         print(f"{blue_code}The following TTrees are common to both the reference and new files:{reset_code} {common}")
+    failure = bool(miss_ref or miss_new)
+
+    return common, failure
+
+def compareHistograms(ref_file, new_file):
+    # Compare the lists of histograms from the two files, and return the common subset
+    ref_histos = getHistograms(ref_file)
+    new_histos = getHistograms(new_file)
+    common, miss_ref, miss_new = compareLists(ref_histos, new_histos)
+    if miss_ref or miss_new:
+        print(f"{orange_code}Warning: the number of TH1 histograms differs between the new file and the reference file.{reset_code}")
+        if miss_ref:
+            print(f"{orange_code}  --> the following are missing from the reference file:{reset_code} {miss_ref}")
+        if miss_new:
+            print(f"{orange_code}  --> the following are missing from the new file:{reset_code} {miss_new}")
+    if common:
+        print(f"{blue_code}The following TH1 histograms are common to both the reference and new files:{reset_code} {common}")
+    failure = bool(miss_ref or miss_new)
+
+    return common, failure
+
+def compareSystematics(ref_file, new_file):
+    # Compare the lists of systematics from the two files, and return the common subset
+    ref_histo = ref_file.Get("listOfSystematics")
+    new_histo = new_file.Get("listOfSystematics")
+    ref_sys = [ref_histo.GetXaxis().GetBinLabel(i+1) for i in range(ref_histo.GetXaxis().GetNbins())]
+    new_sys = [new_histo.GetXaxis().GetBinLabel(i+1) for i in range(new_histo.GetXaxis().GetNbins())]
+    common, miss_ref, miss_new = compareLists(ref_sys, new_sys)
+    if miss_ref or miss_new:
+        print(f"{orange_code}Warning: the number of systematics differs between the new file and the reference file.{reset_code}")
+        if miss_ref:
+            print(f"{orange_code}  --> the following are missing from the reference file:{reset_code} {miss_ref}")
+        if miss_new:
+            print(f"{orange_code}  --> the following are missing from the new file:{reset_code} {miss_new}")
+    if common:
+        print(f"{blue_code}The following systematics are common to both the reference and new files:{reset_code} {common}")
     failure = bool(miss_ref or miss_new)
 
     return common, failure
@@ -111,9 +160,13 @@ if __name__ == '__main__':
     ref_f = TFile.Open(sys.argv[1],"READ")
     new_f = TFile.Open(sys.argv[2],"READ")
 
-    common_trees, failure_trees = compareTrees(ref_f, new_f)
+    common_trees, failure_trees   = compareTrees(ref_f, new_f)
+    common_histos, failure_histos = compareHistograms(ref_f, new_f)
+    global_failure = failure_trees or failure_histos
 
-    global_failure = failure_trees
+    if "listOfSystematics" in common_histos:
+        common_systematics, failure_systematics = compareSystematics(ref_f, new_f)
+        global_failure |= failure_systematics
 
     for tree in common_trees:
         common_branches, failure_branches = compareBranches(tree, ref_f, new_f)
