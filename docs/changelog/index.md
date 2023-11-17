@@ -4,8 +4,23 @@
 
 ### Upcoming release
 
+- [issue #61](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/61): event selectors based on large-R jets
+
+### 2.1.0 <small>November 17, 2023</small>
+- We run on AB 24.2.30
 - [issue #34](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/34): MMC algorithm for di-tau mass reconstruction
 - [issue #51](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/51): update the event selection example
+- [issue #56](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/56): minor updates to the docs, mention `FastFrames` for histogramming
+- [issue #57](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/57): remove ONNX files from the repository (now stored on CVMFS instead)
+- [issue #58](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/58): event selectors based on photons and tau-jets
+- [issue #59](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/59): document the `SysListDumperAlg` for the text-based config
+- [issue #60](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/60): update the documentation of the electron and photon config blocks
+- [issue #62](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/62): allow the filtering of output branches
+- [issue #63](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/63): list all relevant metadata flags at the start of the job
+- [issue #64](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/64): parton history for the tZq topology
+- [issue #65](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/65): parton history for the ttH topology
+- [issue #66](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/66): bugfix, missing list of systematics in the text-based config mode
+- [issue #67](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/67): allow to read configs from arbitrary locations
 
 ### 2.0.0 <small>November 1, 2023</small>
 - We run on AB 24.2.28
