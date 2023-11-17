@@ -26,4 +26,4 @@ You can get a printout of this information by calling
 metaConfig.pretty_print(flags)
 ```
 
-which is done in [runTop_el.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/share/runTop_el.py), at the start of the job.
+which is done in [runTop_el.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/bin/runTop_el.py), at the start of the job.

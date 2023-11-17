@@ -7,7 +7,7 @@ from AnalysisAlgorithmsConfig.ConfigText import TextConfig, addDefaultAlgs
 from AnaAlgorithm.DualUseConfig import createAlgorithm, createService
 from AnalysisAlgorithmsConfig.ConfigAccumulator import DataType
 from TopCPToolkit import metaConfig
-from PathResolver import PathResolver
+from ROOT import PathResolver
 
 
 def makeRecoSequence(analysisName, flags, noSystematics=False, noFilter=False):
@@ -131,7 +131,7 @@ def makeTextBasedSequence(analysisName, filename, flags, noSystematics=False):
     if flags.Input.DataType is DataType.Data and filename in ['particle','parton']:
         return algSeq
 
-    yamlconfig = PathResolver.FindCalibFile(f'TopCPToolkit/configs/{analysisName}/{filename}.yaml')
+    yamlconfig = PathResolver.find_file(f'{analysisName}/{filename}.yaml', "CALIBPATH", PathResolver.RecursiveSearch)
     config = TextConfig(yamlconfig)
 
     print(">>> Configuration file read in:")
