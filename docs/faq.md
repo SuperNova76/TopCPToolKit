@@ -56,7 +56,7 @@
     Please check the `GeneratorInfo` entry of the printout of TopCPToolkit flags, which should appear at the top of your job log. If it is indeed `None`, this is an issue related to the metadata of your sample. Otherwise, please report it!
 
 ??? question "I get a crash on 'ValueError: invalid generator type'"
-    This error will also tell you what the detected generator version is: the problem is that it's not supported by the current FTAG [MC-to-MC recommendations](https://ftag.docs.cern.ch/activities/mcmc/#mcmc-efficiency-map-software). To by-pass this restriction, you will have to set a supported generator version by hand, with the [`generator` property](https://topcptoolkit.docs.cern.ch/settings/jets/#ftagconfig). Please consult your FTAG group liaison for advice on this. If you believe this generator should indeed be supported, please report it.
+    This error will also tell you what the detected generator version is: the problem is that it's not supported by the current FTAG [MC-to-MC recommendations](https://ftag.docs.cern.ch/activities/mcmc/#mcmc-efficiency-map-software). To by-pass this restriction, you will have to set a supported generator version by hand, with the [`generator` property](/settings/jets/#ftagconfig). Please consult your FTAG group liaison for advice on this. If you believe this generator should indeed be supported, please report it.
 
 ## Derivation formats
 
