@@ -75,7 +75,7 @@ def compareHistograms(ref_file, new_file):
         if miss_new:
             print(f"{orange_code}  --> the following are missing from the new file:{reset_code} {miss_new}")
     if common:
-        print(f"{blue_code}The following TH1 histograms are common to both the reference and new files:{reset_code} {common}")
+        print(f"{blue_code}There are {len(common)} TH1 histograms common to both the reference and new files.")
     failure = bool(miss_ref or miss_new)
 
     return common, failure
@@ -94,7 +94,7 @@ def compareSystematics(ref_file, new_file):
         if miss_new:
             print(f"{orange_code}  --> the following are missing from the new file:{reset_code} {miss_new}")
     if common:
-        print(f"{blue_code}The following systematics are common to both the reference and new files:{reset_code} {common}")
+        print(f"{blue_code}There are {len(common)} systematics common to both the reference and new files.")
     failure = bool(miss_ref or miss_new)
 
     return common, failure
