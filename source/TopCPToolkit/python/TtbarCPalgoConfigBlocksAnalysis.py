@@ -24,7 +24,8 @@ def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
     commonAlgoConfig.add_event_cleaning(configSeq, flags)
 
     # run PMG TruthWeightTool on MC only
-    commonAlgoConfig.add_mc_weights(configSeq, flags, reco_branches)
+    from AsgAnalysisAlgorithms.AsgAnalysisConfig import makeGeneratorAnalysisConfig
+    makeGeneratorAnalysisConfig(configSeq)
 
     # PRW
     if not flags.Input.isPHYSLITE:
@@ -359,7 +360,8 @@ def makeTruthConfiguration(flags, algSeq):
     outputContainers = {'': 'EventInfo'}
 
     # PMG TruthWeightTool
-    commonAlgoConfig.add_mc_weights(configSeq, flags, truth_branches)
+    from AsgAnalysisAlgorithms.AsgAnalysisConfig import makeGeneratorAnalysisConfig
+    makeGeneratorAnalysisConfig(configSeq)
 
     # add all three Number variables by hand, since we don't run PRW
     truth_branches += [
@@ -404,7 +406,8 @@ def makeParticleLevelConfiguration(flags, algSeq):
     outputContainers = {'': 'EventInfo'}
 
     # PMG TruthWeightTool
-    commonAlgoConfig.add_mc_weights(configSeq, flags, particleLevel_branches)
+    from AsgAnalysisAlgorithms.AsgAnalysisConfig import makeGeneratorAnalysisConfig
+    makeGeneratorAnalysisConfig(configSeq)
 
     # add all three Number variables by hand, since we don't run PRW
     particleLevel_branches += [

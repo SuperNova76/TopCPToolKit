@@ -49,17 +49,6 @@ def add_event_cleaning(configSeq, flags, runEventCleaning=True):
                             userGRLFiles=(GRLFiles if is_data else None))
 
 
-def add_mc_weights(configSeq, flags, branches):
-    # run PMG TruthWeightTool on MC only
-    print('RunNumber: ', flags.Input.RunNumberAsInt)
-    if flags.Input.DataType is not DataType.Data:
-        from AsgAnalysisAlgorithms.AsgAnalysisConfig import makeGeneratorAnalysisConfig
-        makeGeneratorAnalysisConfig(configSeq,
-                                    saveCutBookkeepers=True,
-                                    runNumber=flags.Input.RunNumberAsInt,
-                                    cutBookkeepersSystematics=True)
-
-
 def makeTruthSequence(analysisName, flags, noSystematics=False):
     algSeq = AnaAlgSequence()
 

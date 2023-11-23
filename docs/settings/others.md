@@ -30,7 +30,7 @@ _Returns an instance of [`CommonServicesConfig`](/settings/others/#commonservice
 :   whether to save the cut bookkeepers information into the output file. The default is `False`.
 
 `runNumber`
-:   the MC runNumber.
+:   the MC runNumber (int). The default is `None` (autoconfigure from metadata).
 
 `cutBookkeepersSystematics`
 :   whether to also save the cut bookkeepers systematics. The default is `False`.
@@ -121,7 +121,7 @@ _Returns an instance of [`CommonServicesConfig`](/settings/others/#commonservice
 :   whether to save the cut bookkeepers information into the output file. The default is `False`.
 
 `runNumber`
-:   the MC runNumber.
+:   the MC runNumber (int). The default is `None` (autoconfigure from metadata).
 
 `cutBookkeepersSystematics`
 :   whether to also save the cut bookkeepers systematics. The default is `False`.
@@ -177,7 +177,4 @@ This module contains the master sequencing functions `makeRecoSequence` / `makeT
 Loading the module also enables the following methods to easily set up very common algorithms:
 
 `add_event_cleaning`
-:   wraps around [`makeEventCleaningConfig`](#makeEventCleaningConfig), allowing to configure `runEventCleaning`. Automates the GRL settings
-
-`add_mc_weights`
-:   wraps around [`makeGeneratorAnalysisConfig`](#makeGeneratorAnalysisConfig), allowing to retrieve the correct output branches. Automates the MC runNumber retrieval.
+:   wraps around [`makeEventCleaningConfig`](#makeEventCleaningConfig), allowing to configure `runEventCleaning`. Automates the GRL settings.
