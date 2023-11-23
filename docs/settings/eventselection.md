@@ -1,5 +1,8 @@
 ## Make-methods
 
+!!! tip
+    The recommendation is to use [`makeMultipleEventSelectionConfigs`](https://topcptoolkit.docs.cern.ch/settings/eventselection/#makemultipleeventselectionconfigs), which is available in the text-based config approach under the name `EventSelection`.
+
 ### [makeEventSelectionConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EventSelectionAlgorithms/python/EventSelectionConfig.py)
 
 Performs a single event selection. To define multiple selection regions, see [`makeMultipleEventSelectionConfigs`](/settings/eventselection/#makemultipleeventselectionconfigs) below.
