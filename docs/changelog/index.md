@@ -5,6 +5,13 @@
 ### Upcoming release
 
 - [issue #61](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/61): event selectors based on large-R jets
+- [issue #70](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/70): adapt to the TextConfig refactoring
+
+### 2.2.0 <small>November 24, 2023</small>
+- We run on AB 24.2.31
+- [issue #68](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/68): reduce the verbosity of the CI tests
+- [issue #69](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/69): simplify the event selection config and the PMG weights bookkeeper histograms
+- [issue #71](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/71): add algorithm to write b-tagging score and p/c/u probabilities.
 
 ### 2.1.0 <small>November 17, 2023</small>
 - We run on AB 24.2.30
