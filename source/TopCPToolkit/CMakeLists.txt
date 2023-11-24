@@ -30,6 +30,7 @@ atlas_add_library(
   AnaAlgorithmLib
   xAODMissingET
   xAODJet
+  xAODBTagging
   xAODEgamma
   xAODMuon
   xAODTau

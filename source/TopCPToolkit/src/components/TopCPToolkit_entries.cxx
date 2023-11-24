@@ -11,5 +11,7 @@
 #include <TopCPToolkit/RunSpaNetAlg.h>
 #include <TopCPToolkit/RunTtbarNNLORecursiveRewAlg.h>
 #include <TopCPToolkit/DiTauMassCalculatorAlg.h>
+#include <TopCPToolkit/DiTauMassCalculatorAlg.h>
+#include <TopCPToolkit/BTaggingScores.h>
 
 DECLARE_COMPONENT (TtbarCPalgoAnalysis)

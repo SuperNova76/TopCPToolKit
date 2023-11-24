@@ -15,5 +15,6 @@
   <class name="top::RunSpaNetAlg" />
   <class name="top::RunTtbarNNLORecursiveRewAlg" />
   <class name="DiTauMassCalculatorAlg" />
+  <class name="BTaggingScoresAlg" />
    
 </lcgdict>

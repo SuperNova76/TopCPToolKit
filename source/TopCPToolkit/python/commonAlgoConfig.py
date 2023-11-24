@@ -164,6 +164,10 @@ def makeTextBasedSequence(analysisName, filename, flags, noSystematics=False):
     from TopCPToolkit.DiTauMassConfig import DiTauMassConfig
     config.addAlgConfigBlock(algName='DiTauMMC',
                              alg=DiTauMassConfig, pos='Output')
+    from TopCPToolkit.BTagScoresConfig import BTagScoresConfig
+    config.addAlgConfigBlock(algName='BTaggingScores',
+                             alg=BTagScoresConfig, superBlocks='Jets')
+    
 
     # END OF CUSTOM BLOCKS
     # ===============================
