@@ -7,6 +7,7 @@
   <class name="top::LeptonSFCalculatorAlg" />
   <class name="top::RunPartonHistoryAlg" />
   <class name="top::ParticleLevelAlg" />
+  <class name="top::PartonToJetsMatchAlg" />
   <class name="top::KLFitterAlg" />
   <class name="top::KLFitterResult" />
   <class name="top::KLFitterResultContainer" />

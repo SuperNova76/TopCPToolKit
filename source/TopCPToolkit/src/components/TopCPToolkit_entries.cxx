@@ -7,6 +7,7 @@
 #include <TopCPToolkit/KLFitterAlg.h>
 #include <TopCPToolkit/KLFitterFinalizeOutputAlg.h>
 #include <TopCPToolkit/ParticleLevelAlg.h>
+#include <TopCPToolkit/PartonToJetsMatchAlg.h>
 #include <TopCPToolkit/RunPartonHistoryAlg.h>
 #include <TopCPToolkit/RunSpaNetAlg.h>
 #include <TopCPToolkit/RunTtbarNNLORecursiveRewAlg.h>

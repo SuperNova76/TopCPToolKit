@@ -121,3 +121,20 @@
 
 !!! success "Registers the following variables:"
     - `NNLO_type_weight`: NNLO weight (overall normalised to 1), where `type` reflects the `reweightType` option
+
+### [PartonToJetsMatchConfig.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/PartonToJetsMatchConfig.py)
+
+The algorithm matches jets with partons from ttbar leton+jets topology. The output of the algorithm are four variables representing the indices (for the jets) of the b-jets from hadronically and semileptonically decaying tops, jets matched to the up-type and down-type quarks from the hadronic W decay. Finally, a flag is added for dilepton events.
+The matching algorithm looks for the closest jets in delta R. For multiple matches (or for dilepton events) the multi-matched objects have index set to -1.
+
+`jets`
+:   jet collection name (string) for matching, can be reco jets or truth jets. The default is `AntiKt4TruthDressedWZJets`.
+
+`eventSelection`
+:   event selection (string) for matching. The default is `pass_ejets_%SYS%||pass_mujets_%SYS%`.
+
+`criticalDR`
+:   maximum delta R (float) used for matching for matching. The default is `0.3`.
+
+`partonContainerName`
+:   name of the parton container (string) used for matching for matching. The default is `TopPartonHistoryTtbar_NOSYS`.
