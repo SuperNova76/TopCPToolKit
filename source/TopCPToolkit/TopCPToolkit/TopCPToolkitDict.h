@@ -10,6 +10,7 @@
 #include "TopCPToolkit/KLFitterFinalizeOutputAlg.h"
 #include "TopCPToolkit/RunPartonHistoryAlg.h"
 #include "TopCPToolkit/ParticleLevelAlg.h"
+#include "TopCPToolkit/PartonToJetsMatchAlg.h"
 #include "TopCPToolkit/RunSpaNetAlg.h"
 #include "TopCPToolkit/RunTtbarNNLORecursiveRewAlg.h"
 #include "TopCPToolkit/DiTauMassCalculatorAlg.h"
