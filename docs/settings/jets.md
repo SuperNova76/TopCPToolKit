@@ -117,9 +117,6 @@
 `noEffSF`
 :   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. The default is `False`.
 
-`legacyRecommendations`
-:   whether to use legacy recommendations without shallow-copied containers. The default is `False`.
-
 `minPt`
 :   minimum jet $p_\mathrm{T}$ used in the kinematic selection of jets. The default is 20 GeV for EMPFlow and EMTopo jets, or 10 GeV for VR-track jets.
 
@@ -179,9 +176,6 @@
 
 `noEffSF`
 :   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. The default is `False`.
-
-`legacyRecommendations`
-:   whether to use legacy recommendations without shallow-copied containers. The default is `False`.
 
 `minPt`
 :   minimum jet $p_\mathrm{T}$ used in the kinematic selection of jets. The default is 20 GeV for EMPFlow and EMTopo jets, or 10 GeV for VR-track jets.
