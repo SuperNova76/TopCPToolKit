@@ -23,6 +23,5 @@
     "python.analysis.extraPaths": [
         "${workspaceFolder}/build/x86_64-centos7-gcc11-opt/python"
     ],
-    "cmake.configureOnOpen": true,
-    "cmake.sourceDirectory": "/afs/cern.ch/work/d/dbaronmo/public/TopCPToolkit/.vscode",
+    "cmake.configureOnOpen": false,
 }
