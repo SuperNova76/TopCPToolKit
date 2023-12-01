@@ -72,7 +72,12 @@ configSeq.append(cfg)
 
 While `treeName` is straightforwardly the desired name of the output tree, some explanations are needed for the three other options.
 
-- `'vars'`: while output branches should be declared within each config block, we may want to add to this collection by passing a list of mappings of the form `'Container.inputname -> outputname'`.
+- `'vars'`: while output branches should be declared within each config block, we may want to store extra variables, by passing a list of mappings of the form `'Object.inputname -> outputname'`.
+
+    - Any variable that is an aux decoration of an xAOD object or container can be stored. If the object is a container, e.g. a jet container, the variable stored is a vector of elements corresponding to the objects in the container. For example,
+    `'OutJets_%SYS%.EMFrac -> jet_EMFrac_%SYS%'` will create a vector in the output, where each element is the fraction of energy in the EM calorimeter of the jet in the OutJets container. The `'_%SYS%'` suffix ensures that systematic variation are stored for this variable.
+    - For single objects, such as EventInfo, the variable itself is stored directly. Example: `'EventInfo.beamPosX -> beamPosX'` will directly store a flat variable containing the beamspot position X coordinate.
+
 - `'metVars'`: same as above, but specifically for the MET container, which contains different levels of MET. By default, the ["Final" MET term](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/AsgAnalysisAlgorithms/AsgxAODMetNTupleMakerAlg.h) is selected.
 - `'containers'`: a dictionary that maps the object containers we want to write out to some prefix used in naming branches. For instance, `{'jet_':'OutJets'}` will result in all the variables we save from the `OutJets` container being saved as `jet_something`.
 
