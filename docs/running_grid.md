@@ -16,7 +16,7 @@ The main script is `submitToGrid.py`, and we'll see shortly what it does and how
 
 ## Preparing the environment
 
-You need the usual software setup (see [Installation](/installation/#setting-up-the-environment)), plus the following:
+You need the usual software setup (see [Installation](installation.md#setting-up-the-environment)), plus the following:
 ```sh
 lsetup emi -q
 voms-proxy-init -voms atlas

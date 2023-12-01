@@ -23,7 +23,7 @@ Please consider
 
 - the public [Mattermost channel](https://mattermost.web.cern.ch/top-analysis/channels/topcptoolkit-support) ([join the team](https://mattermost.web.cern.ch/signup_user_complete/?id=95983da3f25882a52b0e389f0b042150&md=link&sbr=su_) first!)
 - the [issues page](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues)
-- [contributing to the code](/contributing)
+- [contributing to the code](contributing/index.md)
 
 ## Main developers
 

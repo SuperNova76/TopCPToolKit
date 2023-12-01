@@ -5,7 +5,7 @@
 `seq`
 :   the config sequence.
 
-_Returns an instance of [`CommonServicesConfig`](/settings/others/#commonservicesconfig), see the available options below._
+_Returns an instance of [`CommonServicesConfig`](#commonservicesconfig), see the available options below._
 
 ### [makeEventCleaningConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/EventCleaningConfig.py)
 
@@ -90,7 +90,7 @@ _Returns an instance of [`CommonServicesConfig`](/settings/others/#commonservice
 :   a regexp string against which the systematics names will be matched. Only positive matches are retained and used in the evaluation of the various algorithms.
 
 !!! tip
-    See the [tutorial](/running_local/#filtering-systematics) on how to use the systematics filter.
+    See the [tutorial](../running_local.md#filtering-systematics) on how to use the systematics filter.
 
 ### [EventCleaningBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/EventCleaningConfig.py)
 
@@ -169,11 +169,11 @@ _Returns an instance of [`CommonServicesConfig`](/settings/others/#commonservice
 ### [metaConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/metaConfig.py)
 
 This module is responsible for loading additional metadata and should not be called by the end user. It appends additional metadata
-information into configuration flags. The configuration flags are documented in the [Metadata-based autoconfiguration flags](/settings/configflags) section.
+information into configuration flags. The configuration flags are documented in the [Metadata-based autoconfiguration flags](configflags.md) section.
 
 ### [commonAlgoConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/commonAlgoConfig.py)
 
-This module contains the master sequencing functions `makeRecoSequence` / `makeTruthSequence` / `makeParticleLevelSequence` / `makeTextBasedSequence`, as [explained earlier](/analysis#analysis-modules).
+This module contains the master sequencing functions `makeRecoSequence` / `makeTruthSequence` / `makeParticleLevelSequence` / `makeTextBasedSequence`, as [explained earlier](../analysis.md#analysis-modules).
 Loading the module also enables the following methods to easily set up very common algorithms:
 
 `add_event_cleaning`

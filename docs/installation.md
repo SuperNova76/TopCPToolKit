@@ -24,7 +24,7 @@ Create the additional folders where we will compile the code and run some exampl
 mkdir -p build run
 ```
 
-Note that you are now on the `main` branch, which is used for development. To access a [stable release](/changelog), you need to switch to the corresponding tag:
+Note that you are now on the `main` branch, which is used for development. To access a [stable release](changelog/index.md), you need to switch to the corresponding tag:
 ```sh
 git fetch -a
 git checkout tags/vX.Y.Z -b mybranch

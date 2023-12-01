@@ -5,7 +5,7 @@
 ## General
 
 ??? question "Where can I ask questions about the code?"
-    Check out the relevant [contact points](/#get-in-touch).
+    Check out the relevant [contact points](index.md#get-in-touch).
 
 ??? question "Who came up with the name 'TopCPToolkit'?"
     Our good friend ChatGPT :upside_down:. And DALL-E is responsible for the avatar of the project on GitLab.
@@ -40,7 +40,7 @@
 ## Error messages
 
 ??? question "I get a crash on 'Exactly two leptons are required to check whether the event is OS or SS!'"
-    This comes from your [event selection config](/settings/eventselection/#available-keywords).
+    This comes from your [event selection config](settings/eventselection.md#available-keywords).
     As the error message suggests, you are trying to use either the `OS` or `SS` keywords in an event selection that is not enforcing the presence of exactly two electrons or muons.
     Enforce it, and the error will go away.
 
@@ -56,12 +56,12 @@
     Please check the `GeneratorInfo` entry of the printout of TopCPToolkit flags, which should appear at the top of your job log. If it is indeed `None`, this is an issue related to the metadata of your sample. Otherwise, please report it!
 
 ??? question "I get a crash on 'ValueError: invalid generator type'"
-    This error will also tell you what the detected generator version is: the problem is that it's not supported by the current FTAG [MC-to-MC recommendations](https://ftag.docs.cern.ch/activities/mcmc/#mcmc-efficiency-map-software). To by-pass this restriction, you will have to set a supported generator version by hand, with the [`generator` property](/settings/jets/#ftagconfig). Please consult your FTAG group liaison for advice on this. If you believe this generator should indeed be supported, please report it.
+    This error will also tell you what the detected generator version is: the problem is that it's not supported by the current FTAG [MC-to-MC recommendations](https://ftag.docs.cern.ch/activities/mcmc/#mcmc-efficiency-map-software). To by-pass this restriction, you will have to set a supported generator version by hand, with the [`generator` property](settings/jets.md#ftagconfig). Please consult your FTAG group liaison for advice on this. If you believe this generator should indeed be supported, please report it.
 
 ## Derivation formats
 
 ??? question "Which derivation formats are currently supported?"
-    We support PHYS and PHYSLITE. If you would like to use this framework for CP-specific derivation formats, or have observed a breakage in a supported format, please [open an issue](/contributing/).
+    We support PHYS and PHYSLITE. If you would like to use this framework for CP-specific derivation formats, or have observed a breakage in a supported format, please [open an issue](contributing/index.md).
 
 ??? question "Which p-tags are supported?"
     We always recommend using the [latest available p-tags](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/FullListOfPtagsAndPatternsR22).
@@ -84,4 +84,4 @@
 ??? question "I've been asked to run bootstraps on data/MC. What are those? Can I use TopCPToolkit to do it?"
     "Bootstrapping" means reweighting your dataset (whether actual data or MC simulations) so as to provide _replicas_ that, as an _ensemble_, describe the expected statistical fluctuations. Essentially, for each event a series of $k$ random numbers are generated following a Poisson distribution with central value 1. The standard deviation of these $k$ replicas then represents the statistical uncertainty. Moreover, by making sure that each event leads to a unique series of random numbers, multiple analyses with overlapping event selections can determine the overlap, as well as the statistical correlations needed for a combination.
 
-    This is the recommendation of the ATLAS Statistical Forum for combinations and analysis preservation (you are requested to store the bootstrapped data to HEPdata), as detailed in [ATL-PHYS-PUB-2021-011](https://cds.cern.ch/record/2759945/files/ATL-PHYS-PUB-2021-011.pdf). A dedicated algorithm was developed with TopCPToolkit, see [`makeBootstrapGeneratorConfig`](/settings/others/#makebootstrapgeneratorconfig).
+    This is the recommendation of the ATLAS Statistical Forum for combinations and analysis preservation (you are requested to store the bootstrapped data to HEPdata), as detailed in [ATL-PHYS-PUB-2021-011](https://cds.cern.ch/record/2759945/files/ATL-PHYS-PUB-2021-011.pdf). A dedicated algorithm was developed with TopCPToolkit, see [`makeBootstrapGeneratorConfig`](settings/others.md#makebootstrapgeneratorconfig).
