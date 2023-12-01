@@ -155,14 +155,13 @@ os.system(f'rm -rf {args.output_name}')
 ##############
 
 f = ROOT.TFile(f'{finalfile}', "UPDATE")
-t_datatype = ROOT.TNamed("dataType", str(flags.Input.DataType.value))
+h_metadata = ROOT.TH1I('metadata', 'Sample metadata:Look at the bin labels:Number of files in this sample', 3, 0, 3)
+h_metadata.GetXaxis().SetBinLabel( 1, str(flags.Input.DataType.value) )
 if flags.Input.DataType != DataType.Data:
-    campaign = flags.Input.MCCampaign.value
+    campaign = str(flags.Input.MCCampaign.value)
 else:
-    campaign = flags.Input.DataYear
-t_campaign = ROOT.TNamed("campaign", str(campaign))
-t_dsid = ROOT.TNamed("dsid", str(flags.Input.MCChannelNumber))
-t_datatype.Write()
-t_campaign.Write()
-t_dsid.Write()
+    campaign = str(flags.Input.DataYear)
+h_metadata.GetXaxis().SetBinLabel( 2, campaign )
+h_metadata.GetXaxis().SetBinLabel( 3, str(flags.Input.MCChannelNumber) )
+h_metadata.Write()
 f.Close()
