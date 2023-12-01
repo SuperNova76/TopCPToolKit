@@ -83,7 +83,7 @@ And you're ready to go!
 
 ### Developing in VS Code [experimental]
 
-TopCPToolkit is shipped with a VS Code configuration which is built alongside the rest of the package. To use it, setup the same Athena environment used to build the package, and then open the `TopCPToolkit` directory as a VS Code workspace. If using a different workspace, then the following lines in `.vscode/settings.json` need to be updated accordingly:
+TopCPToolkit is shipped with a VS Code configuration which is built alongside the rest of the package. To use it, setup the same Athena environment used to build the package, make sure you ran the `cmake` step in the build folder and then open the `TopCPToolkit` directory as a VS Code workspace. Do not configure the project via `CMake` in VS Code as this is not currently supported. If using a different workspace, then the following lines in `.vscode/settings.json` need to be updated accordingly:
 
 ```json
 "python.defaultInterpreterPath": "<path to build/ide_python>",
