@@ -73,6 +73,17 @@ $$ \sigma_\text{eff} \cdot \mathcal{L} \cdot \dfrac{w_i}{\sum_i w_i} $$
 
 with $\mathcal{L}$ the integrated luminosity, $\sigma_\text{eff}$ the effective cross section (generator cross section times filtering efficiency times k-factor, with these numbers provided in the [PMG](https://atlas-groupdata.web.cern.ch/atlas-groupdata/dev/PMGTools/PMGxsecDB_mc16.txt) or [TDP](https://atlas-groupdata.web.cern.ch/atlas-groupdata/dev/AnalysisTop/TopDataPreparation/) databases), $w_i$ the appropriate MC event weight (branch in the output tree), and $\sum_i w_i$ the sum of weights from the corresponding CutBookkeeper histogram.
 
+### Sample metadata
+
+An additional TH1 histogram is written to the output file, named `metadata`. It holds a few relevant aspect of the original DAOD metadata as its bin labels (i.e. read `metadata->GetXaxis()->GetBinLabel(x)`), namely:
+
+- bin 1: the **type of data** (e.g. 'data', 'fullsim', 'fastsim'...)
+- bin 2: the MC **campaign** (e.g. 'mc20a', 'mc23c'...) or **data-taking year**
+- bin 3: the MC **DSID** (e.g. '410470') or '0' for data samples
+
+This information is particularly important for post-processing with [`FastFrames`](https://gitlab.cern.ch/atlas-amglab/fastframes/).
+The bin content is irrelevant, and simply represents the number of individual files that were merged together (usually on the Grid, via the `hadd` operation).
+
 ### List of systematics
 
 There are multiple ways one could retrieve the list of systematics run by the various algorithms.
