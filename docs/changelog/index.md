@@ -7,6 +7,13 @@
 - [issue #61](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/61): event selectors based on large-R jets
 - [issue #70](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/70): adapt to the TextConfig refactoring
 
+### 2.3.0 <small>December 1, 2023</small>
+- We run on AB 24.2.32
+- [issue #72](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/72): improve the documentation on the ntupling syntax
+- [issue #73](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/73): fix the writing of metadata when running on the Grid
+- [issue #74](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/74): remove legacy FTAG settings
+- [issue #75](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/75): adding new algorithm for jet to parton assignment
+
 ### 2.2.0 <small>November 24, 2023</small>
 - We run on AB 24.2.31
 - [issue #68](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/68): reduce the verbosity of the CI tests
