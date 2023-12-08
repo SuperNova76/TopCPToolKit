@@ -58,6 +58,24 @@
 !!! note
     Not all combinations of `systematicsModelJES` and `systematicsModelJER` are valid! Please refer to the [JetETmiss twiki](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/JetUncertaintiesRel22).
 
+`recalibratePhyslite`
+:   whether to run the [`CP::JetCalibrationAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/JetAnalysisAlgorithms/Root/JetCalibrationAlg.cxx) on PHYSLITE derivations. The default is `True`.
+
+`calibToolConfigFile`
+:   name (str) of the config file to use for the jet calibration tool. Expert option to override JetETmiss recommendations. The default is `None`.
+
+`calibToolCalibArea`
+:   name (str) of the CVMFS area to use for the jet calibration tool. Expert option to override JetETmiss recommendations. The default is `None`.
+
+`uncertToolConfigPath`
+:   name (str) of the config file to use for the jet uncertainty tool. Expert option to override JetETmiss recommendations. The default is `None`.
+
+`uncertToolCalibArea`
+:   name (str) of the CVMFS area to use for the jet uncertainty tool. Expert option to override JetETmiss recommendations. The default is `None`.
+
+`uncertToolMCType`
+:   data type (str) to use for the jet uncertainty tool (e.g. `'AFII'` or `'MC16'`). Expert option to override JetETmiss recommendations. The default is `None`.
+
 !!! success "Registers the following variables:"
     - `jvtEfficiency`: the per-jet JVT efficiency SF (also for fJVT!)
 
