@@ -135,6 +135,11 @@ def compareEvents(key, branches, ref_file, new_file):
     ref_tree.AddFriend(new_tree)
     for event_idx in range(ref_events):
         ref_tree.GetEntry(event_idx)
+        # check that the event number is in both trees, otherwise we will print many warnings below...
+        new_tree.GetEntryWithIndex(getattr(ref_tree, "eventNumber"))
+        if getattr(ref_tree, "eventNumber") != getattr(new_tree, "eventNumber"):
+            print(f"{orange_code}  Entry with eventNumber {getattr(ref_tree,'eventNumber')} doesn't exist in the new file. Skipping.")
+            continue
         for branch in branches:
             ref_value = getattr(ref_tree, branch)
             new_value = getattr(new_tree, branch)
