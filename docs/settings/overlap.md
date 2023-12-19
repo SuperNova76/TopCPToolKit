@@ -87,9 +87,6 @@
 `linkOverlapObjects`
 :   whether to set up an element link between overlapping objects. The default is `False`.
 
-`doEleEleOR`
-:   whether to set up the electron-electron overlap removal (instance of [`ORUtils::EleEleOverlapTool`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/AnalysisCommon/AssociationUtils/Root/EleEleOverlapTool.cxx)). The default is `False`.
-
 `electrons`
 :   the input electron container.
 
@@ -132,9 +129,6 @@
 `bJetLabel`
 :   flag to select b-jets with. If left empty, no b-jets are used in the overlap removal. The default is `''` (empty string).
 
-`doTauAntiTauJetOR`
-:   whether to set up an instance of [`ORUtils::TauAntiTauJetOverlapTool`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/AnalysisCommon/AssociationUtils/Root/TauAntiTauJetOverlapTool.cxx). The default is `False`.
-
 `antiTauIDTauLabel`
 :   flag to select the ID tau-jet for the tau-antitau-jet overlap removal. The default is `''` (empty string).
 
@@ -152,6 +146,45 @@
 
 `preselectLabel`
 :   label to use when adding preselection decorations. The default is `None`, which uses the `outputLabel` instead.
+
+`doEleEleOR`
+:   whether to perform the overlap removal amongst electrons. The default is `False.`
+
+`doEleMuOR`
+:   whether to perform the overlap removal between electrons and muons. The default is `True.`
+
+`doEleJetOR`
+:   whether to perform the overlap removal between electrons and jets. The default is `True.`
+
+`doMuJetOR`
+:   whether to perform the overlap removal between muons and jets. The default is `True.`
+
+`doTauEleOR`
+:   whether to perform the overlap removal between tau-jets and electrons. The default is `True.`
+
+`doTauMuOR`
+:   whether to perform the overlap removal between tau-jets and muons. The default is `True.`
+
+`doTauJetOR`
+:   whether to perform the overlap removal between tau-jets and jets. The default is `True.`
+
+`doTauAntiTauJetOR`
+:   whether to perform the overlap removal between tau-jets and anti-tau-jets. The default is `False.`
+
+`doPhEleOR`
+:   whether to perform the overlap removal between photons and electrons. The default is `True.`
+
+`doPhMuOR`
+:   whether to perform the overlap removal between photons and muons. The default is `True.`
+
+`doPhJetOR`
+:   whether to perform the overlap removal between photons and jets. The default is `True.`
+
+`doEleFatJetOR`
+:   whether to perform the overlap removal between electrons and large-R jets. The default is `True.`
+
+`doJetFatJetOR`
+:   whether to perform the overlap removal between jets and large-R jets. The default is `True.`
 
 !!! success "Registers the following variables:"
     - `select_or`: the per-object overlap removal decision
