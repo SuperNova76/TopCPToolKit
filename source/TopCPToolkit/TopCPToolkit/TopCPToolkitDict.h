@@ -14,6 +14,7 @@
 #include "TopCPToolkit/RunSpaNetAlg.h"
 #include "TopCPToolkit/RunTtbarNNLORecursiveRewAlg.h"
 #include "TopCPToolkit/DiTauMassCalculatorAlg.h"
+#include "TopCPToolkit/JetMatchingAlg.h"
 #include "TopCPToolkit/BTaggingScoresAlg.h"
 
 #endif

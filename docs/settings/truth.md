@@ -124,7 +124,7 @@
 
 ### [PartonToJetsMatchConfig.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/PartonToJetsMatchConfig.py)
 
-The algorithm matches jets with partons from ttbar leton+jets topology. The output of the algorithm are four variables representing the indices (for the jets) of the b-jets from hadronically and semileptonically decaying tops, jets matched to the up-type and down-type quarks from the hadronic W decay. Finally, a flag is added for dilepton events.
+The algorithm matches jets with partons from ttbar lepton+jets topology. The output of the algorithm are four variables representing the indices (for the jets) of the b-jets from hadronically and semileptonically decaying tops, jets matched to the up-type and down-type quarks from the hadronic W decay. Finally, a flag is added for dilepton events.
 The matching algorithm looks for the closest jets in delta R. For multiple matches (or for dilepton events) the multi-matched objects have index set to -1.
 
 `jets`
@@ -134,7 +134,23 @@ The matching algorithm looks for the closest jets in delta R. For multiple match
 :   event selection (string) for matching. The default is `pass_ejets_%SYS%||pass_mujets_%SYS%`.
 
 `criticalDR`
-:   maximum delta R (float) used for matching for matching. The default is `0.3`.
+:   maximum delta R (float) used for matching. The default is `0.3`.
 
 `partonContainerName`
-:   name of the parton container (string) used for matching for matching. The default is `TopPartonHistoryTtbar_NOSYS`.
+:   name of the parton container (string) used for matching. The default is `TopPartonHistoryTtbar_NOSYS`.
+
+### [JetMatchingConfig.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/JetMatchingConfig.py)
+
+The algorithm adds three variables for reco jets: index of matched truth jet, deltaR to the closest reco jet and deltaR of the matched truth jet and its closest truth jet. The matching is based on looking for minimal deltaR. The reco jets with no matched truth jet (no truth jet found with deltaR within critical deltaR) have the index set to -1. If multiple reco jets are matched to the same truth jet their index is also set to -1. 
+
+`criticalDR`
+:   maximum delta R (float) used for matching. The default is `0.3`.
+
+`jets`
+:   reco jets container name (string). The default is `AnaJets`.
+
+`truthJets`
+:   truth jets collection name (string). The default is `AntiKt4TruthDressedWZJets`.
+
+`eventSelection`
+:   event selection (string) to run the algorithm on. The default is ` ` (run over all events).
