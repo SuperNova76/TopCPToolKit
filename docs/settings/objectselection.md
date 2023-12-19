@@ -17,6 +17,9 @@
 `maxEta`
 :   maximum $\vert\eta\vert$ value to cut on. No default value.
 
+`useClusterEta`
+:   whether to use the cluster $\eta$ (`etaBE(2)`) instead of the object $\eta$ (for electrons and photons). The default is `False`.
+
 `selectionDecoration`
 :   the name of the decoration to set.
 
@@ -75,6 +78,9 @@
 
 `maxEta`
 :   maximum $\vert\eta\vert$ value to cut on. No default value.
+
+`useClusterEta`
+:   whether to use the cluster $\eta$ (`etaBE(2)`) instead of the object $\eta$ (for electrons and photons). The default is `False`.
 
 `selectionDecoration`
 :   the name of the decoration to set.
