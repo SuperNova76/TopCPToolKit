@@ -18,6 +18,11 @@ Get a local copy of the git repository with:
     git clone https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit.git
     ```
 
+and move into the `TopCPToolkit` directory with:
+```
+cd TopCPToolkit
+```
+
 The actual code lives in the top-level `source` folder; everything else is needed for e.g. CI tests, GitLab features, powering this website, etc.
 Create the additional folders where we will compile the code and run some examples:
 ```sh
