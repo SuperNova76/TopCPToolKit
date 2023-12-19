@@ -50,10 +50,10 @@
 :   whether to calculate the forward JVT efficiency. The default is `False`.
 
 `systematicsModelJES`
-:   the NP reduction scheme to use for JES: `All`, `Global`, `Category`, `Scenario`. The default is `Global`.
+:   the NP reduction scheme to use for JES: `All`, `Global`, `Category`, `Scenario`. The default is `Category`.
 
 `systematicsModelJER`
-:   the NP reduction scheme to use for JER: `All`, `Full`, `Simple`. The default is `Simple`.
+:   the NP reduction scheme to use for JER: `All`, `Full`, `Simple`. The default is `Full`.
 
 !!! note
     Not all combinations of `systematicsModelJES` and `systematicsModelJER` are valid! Please refer to the [JetETmiss twiki](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/JetUncertaintiesRel22).
@@ -66,6 +66,9 @@
 
 `calibToolCalibArea`
 :   name (str) of the CVMFS area to use for the jet calibration tool. Expert option to override JetETmiss recommendations. The default is `None`.
+
+`calibToolCalibSeq`
+:   name (str) of the sequence to use for the jet calibration tool (e.g. `'JetArea_Residual_EtaJES_GSC'`). Expert option to override JetETmiss recommendations. The default is `None`.
 
 `uncertToolConfigPath`
 :   name (str) of the config file to use for the jet uncertainty tool. Expert option to override JetETmiss recommendations. The default is `None`.
