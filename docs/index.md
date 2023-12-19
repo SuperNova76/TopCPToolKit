@@ -13,6 +13,7 @@ This websites serves to document the usage and main features of the framework, a
 - [Common CP algorithms](https://indico.cern.ch/event/997136/attachments/2192156/3705269/CPAlgorithms.pdf)
 - [ATLAS Software docs](https://atlassoftwaredocs.web.cern.ch/ABtutorial/cpalg_intro/)
 - [Migrating AnalysisTop to CP algorithms](https://indico.cern.ch/event/1257761/contributions/5359759/attachments/2644629/4577607/Migrating%20AT%20to%20CP%20algo.pdf)
+- [Making ntuples from PHYSLITE with CP algorithms](https://indico.cern.ch/event/1335237/contributions/5702431/attachments/2771372/4830140/Making%20ntuples%20from%20PHYSLITE%20with%20CP%20algorithms.pdf)
 - [Introduction to TopCPToolkit](https://indico.cern.ch/event/1319343/contributions/5554653/attachments/2705702/4697065/Introduction%20to%20TopCPToolkit.pdf)
 - [Tips on data management and workflow](https://indico.cern.ch/event/1276819/contributions/5531897/attachments/2733586/4752675/data-management-workflow.pdf)
 - The recommended [`FastFrames` histogramming package](https://gitlab.cern.ch/atlas-amglab/fastframes)
