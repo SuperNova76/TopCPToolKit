@@ -111,6 +111,8 @@
 !!! success "Registers the following variables:"
     - `weight_jvt_effSF`: the event-level JVT efficiency SF
     - `weight_fjvt_effSF`: the event-level forward JVT efficiency SF
+    - `select_jvt`: the per-jet JVT selection flag
+    - `select_fjvt`: the per-jet fJVT selection flag
 
 ### [makeFTagAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagAnalysisConfig.py)
 
@@ -174,6 +176,8 @@
 !!! success "Registers the following variables:"
     - `weight_jvt_effSF`: the event-level JVT efficiency SF
     - `weight_fjvt_effSF`: the event-level forward JVT efficiency SF
+    - `select_jvt`: the per-jet JVT selection flag
+    - `select_fjvt`: the per-jet fJVT selection flag
 
 ### [FTagConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagAnalysisConfig.py)
 
