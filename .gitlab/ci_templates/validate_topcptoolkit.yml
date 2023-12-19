@@ -25,98 +25,77 @@ variables:
   - source */setup.sh
   - cd ${CI_PROJECT_DIR}
 
-validateRun2:
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
+.base_validation_job_template:
   stage: validate
   tags:
     - cvmfs
+  script:
+    - *restore_environment
+    - *run_validation
+  artifacts:
+    paths:
+      - ${VAL_DIR}
+    expire_in: 2h
+    when: always
+  allow_failure: true
+
+
+validateRun2:
+  extends: .base_validation_job_template
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
   variables:
     JOBNAME: job_validateRun2
     REFERENCEFILE: ${CI_PROJECT_DIR}/job_referenceRun2/${RUN_DIR}/output_job_referenceRun2.root
     INPUTFILE: ${CI_PROJECT_DIR}/job_latestABreleaseRun2/${RUN_DIR}/output_job_latestABreleaseRun2.root
-  script:
-    - *restore_environment
-    - *run_validation
   needs: [referenceRun2, latestABreleaseRun2, latestABrelease]
-  allow_failure: true
 
 validateRun3:
+  extends: .base_validation_job_template
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
-  stage: validate
-  tags:
-    - cvmfs
   variables:
     JOBNAME: job_validateRun3
     REFERENCEFILE: ${CI_PROJECT_DIR}/job_referenceRun3/${RUN_DIR}/output_job_referenceRun3.root
     INPUTFILE: ${CI_PROJECT_DIR}/job_latestABreleaseRun3/${RUN_DIR}/output_job_latestABreleaseRun3.root
-  script:
-    - *restore_environment
-    - *run_validation
   needs: [referenceRun3, latestABreleaseRun3, latestABrelease]
-  allow_failure: true
 
 validateLastWeekRun2:
+  extends: .base_validation_job_template
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
-  stage: validate
-  tags:
-    - cvmfs
   variables:
     JOBNAME: job_validateLastWeekRun2
     REFERENCEFILE: ${CI_PROJECT_DIR}/job_lastweekRun2/${RUN_DIR}/output_job_lastweekRun2.root
     INPUTFILE: ${CI_PROJECT_DIR}/job_referenceRun2/${RUN_DIR}/output_job_referenceRun2.root
-  script:
-    - *restore_environment
-    - *run_validation
   needs: [referenceRun2, lastweekRun2, latestABrelease]
-  allow_failure: true
 
 validateLastWeekRun3:
+  extends: .base_validation_job_template
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
-  stage: validate
-  tags:
-    - cvmfs
   variables:
     JOBNAME: job_validateLastWeekRun3
     REFERENCEFILE: ${CI_PROJECT_DIR}/job_lastweekRun3/${RUN_DIR}/output_job_lastweekRun3.root
     INPUTFILE: ${CI_PROJECT_DIR}/job_referenceRun3/${RUN_DIR}/output_job_referenceRun3.root
-  script:
-    - *restore_environment
-    - *run_validation
   needs: [referenceRun3, lastweekRun3, latestABrelease]
-  allow_failure: true
 
 validateYAMLRun2:
+  extends: .base_validation_job_template
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
-  stage: validate
-  tags:
-    - cvmfs
   variables:
     JOBNAME: job_validateYAMLRun2
     REFERENCEFILE: ${CI_PROJECT_DIR}/job_latestABnightlyRun2/${RUN_DIR}/output_job_latestABnightlyRun2.root
     INPUTFILE: ${CI_PROJECT_DIR}/job_latestABnightlyRun2YAML/${RUN_DIR}/output_job_latestABnightlyRun2YAML.root
-  script:
-    - *restore_environment
-    - *run_validation
   needs: [latestABnightlyRun2, latestABnightlyRun2YAML, latestABnightly]
-  allow_failure: true
 
 validateYAMLRun3:
+  extends: .base_validation_job_template
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
-  stage: validate
-  tags:
-    - cvmfs
   variables:
     JOBNAME: job_validateYAMLRun3
     REFERENCEFILE: ${CI_PROJECT_DIR}/job_latestABnightlyRun3/${RUN_DIR}/output_job_latestABnightlyRun3.root
     INPUTFILE: ${CI_PROJECT_DIR}/job_latestABnightlyRun3YAML/${RUN_DIR}/output_job_latestABnightlyRun3YAML.root
-  script:
-    - *restore_environment
-    - *run_validation
   needs: [latestABnightlyRun3, latestABnightlyRun3YAML, latestABnightly]
-  allow_failure: true

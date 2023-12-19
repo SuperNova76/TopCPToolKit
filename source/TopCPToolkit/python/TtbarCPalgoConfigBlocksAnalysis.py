@@ -67,9 +67,10 @@ def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
         from JetAnalysisAlgorithms.JetAnalysisConfig import makeJetAnalysisConfig
         jetContainer = 'AntiKt4EMPFlowJets'
         makeJetAnalysisConfig(configSeq, 'AnaJets', jetContainer,
-                              runGhostMuonAssociation=True,
-                              runNNJvtUpdate = True,
-                              systematicsModelJER='Full', systematicsModelJES='Category', postfix='baselineSel')
+                              runGhostMuonAssociation=True, postfix='')
+        configSeq.setOptionValue('.runNNJvtUpdate', True)
+        configSeq.setOptionValue('.systematicsModelJER', 'Full')
+        configSeq.setOptionValue('.systematicsModelJES', 'Category')
         from JetAnalysisAlgorithms.JetJvtAnalysisConfig import makeJetJvtAnalysisConfig
         makeJetJvtAnalysisConfig(configSeq, 'AnaJets', jetContainer, enableFJvt=False)
 
@@ -87,7 +88,7 @@ def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
                                    btagger=btagger, kinematicSelection=True, selectionName='')
             # calculate per-event b-tagging SF (alternative to storing per-jet SFs)
             cfg = PerEventSFCalculatorConfig(f'btagSFCalc_{btagger}_{WP}')
-            cfg.particles = 'AnaJets.baselineSel'
+            cfg.particles = 'AnaJets.jvt'
             cfg.objectSF = f'ftag_effSF_{btagger}_{WP}_%SYS%'
             cfg.eventSF = f'btagSF_{btagger}_{WP}_%SYS%'
             configSeq.append(cfg)
@@ -154,7 +155,7 @@ def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
                               electrons=('AnaElectrons.tight' if use_electrons else ''),
                               muons=('AnaMuons.tight' if use_muons else ''),
                               photons=('AnaPhotons.tight&&selectPtEta' if use_photons else ''),
-                              jets=('AnaJets.baselineSel&&jvt_selection' if use_jets else ''),
+                              jets=('AnaJets.jvt' if use_jets else ''),
                               taus=('AnaTauJets.tight' if use_taus else ''),
                               inputLabel='preselectOR',
                               outputLabel='passesOR')
@@ -225,7 +226,7 @@ def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
                                  outputName='OutMuons')
     if use_jets:
         makeOutputThinningConfig(configSeq, 'AnaJets',
-                                 selectionName='baselineSel&&jvt_selection',
+                                 selectionName='jvt',
                                  outputName='OutJets')
     if use_photons:
         makeOutputThinningConfig(configSeq, 'AnaPhotons',
@@ -283,14 +284,14 @@ SAVE
 """
     }
     makeMultipleEventSelectionConfigs(configSeq, electrons="AnaElectrons.loose", muons ="AnaMuons.tight", met="AnaMET",
-                                      jets="AnaJets.baselineSel&&jvt_selection", btagDecoration=f'ftag_select_{btagger}_FixedCutBEff_85',
+                                      jets="AnaJets.jvt", btagDecoration=f'ftag_select_{btagger}_FixedCutBEff_85',
                                       preselection=None, selectionCutsDict = mycuts, noFilter=noFilter, cutFlowHistograms=True)
 
     from TopCPToolkit.KLFitterConfig import KLFitterConfig
     cfg = KLFitterConfig('KLFitterResult')
     cfg.setOptionValue('electrons', 'AnaElectrons.tight')
     cfg.setOptionValue('muons', 'AnaMuons.tight')
-    cfg.setOptionValue('jets', 'AnaJets.baselineSel&&jvt_selection')
+    cfg.setOptionValue('jets', 'AnaJets.jvt')
     cfg.setOptionValue('met', 'AnaMET')
     cfg.setOptionValue('likelihoodType', 'ttbar')
     cfg.setOptionValue('jetSelectionMode', 'kBtagPriorityFourJets')
@@ -309,7 +310,7 @@ SAVE
         cfg = TopSpaNetConfig()
         cfg.setOptionValue('electrons', 'AnaElectrons.tight')
         cfg.setOptionValue('muons', 'AnaMuons.tight')
-        cfg.setOptionValue('jets', 'AnaJets.baselineSel&&jvt_selection')
+        cfg.setOptionValue('jets', 'AnaJets.jvt')
         cfg.setOptionValue('met', 'AnaMET')
         cfg.setOptionValue('eventSelection', 'pass_ejets_%SYS%||pass_mujets_%SYS%')
         cfg.setOptionValue('topology', topology)
@@ -321,7 +322,7 @@ SAVE
         cfg.setOptionValue('electrons', 'AnaElectrons.tight')
         cfg.setOptionValue('muons', 'AnaMuons.tight')
         cfg.setOptionValue('taus', 'AnaTauJets.tight')
-        cfg.setOptionValue('jets', 'AnaJets.baselineSel&&jvt_selection')
+        cfg.setOptionValue('jets', 'AnaJets.jvt')
         cfg.setOptionValue('met', 'AnaMET')
         cfg.setOptionValue('eventSelection', '')
         cfg.setOptionValue('saveExtraVariables', True)

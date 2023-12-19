@@ -13,7 +13,6 @@ Jets:
     runGhostMuonAssociation: True
     systematicsModelJES: 'Category'
     systematicsModelJER: 'Full'
-    postfix: 'baselineSel'
     JVT: {}
     PtEtaSelection:
         minPt: 25000.0
@@ -72,23 +71,23 @@ Jets:
 
 PerEventBtagSF:
   - name: 'btagSFCalc_DL1dv01_FixedCutBEff_85'
-    particles: 'AnaJets.baselineSel'
+    particles: 'AnaJets'
     objectSF: 'ftag_effSF_DL1dv01_FixedCutBEff_85_%SYS%'
     eventSF: 'btagSF_DL1dv01_FixedCutBEff_85_%SYS%'
   - name: 'btagSFCalc_DL1dv01_FixedCutBEff_77'
-    particles: 'AnaJets.baselineSel'
+    particles: 'AnaJets'
     objectSF: 'ftag_effSF_DL1dv01_FixedCutBEff_77_%SYS%'
     eventSF: 'btagSF_DL1dv01_FixedCutBEff_77_%SYS%'
   - name: 'btagSFCalc_DL1dv01_FixedCutBEff_70'
-    particles: 'AnaJets.baselineSel'
+    particles: 'AnaJets'
     objectSF: 'ftag_effSF_DL1dv01_FixedCutBEff_70_%SYS%'
     eventSF: 'btagSF_DL1dv01_FixedCutBEff_70_%SYS%'
   - name: 'btagSFCalc_DL1dv01_FixedCutBEff_60'
-    particles: 'AnaJets.baselineSel'
+    particles: 'AnaJets'
     objectSF: 'ftag_effSF_DL1dv01_FixedCutBEff_60_%SYS%'
     eventSF: 'btagSF_DL1dv01_FixedCutBEff_60_%SYS%'
   - name: 'btagSFCalc_DL1dv01_Continuous'
-    particles: 'AnaJets.baselineSel'
+    particles: 'AnaJets'
     objectSF: 'ftag_effSF_DL1dv01_Continuous_%SYS%'
     eventSF: 'btagSF_DL1dv01_Continuous_%SYS%'
 
@@ -163,7 +162,7 @@ OverlapRemoval:
   inputLabel: 'preselectOR'
   outputLabel: 'passesOR'
   # Format should follow Object: '<containerName>.<postfix>'
-  jets: 'AnaJets.baselineSel&&jvt_selection'
+  jets: 'AnaJets.jvt'
   #taus: 'AnaTauJets.tight'
   electrons: 'AnaElectrons.tight'
   #photons: 'AnaPhotons.tight'
@@ -184,7 +183,7 @@ ObjectCutFlow:
 Thinning:
   - containerName: 'AnaJets'
     outputName: 'OutJets'
-    selectionName: 'baselineSel&&jvt_selection'
+    selectionName: 'jvt'
   - containerName: 'AnaElectrons'
     outputName: 'OutElectrons'
     selectionName: 'tight||loose'
@@ -239,7 +238,7 @@ Trigger:
 EventSelection:
   - electrons: 'AnaElectrons.loose'
     muons: 'AnaMuons.tight'
-    jets: 'AnaJets.baselineSel&&jvt_selection'
+    jets: 'AnaJets.jvt'
     met: 'AnaMET'
     btagDecoration: 'ftag_select_DL1dv01_FixedCutBEff_85'
     noFilter: True
@@ -275,7 +274,7 @@ KLFitter:
   - containerName: 'KLFitterResult'
     electrons: 'AnaElectrons.tight'
     muons: 'AnaMuons.tight'
-    jets: 'AnaJets.baselineSel&&jvt_selection'
+    jets: 'AnaJets.jvt'
     met: 'AnaMET'
     likelihoodType: 'ttbar'
     jetSelectionMode: 'kBtagPriorityFourJets'
@@ -288,13 +287,13 @@ SpaNet:
   - topology: 'TtbarLjets'
     electrons: 'AnaElectrons.tight'
     muons: 'AnaMuons.tight'
-    jets: 'AnaJets.baselineSel&&jvt_selection'
+    jets: 'AnaJets.jvt'
     met: 'AnaMET'
     eventSelection: 'pass_ejets_%SYS%||pass_mujets_%SYS%'
   - topology: 'TtbarLjetsNu'
     electrons: 'AnaElectrons.tight'
     muons: 'AnaMuons.tight'
-    jets: 'AnaJets.baselineSel&&jvt_selection'
+    jets: 'AnaJets.jvt'
     met: 'AnaMET'
     eventSelection: 'pass_ejets_%SYS%||pass_mujets_%SYS%'
 
