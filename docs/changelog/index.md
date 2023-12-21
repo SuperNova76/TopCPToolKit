@@ -6,14 +6,16 @@
 
 - [issue #61](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/61): event selectors based on large-R jets
 - [issue #70](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/70): adapt to the TextConfig refactoring
+- [issue #83](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/83): add the central IFF classification algorithm
+
+### 2.4.0 <small>December 21, 2023</small>
+- We run on AB 24.2.34
 - [issue #77](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/77): adding new algorithm for jet-to-particle matching
 - [issue #78](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/78): minor improvement to the installation instructions
 - [issue #79](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/79): update the available jet config options
 - [issue #80](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/80): document the extended settings for Overlap Removal
 - [issue #81](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/81): allow to select electrons and photons based on cluster eta
 - [issue #82](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/82): add JVT selection to the output ntuple
-- [issue #83](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/83): add the central IFF classification algorithm
-
 
 ### 2.3.0 <small>December 1, 2023</small>
 - We run on AB 24.2.32
