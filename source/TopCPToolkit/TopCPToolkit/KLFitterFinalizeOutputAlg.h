@@ -20,10 +20,10 @@ namespace top {
     CP::SysListHandle m_systematicsList {this};
 
     CP::SysReadHandle<xAOD::KLFitterResultContainer> m_inHandle {
-      this, "result", "KLFitterResult_%SYS%", "the input KLFitterResultContainer to check for existence"
+      this, "resultContainerToCheck", "KLFitterResult_%SYS%", "the input KLFitterResultContainer to check for existence"
     };
     CP::SysWriteHandle<xAOD::KLFitterResultContainer, xAOD::KLFitterResultAuxContainer> m_outHandle {
-      this, "result", "KLFitterResult_%SYS%", "the output KLFitterResultContainer"
+      this, "resultContainerToWrite", "KLFitterResult_%SYS%", "the output KLFitterResultContainer"
     };
   };
 }

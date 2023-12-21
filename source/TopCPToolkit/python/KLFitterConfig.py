@@ -43,12 +43,13 @@ class KLFitterConfig(ConfigBlock):
         for perRegionConfig in self.perRegionConfiguration:
             selectionName = perRegionConfig['selectionName']
             alg = config.createAlgorithm('top::KLFitterAlg',
-                                         'KLFitterAlg_' + selectionName)
+                                         f'KLFitterAlg_{self.containerName}_{selectionName}')
             # input objects and their object selections
             alg.electrons, alg.electronSelection = config.readNameAndSelection(self.electrons)
             alg.muons, alg.muonSelection = config.readNameAndSelection(self.muons)
             alg.jets, alg.jetSelection = config.readNameAndSelection(self.jets)
             alg.met = config.readName(self.met)
+            alg.result = self.containerName + '_%SYS%'
 
             # global settings, in future expect to expose more options for configuration
             alg.SaveAllPermutations = self.saveAllPermutations
@@ -73,7 +74,9 @@ class KLFitterConfig(ConfigBlock):
                 # NOTE the efficiency tool is simply set to the default generator,
                 # meaning the results are not correct for alternative showering generators!!
 
-        finalizeAlg = config.createAlgorithm('top::KLFitterFinalizeOutputAlg', 'KLFitterFinalizeOutputAlg')
+        finalizeAlg = config.createAlgorithm('top::KLFitterFinalizeOutputAlg', 'KLFitterFinalizeOutputAlg_' + self.containerName)
+        finalizeAlg.resultContainerToCheck = self.containerName + '_%SYS%'
+        finalizeAlg.resultContainerToWrite = self.containerName + '_%SYS%'
 
         config.setSourceName(self.containerName, self.containerName)
         config.addOutputContainer(self.containerName, self.containerName + '_%SYS%')
