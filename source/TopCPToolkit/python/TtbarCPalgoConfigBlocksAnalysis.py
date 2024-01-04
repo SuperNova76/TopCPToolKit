@@ -211,6 +211,13 @@ def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
     cfg.setOptionValue('particles', 'AnaJets')
     configSeq.append(cfg)
 
+    # the IFF lepton classification
+    from AsgAnalysisAlgorithms.AsgAnalysisConfig import IFFLeptonDecorationBlock
+    cfg = IFFLeptonDecorationBlock('AnaElectrons')
+    configSeq.append(cfg)
+    cfg = IFFLeptonDecorationBlock('AnaMuons')
+    configSeq.append(cfg)
+
     # object thinning
     from AsgAnalysisAlgorithms.AsgAnalysisConfig import makeOutputThinningConfig
 

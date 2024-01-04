@@ -65,6 +65,7 @@ PerEventBtagSF:
 Electrons:
   - containerName: 'AnaElectrons'
     crackVeto: True
+    IFFClassification: {}
     WorkingPoint:
       - selectionName: 'loose'
         likelihoodWP: 'TightLH'
@@ -94,6 +95,7 @@ Electrons:
 
 Muons:
   - containerName: 'AnaMuons'
+    IFFClassification: {}
     WorkingPoint:
       - selectionName: 'loose'
         quality: 'Medium'
