@@ -122,10 +122,10 @@
 !!! success "Registers the following variables:"
     - `NNLO_type_weight`: NNLO weight (overall normalised to 1), where `type` reflects the `reweightType` option
 
-### [PartonToJetsMatchConfig.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/PartonToJetsMatchConfig.py)
+### [PartonToJetsMatchConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/PartonToJetsMatchConfig.py)
 
 The algorithm matches jets with partons from ttbar lepton+jets topology. The output of the algorithm are four variables representing the indices (for the jets) of the b-jets from hadronically and semileptonically decaying tops, jets matched to the up-type and down-type quarks from the hadronic W decay. Finally, a flag is added for dilepton events.
-The matching algorithm looks for the closest jets in delta R. For multiple matches (or for dilepton events) the multi-matched objects have index set to -1.
+The matching algorithm looks for the closest jets in $\Delta R$. For multiple matches (or for dilepton events) the multi-matched objects have index set to -1.
 
 `jets`
 :   jet collection name (string) for matching, can be reco jets or truth jets. The default is `AntiKt4TruthDressedWZJets`.
@@ -134,17 +134,24 @@ The matching algorithm looks for the closest jets in delta R. For multiple match
 :   event selection (string) for matching. The default is `pass_ejets_%SYS%||pass_mujets_%SYS%`.
 
 `criticalDR`
-:   maximum delta R (float) used for matching. The default is `0.3`.
+:   maximum $\Delta R$ (float) used for matching. The default is `0.3`.
 
 `partonContainerName`
 :   name of the parton container (string) used for matching. The default is `TopPartonHistoryTtbar_NOSYS`.
 
-### [JetMatchingConfig.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/JetMatchingConfig.py)
+!!! success "Registers the following variables:"
+    - `parton_truth_lep_b_index`: the detector-level jet index corresponding to the parton-level leptonic b-quark
+    - `parton_truth_had_b_index`: the detector-level jet index corresponding to the parton-level hadronic b-quark
+    - `parton_truth_up_index`: the detector-level jet index corresponding to the parton-level up-type-quark from the hadronic-W decay
+    - `parton_truth_down_index`: the detector-level jet index corresponding to the parton-level down-type-quark from the hadronic-W decay
+    - `event_is_dilepton`: flags whether the parton-level event is dileptonic
 
-The algorithm adds three variables for reco jets: index of matched truth jet, deltaR to the closest reco jet and deltaR of the matched truth jet and its closest truth jet. The matching is based on looking for minimal deltaR. The reco jets with no matched truth jet (no truth jet found with deltaR within critical deltaR) have the index set to -1. If multiple reco jets are matched to the same truth jet their index is also set to -1. 
+### [JetMatchingConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/JetMatchingConfig.py)
+
+The algorithm adds three variables for reco jets: index of matched truth jet, $\Delta R$ to the closest reco jet and $\Delta R$ of the matched truth jet and its closest truth jet. The matching is based on looking for minimal $\Delta R$. The reco jets with no matched truth jet (no truth jet found with $\Delta R$ within the critical $\Delta R$) have the index set to -1. If multiple reco jets are matched to the same truth jet their index is also set to -1.
 
 `criticalDR`
-:   maximum delta R (float) used for matching. The default is `0.3`.
+:   maximum $\Delta R$ (float) used for matching. The default is `0.3`.
 
 `jets`
 :   reco jets container name (string). The default is `AnaJets`.
@@ -154,3 +161,22 @@ The algorithm adds three variables for reco jets: index of matched truth jet, de
 
 `eventSelection`
 :   event selection (string) to run the algorithm on. The default is ` ` (run over all events).
+
+!!! success "Registers the following variables:"
+    - `truth_jet_paired_index`: the index of the truth-level jets matched to the detector-level jets
+    - `reco_to_reco_jet_closest_dR`: the minimum $\Delta R$ with respect to detector-level jets
+    - `truth_to_truth_jet_closest_dR`: the minimum $\Delta R$ of the matched truth-level jet with respect to truth-level jets
+
+### [IFFLeptonDecorationBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
+
+`containerName`
+:   the name of the input electron or muon container.
+
+`separateChargeFlipElectrons`
+:   whether to consider charged-flip electrons as a separate class. The default is `True` (recommended).
+
+`decoration`
+:   the name (str) of the decoration set by the [IFF `TruthClassificationTool`](https://gitlab.cern.ch/atlas/athena/-/tree/21.2/PhysicsAnalysis/AnalysisCommon/TruthClassification). The default is `'IFFClass_%SYS%'`.
+
+!!! success "Registers the following variables:"
+    - `IFFClass`: the decision of the [IFF `TruthClassificationTool`](https://gitlab.cern.ch/atlas/athena/-/tree/21.2/PhysicsAnalysis/AnalysisCommon/TruthClassification)  (no systematics)
