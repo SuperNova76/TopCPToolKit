@@ -3,7 +3,7 @@
 from AnaAlgorithm.AnaAlgSequence import AnaAlgSequence
 from AnalysisAlgorithmsConfig.ConfigSequence import ConfigSequence
 from AnalysisAlgorithmsConfig.ConfigAccumulator import ConfigAccumulator
-from AnalysisAlgorithmsConfig.ConfigText import TextConfig, addDefaultAlgs
+from AnalysisAlgorithmsConfig.ConfigText import TextConfig
 from AnaAlgorithm.DualUseConfig import createAlgorithm, createService
 from AnalysisAlgorithmsConfig.ConfigAccumulator import DataType
 from TopCPToolkit import metaConfig
@@ -126,11 +126,6 @@ def makeTextBasedSequence(analysisName, filename, flags, noSystematics=False):
     print(">>> Configuration file read in:")
     config.printConfig()
 
-    print(">>> Adding default algorithms")
-    addDefaultAlgs(config, dataType=flags.Input.DataType,
-                   isPhyslite=flags.Input.isPHYSLITE, noPhysliteBroken=True,
-                   noSystematics=noSystematics)
-
     # ==============================
     # INSERT CUSTOM BLOCKS BELOW
     # it's a good idea to keep "pos='Output'" to make sure the custom block
@@ -189,7 +184,8 @@ def makeTextBasedSequence(analysisName, filename, flags, noSystematics=False):
 
     configAccumulator = ConfigAccumulator(dataType=flags.Input.DataType, campaign=flags.Input.MCCampaign,
                                           geometry=flags.Input.LHCPeriod, autoconfigFromFlags=flags,
-                                          algSeq=algSeq, isPhyslite=flags.Input.isPHYSLITE)
+                                          algSeq=algSeq, isPhyslite=flags.Input.isPHYSLITE,
+                                          noSystematics=noSystematics)
     configSeq.fullConfigure(configAccumulator)
 
     return algSeq
