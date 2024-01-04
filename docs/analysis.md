@@ -215,7 +215,7 @@ While the YAML config to schedule algorithms is a seemingly completely different
 
 ### Adding blocks to the config
 
-In [commonAlgoConfig.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/blob/main/source/TopCPToolkit/python/commonAlgoConfig.py), we define the `makeTextBasedSequence` function, which will ultimately set up an instance of `ConfigAccumulator` as before. Crucially, we also declare all possible config blocks: either by calling the Athena method [`addDefaultAlgs`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AnalysisAlgorithmsConfig/python/ConfigText.py), or by adding manually those blocks defined only in TopCPToolkit. Below is an example for the NNLO $t\bar{t}$ reweighting algorithm:
+In [commonAlgoConfig.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/blob/main/source/TopCPToolkit/python/commonAlgoConfig.py), we define the `makeTextBasedSequence` function, which will ultimately set up an instance of `ConfigAccumulator` as before. Crucially, we also declare all possible config blocks: those defined by default in the `addDefaultAlgs` method of the [`ConfigFactory`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AnalysisAlgorithmsConfig/python/ConfigFactory.py), and adding manually those blocks defined only in TopCPToolkit. Below is an example for the NNLO $t\bar{t}$ reweighting algorithm:
 
 ```python
 from TopCPToolkit.TtbarNNLORecursiveRewConfig import TtbarNNLORecursiveRewConfig
@@ -225,7 +225,7 @@ config.addAlgConfigBlock(algName='TtbarNNLO',
 
 In this example, we match the `TtbarNNLORecursiveRewConfig` config block with the name `TtbarNNLO`, which is how we'll refer to that block in the YAML config. The `pos='Output'` argument is a technical requirement, to make sure that this custom block is inserted in the list of all possible blocks *before* the `Output` block, as that one needs to know about all other blocks in order to correctly write the output branches to file.
 
-A similar operation allows us to define the common services and PMG weights (in [`addDefaultAlgs`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AnalysisAlgorithmsConfig/python/ConfigText.py)), as well as the truth parton histories. We can then write our example parton-level YAML config as:
+A similar operation allows us to define e.g. the common services and PMG weights (in [`addDefaultAlgs`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AnalysisAlgorithmsConfig/python/ConfigFactory.py)), as well as the truth parton histories. We can then write our example parton-level YAML config as:
 ```yaml
 CommonServices: {}
 
