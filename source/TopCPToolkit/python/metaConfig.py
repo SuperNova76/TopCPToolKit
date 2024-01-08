@@ -65,10 +65,10 @@ def populate_config_flags(flags, metadata):
     Populate additional information in the AllConfigFlags from FileMetaData
     """
     flags.addFlag('Input.AMITag', metadata.get('AMITag', ''))
-    if len(flags.Input.RunNumber) != 1:
+    if len(flags.Input.RunNumbers) != 1:
         print('WARNING (metaConfig.populate_config_flags): FileMetaData reports RunNumber list '
-              f'with not exactly 1 entry: {flags.Input.RunNumber}')
-    flags.addFlag('Input.RunNumberAsInt', int(flags.Input.RunNumber[0]))
+              f'with not exactly 1 entry: {flags.Input.RunNumbers}')
+    flags.addFlag('Input.RunNumberAsInt', int(flags.Input.RunNumbers[0]))
     flags.addFlag('Input.DataType', get_data_type)
     is_data = (flags.Input.DataType is DataType.Data)
     if not is_data:
@@ -169,7 +169,7 @@ def pretty_print(flags):
     print("="*73)
     print(" "*2, "DataType:       ", flags.Input.DataType)
     print(" "*2, "LHCPeriod:      ", flags.Input.LHCPeriod)
-    print(" "*2, "RunNumber:      ", flags.Input.RunNumber)
+    print(" "*2, "RunNumber:      ", flags.Input.RunNumbers)
     print(" "*2, "MCChannelNumber:", flags.Input.MCChannelNumber)
     print(" "*2, "RunNumberAsInt: ", flags.Input.RunNumberAsInt)
     print(" "*2, "AMITag:         ", flags.Input.AMITag)
