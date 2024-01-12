@@ -167,6 +167,7 @@ The symbol `$` below is a placeholder for any of the following comparison operat
 | ----------- | ----------- | ---------- |
 | `EL_N` | `ptmin $ ref` <br>`sel ptmin $ ref` | Compares (`$`) the number of electrons with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify a different electron selection. |
 | `MU_N` | `ptmin $ ref` <br>`sel ptmin $ ref` | Compares (`$`) the number of muons with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify a different muon selection. |
+| `SUM_EL_N_MU_N` | `ptmin $ ref` | Compares (`$`) the number of electrons and muons with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`. |
 | `JET_N` | `ptmin $ ref` <br>`sel ptmin $ ref` | Compares (`$`) the number of jets with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify a different jet selection. |
 | `JET_N_BTAG` | `$ ref` <br>`tagger:WP $ ref` | Compares (`$`) the number of b-tagged jets to `ref`.<br>Use `tagger:WP` to specify a different b-tagging configuration. |
 | `PH_N` | `ptmin $ ref` <br>`sel ptmin $ ref` | Compares (`$`) the number of photons with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify a different photon selection. |
@@ -176,6 +177,7 @@ The symbol `$` below is a placeholder for any of the following comparison operat
 | `MET+MWT` | `$ ref` | Compares (`$`) the sum of the MET and the transverse mass<br>of the W boson(lepton+MET system) to `ref` (in MeV). |
 | `MLL` | `$ ref` | Compares (`$`) the dilepton invariant mass to `ref` (in MeV). |
 | `MLLWINDOW` | `low high` <br> `high low` | Selects the event if `MLL > low && MLL < high` (in MeV).<br>Selects the event if `MLL < low || MLL > high` (in MeV). |
+| `MLL_OSSF` | `low high` <br> `low high veto` | Selects the event if `MLL_OSSF > low && MLL_OSSF < high` (in MeV).<br>Rejects the event if `MLL_OSSF > low || MLL_OSSF < high` (in MeV). |
 | `OS` | None | Selects the event if it contains two opposite-sign leptons. |
 | `SS` | None | Selects the event if it contains two same-sign leptons. |
 | `SAVE` | None | Saves the current selection (can be retrieved as `pass_<region>_%SYS%`). |
