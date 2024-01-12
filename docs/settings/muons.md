@@ -75,6 +75,9 @@
 `recalibratePhyslite`
 :   whether to run the [`CP::EgammaCalibrationAndSmearingAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/Root/EgammaCalibrationAndSmearingAlg.cxx) on PHYSLITE derivations. The default is `True`.
 
+`maxEta`
+:   maximum muon $\vert\eta\vert$ (float). The default is 2.7.
+
 !!! success "Registers the following variables:"
     - `pt`: muon $p_\mathrm{T}$
     - `eta`: muon $\eta$ (no systematics)
