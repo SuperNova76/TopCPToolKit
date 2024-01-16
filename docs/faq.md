@@ -21,6 +21,7 @@
     then it is likely that your muon trigger settings are wrong.
     One possible reason is a mismatch between Run 2 and Run 3 recommendations, i.e. you could be using an un-supported muon ID WP.
     See [MuonCP docs](https://atlas-mcp.docs.cern.ch/guidelines/release22/index.html#wps-for-run3).
+    Incomplete recommendations could also be at fault, as previously reported in [ANALYSISTO-1368](https://its.cern.ch/jira/browse/ANALYSISTO-1368).
 
 ??? question "How do I enable debugging printouts?"
     All algorithms and tools inherit the `OutputLevel` property, which you can set to 0 (info), 1 (verbose) or 2 (debug). See also [`MsgLevel`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/Control/AthToolSupport/AsgMessaging/Root/MsgLevel.cxx).
@@ -57,6 +58,11 @@
 
 ??? question "I get a crash on 'ValueError: invalid generator type'"
     This error will also tell you what the detected generator version is: the problem is that it's not supported by the current FTAG [MC-to-MC recommendations](https://ftag.docs.cern.ch/activities/mcmc/#mcmc-efficiency-map-software). To by-pass this restriction, you will have to set a supported generator version by hand, with the [`generator` property](settings/jets.md#ftagconfig). Please consult your FTAG group liaison for advice on this. If you believe this generator should indeed be supported, please report it.
+
+??? question "I get a crash on 'Unknown trigger 'my_jet_trigger' found while parsing trigger combination' / Why are jet triggers not supported?"
+    Jet triggers are supported for trigger selection, but not trigger matching and the retrieval of trigger scale factors. These last two items should be performed on analysis-by-analysis basis for jet triggers (but they are supported centrally for lepton triggers).
+
+    This is the reason for the crash: you are attempting to run trigger matching for jet triggers that are not supported by the [`TrigGlobalEfficiencyCorrectionTool`](https://twiki.cern.ch/twiki/bin/viewauth/Atlas/TrigGlobalEfficiencyCorrectionTool). When you pass the dictionary `triggerChainsPerYear`, the code will attempt to set up both the selection and matching tools. To set up only the selection tool, use the list `triggerChainsForSelection` instead. More details in [Trigger](settings/trigger.md).
 
 ## Derivation formats
 
