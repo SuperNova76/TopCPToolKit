@@ -7,9 +7,16 @@
 - [issue #61](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/61): event selectors based on large-R jets
 - [issue #70](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/70): adapt to the TextConfig refactoring
 - [issue #83](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/83): add the central IFF classification algorithm
+- [issue #84](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/84): support multiple instances of KLFitter
+- [issue #85](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/85): adapt to the new metadata handling
+- [issue #86](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/86): document two new event selectors based on leptons
+- [issue #87](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/87): further documentation improvements to selectors
+- [issue #88](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/88): centralise the calculation of per-event SFs
+- [issue #89](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/89): add the number of particle-level truth b/c-jets
 
 ### 2.4.0 <small>December 21, 2023</small>
 - We run on AB 24.2.34
+- [issue #76](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/76): update the documentation for jet calibration
 - [issue #77](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/77): adding new algorithm for jet-to-particle matching
 - [issue #78](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/78): minor improvement to the installation instructions
 - [issue #79](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/79): update the available jet config options
