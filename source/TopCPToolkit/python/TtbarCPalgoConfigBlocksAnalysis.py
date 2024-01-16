@@ -1,7 +1,6 @@
 from AnalysisAlgorithmsConfig.ConfigSequence import ConfigSequence
 from AnalysisAlgorithmsConfig.ConfigAccumulator import ConfigAccumulator
-from AsgAnalysisAlgorithms.AsgAnalysisConfig import makePtEtaSelectionConfig
-from TopCPToolkit.PerEventSFCalculatorConfig import PerEventSFCalculatorConfig
+from AsgAnalysisAlgorithms.AsgAnalysisConfig import makePtEtaSelectionConfig, PerEventSFBlock
 from TopCPToolkit import metaConfig, commonAlgoConfig
 
 
@@ -87,10 +86,10 @@ def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
                                    generator="autoconfig",
                                    btagger=btagger, kinematicSelection=True, selectionName='')
             # calculate per-event b-tagging SF (alternative to storing per-jet SFs)
-            cfg = PerEventSFCalculatorConfig(f'btagSFCalc_{btagger}_{WP}')
+            cfg = PerEventSFBlock(f'btagSFCalc_{btagger}_{WP}')
             cfg.particles = 'AnaJets.jvt'
             cfg.objectSF = f'ftag_effSF_{btagger}_{WP}_%SYS%'
-            cfg.eventSF = f'btagSF_{btagger}_{WP}_%SYS%'
+            cfg.eventSF = f'weight_btagSF_{btagger}_{WP}_%SYS%'
             configSeq.append(cfg)
 
         outputContainers['jet_'] = 'OutJets'

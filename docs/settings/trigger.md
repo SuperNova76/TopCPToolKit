@@ -24,14 +24,14 @@ The default is `[]` (empty list).
 `muonWorkingPoint`
 :   the muon quality and isolation WPs to use. Pass them in the format `quality.isolation`.
 
-!!! note
-    Only the muon quality is really needed. Passing e.g. `Tight.None` is therefore correct.
+    !!! note
+        Only the muon quality is really needed. Passing e.g. `Tight.None` is therefore correct.
 
 `photonWorkingPoint`
 :   the photon quality and isolation WPs to use. Pass them in the format `quality.isolation`.
 
-!!! note
-    Only the photon isolation is really needed. Passing e.g. `None.TightCaloOnly` is therefore correct.
+    !!! note
+        Only the photon isolation is really needed. Passing e.g. `None.TightCaloOnly` is therefore correct.
 
 `electrons`
 :   the input electron container, with a possible selection, in the format `container` or `container.selection`.

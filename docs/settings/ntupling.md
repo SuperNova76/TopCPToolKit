@@ -25,14 +25,23 @@
 `metTermName`
 :   the name (string) of the MET term to save, turning the MET container into a single object. The default is `'Final'`.
 
-!!! tip
-    For a particle-level truth analysis, you likely want to recover `'NonInt'` instead. See [MET_Truth](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/Run2xAODMissingET#MET_Truth).
+    !!! tip
+        For a particle-level truth analysis, you likely want to recover `'NonInt'` instead. See [MET_Truth](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/Run2xAODMissingET#MET_Truth).
 
 `systematicsHistogram`
 :   the name (string) of the histogram to which a list of executed systematics will be printed. The default is `None` (don't write out the histogram).
 
-!!! tip
-    We recommend using the string `'listOfSystematics'` for interfacing with [`FastFrames`](https://gitlab.cern.ch/atlas-amglab/fastframes).
+    !!! tip
+        We recommend using the string `'listOfSystematics'` for interfacing with [`FastFrames`](https://gitlab.cern.ch/atlas-amglab/fastframes).
 
 `commands`
 :   a list of strings containing commands (regexp strings prefaced by the keywords `enable` or `disable`) to turn on/off the writing of branches to the output ntuple. The default is `None` (no modification to the scheduled output branches).
+
+    !!! example
+        Suppose you run b-tagging and JVT but don't actually need to store the individual per-jet SFs for either b-tagging or JVT. The list that is passed to the `commands` argument would look like:
+        ```python
+        commands = [
+            'disable jet_.*.eff.*',
+            'dlsable jet_jvtEfficiency.*'
+        ]
+        ```

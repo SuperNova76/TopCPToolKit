@@ -67,6 +67,7 @@ nav:
         - Trigger: settings/trigger.md
         - Overlap removal: settings/overlap.md
         - Object selection: settings/objectselection.md
+        - Event-level scale factors: settings/scalefactors.md
         - Event selection: settings/eventselection.md
         - Event reconstruction: settings/reconstruction.md
         - Truth content: settings/truth.md

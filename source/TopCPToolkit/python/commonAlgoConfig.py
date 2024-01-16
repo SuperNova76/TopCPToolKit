@@ -123,8 +123,7 @@ def makeTextBasedSequence(analysisName, filename, flags, noSystematics=False):
     yamlconfig = PathResolver.find_file(f'{analysisName}/{filename}.yaml', "CALIBPATH", PathResolver.RecursiveSearch)
     config = TextConfig(yamlconfig)
 
-    print(">>> Configuration file read in:")
-    config.printConfig()
+    print(">>> Setting up configuration based on YAML\n")
 
     # ==============================
     # INSERT CUSTOM BLOCKS BELOW
@@ -132,9 +131,6 @@ def makeTextBasedSequence(analysisName, filename, flags, noSystematics=False):
     # is configured *before* the Output one, so custom containers are
     # treated properly.
 
-    from TopCPToolkit.PerEventSFCalculatorConfig import PerEventSFCalculatorConfig
-    config.addAlgConfigBlock(algName='PerEventBtagSF',
-                             alg=PerEventSFCalculatorConfig, pos='Output')
     from TopCPToolkit.LeptonSFCalculatorConfig import LeptonSFCalculatorConfig
     config.addAlgConfigBlock(algName='LeptonSF',
                              alg=LeptonSFCalculatorConfig, pos='Output')

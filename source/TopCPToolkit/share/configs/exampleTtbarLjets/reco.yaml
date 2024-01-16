@@ -39,28 +39,27 @@ Jets:
         generator: 'autoconfig'
         minPt: 25000.0
 
-PerEventBtagSF:
+PerEventSF:
   - name: 'btagSFCalc_DL1dv01_FixedCutBEff_85'
     particles: 'AnaJets.jvt'
     objectSF: 'ftag_effSF_DL1dv01_FixedCutBEff_85_%SYS%'
-    eventSF: 'btagSF_DL1dv01_FixedCutBEff_85_%SYS%'
+    eventSF: 'weight_btagSF_DL1dv01_FixedCutBEff_85_%SYS%'
   - name: 'btagSFCalc_DL1dv01_FixedCutBEff_77'
     particles: 'AnaJets.jvt'
-    objectSF: 'ftag_effSF_DL1dv01_FixedCutBEff_77_%SYS%'
-    eventSF: 'btagSF_DL1dv01_FixedCutBEff_77_%SYS%'
+    objectSF: 'ftag_effSF_DL1dv01_FixedCutBEff_77_%SYS%' 
+    eventSF: 'weight_btagSF_DL1dv01_FixedCutBEff_77_%SYS%'
   - name: 'btagSFCalc_DL1dv01_FixedCutBEff_70'
     particles: 'AnaJets.jvt'
     objectSF: 'ftag_effSF_DL1dv01_FixedCutBEff_70_%SYS%'
-    eventSF: 'btagSF_DL1dv01_FixedCutBEff_70_%SYS%'
+    eventSF: 'weight_btagSF_DL1dv01_FixedCutBEff_70_%SYS%'
   - name: 'btagSFCalc_DL1dv01_FixedCutBEff_60'
     particles: 'AnaJets.jvt'
     objectSF: 'ftag_effSF_DL1dv01_FixedCutBEff_60_%SYS%'
-    eventSF: 'btagSF_DL1dv01_FixedCutBEff_60_%SYS%'
+    eventSF: 'weight_btagSF_DL1dv01_FixedCutBEff_60_%SYS%'
   - name: 'btagSFCalc_DL1dv01_Continuous'
     particles: 'AnaJets.jvt'
     objectSF: 'ftag_effSF_DL1dv01_Continuous_%SYS%'
-    eventSF: 'btagSF_DL1dv01_Continuous_%SYS%'
-
+    eventSF: 'weight_btagSF_DL1dv01_Continuous_%SYS%'
 
 Electrons:
   - containerName: 'AnaElectrons'
