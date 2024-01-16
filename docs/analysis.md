@@ -278,3 +278,4 @@ They should be arranged as up to three config files (`reco.yaml`, `particle.yaml
 We currently have:
 
 - [`exampleTtbarLjets`](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/tree/main/source/TopCPToolkit/share/configs/exampleTtbarLjets): an example $t\bar{t}\to\ell$+jets analysis, only for demonstration purposes.
+- [`bTaggerCalibration`](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/tree/main/source/TopCPToolkit/share/configs/bTaggerCalibration): used by the FTAG group to run simple ntuple productions for calibration.

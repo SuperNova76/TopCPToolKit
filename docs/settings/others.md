@@ -89,8 +89,8 @@ _Returns an instance of [`CommonServicesConfig`](#commonservicesconfig), see the
 `filterSystematics`
 :   a regexp string against which the systematics names will be matched. Only positive matches are retained and used in the evaluation of the various algorithms.
 
-!!! tip
-    See the [tutorial](../running_local.md#filtering-systematics) on how to use the systematics filter.
+    !!! tip
+        See the [tutorial](../running_local.md#filtering-systematics) on how to use the systematics filter.
 
 ### [EventCleaningBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/EventCleaningConfig.py)
 
@@ -112,8 +112,8 @@ _Returns an instance of [`CommonServicesConfig`](#commonservicesconfig), see the
 `invertFlags`
 :   list of booleans determining whether to invert the cut of the above `selectionFlags`. The default is `[0]`.
 
-!!! warning
-    In AnalysisBase, vectors of bools cannot be handled properly. Instead, use 0/1 values.
+    !!! warning
+        In AnalysisBase, vectors of bools cannot be handled properly. Instead, use 0/1 values.
 
 ### [GeneratorAnalysisBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
 

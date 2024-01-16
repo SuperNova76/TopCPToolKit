@@ -46,14 +46,14 @@
 `recomputeLikelihood`
 :   whether to rerun the LH. The default is `False`, i.e. to use derivation flags.
 
-!!! warning
-    The only way to get the DNN ID at the moment is to recompute the likelihood, as it's not stored in derivations.
+    !!! warning
+        The only way to get the DNN ID at the moment is to recompute the likelihood, as it's not stored in derivations.
 
 `chargeIDSelection`
 :   whether to run the [ECIDS tool](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/ElectronPhotonID/ElectronPhotonSelectorTools/Root/AsgElectronChargeIDSelectorTool.cxx?v=21.2). The default is `False`.
 
-!!! warning
-    ECIDS is actually not supported in release 24. It will likely become part of the DNN ID.
+    !!! warning
+        ECIDS is actually not supported in release 24. It will likely become part of the DNN ID.
 
 `noEffSF`
 :   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. The default is `False`.
@@ -118,14 +118,14 @@
 `recomputeLikelihood`
 :   whether to rerun the LH. The default is `False`, i.e. to use derivation flags.
 
-!!! warning
-    The only way to get the DNN ID at the moment is to recompute the likelihood, as it's not stored in derivations.
+    !!! warning
+        The only way to get the DNN ID at the moment is to recompute the likelihood, as it's not stored in derivations.
 
 `chargeIDSelection`
 :   whether to run the [ECIDS tool](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/ElectronPhotonID/ElectronPhotonSelectorTools/Root/AsgElectronChargeIDSelectorTool.cxx?v=21.2). The default is `False`.
 
-!!! warning
-    ECIDS is actually not supported in release 24. It will likely become part of the DNN ID.
+    !!! warning
+        ECIDS is actually not supported in release 24. It will likely become part of the DNN ID.
 
 `noEffSF`
 :   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. The default is `False`.

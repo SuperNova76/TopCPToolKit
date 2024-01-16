@@ -69,7 +69,7 @@ Jets:
         saveAllProbabilities: True
         eventSelection : ''
 
-PerEventBtagSF:
+PerEventSF:
   - name: 'btagSFCalc_DL1dv01_FixedCutBEff_85'
     particles: 'AnaJets'
     objectSF: 'ftag_effSF_DL1dv01_FixedCutBEff_85_%SYS%'
