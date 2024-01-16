@@ -71,6 +71,8 @@ namespace top {
     std::vector<MCTruthPartClassifier::ParticleOrigin> photon_origins;
     std::string photon_isolationVar;
     float photon_isolationCut;
+
+    const xAOD::EventInfo *evtInfo;
   };
 
 }  // namespace top

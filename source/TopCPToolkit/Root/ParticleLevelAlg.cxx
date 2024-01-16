@@ -138,8 +138,10 @@ namespace top {
       ANA_CHECK(evtStore()->retrieve(inputPhotons, "TruthPhotons"));
     if (m_useTruthTaus)
       ANA_CHECK(evtStore()->retrieve(inputTaus, "TruthTaus"));
-    if (m_useTruthJets)
+    if (m_useTruthJets){
       ANA_CHECK(evtStore()->retrieve(inputJets, "AntiKt4TruthDressedWZJets"));
+      ANA_CHECK(evtStore()->retrieve(evtInfo,"EventInfo"));
+    }
     if (m_useTruthLargeRJets)
       ANA_CHECK(evtStore()->retrieve(inputLargeRJets, m_ljet_collection));
     if (m_useTruthMET)
@@ -159,6 +161,8 @@ namespace top {
     static const SG::AuxElement::Decorator<float> dec_particle_pt("pt");
     static const SG::AuxElement::Decorator<float> dec_particle_eta("eta");
     static const SG::AuxElement::Decorator<float> dec_particle_phi("phi");
+    static const SG::AuxElement::Decorator<int> dec_num_truth_bjets_nocuts("num_truth_bjets_nocuts");
+    static const SG::AuxElement::Decorator<int> dec_num_truth_cjets_nocuts("num_truth_cjets_nocuts");
 
     // indices of selected objects
     std::list<std::size_t> idx_electrons;
@@ -299,8 +303,20 @@ namespace top {
 
     // apply jet selection
     if (m_useTruthJets) {
+      int num_truth_bjets_nocuts = 0;
+      int num_truth_cjets_nocuts = 0;
       for (std::size_t i = 0; i < inputJets->size(); i++) {
 	const auto* jet = inputJets->at(i);
+
+  //get number of truth HF jets before any cuts
+  if (jet->isAvailable<int>("HadronConeExclTruthLabelID")){
+    int flavourlabel(0);
+    jet->getAttribute("HadronConeExclTruthLabelID", flavourlabel);
+    if(flavourlabel == 5) {num_truth_bjets_nocuts++;}
+    else if(flavourlabel == 4) {num_truth_cjets_nocuts++;}
+  } else {
+    num_truth_bjets_nocuts = -999; num_truth_cjets_nocuts = -999;
+  }
 
 	// pT and eta cuts
 	if (jet->pt() < m_jet_ptMin)
@@ -311,6 +327,9 @@ namespace top {
 	// jet is accepted
 	idx_jets.push_back(i);
       }
+      //save number of truth HF jets as decoration of EventInfo
+      dec_num_truth_bjets_nocuts(*evtInfo) = num_truth_bjets_nocuts;
+      dec_num_truth_cjets_nocuts(*evtInfo) = num_truth_cjets_nocuts;
     }
 
     // apply large-R jet selection

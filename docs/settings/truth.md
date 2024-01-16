@@ -104,6 +104,8 @@
     - `IsHadronicTau`: whether the tau decays hadronically (no systematics)
     - `nGhosts_bHadron`: number of ghost-matched b-hadrons in the jet (no systematics)
     - `nGhosts_cHadron`: number of ghost-matched c-hadrons in the jet (no systematics)
+    - `num_truth_bjets_nocuts`: number of truth b-jets according to [`HadronConeExclTruthLabelID`](https://ftag.docs.cern.ch/algorithms/labelling/jet_labels/#delta-r-matching-default-scheme-in-ftag) without any cuts per event (no systematics)
+    - `num_truth_bjets_nocuts`: number of truth c-jets according to [`HadronConeExclTruthLabelID`](https://ftag.docs.cern.ch/algorithms/labelling/jet_labels/#delta-r-matching-default-scheme-in-ftag) without any cuts per event (no systematics)
 
 ### [TtbarNNLORecursiveRewConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/TtbarNNLORecursiveRewConfig.py)
 

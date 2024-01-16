@@ -133,6 +133,8 @@ class particleLevelConfig(ConfigBlock):
             config = self.createAndFillOutputContainer(config, container, "jets")
             if self.jetPtMin: alg.jet_ptMin = self.jetPtMin
             if self.jetEtaMax: alg.jet_etaMax = self.jetEtaMax
+            config.addOutputVar("EventInfo","num_truth_bjets_nocuts","num_truth_bjets_nocuts",noSys=True)
+            config.addOutputVar("EventInfo","num_truth_cjets_nocuts","num_truth_cjets_nocuts",noSys=True)
         if self.useTruthLargeRJets:
             container = "ParticleLevelLargeRJets"
             config = self.createAndFillOutputContainer(config, container, "ljets")
