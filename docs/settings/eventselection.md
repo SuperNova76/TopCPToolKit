@@ -19,6 +19,9 @@ Performs a single event selection. To define multiple selection regions, see [`m
 `jets`
 :   the input jet container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
 
+`largeRjets`
+:   the large-R jet container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
+
 `photons`
 :   the input photon container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
 
@@ -105,6 +108,9 @@ Performs multiple event selections, split into separate regions and subregions. 
 `jets`
 :   the input jet container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
 
+`largeRjets`
+:   the large-R jet container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
+
 `photons`
 :   the input photon container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
 
@@ -170,14 +176,17 @@ The symbol `$` below is a placeholder for any of the following comparison operat
 | `SUM_EL_N_MU_N` | `ptmin $ ref`<br><br>`ptminEL ptminMU $ ref` | Compares (`$`) the number of electrons and muons with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Same, but with different cuts for electrons/muons. |
 | `JET_N` | `ptmin $ ref`<br><br>`sel ptmin $ ref` | Compares (`$`) the number of jets with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify a different jet selection. |
 | `JET_N_BTAG` | `$ ref`<br><br>`tagger:WP $ ref` | Compares (`$`) the number of b-tagged jets to `ref`.<br><br>Use `tagger:WP` to specify a different b-tagging configuration. |
+| `LJET_N` | `ptmin $ ref` <br><br>`sel ptmin $ ref` | Compares (`$`) the number of large-R jets with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify a different large-R jet selection. |
+| `LJETMASS_N` | `massmin $ ref` <br><br>`sel massmin $ ref` | Compares (`$`) the number of large-R jets with <br>mass >`massmin` (in MeV) to `ref`.<br>Use `sel` to specify a different large-R jet selection. |
+| `LJETMASSWINDOW_N` | `low high $ ref`<br><br>`sel low high $ ref` | Compares (`$`) the number of large-R jets with <br>`low`< mass <`high` (in MeV) to `ref`.<br>Use `sel` to specify a different large-R jet selection.<br>(Append `veto` to veto the mass window instead.) |
 | `PH_N` | `ptmin $ ref`<br><br>`sel ptmin $ ref` | Compares (`$`) the number of photons with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify a different photon selection. |
 | `TAU_N` | `ptmin $ ref`<br><br>`sel ptmin $ ref` | Compares (`$`) the number of tau-jets with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify a different tau-jet selection. |
 | `MET` | `$ ref` | Compares (`$`) the MET to `ref` (in MeV). |
 | `MWT` | `$ ref` | Compares (`$`) the transverse mass of the W boson<br>(lepton+MET system) to `ref` (in MeV). |
 | `MET+MWT` | `$ ref` | Compares (`$`) the sum of the MET and the transverse mass<br>of the W boson(lepton+MET system) to `ref` (in MeV). |
 | `MLL` | `$ ref` | Compares (`$`) the dilepton invariant mass to `ref` (in MeV). |
-| `MLLWINDOW` | `low high`<br><br>`low high veto` | Selects the event if `MLL > low && MLL < high` (in MeV).<br><br>Rejects the event if `MLL > low && MLL < high` (in MeV). |
-| `MLL_OSSF` | `low high`<br><br>`low high veto` | Selects the event if `MLL_OSSF > low && MLL_OSSF < high` (in MeV).<br>Rejects the event if `MLL_OSSF > low && MLL_OSSF < high` (in MeV). |
+| `MLLWINDOW` | `low high`<br>`low high veto` | Selects the event if `low < MLL < high` (in MeV).<br>Rejects the event if `low < MLL < high` (in MeV). |
+| `MLL_OSSF` | `low high`<br>`low high veto` | Selects the event if `low < MLL_OSSF < high` (in MeV).<br>Rejects the event if `low < MLL_OSSF < high` (in MeV). |
 | `OS` | None | Selects the event if it contains two opposite-sign leptons. |
 | `SS` | None | Selects the event if it contains two same-sign leptons. |
 | `SAVE` | None | Saves the current selection (can be retrieved as `pass_<region>_%SYS%`). |
