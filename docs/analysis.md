@@ -82,6 +82,9 @@ While `treeName` is straightforwardly the desired name of the output tree, some 
 - `'metVars'`: same as above, but specifically for the MET container, which contains different levels of MET. By default, the ["Final" MET term](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/AsgAnalysisAlgorithms/AsgxAODMetNTupleMakerAlg.h) is selected.
 - `'containers'`: a dictionary that maps the object containers we want to write out to some prefix used in naming branches. For instance, `{'jet_':'OutJets'}` will result in all the variables we save from the `OutJets` container being saved as `jet_something`.
 
+!!! tip
+    Event-level variables (e.g. reconstructed resonances, object multiplicities, MVA discriminants, etc.) should be decorated onto the `'EventInfo'` container.
+
 ### Running ML inference
 
 In case one wishes to run ML inference on trained models and store the model predictions to the output ntuple, a config block can be added to the algorithm sequence of your analysis module. One example can be founded here [TopSpaNetConfig.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/TopSpaNetConfig.py). This config block loads an algorithm `RunSpaNetAlg` defined in [RunSpaNetAlg.h](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/TopCPToolkit/RunSpaNetAlg.h). To run ML inference on custom models, a similar algorithm e.g. `RunCustomNNAlg` need to be added. This algorithm is responsible for:
