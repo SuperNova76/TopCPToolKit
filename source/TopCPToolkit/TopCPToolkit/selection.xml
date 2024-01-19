@@ -18,5 +18,6 @@
   <class name="top::JetMatchingAlg" />
   <class name="DiTauMassCalculatorAlg" />
   <class name="BTaggingScoresAlg" />
+  <class name="SVMassAlg" />
    
 </lcgdict>

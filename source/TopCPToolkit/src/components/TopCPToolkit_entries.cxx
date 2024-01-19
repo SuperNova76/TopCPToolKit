@@ -15,5 +15,6 @@
 #include <TopCPToolkit/JetMatchingAlg.h>
 #include <TopCPToolkit/DiTauMassCalculatorAlg.h>
 #include <TopCPToolkit/BTaggingScores.h>
+#include <TopCPToolkit/SVMassAlg.h>
 
 DECLARE_COMPONENT (TtbarCPalgoAnalysis)

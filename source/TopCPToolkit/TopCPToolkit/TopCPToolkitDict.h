@@ -16,5 +16,6 @@
 #include "TopCPToolkit/DiTauMassCalculatorAlg.h"
 #include "TopCPToolkit/JetMatchingAlg.h"
 #include "TopCPToolkit/BTaggingScoresAlg.h"
+#include "TopCPToolkit/SVMassAlg.h"
 
 #endif
