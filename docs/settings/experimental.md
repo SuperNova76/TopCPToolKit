@@ -39,3 +39,16 @@ Computes per-jet b-tagging score and jet origin (bottom/charm/light) probabiliti
     - `prob_pb`: the probability of the jet origin being related to a bottom quark.
     - `prob_pc`: the probability of the jet origin being related to a charm quark.
     - `prob_pl`: the probability of the jet origin being related to a light quark.
+
+### [SVMassAlg](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/SVMassConfig.py)
+
+Decorates the output jets with the secondary vertex mass (SVMass).
+
+`containerName`
+:   the name of the output container after calibration.
+
+`eventSelection`
+:   optional event filter to run on. The default is `''` (empty string), i.e. all events.
+
+!!! success "Registers the following variables:"
+    - `SVMass`: the secondary vertex mass of every jet.

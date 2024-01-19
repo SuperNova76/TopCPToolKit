@@ -163,6 +163,9 @@ def makeTextBasedSequence(analysisName, filename, flags, noSystematics=False):
     from TopCPToolkit.BTagScoresConfig import BTagScoresConfig
     config.addAlgConfigBlock(algName='BTaggingScores',
                              alg=BTagScoresConfig, superBlocks='Jets')
+    from TopCPToolkit.SVMassConfig import SVMassConfig
+    config.addAlgConfigBlock(algName='SVMass',
+                             alg=SVMassConfig, superBlocks='Jets')
     from TopCPToolkit.PartonToJetsMatchConfig import PartonToJetsMatchConfig
     config.addAlgConfigBlock(algName='PartonToJetsMatch',
                              alg=PartonToJetsMatchConfig, pos='Output')

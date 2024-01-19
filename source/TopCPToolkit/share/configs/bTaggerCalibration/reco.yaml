@@ -68,6 +68,9 @@ Jets:
         minPt: 25000.0
         saveAllProbabilities: True
         eventSelection : ''
+    # Add SV Mass to the output
+    SVMass: {}
+      
 
 PerEventSF:
   - name: 'btagSFCalc_DL1dv01_FixedCutBEff_85'
@@ -304,7 +307,7 @@ Bootstraps:
 # After configuring each container, many variables will be saved automatically.
 Output:
   treeName: 'reco'
-  vars: []
+  vars: [OutJets_NOSYS.HadronConeExclTruthLabelID -> jet_TruthFlavour, OutJets_NOSYS.HadronConeExclExtendedTruthLabelID -> jet_TruthFlavouExtended]
   metVars: []
   containers:
       # Format should follow: '<suffix>:<output container>'
