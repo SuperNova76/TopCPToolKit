@@ -4,6 +4,10 @@
 
 ### Upcoming release
 
+- [issue #90](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/90): reduce the large memory footprint
+
+### 2.5.0 <small>January 19, 2024</small>
+- We run on AB 24.2.37
 - [issue #61](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/61): event selectors based on large-R jets
 - [issue #70](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/70): adapt to the TextConfig refactoring
 - [issue #83](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/83): add the central IFF classification algorithm
@@ -13,6 +17,8 @@
 - [issue #87](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/87): further documentation improvements to selectors
 - [issue #88](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/88): centralise the calculation of per-event SFs
 - [issue #89](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/89): add the number of particle-level truth b/c-jets
+- [issue #91](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/91): add a FAQ for experienced AnalysisTop users
+- [issue #92](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/92): adding new algorithm to retrieve the secondary vertex mass
 
 ### 2.4.0 <small>December 21, 2023</small>
 - We run on AB 24.2.34
