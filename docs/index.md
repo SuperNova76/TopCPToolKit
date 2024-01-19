@@ -8,6 +8,10 @@ This websites serves to document the usage and main features of the framework, a
     This code is being continuously developed.
     Prior experience in designing analysis workflows and preparing ntuple productions is desirable.
 
+    Experienced AnalysisTop users: see the [FAQ](faq.md#migrating-from-analysistop) to help your transition!
+
+![The TopCPToolkit analysis flow](/flowchart.png)
+
 ## References
 
 - [Common CP algorithms](https://indico.cern.ch/event/997136/attachments/2192156/3705269/CPAlgorithms.pdf)
