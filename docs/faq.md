@@ -64,6 +64,9 @@
 
     This is the reason for the crash: you are attempting to run trigger matching for jet triggers that are not supported by the [`TrigGlobalEfficiencyCorrectionTool`](https://twiki.cern.ch/twiki/bin/viewauth/Atlas/TrigGlobalEfficiencyCorrectionTool). When you pass the dictionary `triggerChainsPerYear`, the code will attempt to set up both the selection and matching tools. To set up only the selection tool, use the list `triggerChainsForSelection` instead. More details in [Trigger](settings/trigger.md).
 
+??? question "I get a crash on 'Sample is FastSim but no AF3 calibration is available yet with es2022_R22_PRE recommendations.'"
+    As stated, you are running on an AF3 (fast simulation) sample, for which Egamma recommendations are not available in this AnalysisBase release. For a quick fix, you can set the `forceFullSimConfig` property to `True`, but please note that this is only acceptable in the absence of AF3 recommendations and will not be correct in the long-term for physics analysis! For more details, please get in touch with your local Egamma expert.
+
 ## Derivation formats
 
 ??? question "Which derivation formats are currently supported?"
