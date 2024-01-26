@@ -5,6 +5,9 @@
 ### Upcoming release
 
 - [issue #90](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/90): reduce the large memory footprint
+- [issue #93](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/93): prepare a tutorial
+- [issue #94](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/94): add algorithm for NuFlows reconstruction
+- [issue #96](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/96): fix for missing AF3 Egamma calibrations
 
 ### 2.5.0 <small>January 19, 2024</small>
 - We run on AB 24.2.37
