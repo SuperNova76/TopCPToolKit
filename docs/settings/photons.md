@@ -26,6 +26,9 @@
 `ptSelectionOutput`
 :  whether or not to apply the default $p_\mathrm{T} > 10$ GeV cut to calibrated photons. The default is `False`.
 
+`forceFullSimConfig`
+:   whether to force the tool to use the configuration meant for full simulation samples. Only for testing purposes. The default is `False`.
+
 !!! success "Registers the following variables:"
     - `pt`: photon $p_\mathrm{T}$
     - `eta`: photon $\eta$ (no systematics)
@@ -54,6 +57,9 @@
 
 `noEffSF`
 :   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. The default is `False`.
+
+`forceFullSimConfig`
+:   whether to force the tool to use the configuration meant for full simulation samples. Only for testing purposes. The default is `False`.
 
 !!! success "Registers the following variables:"
     - `select`: whether the photon passes the ID and isolation cuts
@@ -91,6 +97,9 @@
 `recalibratePhyslite`
 :   whether to run the [`CP::EgammaCalibrationAndSmearingAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/Root/EgammaCalibrationAndSmearingAlg.cxx) on PHYSLITE derivations. The default is `True`.
 
+`forceFullSimConfig`
+:   whether to force the tool to use the configuration meant for full simulation samples. Only for testing purposes. The default is `False`.
+
 
 !!! success "Registers the following variables:"
     - `pt`: photon $p_\mathrm{T}$
@@ -119,6 +128,12 @@
 
 `noEffSF`
 :   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. The default is `False`.
+
+`doFSRSelection`
+:   whether to accept additional photons close to muons for the purpose of FSR corrections to these muons. Expert feature requested by the H4l analysis running on PHYSLITE. The default is `False`.
+
+`forceFullSimConfig`
+:   whether to force the tool to use the configuration meant for full simulation samples. Only for testing purposes. The default is `False`.
 
 !!! success "Registers the following variables:"
     - `select`: whether the photon passes the ID and isolation cuts

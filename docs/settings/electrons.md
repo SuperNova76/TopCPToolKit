@@ -20,6 +20,9 @@
 `isolationCorrection`
 :   whether or not to perform isolation corrections (leakage corrections), i.e. set up an instance of [`CP::EgammaIsolationCorrectionAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/Root/EgammaIsolationCorrectionAlg.cxx).
 
+`forceFullSimConfig`
+:   whether to force the tool to use the configuration meant for full simulation samples. Only for testing purposes. The default is `False`.
+
 !!! success "Registers the following variables:"
     - `pt`: electron $p_\mathrm{T}$
     - `eta`: electron $\eta$ (no systematics)
@@ -58,6 +61,9 @@
 `noEffSF`
 :   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. The default is `False`.
 
+`forceFullSimConfig`
+:   whether to force the tool to use the configuration meant for full simulation samples. Only for testing purposes. The default is `False`.
+
 !!! success "Registers the following variables:"
     - `select`: whether the electron passes the ID and isolation cuts
     - `reco_effSF`: the per-electron reconstruction SF
@@ -91,6 +97,9 @@
 
 `recalibratePhyslite`
 :   whether to run the [`CP::EgammaCalibrationAndSmearingAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/Root/EgammaCalibrationAndSmearingAlg.cxx) on PHYSLITE derivations. The default is `True`.
+
+`forceFullSimConfig`
+:   whether to force the tool to use the configuration meant for full simulation samples. Only for testing purposes. The default is `False`.
 
 !!! success "Registers the following variables:"
     - `pt`: electron $p_\mathrm{T}$
@@ -129,6 +138,12 @@
 
 `noEffSF`
 :   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. The default is `False`.
+
+`doFSRSelection`
+:   whether to accept additional electrons close to muons for the purpose of FSR corrections to these muons. Expert feature requested by the H4l analysis running on PHYSLITE. The default is `False`.
+
+`forceFullSimConfig`
+:   whether to force the tool to use the configuration meant for full simulation samples. Only for testing purposes. The default is `False`.
 
 !!! success "Registers the following variables:"
     - `select`: whether the electron passes the ID and isolation cuts
