@@ -50,7 +50,7 @@ _Returns an instance of [`CommonServicesConfig`](#commonservicesconfig), see the
 :   the input files being processed (list of strings). Alternative to auto-configuration.
 
 `useDefaultConfig`
-:   whether to use the central PRW files.
+:   whether to use the central PRW files. The default is `True`.
 
 `userLumicalFiles`
 :   user-provided lumicalc files (list of strings). Alternative to auto-configuration.
@@ -138,13 +138,19 @@ _Returns an instance of [`CommonServicesConfig`](#commonservicesconfig), see the
 :   the input files being processed (list of strings). Alternative to auto-configuration.
 
 `useDefaultConfig`
-:   whether to use the central PRW files.
+:   whether to use the central PRW files. The default is `True`.
 
 `userLumicalFiles`
 :   user-provided lumicalc files (list of strings). Alternative to auto-configuration.
 
+`userLumicalcFilesPerCampaign`
+:   user-provided lumicalc files (dictionary of list of strings, with MC campaigns as the keys). Alternative to auto-configuration.
+
 `userPileupConfigs`
-:   user-provided PRW files. Alternative to auto-configuration.
+:   user-provided PRW files (list of strings). Alternative to auto-configuration. Alternative to auto-configuration.
+
+`userPileupConfigsPerCampaign`
+:   user-provided PRW files (dictionary of list of strings, with MC campaigns as the keys)
 
 !!! success "Registers the following variables:"
     - `eventNumber`: the event number (no systematics)
