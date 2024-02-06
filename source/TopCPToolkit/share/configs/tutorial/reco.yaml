@@ -46,6 +46,7 @@ MissingET:
     # Format should follow Object: '<containerName>.<postfix>'
     jets: 'AnaJets'
     electrons: 'AnaElectrons.tight'
+    setMuonJetEMScale: False
 
 OverlapRemoval:
   inputLabel: 'preselectOR'
