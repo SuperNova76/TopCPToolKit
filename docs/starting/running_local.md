@@ -28,7 +28,7 @@ The CutBookkeeper histograms serve the dual purpose of keeping track of the MC s
 We distinguish between two types of cutflows: _object-wise_ and _event-wise_.
 
 **_Object_-wise cutflows** are handled internally from the common CP algorithms associated to each object (electrons, muons, jets, etc.) and decorate systematic-dependent flags onto them at each step of the calibration, identification, isolation... processes.
-In order to obtain these cutflow histograms in the output, a specific algorithm config is needed (see [`makeObjectCutFlowConfig`](settings/objectselection.md#makeobjectcutflowconfig)).
+In order to obtain these cutflow histograms in the output, a specific algorithm config is needed (see [`makeObjectCutFlowConfig`](../settings/objectselection.md#makeobjectcutflowconfig)).
 You may then write e.g.
 ```python
 # object-based cutflow
@@ -39,8 +39,8 @@ to enable the cutflow histograms for `tight` electrons.
 You will find them in `output/hist-output.root`, as `cflow_OBJECT_PRESELECTION_SYSTEMATIC`.
 Each bin is filled with the number of objects passing the corresponding selection cut, which is stored as the bin label.
 
-**_Event_-wise cutflows** can technically be generated independently using the [`EventCutFlowBlock`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py), but the expected use case is in conjonction with the [event selection config](settings/eventselection.md).
-In that case, you just need to pass the `cutFlowHistograms=True` argument to the relevant config block (typically [`makeMultipleEventSelectionConfig`](settings/eventselection.md#makemultipleeventselectionconfigs)).
+**_Event_-wise cutflows** can technically be generated independently using the [`EventCutFlowBlock`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py), but the expected use case is in conjonction with the [event selection config](../settings/eventselection.md).
+In that case, you just need to pass the `cutFlowHistograms=True` argument to the relevant config block (typically [`makeMultipleEventSelectionConfig`](../settings/eventselection.md#makemultipleeventselectionconfigs)).
 You will also find them in `output/hist-output.root`, as `cflow_EventInfo__SELECTION_SYSTEMATIC`.
 Each selection region defines its own cutflow.
 
