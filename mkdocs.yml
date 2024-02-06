@@ -44,10 +44,10 @@ extra_javascript:
 nav:
     - Home: index.md
     - Getting started:
-        - Installation: installation.md
-        - Running the event loop: running_local.md
-        - Submitting jobs to the Grid: running_grid.md
-        - Writing your own analysis: analysis.md
+        - Installation: starting/installation.md
+        - Running the event loop: starting/running_local.md
+        - Submitting jobs to the Grid: starting/running_grid.md
+        - Writing your own analysis: starting/analysis.md
         - Changelog:
             - changelog/index.md
         - Contributing:
@@ -56,6 +56,13 @@ nav:
             - Requesting a feature: contributing/requesting_feature.md
             - Proposing a new algorithm: contributing/proposing_algorithm.md
             - Suggesting an improvement: contributing/suggesting_improvement.md
+    - Tutorials:
+        - tutorials/index.md
+        - Initial setup: tutorials/setup.md
+        - Your first config: tutorials/write_config.md
+        - Your first algorithm: tutorials/write_algorithm.md
+        - Understanding Grid jobs: tutorials/submit_grid.md
+        - Using machine learning: tutorials/machine_learning.md
     - Settings:
         - settings/index.md
         - Electrons: settings/electrons.md
@@ -76,4 +83,4 @@ nav:
         - Metadata-based autoconfiguration flags: settings/configflags.md
         - Experimental: settings/experimental.md
         - ONNX Wrapper: settings/onnxwrapper.md
-    - FAQ: faq.md
+    - FAQ: faq/index.md
