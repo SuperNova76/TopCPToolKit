@@ -485,7 +485,7 @@ Let's do it step by step... and of course you can use the documentation and sear
     **Step 3:** in the `Trigger:` block, pass the properties
     ```yaml
     muons: 'AnaMuons.tight'
-    muonID: 'Tight'
+    muonID: 'Medium'
     ```
     and add the following line to the 2022 entry of `triggerChainsPerYear`
     ```yaml

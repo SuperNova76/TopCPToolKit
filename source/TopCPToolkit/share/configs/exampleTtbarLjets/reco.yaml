@@ -203,7 +203,7 @@ Trigger:
     muons: 'AnaMuons.tight'
     electronID: 'Tight'
     electronIsol: 'Tight_VarRad'
-    muonID: 'Tight'
+    muonID: 'Medium'
 
 EventSelection:
   - electrons: 'AnaElectrons.loose'
