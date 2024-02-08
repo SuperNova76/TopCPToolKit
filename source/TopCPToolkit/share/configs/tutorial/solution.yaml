@@ -5,6 +5,8 @@ PileupReweighting: {}
 EventCleaning:
     runEventCleaning: True
 
+GeneratorLevelAnalysis: {}
+
 Jets:
   - containerName: 'AnaJets'
     jetCollection: 'AntiKt4EMPFlowJets'
@@ -25,6 +27,12 @@ Jets:
       - btagger: 'DL1dv01'
         btagWP: 'Continuous'
         minPt: 25000.0
+
+PerEventSF:
+  - name: 'btagSFCalc_DL1dv01_Continuous'
+    particles: 'AnaJets.jvt'
+    objectSF: 'ftag_effSF_DL1dv01_Continuous_%SYS%'
+    eventSF: 'weight_btagSF_DL1dv01_Continuous_%SYS%'
 
 Electrons:
   - containerName: 'AnaElectrons'
@@ -90,6 +98,11 @@ Thinning:
     outputName: 'OutMuons'
     selectionName: 'tight||loose'
 
+LeptonSF:
+  - electrons: 'AnaElectrons.tight'
+    muons: 'AnaMuons.tight'
+    lepton_postfix: 'tight'
+
 Trigger:
     triggerChainsPerYear:
         '2018':
@@ -140,7 +153,12 @@ Output:
   containers:
       # Format should follow: '<suffix>:<output container>'
       el_: 'OutElectrons'
+      mu_: 'OutMuons'
       jet_: 'OutJets'
       met_: 'AnaMET'
       '': 'EventInfo'
   systematicsHistogram: 'listOfSystematics'
+  commands:
+    # Turn output branches on and off with 'enable' and 'disable'
+    - disable jet_.*_eff.*
+    - disable jet_jvtEfficiency.*
