@@ -77,6 +77,12 @@ Thinning:
     outputName: 'OutElectrons'
     selectionName: 'tight||loose'
 
+ExtraParticleDecoration:
+   - name: 'El'
+     particles: 'AnaElectrons'
+   - name: 'Jets'
+     particles: 'AnaJets'
+
 Trigger:
     triggerChainsPerYear:
         '2018':

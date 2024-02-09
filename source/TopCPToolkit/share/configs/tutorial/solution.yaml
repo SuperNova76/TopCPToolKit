@@ -98,6 +98,14 @@ Thinning:
     outputName: 'OutMuons'
     selectionName: 'tight||loose'
 
+ExtraParticleDecoration:
+   - name: 'El'
+     particles: 'AnaElectrons'
+   - name: 'Mu'
+     particles: 'AnaMuons'
+   - name: 'Jets'
+     particles: 'AnaJets'
+
 LeptonSF:
   - electrons: 'AnaElectrons.tight'
     muons: 'AnaMuons.tight'
