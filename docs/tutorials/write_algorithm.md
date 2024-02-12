@@ -495,7 +495,31 @@ This could be left open to the user, who could map the decorations onto branches
 
 ### Connecting to YAML
 
-To be filled at a later stage!
+!!! warning
+    To be filled at a later stage!
+
+    For now, just add the following lines at the bottom of `commonAlgoConfig.py`:
+    ```python
+    from TopCPToolkit.TutorialConfig import TutorialConfig
+    config.addAlgConfigBlock(algName='Tutorial',
+                             alg=TutorialConfig, pos='Output')
+    ```
+
+We can now set up our config block in the `reco.yaml` file we've been using so far.
+
+!!! example "Exercise"
+    Set the block to run on `AnaElectrons`, `AnaMuon`, `AnaMET`, and only for events that pass the combined selection `pass_ejets_%SYS% || pass_mujets_%SYS%`.
+
+??? success "Solution"
+    You can technically put this block anywhere in the YAML config, but it's best to keep things logical and put it after the `EventSelection:` block:
+    ```yaml
+    +Tutorial:
+    - electrons: 'AnaElectrons'
+      muons: 'AnaMuons'
+      met: 'AnaMET'
+      jets: 'AnaJets'
+      selection: 'pass_ejets_%SYS% || pass_mujets_%SYS%'
+    ```
 
 ### Taking it for a spin!
 

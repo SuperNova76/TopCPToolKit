@@ -25,6 +25,6 @@ Tutorial:\
     muons: '\''AnaMuons'\''\
     met: '\''AnaMET'\''\
     jets: '\''AnaJets'\''\
-    #selection: '\''pass_ejets_%SYS% || pass_mujets_%SYS%'\''' "$SCRIPT_DIR/source/TopCPToolkit/share/configs/tutorial/reco.yaml"
+    selection: '\''pass_ejets_%SYS% || pass_mujets_%SYS%'\''' "$SCRIPT_DIR/source/TopCPToolkit/share/configs/tutorial/reco.yaml"
 
 echo "Done!"
