@@ -5,7 +5,7 @@
 #include <SystematicsHandles/SysListHandle.h>
 #include <SystematicsHandles/SysReadHandle.h>
 #include <SystematicsHandles/SysWriteDecorHandle.h>
-#include <SystematicsHandles/SysReadSelectionHandle.h>
+#include <SelectionHelpers/SysReadSelectionHandle.h>
 
 #include <xAODEgamma/ElectronContainer.h>
 #include <xAODMuon/MuonContainer.h>
