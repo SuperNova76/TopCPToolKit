@@ -5,6 +5,8 @@ PileupReweighting: {}
 EventCleaning:
     runEventCleaning: True
 
+GeneratorLevelAnalysis: {}
+
 Jets:
   - containerName: 'AnaJets'
     jetCollection: 'AntiKt4EMPFlowJets'
