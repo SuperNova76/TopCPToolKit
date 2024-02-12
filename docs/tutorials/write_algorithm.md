@@ -288,7 +288,7 @@ Having declared all our input and output handles, we need to make sure they are 
       ANA_CHECK(m_eventInfoHandle.initialize(m_systematicsList));
 
       ANA_CHECK(m_dphimetHandle.initialize(m_systematicsList, m_jetsHandle));
-      ANA_CHECK(m_mtwHandle.initialize(m_systematicsLists, m_eventInfoHandle));
+      ANA_CHECK(m_mtwHandle.initialize(m_systematicsList, m_eventInfoHandle));
       ```
 
 ### Coding the physics
@@ -311,10 +311,10 @@ The loop over all relevant systematics is already set up for us, so let's replac
     const xAOD::MissingETContainer *met = nullptr;
 
     ANA_CHECK(m_eventInfoHandle.retrieve(evtInfo, sys));
-    ANA_CHECK(m_electronsHandle.retrieve(evtInfo, sys));
-    ANA_CHECK(m_muonsHandle.retrieve(evtInfo, sys));
-    ANA_CHECK(m_jetsHandle.retrieve(evtInfo, sys));
-    ANA_CHECK(m_metHandle.retrieve(evtInfo, sys));
+    ANA_CHECK(m_electronsHandle.retrieve(electrons, sys));
+    ANA_CHECK(m_muonsHandle.retrieve(muons, sys));
+    ANA_CHECK(m_jetsHandle.retrieve(jets, sys));
+    ANA_CHECK(m_metHandle.retrieve(met, sys));
     ```
 
 To compute the $M_\mathrm{T}(W)$ observable, we need access to the one lepton in the event - but we don't know if it's an electron or a muon!
@@ -356,8 +356,8 @@ Look up the definition we gave above in case you forgot!
 ??? success "Solution"
     After the code we just wrote, add:
     ```cpp
-    float dphi_lep_met = TVector2::Phi_mpi_pi( lepton->Phi() - met_phi );
-    float mtw = std::sqrt( 2 * lepton->Pt() * et_miss * (1-std::cos(dphi_lep_met)) );
+    float dphi_lep_met = TVector2::Phi_mpi_pi( lepton.Phi() - phi_miss );
+    float mtw = std::sqrt( 2 * lepton.Pt() * et_miss * (1-std::cos(dphi_lep_met)) );
     m_mtwHandle.set(*evtInfo, mtw, sys);
     ```
 
@@ -370,7 +370,7 @@ Now onto the per-jet observable: you already know how to compute the $\Delta\phi
     After the code we just wrote, add:
     ```cpp
     for (const xAOD::Jet *jet : *jets) {
-      float dphi_jet_met = TVector2::Phi_mpi_pi( jet->Phi() - met_phi );
+      float dphi_jet_met = TVector2::Phi_mpi_pi( jet->phi() - phi_miss );
       m_dphimetHandle.set(*jet, dphi_jet_met, sys);
     }
     ```
@@ -397,7 +397,7 @@ This is not a perfect protection, but since we've already defined in our YAML co
     ```
     In the main code `TutorialAlg.cxx`, add to the `initalize()` method, after `m_eventInfoHandle` is initialised, the line
     ```cpp
-    ANA_CHECK(m_preselection.initialize(m_systematicsLists, m_eventInfoHandle, SG::AllowEmpty));
+    ANA_CHECK(m_preselection.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
     ```
     Finally, in the `execute()` method, after calling `m_eventInfoHandle.retrieve(...)`, add the following:
     ```cpp
@@ -486,7 +486,7 @@ This could be left open to the user, who could map the decorations onto branches
     At the end of the `makeAlg` method, add:
     ```python
     config.addOutputVar('EventInfo', 'mtw_%SYS%', 'transverseWmass' )
-    config.addOutputVar(self.jets, 'dphimet_%SYS%", 'deltaPhi_with_met')
+    config.addOutputVar(self.jets, 'dphimet_%SYS%', 'deltaPhi_with_met')
     ```
 
 !!! note
