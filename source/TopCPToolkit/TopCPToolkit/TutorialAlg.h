@@ -13,6 +13,8 @@
 #include <xAODMissingET/MissingETContainer.h>
 #include <xAODEventInfo/EventInfo.h>
 
+#include <TVector2.h>
+
 namespace top {
 
   class TutorialAlg final : public EL::AnaAlgorithm {
