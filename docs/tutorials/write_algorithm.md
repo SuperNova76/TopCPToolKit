@@ -513,7 +513,7 @@ We can now set up our config block in the `reco.yaml` file we've been using so f
 ??? success "Solution"
     You can technically put this block anywhere in the YAML config, but it's best to keep things logical and put it after the `EventSelection:` block:
     ```yaml
-    +Tutorial:
+    Tutorial:
     - electrons: 'AnaElectrons'
       muons: 'AnaMuons'
       met: 'AnaMET'
