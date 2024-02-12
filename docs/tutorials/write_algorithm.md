@@ -473,7 +473,7 @@ We are dealing here with a high-level python interface, which allows us a lot of
     alg.muons = muons
     alg.jets  = jets
     alg.met   = met
-    alg.eventSelection = self.selection
+    alg.eventPreselection = self.selection
     ```
 
 Finally, we wish to ensure that our calculations are written to file.
@@ -500,3 +500,16 @@ To be filled at a later stage!
 ### Taking it for a spin!
 
 We are now ready to run our brand new analysis algorithm for the first time :sunglasses:
+
+!!! example "Exercise"
+    Run TopCPToolkit as before (with systematics).
+    Inspect the output file and look for the branches we added.
+    Is everything there as expected?
+
+??? success "Solution"
+    As before, we run e.g.
+    ```sh
+    runTop_el.py -i input.txt -o output -t tutorial -e 100
+    ```
+    We find the branches we created: `transverseWmass` and `jet_deltaPhi_with_met`, together with all their systematic variations.
+    They are set to default values only for events that do not pass our $\ell+$jets selection.
