@@ -28,6 +28,12 @@ Jets:
         btagWP: 'Continuous'
         minPt: 25000.0
 
+PerEventSF:
+  - name: 'btagSFCalc_DL1dv01_Continuous'
+    particles: 'AnaJets.jvt'
+    objectSF: 'ftag_effSF_DL1dv01_Continuous_%SYS%'
+    eventSF: 'weight_btagSF_DL1dv01_Continuous_%SYS%'
+
 Electrons:
   - containerName: 'AnaElectrons'
     crackVeto: True
@@ -70,6 +76,12 @@ Thinning:
   - containerName: 'AnaElectrons'
     outputName: 'OutElectrons'
     selectionName: 'tight||loose'
+
+ExtraParticleDecoration:
+   - name: 'El'
+     particles: 'AnaElectrons'
+   - name: 'Jets'
+     particles: 'AnaJets'
 
 Trigger:
     triggerChainsPerYear:
@@ -118,3 +130,7 @@ Output:
       met_: 'AnaMET'
       '': 'EventInfo'
   systematicsHistogram: 'listOfSystematics'
+  commands:
+    # Turn output branches on and off with 'enable' and 'disable'
+    - disable jet_.*_eff.*
+    - disable jet_jvtEfficiency.*

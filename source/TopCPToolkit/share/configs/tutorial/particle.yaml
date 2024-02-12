@@ -1,0 +1,22 @@
+CommonServices: {}
+
+GeneratorLevelAnalysis: {}
+
+ParticleLevel: {}
+
+# After configuring each container, many variables will be saved automatically.
+Output:
+  treeName: 'particleLevel'
+  vars:
+    - 'EventInfo.mcChannelNumber -> mcChannelNumber'
+    - 'EventInfo.runNumber -> runNumber'
+    - 'EventInfo.eventNumber -> eventNumber'
+  metVars: []
+  metTermName: 'NonInt'
+  containers:
+      # Format should follow: '<suffix>:<output container>'
+      '': 'EventInfo'
+      'el_': 'ParticleLevelElectrons'
+      'mu_': 'ParticleLevelMuons'
+      'jet_': 'ParticleLevelJets'
+      'met_': 'ParticleLevelMissingET'
