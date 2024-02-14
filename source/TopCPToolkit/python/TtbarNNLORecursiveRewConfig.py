@@ -12,6 +12,7 @@ class TtbarNNLORecursiveRewConfig(ConfigBlock):
         self.addOption('reweightType', '2D', type=str)
         self.addOption('reweightPath', 'dev/AnalysisTop/TTbarNNLOReweighter', type=str)
         self.addOption('reweightSuffix', '_3iter_2023_LUX', type=str)
+        self.addOption('nominalOnly', False, type=bool)
 
     def makeAlgs(self, config):
         # don't run on data!
@@ -55,6 +56,8 @@ class TtbarNNLORecursiveRewConfig(ConfigBlock):
         alg.reweightingType = self.reweightType
         alg.reweightingPath = self.reweightPath
         alg.reweightingSuffix = self.reweightSuffix
+        if self.nominalOnly:
+            alg.affectingSystematicsFilter = '.*'
 
         # give appropriate names for the handles to decorate
         alg.NNLO_weight = 'NNLO_'+self.reweightType+'_weight_%SYS%'
