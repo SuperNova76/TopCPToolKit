@@ -32,19 +32,19 @@ public:
 
 private:
   // configurable properties
-  const float m_njets_min_pt;
-  const bool m_float_stop;
-  const std::string m_calib_set;
-  const double m_n_sigma_met;
-  const int m_use_tail_cleanup;
-  const int m_niter_fit_2;
-  const int m_niter_fit_3;
-  const int m_use_tau_prob;
-  const bool m_use_mnu_prob;
-  const int m_use_defaults;
-  const int m_use_eff_recovery;
-  const int m_use_met_dphill;
-  const std::string m_param_file_path;
+  float m_njets_min_pt;
+  bool m_float_stop;
+  std::string m_calib_set;
+  double m_n_sigma_met;
+  int m_use_tail_cleanup;
+  int m_niter_fit_2;
+  int m_niter_fit_3;
+  int m_use_tau_prob;
+  bool m_use_mnu_prob;
+  int m_use_defaults;
+  int m_use_eff_recovery;
+  int m_use_met_dphill;
+  std::string m_param_file_path;
 
   // the MMC tool
   std::unique_ptr<DiTauMassTools::MissingMassToolV2> m_mmc;

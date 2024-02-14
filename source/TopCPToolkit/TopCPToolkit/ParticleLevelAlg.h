@@ -39,19 +39,19 @@ namespace top {
     StatusCode save;
     StatusCode saveAux;
 
-    const bool m_useTruthElectrons, m_useTruthMuons, m_useTruthPhotons,
+    bool m_useTruthElectrons, m_useTruthMuons, m_useTruthPhotons,
       m_useTruthTaus, m_useTruthJets, m_useTruthLargeRJets, m_useTruthMET,
       m_doOverlapRemoval;
-    const float m_el_ptMin, m_el_etaMax;
-    const bool m_el_notFromHadron, m_el_tauIsHadron;
-    const float m_mu_ptMin, m_mu_etaMax;
-    const bool m_mu_notFromHadron, m_mu_tauIsHadron;
-    const float m_ph_ptMin, m_ph_etaMax;
-    const std::string m_ph_origin, m_ph_isolation;
-    const float m_tau_ptMin, m_tau_etaMax;
-    const float m_jet_ptMin, m_jet_etaMax;
-    const float m_ljet_ptMin, m_ljet_etaMax;
-    const std::string m_ljet_collection;
+    float m_el_ptMin, m_el_etaMax;
+    bool m_el_notFromHadron, m_el_tauIsHadron;
+    float m_mu_ptMin, m_mu_etaMax;
+    bool m_mu_notFromHadron, m_mu_tauIsHadron;
+    float m_ph_ptMin, m_ph_etaMax;
+    std::string m_ph_origin, m_ph_isolation;
+    float m_tau_ptMin, m_tau_etaMax;
+    float m_jet_ptMin, m_jet_etaMax;
+    float m_ljet_ptMin, m_ljet_etaMax;
+    std::string m_ljet_collection;
 
     const xAOD::TruthParticleContainer *inputElectrons, *inputMuons,
       *inputPhotons, *inputTaus;

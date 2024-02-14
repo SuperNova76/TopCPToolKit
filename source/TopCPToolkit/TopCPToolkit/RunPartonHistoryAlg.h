@@ -29,7 +29,7 @@ namespace top {
     virtual StatusCode finalize() override;
 
  private:
-    const std::string m_topPartonScheme;
+    std::string m_topPartonScheme;
     std::unique_ptr<CalcTopPartonHistory> m_topPartonHistory;
 
   };

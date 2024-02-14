@@ -1,4 +1,5 @@
 #include "TopCPToolkit/PartonToJetsMatchAlg.h"
+#include "AthContainers/ConstDataVector.h"
 
 #include "TopPartons/PartonHistory.h"
 

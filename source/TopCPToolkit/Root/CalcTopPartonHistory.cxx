@@ -2,6 +2,16 @@
 #include "TopPartons/PartonHistoryUtils.h"
 #include "TopPartons/CalcTopPartonHistory.h"
 #include "xAODTruth/TruthVertex.h"
+#include "xAODTruth/TruthParticleContainer.h"
+#include "AthContainers/ConstDataVector.h"
+
+#ifdef XAOD_STANDALONE
+// access to tds in non-athena release
+#define TDS() evtStore()->tds()
+#else
+// access to tds in athena release
+#define TDS() evtStore()
+#endif
 
 namespace top {
 
@@ -25,7 +35,7 @@ namespace top {
     }
 
     //we give control of the container to the store, because in this way we are able to retrieve it as a const data vector, see https://twiki.cern.ch/twiki/bin/view/AtlasComputing/DataVector#ConstDataVector
-    StatusCode save = evtStore()->tds()->record(out_cont,out_contName);
+    StatusCode save = TDS()->record(out_cont,out_contName);
     if (!save) return StatusCode::FAILURE;
 
     return StatusCode::SUCCESS;
@@ -656,8 +666,8 @@ namespace top {
     ANA_CHECK(runHistorySaver(truthParticles, partonHistory));
 
     // Save to StoreGate / TStore
-    StatusCode save = evtStore()->tds()->record(partonHistory, m_topPartonsSGKey);
-    StatusCode saveAux = evtStore()->tds()->record(partonHistoryAux, m_topPartonsSGKey + "Aux.");
+    StatusCode save = TDS()->record(partonHistory, m_topPartonsSGKey);
+    StatusCode saveAux = TDS()->record(partonHistoryAux, m_topPartonsSGKey + "Aux.");
     if (!save || !saveAux) return StatusCode::FAILURE;
 
     return StatusCode::SUCCESS;
