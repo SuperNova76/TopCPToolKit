@@ -175,9 +175,9 @@ We will start from the skeleton structure provided in these two files: [Root/Tut
 We already compiled TopCPToolkit successfully, but we also need to register this `TutorialAlg` as an algorithm in a few special places.
 These are:
 
-- [TopCPToolkit/TopCPToolkitDict.h](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/TopCPToolkit/TopCPToolkitDict.h)
-- [TopCPToolkit/selection.xml](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/TopCPToolkit/selection.xml)
-- [src/components/TopCPToolkit_entries.cxx](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/src/components/TopCPToolkit_entries.cxx)
+- [source/TopCPToolkit/TopCPToolkit/TopCPToolkitDict.h](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/TopCPToolkit/TopCPToolkitDict.h)
+- [source/TopCPToolkit/TopCPToolkit/selection.xml](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/TopCPToolkit/selection.xml)
+- [source/TopCPToolkit/src/components/TopCPToolkit_entries.cxx](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/src/components/TopCPToolkit_entries.cxx)
 
 !!! example "Exercise"
     Inspect these 3 files and insert the necessary lines.
@@ -294,7 +294,7 @@ Having declared all our input and output handles, we need to make sure they are 
 ### Coding the physics
 
 Let's now focus on the `TutorialAlg::execute()` method, which will run on every event.
-The loop over all relevant systematics is already set up for us, so let's replace the `continue` statement there with some actual physics calculations!
+The loop over all relevant systematics is already set up for us, so let's comment it out and fill it with some actual physics calculations!
 
 !!! example "Exercise"
     We need to start by retrieving the containers corresponding to each systematic.
@@ -302,7 +302,7 @@ The loop over all relevant systematics is already set up for us, so let's replac
     Let's call the containers `electrons`, `muons`, `jets`, `met` and `evtInfo` - pretty standard notation.
 
 ??? success "Solution"
-    Within the loop over `m_systematicsList.systematicsVector()`, replace `continue;` by:
+    Uncomment the loop over `m_systematicsList.systematicsVector()`, and fill it with
     ```cpp
     const xAOD::EventInfo *evtInfo = nullptr;
     const xAOD::ElectronContainer *electrons = nullptr;
@@ -430,7 +430,7 @@ However, we haven't specified any of its properties, like what the input lepton 
 This is on purpose: we don't want to hardcode any of that information!
 Instead, we will **expose these properties to the user via a config block**.
 
-You can find a skeleton of that config block in [python/TutorialConfig.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/TutorialConfig.py).
+You can find a skeleton of that config block in [source/TopCPToolkit/python/TutorialConfig.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/TutorialConfig.py).
 
 !!! example "Exercise"
     What options does the config block currently have? Are they all one-to-one with the properties of the algorithm?

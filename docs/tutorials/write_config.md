@@ -34,12 +34,12 @@ echo "/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/dev/AnalysisTop/Continuous
 
 ### Running from a YAML config file
 
-Config files are located in the [`share/configs`](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/tree/main/source/TopCPToolkit/share/configs?ref_type=heads) folder of TopCPToolkit.
+Config files are located in the [`source/TopCPToolkit/share/configs`](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/tree/main/source/TopCPToolkit/share/configs?ref_type=heads) folder of TopCPToolkit.
 Each analysis is set up as one subfolder, containing up to three YAML files: `reco.yaml`, `particle.yaml` and `parton.yaml`.
 These allow us to run separate analyses at detector-, particle- and parton-level.
 
 You can browse the config files hosted there to get an idea of what a "real" analysis might look like.
-For now, we'll use the `tutorial` folder, which contains a `reco.yaml` and a `solution.yaml`.
+For now, we'll use the `tutorial` folder, which contains a `reco.yaml`, a `particle.yaml` and a `solution.yaml`.
 
 !!! warning
     Don't look at the solution yet! :pray: :upside_down:
@@ -77,7 +77,7 @@ There is also a branch for the electron $p_\mathrm{T}$, with a different naming 
 This is a quantity that is affected by the EGamma calibration,
 If you run with systematis enabled, you'll see that we still get only a single version of e.g. `el_eta`, `el_phi` and `el_charge`, but different values of `el_pt_%SYS%`.
 
-Here are two more easy exercises to keep you engaged :wink:
+Here are a few more easy exercises to keep you engaged :wink:
 
 !!! example "Exercise"
     Run again the same command, but enabling systematics. How does the output differ?
@@ -94,6 +94,16 @@ Here are two more easy exercises to keep you engaged :wink:
 
 ??? success "Solution"
     Electrons (`el_*`) and jets (`jet_*`) are there, but muons are missing! (no `mu_*` branches)
+
+!!! example "Exercise"
+    Run again the same command, but enabling the particle-level analysis. How does the output differ?
+
+??? success "Solution"
+    The command is
+    ```
+    runTop_el.py -i input.txt -o output -t tutorial -e 100 --particle
+    ```
+    and it leads to one more tree, `particleLevel`, being created in the output file.
 
 ## What is actually going on ?
 
@@ -429,19 +439,23 @@ Let's do it step by step... and of course you can use the documentation and sear
     **Step 2:** make sure that we actually save these muons to file!
 
       - make a cutflow for them
-      - add them to the MET definition and the overlap removal
+      - add them to the MET definition, removing the `setMuonJetEMScale: False` setting
+      - add them to the overlap removal
+      - add them to the `ExtraParticleDecoration:` block
       - thin the output in a similar way as for electrons
       - add them to the output with the prefix "mu_"
     
     **Step 3:** edit the trigger selection to include single-muon trigger legs (see [Muon Trigger Recommendations for 2022](https://twiki.cern.ch/twiki/bin/view/Atlas/MuonTriggerPhysicsRecommendationsRun32022))
 
-    **Step 4:** fix the event selection such that it treats the muons properly
+    **Step 4:** add an instance of the `LeptonSF:` block, which should read in the tight electrons and muons, and produce a single event-wise lepton SF from all the different per-lepton SFs.
+
+    **Step 5:** fix the event selection such that it treats the muons properly
 
       - add the "tight" muons as inputs to the event selection
       - the "ejets" selection should veto any muons in the event
       - the "mujets" selection should select exactly one muon
     
-    **Step 5:** add to the output ntuple the information "truthOrigin" about the muons, which is present at DAOD-level and does not depend on systematics
+    **Step 6:** add to the output ntuple the information "truthOrigin" about the muons, which is present at DAOD-level and does not depend on systematics
 
 ??? success "Solution"
     **Step 1:** the entire block should read
@@ -477,6 +491,11 @@ Let's do it step by step... and of course you can use the documentation and sear
     ```yaml
     muons: 'AnaMuons.tight'
     ```
+    In the `ExtraParticleDecoration:` block, add a list element
+    ```yaml
+    - name: 'Mu'
+      particles: 'AnaMuons'
+    ```
     Finally, in the `Output:` block, under `containers:`, add the line
     ```yaml
     mu_: 'OutMuons'
@@ -491,14 +510,21 @@ Let's do it step by step... and of course you can use the documentation and sear
     ```yaml
     - 'HLT_mu24_ivarmedium_L1MU14FCH || HLT_mu50_L1MU14FCH'
     ```
+    **Step 4:** define the `LeptonSF:` block as follows
+    ```yaml
+    LeptonSF:
+    - electrons: 'AnaElectrons.tight'
+      muons: 'AnaMuons.tight'
+      lepton_postfix: 'tight'
+    ```
 
-    **Step 4:** in the `EventSelection:` block, pass the property
+    **Step 5:** in the `EventSelection:` block, pass the property
     ```yaml
     muons: 'AnaMuons.tight'
     ```
     and add the cuts `MU_N 25000 == 0` to "ejets" and `MU_N 25000 == 1` to "mujets"
 
-    **Step 5:** in the `Output:` block, add a list element to `vars`
+    **Step 6:** in the `Output:` block, add a list element to `vars`
     ```yaml
     - 'OutMuons_NOSYS.truthOrigin -> mu_truthOrigin'
     ```

@@ -16,9 +16,8 @@ namespace top {
 
   StatusCode TutorialAlg::execute() {
 
-    for (const auto &sys : m_systematicsList.systematicsVector()) {
-      continue;      
-    }
+    // for (const auto &sys : m_systematicsList.systematicsVector()) {
+    // }
 
     return StatusCode::SUCCESS;
   }
