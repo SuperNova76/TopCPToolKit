@@ -4,7 +4,9 @@ from AsgAnalysisAlgorithms.AsgAnalysisConfig import makePtEtaSelectionConfig, Pe
 from TopCPToolkit import metaConfig, commonAlgoConfig
 
 
-def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
+def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
+
+    makeConfig = factory.makeConfig
 
     use_electrons = True
     use_muons = True
@@ -20,148 +22,173 @@ def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
     met_branches = []
 
     # primary vertex ,event cleaning (jet clean loosebad) and GoodRunsList selection
-    commonAlgoConfig.add_event_cleaning(configSeq, flags)
+    commonAlgoConfig.add_event_cleaning(configSeq, factory, flags)
 
     # run PMG TruthWeightTool on MC only
-    from AsgAnalysisAlgorithms.AsgAnalysisConfig import makeGeneratorAnalysisConfig
-    makeGeneratorAnalysisConfig(configSeq)
+    configSeq += makeConfig ('GeneratorLevelAnalysis')
 
     # PRW
     if not flags.Input.isPHYSLITE:
-        from AsgAnalysisAlgorithms.AsgAnalysisConfig import makePileupReweightingConfig
-        makePileupReweightingConfig(configSeq,
-                                    campaign=flags.Input.MCCampaign,
-                                    useDefaultConfig=True)
+        configSeq += makeConfig ('PileupReweighting')
 
     # electrons
     if use_electrons:
-        from EgammaAnalysisAlgorithms.ElectronAnalysisConfig import\
-            makeElectronCalibrationConfig, makeElectronWorkingPointConfig
-        WPLoose = 'TightLH.NonIso'  # no isolation
-        WPTight = 'TightLH.Tight_VarRad'
-        makeElectronCalibrationConfig(configSeq, 'AnaElectrons', crackVeto=True)
-        makeElectronWorkingPointConfig(configSeq, 'AnaElectrons', WPLoose, chargeIDSelection=False, selectionName='loose')
-        makeElectronWorkingPointConfig(configSeq, 'AnaElectrons', WPTight, chargeIDSelection=False, selectionName='tight')
-        # TODO -- this probably not correct -- is it track or cluster eta ?
-        makePtEtaSelectionConfig(configSeq, 'AnaElectrons', selectionDecoration='selectPtEta',
-                                 selectionName='', minPt=25e3, maxEta=2.47)
+        configSeq += makeConfig ('Electrons', containerName='AnaElectrons')
+        configSeq.setOptionValue ('.crackVeto', True)
+
+        WPLoose = ["TightLH", "NonIso"]  # no isolation
+        WPTight = ["TightLH", "Tight_VarRad"]
+        configSeq += makeConfig ('Electrons.WorkingPoint', containerName='AnaElectrons', selectionName='loose')
+        configSeq.setOptionValue ('.likelihoodWP', WPLoose[0])
+        configSeq.setOptionValue ('.isolationWP', WPLoose[1])
+        configSeq += makeConfig ('Electrons.WorkingPoint', containerName='AnaElectrons', selectionName='tight')
+        configSeq.setOptionValue ('.likelihoodWP', WPTight[0])
+        configSeq.setOptionValue ('.isolationWP', WPTight[1])
+
+        configSeq += makeConfig ('Electrons.PtEtaSelection', containerName='AnaElectrons')
+        configSeq.setOptionValue ('.selectionDecoration', 'selectPtEta')
+        configSeq.setOptionValue ('.minPt', 25e3)
+        configSeq.setOptionValue ('.maxEta', 2.47)
+
         outputContainers['el_'] = 'OutElectrons'
 
     # muons
     if use_muons:
-        from MuonAnalysisAlgorithms.MuonAnalysisConfig import\
-            makeMuonCalibrationConfig, makeMuonWorkingPointConfig
-        WPLoose = 'Medium.NonIso'
-        WPTight = 'Medium.Tight_VarRad'
-        makeMuonCalibrationConfig(configSeq, 'AnaMuons')
-        makeMuonWorkingPointConfig(configSeq, 'AnaMuons', workingPoint=WPLoose, selectionName='loose')
-        makeMuonWorkingPointConfig(configSeq, 'AnaMuons', workingPoint=WPTight, selectionName='tight', systematicBreakdown = True)
-        # TODO -- eta cut probably wrong
-        makePtEtaSelectionConfig(configSeq, 'AnaMuons', selectionDecoration='selectPtEta',
-                                 selectionName='', minPt=25e3, maxEta=2.5)
+        configSeq += makeConfig ('Muons', containerName='AnaMuons')
+
+        WPLoose = ["Medium", "NonIso"]
+        WPTight = ["Medium", "Tight_VarRad"]
+        configSeq += makeConfig ('Muons.WorkingPoint', containerName='AnaMuons', selectionName='loose')
+        configSeq.setOptionValue ('.quality', WPLoose[0])
+        configSeq.setOptionValue ('.isolation', WPLoose[1])
+        configSeq += makeConfig ('Muons.WorkingPoint', containerName='AnaMuons', selectionName='tight')
+        configSeq.setOptionValue ('.quality', WPTight[0])
+        configSeq.setOptionValue ('.isolation', WPTight[1])
+        configSeq.setOptionValue ('.systematicBreakdown', True)
+
+        configSeq += makeConfig ('Muons.PtEtaSelection', containerName='AnaMuons')
+        configSeq.setOptionValue ('.selectionDecoration', 'selectPtEta')
+        configSeq.setOptionValue ('.minPt', 25e3)
+        configSeq.setOptionValue ('.maxEta', 2.5)
+
         outputContainers['mu_'] = 'OutMuons'
 
     # small-R jets
     if use_jets:
-        from JetAnalysisAlgorithms.JetAnalysisConfig import makeJetAnalysisConfig
         jetContainer = 'AntiKt4EMPFlowJets'
-        makeJetAnalysisConfig(configSeq, 'AnaJets', jetContainer,
-                              runGhostMuonAssociation=True, postfix='')
-        configSeq.setOptionValue('.runNNJvtUpdate', True)
-        configSeq.setOptionValue('.systematicsModelJER', 'Full')
-        configSeq.setOptionValue('.systematicsModelJES', 'Category')
-        from JetAnalysisAlgorithms.JetJvtAnalysisConfig import makeJetJvtAnalysisConfig
-        makeJetJvtAnalysisConfig(configSeq, 'AnaJets', jetContainer, enableFJvt=False)
+        configSeq += makeConfig ('Jets', containerName='AnaJets', jetCollection=jetContainer)
+        configSeq.setOptionValue ('.runGhostMuonAssociation', True)
+        configSeq.setOptionValue ('.runNNJvtUpdate', True)
+        configSeq.setOptionValue ('.systematicsModelJER', 'Full')
+        configSeq.setOptionValue ('.systematicsModelJES', 'Category')
 
-        makePtEtaSelectionConfig(configSeq, 'AnaJets', selectionDecoration='selectPtEta',
-                                 selectionName='', minPt=25e3, maxEta=2.5)
+        configSeq += makeConfig ('Jets.JVT', containerName='AnaJets')
+
+        configSeq += makeConfig ('Jets.PtEtaSelection', containerName='AnaJets')
+        configSeq.setOptionValue ('.selectionDecoration', 'selectPtEta')
+        configSeq.setOptionValue ('.minPt', 25e3)
+        configSeq.setOptionValue ('.maxEta', 2.5)
 
         # b-tagging
         WPs = ['FixedCutBEff_85','FixedCutBEff_77','FixedCutBEff_70','FixedCutBEff_60','Continuous']
         btagger = 'DL1dv01'
         from FTagAnalysisAlgorithms.FTagAnalysisConfig import makeFTagAnalysisConfig
         for WP in WPs:
-            # suppress CDI warnings due to missing SFs
-            makeFTagAnalysisConfig(configSeq, 'AnaJets', btagWP=WP, noEffSF=False, minPt=25e3,
-                                   generator="autoconfig",
-                                   btagger=btagger, kinematicSelection=True, selectionName='')
+            configSeq += makeConfig ('Jets.FlavourTagging', containerName='AnaJets', selectionName='')
+            configSeq.setOptionValue ('.btagger', btagger)
+            configSeq.setOptionValue ('.btagWP', WP)
+            configSeq.setOptionValue ('.minPt', 25e3)
+            configSeq.setOptionValue ('')
+
             # calculate per-event b-tagging SF (alternative to storing per-jet SFs)
-            cfg = PerEventSFBlock(f'btagSFCalc_{btagger}_{WP}')
-            cfg.particles = 'AnaJets.jvt'
-            cfg.objectSF = f'ftag_effSF_{btagger}_{WP}_%SYS%'
-            cfg.eventSF = f'weight_btagSF_{btagger}_{WP}_%SYS%'
-            configSeq.append(cfg)
+            configSeq += makeConfig ('PerEventSF', name=f'btagSFCalc_{btagger}_{WP}')
+            configSeq.setOptionValue ('.particles', 'AnaJets.jvt')
+            configSeq.setOptionValue ('.objectSF', f'ftag_effSF_{btagger}_{WP}_%SYS%')
+            configSeq.setOptionValue ('.eventSF', f'weight_btagSF_{btagger}_{WP}_%SYS%')
 
         outputContainers['jet_'] = 'OutJets'
 
     # TODO VR track jets b-tagging -- not yet in CDI ?
     if use_track_jets:
-        makeJetAnalysisConfig(configSeq, 'AnaTrackJets', 'AntiKtVR30Rmax4Rmin02PV0TrackJets',
-                              postfix='track_jets')
-        makePtEtaSelectionConfig(configSeq, 'AnaTrackJets',
-                                 selectionDecoration='selectPtEta',
-                                 selectionName='track_jets',
-                                 minPt=10e3, maxEta=2.5)
+        jetContainer = 'AntiKtVR30Rmax4Rmin02PV0TrackJets'
+        configSeq += makeConfig ('Jets', containerName='AnaTrackJets', jetCollection=jetContainer, postfix='track_jets')
+
+        configSeq += makeConfig ('Jets.PtEtaSelection', containerName='AnaTrackJets')
+        configSeq.setOptionValue ('.selectionDecoration', 'selectPtEta')
+        configSeq.setOptionValue ('.selectionName', 'track_jets')
+        configSeq.setOptionValue ('.minPt', 10e3)
+        configSeq.setOptionValue ('.maxEta', 2.5)
+
         outputContainers['track_jet_'] = 'OutTrackJets'
 
     if use_largeR_jets:
-        makeJetAnalysisConfig(configSeq, 'AnaLargeRJets', 'AntiKt10UFOCSSKSoftDropBeta100Zcut10Jets',
-                              postfix='largeR_jets')
-        makePtEtaSelectionConfig(configSeq, 'AnaLargeRJets',
-                                 selectionDecoration='selectPtEta',
-                                 selectionName='largeR_jets',
-                                 minPt=350e3, maxEta=2.0)
+        jetContainer = 'AntiKt10UFOCSSKSoftDropBeta100Zcut10Jets'
+        configSeq += makeConfig ('Jets', containerName='AnaLargeRJets', jetCollection=jetContainer, postfix='largeR_jets')
+
+        configSeq += makeConfig ('Jets.PtEtaSelection', containerName='AnaLargeRJets')
+        configSeq.setOptionValue ('.selectionDecoration', 'selectPtEta')
+        configSeq.setOptionValue ('.selectionName', 'largeR_jets')
+        configSeq.setOptionValue ('.minPt', 350e3)
+        configSeq.setOptionValue ('.maxEta', 2.0)
+
         outputContainers['larger_jet_'] = 'OutLargeRJets'
 
     # photons
     if use_photons:
-        from EgammaAnalysisAlgorithms.PhotonAnalysisConfig import\
-            makePhotonCalibrationConfig, makePhotonWorkingPointConfig
-        makePhotonCalibrationConfig(configSeq, 'AnaPhotons', recomputeIsEM=False)
-        makePhotonWorkingPointConfig(configSeq, 'AnaPhotons', 'Tight.FixedCutTight',
-                                     selectionName = 'tight', recomputeIsEM=False)
-        makePhotonWorkingPointConfig(configSeq, 'AnaPhotons', 'Loose.Undefined',
-                                     selectionName = 'loose', recomputeIsEM=False)
-        makePtEtaSelectionConfig(configSeq, 'AnaPhotons', selectionDecoration='selectPtEta',
-                                 selectionName='', minPt=25e3, maxEta=2.5)
+        configSeq += makeConfig ('Photons', containerName='AnaPhotons')
+
+        WPLoose = ["Loose", "Undefined"]
+        WPTight = ["Tight", "FixedCutTight"]
+        configSeq += makeConfig ('Photons.WorkingPoint', containerName='AnaPhotons', selectionName='loose')
+        configSeq.setOptionValue ('.qualityWP', WPLoose[0])
+        configSeq.setOptionValue ('.isolationWP', WPLoose[1])
+        configSeq += makeConfig ('Photons.WorkingPoint', containerName='AnaPhotons', selectionName='tight')
+        configSeq.setOptionValue ('.qualityWP', WPTight[0])
+        configSeq.setOptionValue ('.isolationWP', WPTight[1])
+
+        configSeq += makeConfig ('Photons.PtEtaSelection', containerName='AnaPhotons')
+        configSeq.setOptionValue ('.selectionDecoration', 'selectPtEta')
+        configSeq.setOptionValue ('.minPt', 25e3)
+        configSeq.setOptionValue ('.maxEta', 2.5)
+
         outputContainers['ph_'] = 'OutPhotons'
 
     # Taus
     if use_taus:
-        from TauAnalysisAlgorithms.TauAnalysisConfig import\
-            makeTauCalibrationConfig, makeTauWorkingPointConfig
-        makeTauCalibrationConfig(configSeq, 'AnaTauJets')
-        makeTauWorkingPointConfig(configSeq, 'AnaTauJets', workingPoint='Tight', selectionName='tight')
-        makePtEtaSelectionConfig(configSeq, 'AnaTauJets',
-                                 selectionDecoration='selectPtEta',
-                                 selectionName='', minPt=25e3, maxEta=2.5)
+        configSeq += makeConfig ('TauJets', containerName='AnaTauJets')
+
+        configSeq += makeConfig ('TauJets.WorkingPoint', containerName='AnaTauJets', selectionName='tight')
+        configSeq.setOptionValue ('.quality', 'Tight')
+
+        configSeq += makeConfig ('TauJets.PtEtaSelection', containerName='AnaTauJets')
+        configSeq.setOptionValue ('.selectionDecoration', 'selectPtEta')
+        configSeq.setOptionValue ('.minPt', 25e3)
+        configSeq.setOptionValue ('.maxEta', 2.5)
+
         outputContainers['tau_'] = 'OutTauJets'
 
     # MET
     if use_MET:
-        from MetAnalysisAlgorithms.MetAnalysisConfig import makeMetAnalysisConfig
-        makeMetAnalysisConfig(configSeq, containerName='AnaMET',
-                              electrons=('AnaElectrons.tight' if use_electrons else ''),
-                              muons=('AnaMuons.tight' if use_muons else ''),
-                              jets=('AnaJets' if use_jets else ''),  # use all jets for MET, it does it's own OR
-                              photons=('AnaPhotons.tight&&selectPtEta' if use_photons else ''),
-                              taus=('AnaTauJets.tight' if use_taus else ''))
+        configSeq += makeConfig ('MissingET', containerName='AnaMET')
+        configSeq.setOptionValue ('.electrons', 'AnaElectrons.tight' if use_electrons else '')
+        configSeq.setOptionValue ('.muons', 'AnaMuons.tight' if use_muons else '')
+        configSeq.setOptionValue ('.jets', 'AnaJets' if use_jets else '') # use all jets for MET, it does it's own OR
+        configSeq.setOptionValue ('.photons', 'AnaPhotons.tight&&selectPtEta' if use_photons else '')
+        configSeq.setOptionValue ('.taus', 'AnaTauJets.tight' if use_taus else '')
+
         outputContainers['met_'] = 'AnaMET'
 
     # overlap removal
-    from AsgAnalysisAlgorithms.OverlapAnalysisConfig import makeOverlapAnalysisConfig
-    makeOverlapAnalysisConfig(configSeq,
-                              electrons=('AnaElectrons.tight' if use_electrons else ''),
-                              muons=('AnaMuons.tight' if use_muons else ''),
-                              photons=('AnaPhotons.tight&&selectPtEta' if use_photons else ''),
-                              jets=('AnaJets.jvt' if use_jets else ''),
-                              taus=('AnaTauJets.tight' if use_taus else ''),
-                              inputLabel='preselectOR',
-                              outputLabel='passesOR')
+    configSeq += makeConfig ('OverlapRemoval')
+    configSeq.setOptionValue ('.electrons', 'AnaElectrons.tight' if use_electrons else '')
+    configSeq.setOptionValue ('.muons', 'AnaMuons.tight' if use_muons else '')
+    configSeq.setOptionValue ('.photons', 'AnaPhotons.tight&&selectPtEta' if use_photons else '')
+    configSeq.setOptionValue ('.jets', 'AnaJets.jvt' if use_jets else '')
+    configSeq.setOptionValue ('.taus', 'AnaTauJets.tight' if use_taus else '')
+    configSeq.setOptionValue ('.inputLabel', 'preselectOR')
+    configSeq.setOptionValue ('.outputLabel', 'passesOR')
 
     # global lepton trigger
-    from TriggerAnalysisAlgorithms.TriggerAnalysisConfig import makeTriggerAnalysisConfig
-
     triggerChainsPerYear = {
         '2015': ['HLT_e24_lhmedium_L1EM20VH || HLT_e60_lhmedium || HLT_e120_lhloose', 'HLT_mu20_iloose_L1MU15 || HLT_mu50'],
         '2016': ['HLT_e26_lhtight_nod0_ivarloose || HLT_e60_lhmedium_nod0 || HLT_e140_lhloose_nod0', 'HLT_mu26_ivarmedium || HLT_mu50'],
@@ -170,88 +197,91 @@ def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
         '2022': ['HLT_e26_lhtight_ivarloose_L1EM22VHI || HLT_e60_lhmedium_L1EM22VHI || HLT_e140_lhloose_L1EM22VHI', 'HLT_mu26_ivarmedium_L1MU14FCH || HLT_mu50_L1MU14FCH'],
     }
     individual_triggers = list(set(substring.strip() for chains_list in triggerChainsPerYear.values() for chain in chains_list for substring in chain.split('||')))
-
-    makeTriggerAnalysisConfig(configSeq, triggerChainsPerYear=triggerChainsPerYear, noFilter=noFilter, electronWorkingPoint='Tight.Tight_VarRad', muonWorkingPoint='Medium.None',
-                              electrons='AnaElectrons.tight', muons='AnaMuons.tight')
+    configSeq += makeConfig ( 'Trigger' )
+    configSeq.setOptionValue ('.triggerChainsPerYear', triggerChainsPerYear )
+    configSeq.setOptionValue ('.noFilter', noFilter )
+    configSeq.setOptionValue ('.electronID', 'Tight' )
+    configSeq.setOptionValue ('.electronIsol', 'Tight_VarRad')
+    configSeq.setOptionValue ('.muonID', 'Medium')
+    configSeq.setOptionValue ('.electrons', 'AnaElectrons.tight' )
+    configSeq.setOptionValue ('.muons', 'AnaMuons.tight' )
 
     # object-based cutflow
-    from AsgAnalysisAlgorithms.AsgAnalysisConfig import makeObjectCutFlowConfig
     if use_electrons:
-        makeObjectCutFlowConfig(configSeq, 'AnaElectrons', selectionName='tight')
+        configSeq += makeConfig ('ObjectCutFlow', containerName='AnaElectrons', selectionName='tight')
     if use_muons:
-        makeObjectCutFlowConfig(configSeq, 'AnaMuons', selectionName='tight')
+        configSeq += makeConfig ('ObjectCutFlow', containerName='AnaMuons', selectionName='tight')
     if use_taus:
-        makeObjectCutFlowConfig(configSeq, 'AnaTauJets', selectionName='tight')
+        configSeq += makeConfig ('ObjectCutFlow', containerName='AnaTauJets', selectionName='tight')
     if use_photons:
-        makeObjectCutFlowConfig(configSeq, 'AnaPhotons', selectionName='tight')
+        configSeq += makeConfig ('ObjectCutFlow', containerName='AnaPhotons', selectionName='tight')
     if use_jets:
-        makeObjectCutFlowConfig(configSeq, 'AnaJets', selectionName='jvt')
+        configSeq += makeConfig ('ObjectCutFlow', containerName='AnaJets', selectionName='jvt')
     if use_largeR_jets:
-        makeObjectCutFlowConfig(configSeq, 'AnaLargeRJets', selectionName='')
+        configSeq += makeConfig ('ObjectCutFlow', containerName='AnaLargeRJets', selectionName='')
     if use_track_jets:
-        makeObjectCutFlowConfig(configSeq, 'AnaTrackJets', selectionName='')
+        configSeq += makeConfig ('ObjectCutFlow', containerName='AnaTrackJets', selectionName='')
 
     # a single lepton SF
+    # TODO: give it a factory when moving to Athena
     from TopCPToolkit.LeptonSFCalculatorConfig import LeptonSFCalculatorConfig
-    cfg = LeptonSFCalculatorConfig()
-    cfg.setOptionValue('electrons', 'AnaElectrons.tight')
-    cfg.setOptionValue('muons', 'AnaMuons.tight')
-    cfg.setOptionValue('lepton_postfix', 'tight')
-    configSeq.append(cfg)
+    configSeq += LeptonSFCalculatorConfig()
+    configSeq.setOptionValue ('.electrons', 'AnaElectrons.tight')
+    configSeq.setOptionValue ('.muons', 'AnaMuons.tight')
+    configSeq.setOptionValue ('.lepton_postfix', 'tight')
 
+    # energy decorations
+    # TODO: give it a factory when moving to Athena
     from TopCPToolkit.ExtraParticleDecorationConfig import ExtraParticleDecorationConfig
-    cfg = ExtraParticleDecorationConfig('El')
-    cfg.setOptionValue('particles', 'AnaElectrons')
-    configSeq.append(cfg)
-    cfg = ExtraParticleDecorationConfig('Mu')
-    cfg.setOptionValue('particles', 'AnaMuons')
-    configSeq.append(cfg)
-    cfg = ExtraParticleDecorationConfig('Jet')
-    cfg.setOptionValue('particles', 'AnaJets')
-    configSeq.append(cfg)
+    if use_electrons:
+        configSeq += ExtraParticleDecorationConfig('El')
+        configSeq.setOptionValue('.particles', 'AnaElectrons')
+    if use_muons:
+        configSeq += ExtraParticleDecorationConfig('Mu')
+        configSeq.setOptionValue('.particles', 'AnaMuons')
+    if use_jets:
+        configSeq += ExtraParticleDecorationConfig('Jet')
+        configSeq.setOptionValue('.particles', 'AnaJets')
 
     # the IFF lepton classification
-    from AsgAnalysisAlgorithms.AsgAnalysisConfig import IFFLeptonDecorationBlock
-    cfg = IFFLeptonDecorationBlock('AnaElectrons')
-    configSeq.append(cfg)
-    cfg = IFFLeptonDecorationBlock('AnaMuons')
-    configSeq.append(cfg)
+    if use_electrons:
+        configSeq += makeConfig ('Electrons.IFFClassification', containerName='AnaElectrons')
+    if use_muons:
+        configSeq += makeConfig ('Muons.IFFClassification', containerName='AnaMuons')
 
     # object thinning
-    from AsgAnalysisAlgorithms.AsgAnalysisConfig import makeOutputThinningConfig
-
     if use_electrons:
         # write out single electron container containg all leptons passing loose or tight and at the same time pass selectPtEta
         # i.e. there is a logical && between selection and selectionName
-        makeOutputThinningConfig(configSeq, 'AnaElectrons',
-                                 selectionName='tight||loose',
-                                 outputName='OutElectrons')
+        configSeq += makeConfig ('Thinning', containerName='AnaElectrons')
+        configSeq.setOptionValue ('.selectionName', 'tight||loose')
+        configSeq.setOptionValue ('.outputName', 'OutElectrons')
     if use_muons:
-        makeOutputThinningConfig(configSeq, 'AnaMuons',
-                                 selectionName='tight||loose',
-                                 outputName='OutMuons')
+        configSeq += makeConfig ('Thinning', containerName='AnaMuons')
+        configSeq.setOptionValue ('.selectionName', 'tight||loose')
+        configSeq.setOptionValue ('.outputName', 'OutMuons')
     if use_jets:
-        makeOutputThinningConfig(configSeq, 'AnaJets',
-                                 selectionName='jvt',
-                                 outputName='OutJets')
+        configSeq += makeConfig ('Thinning', containerName='AnaJets')
+        configSeq.setOptionValue ('.selectionName', 'jvt')
+        configSeq.setOptionValue ('.outputName', 'OutJets')
     if use_photons:
-        makeOutputThinningConfig(configSeq, 'AnaPhotons',
-                                 selectionName='tight||loose',
-                                 outputName='OutPhotons')
+        configSeq += makeConfig ('Thinning', containerName='AnaPhotons')
+        configSeq.setOptionValue ('.selectionName', 'tight||loose')
+        configSeq.setOptionValue ('.outputName', 'OutPhotons')
     if use_taus:
-        makeOutputThinningConfig(configSeq, 'AnaTauJets',
-                                 selectionName='tight',
-                                 outputName='OutTauJets')
+        configSeq += makeConfig ('Thinning', containerName='AnaTauJets')
+        configSeq.setOptionValue ('.selectionName', 'tight')
+        configSeq.setOptionValue ('.outputName', 'OutTauJets')
     if use_largeR_jets:
-        makeOutputThinningConfig(configSeq, 'AnaLargeRJets',
-                                 selectionName='largeR_jets',
-                                 outputName='OutLargeRJets')
+        configSeq += makeConfig ('Thinning', containerName='AnaLargeRJets')
+        configSeq.setOptionValue ('.selectionName', 'largeR_jets')
+        configSeq.setOptionValue ('.outputName', 'OutLargeRJets')
     if use_track_jets:
-        makeOutputThinningConfig(configSeq, 'AnaTrackJets',
-                                 selectionName='track_jets',
-                                 outputName='OutTrackJets')
+        configSeq += makeConfig ('Thinning', containerName='AnaTrackJets')
+        configSeq.setOptionValue ('.selectionName', 'track_jets')
+        configSeq.setOptionValue ('.outputName', 'OutTrackJets')
 
-    from EventSelectionAlgorithms.EventSelectionConfig import makeMultipleEventSelectionConfigs
+    # event selection
     mycuts = {
         'SUBcommon': """
 JET_N_BTAG >= 2
@@ -289,68 +319,74 @@ JET_N 1000000 >= 1
 SAVE
 """
     }
-    makeMultipleEventSelectionConfigs(configSeq, electrons="AnaElectrons.loose", muons ="AnaMuons.tight", met="AnaMET",
-                                      jets="AnaJets.jvt", btagDecoration=f'ftag_select_{btagger}_FixedCutBEff_85',
-                                      preselection=None, selectionCutsDict = mycuts, noFilter=noFilter, cutFlowHistograms=True)
+    configSeq += makeConfig ('EventSelection')
+    configSeq.setOptionValue ('.electrons', 'AnaElectrons.loose')
+    configSeq.setOptionValue ('.muons', 'AnaMuons.tight')
+    configSeq.setOptionValue ('.met', 'AnaMET')
+    configSeq.setOptionValue ('.jets', 'AnaJets.jvt')
+    configSeq.setOptionValue ('.btagDecoration', f'ftag_select_{btagger}_FixedCutBEff_85')
+    configSeq.setOptionValue ('.selectionCutsDicts', mycuts)
+    configSeq.setOptionValue ('.noFilter', noFilter)
+    configSeq.setOptionValue ('.cutFlowHistograms', True)
 
+    # TODO: give it a factory when moving to Athena
     from TopCPToolkit.KLFitterConfig import KLFitterConfig
-    cfg = KLFitterConfig('KLFitterResult')
-    cfg.setOptionValue('electrons', 'AnaElectrons.tight')
-    cfg.setOptionValue('muons', 'AnaMuons.tight')
-    cfg.setOptionValue('jets', 'AnaJets.jvt')
-    cfg.setOptionValue('met', 'AnaMET')
-    cfg.setOptionValue('likelihoodType', 'ttbar')
-    cfg.setOptionValue('jetSelectionMode', 'kBtagPriorityFourJets')
-    cfg.setOptionValue('btaggingMethod', 'kWorkingPoint')
-    cfg.setOptionValue('btagger', btagger)
-    cfg.setOptionValue('btagWP', 'FixedCutBEff_77')
+    configSeq += KLFitterConfig('KLFitterResult')
+    configSeq.setOptionValue ('.electrons', 'AnaElectrons.tight')
+    configSeq.setOptionValue ('.muons', 'AnaMuons.tight')
+    configSeq.setOptionValue ('.jets', 'AnaJets.jvt')
+    configSeq.setOptionValue ('.met', 'AnaMET')
+    configSeq.setOptionValue ('.likelihoodType', 'ttbar')
+    configSeq.setOptionValue ('.jetSelectionMode', 'kBtagPriorityFourJets')
+    configSeq.setOptionValue ('.btaggingMethod', 'kWorkingPoint')
+    configSeq.setOptionValue ('.btagger', btagger)
+    configSeq.setOptionValue ('.btagWP', 'FixedCutBEff_77')
     selectionRegionsConfig = 'selectionName:pass_ejets, leptonType: kElectron;'\
         'selectionName:pass_mujets, leptonType: kMuon'
-    cfg.setOptionValue('selectionRegionsConfig', selectionRegionsConfig)
-    configSeq.append(cfg)
+    configSeq.setOptionValue ('.selectionRegionsConfig', selectionRegionsConfig)
 
     outputContainers['klfitter_'] = 'KLFitterResult'
 
+    # TODO: give it a factory when moving to Athena
     from TopCPToolkit.TopSpaNetConfig import TopSpaNetConfig
     for topology in ['TtbarLjets', 'TtbarLjetsNu']:
-        cfg = TopSpaNetConfig()
-        cfg.setOptionValue('electrons', 'AnaElectrons.tight')
-        cfg.setOptionValue('muons', 'AnaMuons.tight')
-        cfg.setOptionValue('jets', 'AnaJets.jvt')
-        cfg.setOptionValue('met', 'AnaMET')
-        cfg.setOptionValue('eventSelection', 'pass_ejets_%SYS%||pass_mujets_%SYS%')
-        cfg.setOptionValue('topology', topology)
-        configSeq.append(cfg)
+        configSeq += TopSpaNetConfig()
+        configSeq.setOptionValue ('.electrons', 'AnaElectrons.tight')
+        configSeq.setOptionValue ('.muons', 'AnaMuons.tight')
+        configSeq.setOptionValue ('.jets', 'AnaJets.jvt')
+        configSeq.setOptionValue ('.met', 'AnaMET')
+        configSeq.setOptionValue ('.eventSelection', 'pass_ejets_%SYS%||pass_mujets_%SYS%')
+        configSeq.setOptionValue ('.topology', topology)
 
+    # TODO: give it a factory when moving to Athena
     if use_taus:
         from TopCPToolkit.DiTauMassConfig import DiTauMassConfig
-        cfg = DiTauMassConfig()
-        cfg.setOptionValue('electrons', 'AnaElectrons.tight')
-        cfg.setOptionValue('muons', 'AnaMuons.tight')
-        cfg.setOptionValue('taus', 'AnaTauJets.tight')
-        cfg.setOptionValue('jets', 'AnaJets.jvt')
-        cfg.setOptionValue('met', 'AnaMET')
-        cfg.setOptionValue('eventSelection', '')
-        cfg.setOptionValue('saveExtraVariables', True)
-        configSeq.append(cfg)
+        configSeq += DiTauMassConfig()
+        configSeq.setOptionValue ('.electrons', 'AnaElectrons.tight')
+        configSeq.setOptionValue ('.muons', 'AnaMuons.tight')
+        configSeq.setOptionValue ('.taus', 'AnaTauJets.tight')
+        configSeq.setOptionValue ('.jets', 'AnaJets.jvt')
+        configSeq.setOptionValue ('.met', 'AnaMET')
+        configSeq.setOptionValue ('.eventSelection', '')
+        configSeq.setOptionValue ('.saveExtraVariables', True)
 
-    from AsgAnalysisAlgorithms.BootstrapGeneratorConfig import makeBootstrapGeneratorConfig
-    makeBootstrapGeneratorConfig(configSeq, nReplicas=2000, runOnMC=True)
+    # bootstraps
+    configSeq += makeConfig ('Bootstraps')
+    configSeq.setOptionValue ('.nReplicas', 2000)
+    configSeq.setOptionValue ('.runOnMC', True)
 
     # add NTuple output config
-    from AsgAnalysisAlgorithms.OutputAnalysisConfig import OutputAnalysisConfig
-    cfg = OutputAnalysisConfig('reco')
-    cfg.setOptionValue('treeName', 'reco')
-    cfg.setOptionValue('vars', reco_branches)
-    cfg.setOptionValue('metVars', met_branches)
-    cfg.setOptionValue('containers', outputContainers)
-    cfg.setOptionValue('commands',
+    configSeq += makeConfig ('.Output')
+    configSeq.setOptionValue ('.treeName', 'reco')
+    configSeq.setOptionValue ('.vars', reco_branches)
+    configSeq.setOptionValue ('.metVars', met_branches)
+    configSeq.setOptionValue ('.containers', outputContainers)
+    configSeq.setOptionValue ('.commands',
                        ['disable jet_.*_eff.*',
                         'disable jet_jvtEfficiency.*',
                         'disable trigPassed_HLT.*',
                         'enable trigPassed_HLT_e.*']
                    )
-    configSeq.append(cfg)
 
     # put everything together
     configAccumulator = ConfigAccumulator(algSeq, flags.Input.DataType,
@@ -362,13 +398,14 @@ SAVE
 
 def makeTruthConfiguration(flags, algSeq):
     configSeq = ConfigSequence()
+    factory = ConfigFactory()
+    makeConfig = factory.makeConfig
 
     truth_branches = []
     outputContainers = {'': 'EventInfo'}
 
     # PMG TruthWeightTool
-    from AsgAnalysisAlgorithms.AsgAnalysisConfig import makeGeneratorAnalysisConfig
-    makeGeneratorAnalysisConfig(configSeq)
+    configSeq += makeConfig ('GeneratorLevelAnalysis')
 
     # add all three Number variables by hand, since we don't run PRW
     truth_branches += [
@@ -377,26 +414,24 @@ def makeTruthConfiguration(flags, algSeq):
         'EventInfo.mcChannelNumber -> mcChannelNumber',
     ]
 
+    # TODO: give it a factory when moving to Athena
     from TopCPToolkit.truthConfig import truthConfig
-    cfg = truthConfig()
-    cfg.setOptionValue('histories', 'Ttbar.TtbarLight')
-    configSeq.append(cfg)
-    outputContainers.update( cfg.getOutputContainers() )
+    configSeq += truthConfig()
+    configSeq.setOptionValue ('.histories', 'Ttbar.TtbarLight')
+    outputContainers.update( configSeq.getOutputContainers() )
 
     # NNLO reweighting
+    # TODO: give it a factory when moving to Athena
     from TopCPToolkit.TtbarNNLORecursiveRewConfig import TtbarNNLORecursiveRewConfig
-    cfg = TtbarNNLORecursiveRewConfig()
-    #cfg.setOptionValue('reweightType','3D')
-    #cfg.setOptionValue('sampleID', 'aMCH7')
-    configSeq.append(cfg)
+    configSeq += TtbarNNLORecursiveRewConfig()
+    #configSeq.setOptionValue ('.reweightType','3D')
+    #configSeq.setOptionValue ('.sampleID', 'aMCH7')
 
     # add NTuple output config
-    from AsgAnalysisAlgorithms.OutputAnalysisConfig import OutputAnalysisConfig
-    cfg = OutputAnalysisConfig('truth')
-    cfg.setOptionValue('treeName', 'truth')
-    cfg.setOptionValue('vars', truth_branches)
-    cfg.setOptionValue('containers', outputContainers)
-    configSeq.append(cfg)
+    configSeq += makeConfig ('Output')
+    configSeq.setOptionValue ('.treeName', 'truth')
+    configSeq.setOptionValue ('.vars', truth_branches)
+    configSeq.setOptionValue ('.containers', outputContainers)
 
     # put everything together
     configAccumulator = ConfigAccumulator(algSeq, flags.Input.DataType,
@@ -408,13 +443,14 @@ def makeTruthConfiguration(flags, algSeq):
 
 def makeParticleLevelConfiguration(flags, algSeq):
     configSeq = ConfigSequence()
+    factory = ConfigFactory()
+    makeConfig = factory.makeConfig
 
     particleLevel_branches = []
     outputContainers = {'': 'EventInfo'}
 
     # PMG TruthWeightTool
-    from AsgAnalysisAlgorithms.AsgAnalysisConfig import makeGeneratorAnalysisConfig
-    makeGeneratorAnalysisConfig(configSeq)
+    configSeq += makeConfig ('GeneratorLevelAnalysis')
 
     # add all three Number variables by hand, since we don't run PRW
     particleLevel_branches += [
@@ -423,22 +459,20 @@ def makeParticleLevelConfiguration(flags, algSeq):
         'EventInfo.mcChannelNumber -> mcChannelNumber',
     ]
 
+    # TODO: give it a factory when moving to Athena
     from TopCPToolkit.particleLevelConfig import particleLevelConfig
-    cfg = particleLevelConfig()
-    cfg.setOptionValue('useTruthLargeRJets', True)
-    cfg.setOptionValue('useTruthPhotons', True)
-    cfg.setOptionValue('useTruthTaus', True)
-    configSeq.append(cfg)
+    configSeq += particleLevelConfig()
+    configSeq.setOptionValue ('.useTruthLargeRJets', True)
+    configSeq.setOptionValue ('.useTruthPhotons', True)
+    configSeq.setOptionValue ('.useTruthTaus', True)
     outputContainers.update( cfg.getOutputContainers() )
 
     # add NTuple output config
-    from AsgAnalysisAlgorithms.OutputAnalysisConfig import OutputAnalysisConfig
-    cfg = OutputAnalysisConfig('particleLevel')
-    cfg.setOptionValue('treeName', 'particleLevel')
-    cfg.setOptionValue('vars', particleLevel_branches)
-    cfg.setOptionValue('containers', outputContainers)
-    cfg.setOptionValue('metTermName', 'NonInt')
-    configSeq.append(cfg)
+    configSeq += makeConfig ('Output')
+    configSeq.setOptionValue('.treeName', 'particleLevel')
+    configSeq.setOptionValue('.vars', particleLevel_branches)
+    configSeq.setOptionValue('.containers', outputContainers)
+    configSeq.setOptionValue('.metTermName', 'NonInt')
 
     # put everything together
     configAccumulator = ConfigAccumulator(algSeq, flags.Input.DataType,
