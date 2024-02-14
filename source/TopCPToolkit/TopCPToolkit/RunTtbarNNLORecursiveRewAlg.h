@@ -31,10 +31,10 @@ namespace top {
         // configurable properties
         int m_sampleID;
         int m_reweightType;
-        const std::string m_user_sampleID;
-        const std::string m_user_reweightType;
-        const std::string m_reweightPath;
-        const std::string m_reweightSuffix;
+        std::string m_user_sampleID;
+        std::string m_user_reweightType;
+        std::string m_reweightPath;
+        std::string m_reweightSuffix;
 
         // the reweighter tool
         std::unique_ptr<TtbarNNLORecursiveRew> m_nnlo_reweighter;

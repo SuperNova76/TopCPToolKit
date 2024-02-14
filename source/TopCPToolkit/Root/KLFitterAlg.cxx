@@ -1,3 +1,4 @@
+#include "AthContainers/ConstDataVector.h"
 #include "TopCPToolkit/KLFitterAlg.h"
 #include "TopCPToolkit/Tokenize.h"
 #include "PathResolver/PathResolver.h"
@@ -541,7 +542,7 @@ namespace top {
 
       ++index;
     }  // for (jet)
-    return true;
+    return StatusCode::SUCCESS;
   }
 
   StatusCode KLFitterAlg::evaluatePermutations(const CP::SystematicSet &sys) {

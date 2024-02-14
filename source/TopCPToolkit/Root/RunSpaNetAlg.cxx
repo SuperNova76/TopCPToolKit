@@ -1,4 +1,5 @@
 #include "TopCPToolkit/RunSpaNetAlg.h"
+#include "AthContainers/ConstDataVector.h"
 
 namespace top {
 

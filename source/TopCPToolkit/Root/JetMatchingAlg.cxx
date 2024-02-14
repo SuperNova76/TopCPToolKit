@@ -1,4 +1,5 @@
 #include "TopCPToolkit/JetMatchingAlg.h"
+#include "AthContainers/ConstDataVector.h"
 
 namespace top {
 

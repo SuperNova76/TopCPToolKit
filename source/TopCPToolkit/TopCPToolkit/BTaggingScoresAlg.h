@@ -27,8 +27,8 @@ public:
 
 private:
   // configurable properties
-  const bool m_saveAllProbabilities;
-  const std::string m_taggerName;
+  bool m_saveAllProbabilities;
+  std::string m_taggerName;
 
   // systematics
   CP::SysListHandle m_systematicsList{this};

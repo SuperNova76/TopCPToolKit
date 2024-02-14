@@ -1,4 +1,5 @@
 #include "TopCPToolkit/DiTauMassCalculatorAlg.h"
+#include "AthContainers/ConstDataVector.h"
 
 DiTauMassCalculatorAlg::DiTauMassCalculatorAlg(const std::string &name, ISvcLocator *pSvcLocator)
     : EL::AnaAlgorithm(name, pSvcLocator)

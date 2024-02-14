@@ -395,7 +395,7 @@ double TtbarNNLORecursiveRew::GetSysWeight(const CP::SystematicSet& sys, double 
 {
     // switch to the appropriate systematic variation
     const NNLORewEnums::SystVar *systVar {nullptr};
-    ANA_CHECK( m_calibCache.get(sys, systVar) );
+    m_calibCache.get(sys, systVar).ignore();
 
     m_systVar = *systVar;
 
