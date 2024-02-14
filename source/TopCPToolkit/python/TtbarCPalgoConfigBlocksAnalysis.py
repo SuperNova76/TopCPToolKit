@@ -171,7 +171,7 @@ def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
     }
     individual_triggers = list(set(substring.strip() for chains_list in triggerChainsPerYear.values() for chain in chains_list for substring in chain.split('||')))
 
-    makeTriggerAnalysisConfig(configSeq, triggerChainsPerYear=triggerChainsPerYear, noFilter=noFilter, electronWorkingPoint='Tight.Tight_VarRad', muonWorkingPoint='Tight.None',
+    makeTriggerAnalysisConfig(configSeq, triggerChainsPerYear=triggerChainsPerYear, noFilter=noFilter, electronWorkingPoint='Tight.Tight_VarRad', muonWorkingPoint='Medium.None',
                               electrons='AnaElectrons.tight', muons='AnaMuons.tight')
 
     # object-based cutflow
