@@ -58,9 +58,9 @@ nav:
             - Suggesting an improvement: contributing/suggesting_improvement.md
     - Tutorials:
         - tutorials/index.md
-        - Initial setup: tutorials/setup.md
-        - Your first config: tutorials/write_config.md
-        - Your first algorithm: tutorials/write_algorithm.md
+        - 0. Initial setup: tutorials/setup.md
+        - 1. Your first config: tutorials/write_config.md
+        - 2. Your first algorithm: tutorials/write_algorithm.md
         - Understanding Grid jobs: tutorials/submit_grid.md
         - Using machine learning: tutorials/machine_learning.md
     - Settings:
