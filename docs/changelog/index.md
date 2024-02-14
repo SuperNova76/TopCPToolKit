@@ -7,7 +7,18 @@
 - [issue #90](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/90): reduce the large memory footprint
 - [issue #93](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/93): prepare a tutorial
 - [issue #94](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/94): add algorithm for NuFlows reconstruction
+- [issue #99](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/99): update to ConfigFactory syntax
+- [issue #100](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/100): deal with the correct ordering of JVT and OR
+- [issue #101](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/101): adapt to the new btagging event-wise SF
+
+### 2.6.0 <small>February 14, 2024</small>
+- We run on AB 24.2.40
 - [issue #96](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/96): fix for missing AF3 Egamma calibrations
+- [issue #97](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/97): document the updated PRW interface
+- [issue #98](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/98): document the declaration of blocks in YAML
+- [issue #102](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/102): allow to run NNLO reweighting in nominal-only mode
+- [issue #103](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/103): compatibility with AthAnalysis
+
 
 ### 2.5.0 <small>January 19, 2024</small>
 - We run on AB 24.2.37
