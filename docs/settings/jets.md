@@ -132,7 +132,7 @@
 :   the flavour tagging WP. The default is `FixedCutBEff_77`.
 
 `generator`
-:   MC generator setup, for MC/MC SFs. The default is `default` (Powheg+Pythia8). A DSID string is expected, see [MC/MC Scale Factors using Top Samples](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/PmgTopProcesses#FTAG_MC_MC_Scale_Factors_using_T).
+:   MC generator setup, for MC/MC SFs. The default is `"autoconfig"` (relies on the sample metadata). To override, a DSID string is expected, see [MC/MC Scale Factors using Top Samples](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/PmgTopProcesses#FTAG_MC_MC_Scale_Factors_using_T).
 
 `kinematicSelection`
 :   whether to run kinematic selection. The default is `True`.
@@ -194,7 +194,7 @@
 :   the flavour tagging WP. The default is `FixedCutBEff_77`.
 
 `generator`
-:   MC generator setup, for MC/MC SFs. The default is `default` (Powheg+Pythia8). A DSID string is expected, see [MC/MC Scale Factors using Top Samples](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/PmgTopProcesses#FTAG_MC_MC_Scale_Factors_using_T).
+:   MC generator setup, for MC/MC SFs. The default is `"autoconfig"` (relies on the sample metadata). To override, a DSID string is expected, see [MC/MC Scale Factors using Top Samples](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/PmgTopProcesses#FTAG_MC_MC_Scale_Factors_using_T).
 
 `kinematicSelection`
 :   whether to run kinematic selection. The default is `True`.

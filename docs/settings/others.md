@@ -118,13 +118,13 @@ _Returns an instance of [`CommonServicesConfig`](#commonservicesconfig), see the
 ### [GeneratorAnalysisBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
 
 `saveCutBookkeepers`
-:   whether to save the cut bookkeepers information into the output file. The default is `False`.
+:   whether to save the cut bookkeepers information into the output file. The default is `True`.
 
 `runNumber`
 :   the MC runNumber (int). The default is `None` (autoconfigure from metadata).
 
 `cutBookkeepersSystematics`
-:   whether to also save the cut bookkeepers systematics. The default is `False`.
+:   whether to also save the cut bookkeepers systematics. The default is `None` (follows the global systematics flag). Set to `False` or `True` to override.
 
 !!! success "Registers the following variables:"
     - `generatorWeight`: the event-level PMG generator weight
