@@ -121,9 +121,10 @@ def makeTextBasedSequence(analysisName, filename, flags, noSystematics=False):
         return algSeq
 
     yamlconfig = PathResolver.find_file(f'{analysisName}/{filename}.yaml', "CALIBPATH", PathResolver.RecursiveSearch)
+    print(">>> Setting up configuration based on YAML config:")
+    print(yamlconfig + "\n")
     config = TextConfig(yamlconfig)
 
-    print(">>> Setting up configuration based on YAML\n")
 
     # ==============================
     # INSERT CUSTOM BLOCKS BELOW
@@ -173,8 +174,6 @@ def makeTextBasedSequence(analysisName, filename, flags, noSystematics=False):
 
     # END OF CUSTOM BLOCKS
     # ===============================
-    config.printAlgs(printOpts=True)
-
     print(">>> Configuring algorithms based on YAML file")
     configSeq = config.configure()
 

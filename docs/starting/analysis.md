@@ -216,7 +216,29 @@ The model inference is done using [ONNX runtime](https://onnxruntime.ai/) C++ in
 
 While the YAML config to schedule algorithms is a seemingly completely different approach, it's just another level of abstraction: CP tools are set up by algorithms, which are configured in blocks, and registering these blocks with the [`TextConfig`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AnalysisAlgorithmsConfig/python/ConfigText.py) object allows to manipulate them in the YAML file. Therefore, everything we've discussed up until this point for config blocks and analysis modules, still applies.
 
-### Adding blocks to the config
+### Registering new blocks directly in the YAML config (since AnalysisBase 24.2.40)
+
+Custom config blocks created by the user can be registered directly in the YAML config, such that they are recognised by the `ConfigAccumulator`.
+This does not require modifying the TopCPToolkit code, unlike the approach using the python interface described below.
+
+Suppose we have a package named `MyPackage` (this could be e.g. TopCPToolkit itself) with the `MyAnalysisConfigModule.py` file declaring a new block class `MyAnalysisConfig`.
+The registration of the config block is done using the `AddConfigBlocks` block in YAML:
+
+```yaml
+AddConfigBlocks:
+  - modulePath: 'MyPackage.MyAnalysisConfigModule'
+    functionName: 'MyAnalysisConfig'
+    algName: 'ThisAnalysis'
+    pos: 'Output'
+```
+
+The argument of `AddConfigBlocks` is a list, so that any number of custom blocks can be registered.
+The blocks can be subsequently used in the YAML config, as specified by the `algName`.
+In our concrete example, we would configure the block in YAML using the `ThisAnalysis` keyword.
+The `pos` argument specifies where in the chain to place this block: here, before the `Output` block.
+This is the appropriate location for most analysis algorithms, which should be run after anything related to object calibration, working points, overlap removal, etc.
+
+### Registering new blocks in the python interface
 
 In [commonAlgoConfig.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/blob/main/source/TopCPToolkit/python/commonAlgoConfig.py), we define the `makeTextBasedSequence` function, which will ultimately set up an instance of `ConfigAccumulator` as before. Crucially, we also declare all possible config blocks: those defined by default in the `addDefaultAlgs` method of the [`ConfigFactory`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AnalysisAlgorithmsConfig/python/ConfigFactory.py), and adding manually those blocks defined only in TopCPToolkit. Below is an example for the NNLO $t\bar{t}$ reweighting algorithm:
 
