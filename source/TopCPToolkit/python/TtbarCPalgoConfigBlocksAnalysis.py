@@ -1,5 +1,6 @@
 from AnalysisAlgorithmsConfig.ConfigSequence import ConfigSequence
 from AnalysisAlgorithmsConfig.ConfigAccumulator import ConfigAccumulator
+from AnalysisAlgorithmsConfig.ConfigFactory import ConfigFactory
 from AsgAnalysisAlgorithms.AsgAnalysisConfig import makePtEtaSelectionConfig, PerEventSFBlock
 from TopCPToolkit import metaConfig, commonAlgoConfig
 
@@ -92,19 +93,18 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
         # b-tagging
         WPs = ['FixedCutBEff_85','FixedCutBEff_77','FixedCutBEff_70','FixedCutBEff_60','Continuous']
         btagger = 'DL1dv01'
-        from FTagAnalysisAlgorithms.FTagAnalysisConfig import makeFTagAnalysisConfig
         for WP in WPs:
-            configSeq += makeConfig ('Jets.FlavourTagging', containerName='AnaJets', selectionName='')
+            configSeq += makeConfig ('Jets.FlavourTagging', containerName='AnaJets', selectionName=f'{btagger}_{WP}')
             configSeq.setOptionValue ('.btagger', btagger)
             configSeq.setOptionValue ('.btagWP', WP)
             configSeq.setOptionValue ('.minPt', 25e3)
-            configSeq.setOptionValue ('')
 
             # calculate per-event b-tagging SF (alternative to storing per-jet SFs)
-            configSeq += makeConfig ('PerEventSF', name=f'btagSFCalc_{btagger}_{WP}')
-            configSeq.setOptionValue ('.particles', 'AnaJets.jvt')
-            configSeq.setOptionValue ('.objectSF', f'ftag_effSF_{btagger}_{WP}_%SYS%')
-            configSeq.setOptionValue ('.eventSF', f'weight_btagSF_{btagger}_{WP}_%SYS%')
+            # TODO: fix the argument "name"!
+            # configSeq += makeConfig ('PerEventSF', name=f'btagSFCalc_{btagger}_{WP}')
+            # configSeq.setOptionValue ('.particles', 'AnaJets.jvt')
+            # configSeq.setOptionValue ('.objectSF', f'ftag_effSF_{btagger}_{WP}_%SYS%')
+            # configSeq.setOptionValue ('.eventSF', f'weight_btagSF_{btagger}_{WP}_%SYS%')
 
         outputContainers['jet_'] = 'OutJets'
 
@@ -225,23 +225,27 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
     # a single lepton SF
     # TODO: give it a factory when moving to Athena
     from TopCPToolkit.LeptonSFCalculatorConfig import LeptonSFCalculatorConfig
-    configSeq += LeptonSFCalculatorConfig()
-    configSeq.setOptionValue ('.electrons', 'AnaElectrons.tight')
-    configSeq.setOptionValue ('.muons', 'AnaMuons.tight')
-    configSeq.setOptionValue ('.lepton_postfix', 'tight')
+    cfg = LeptonSFCalculatorConfig()
+    cfg.setOptionValue ('electrons', 'AnaElectrons.tight')
+    cfg.setOptionValue ('muons', 'AnaMuons.tight')
+    cfg.setOptionValue ('lepton_postfix', 'tight')
+    configSeq.append(cfg)
 
     # energy decorations
     # TODO: give it a factory when moving to Athena
     from TopCPToolkit.ExtraParticleDecorationConfig import ExtraParticleDecorationConfig
     if use_electrons:
-        configSeq += ExtraParticleDecorationConfig('El')
-        configSeq.setOptionValue('.particles', 'AnaElectrons')
+        cfg = ExtraParticleDecorationConfig('El')
+        cfg.setOptionValue('particles', 'AnaElectrons')
+        configSeq.append(cfg)
     if use_muons:
-        configSeq += ExtraParticleDecorationConfig('Mu')
-        configSeq.setOptionValue('.particles', 'AnaMuons')
+        cfg = ExtraParticleDecorationConfig('Mu')
+        cfg.setOptionValue('particles', 'AnaMuons')
+        configSeq.append(cfg)
     if use_jets:
-        configSeq += ExtraParticleDecorationConfig('Jet')
-        configSeq.setOptionValue('.particles', 'AnaJets')
+        cfg = ExtraParticleDecorationConfig('Jet')
+        cfg.setOptionValue('particles', 'AnaJets')
+        configSeq.append(cfg)
 
     # the IFF lepton classification
     if use_electrons:
@@ -319,56 +323,59 @@ JET_N 1000000 >= 1
 SAVE
 """
     }
-    configSeq += makeConfig ('EventSelection')
-    configSeq.setOptionValue ('.electrons', 'AnaElectrons.loose')
-    configSeq.setOptionValue ('.muons', 'AnaMuons.tight')
-    configSeq.setOptionValue ('.met', 'AnaMET')
-    configSeq.setOptionValue ('.jets', 'AnaJets.jvt')
-    configSeq.setOptionValue ('.btagDecoration', f'ftag_select_{btagger}_FixedCutBEff_85')
-    configSeq.setOptionValue ('.selectionCutsDicts', mycuts)
-    configSeq.setOptionValue ('.noFilter', noFilter)
-    configSeq.setOptionValue ('.cutFlowHistograms', True)
+    configSeq += makeConfig ('EventSelection',
+                             electrons='AnaElectrons.loose',
+                             muons='AnaMuons.tight',
+                             met='AnaMET',
+                             jets='AnaJets.jvt',
+                             btagDecoration='ftag_select_DL1dv01_FixedCutBEff_85',
+                             selectionCutsDict=mycuts,
+                             noFilter=noFilter,
+                             cutFlowHistograms=True)
 
     # TODO: give it a factory when moving to Athena
     from TopCPToolkit.KLFitterConfig import KLFitterConfig
-    configSeq += KLFitterConfig('KLFitterResult')
-    configSeq.setOptionValue ('.electrons', 'AnaElectrons.tight')
-    configSeq.setOptionValue ('.muons', 'AnaMuons.tight')
-    configSeq.setOptionValue ('.jets', 'AnaJets.jvt')
-    configSeq.setOptionValue ('.met', 'AnaMET')
-    configSeq.setOptionValue ('.likelihoodType', 'ttbar')
-    configSeq.setOptionValue ('.jetSelectionMode', 'kBtagPriorityFourJets')
-    configSeq.setOptionValue ('.btaggingMethod', 'kWorkingPoint')
-    configSeq.setOptionValue ('.btagger', btagger)
-    configSeq.setOptionValue ('.btagWP', 'FixedCutBEff_77')
+    cfg = KLFitterConfig('KLFitterResult')
+    cfg.setOptionValue ('electrons', 'AnaElectrons.tight')
+    cfg.setOptionValue ('muons', 'AnaMuons.tight')
+    cfg.setOptionValue ('jets', 'AnaJets.jvt')
+    cfg.setOptionValue ('met', 'AnaMET')
+    cfg.setOptionValue ('likelihoodType', 'ttbar')
+    cfg.setOptionValue ('jetSelectionMode', 'kBtagPriorityFourJets')
+    cfg.setOptionValue ('btaggingMethod', 'kWorkingPoint')
+    cfg.setOptionValue ('btagger', btagger)
+    cfg.setOptionValue ('btagWP', 'FixedCutBEff_77')
     selectionRegionsConfig = 'selectionName:pass_ejets, leptonType: kElectron;'\
         'selectionName:pass_mujets, leptonType: kMuon'
-    configSeq.setOptionValue ('.selectionRegionsConfig', selectionRegionsConfig)
+    cfg.setOptionValue ('selectionRegionsConfig', selectionRegionsConfig)
+    configSeq.append(cfg)
 
     outputContainers['klfitter_'] = 'KLFitterResult'
 
     # TODO: give it a factory when moving to Athena
     from TopCPToolkit.TopSpaNetConfig import TopSpaNetConfig
     for topology in ['TtbarLjets', 'TtbarLjetsNu']:
-        configSeq += TopSpaNetConfig()
-        configSeq.setOptionValue ('.electrons', 'AnaElectrons.tight')
-        configSeq.setOptionValue ('.muons', 'AnaMuons.tight')
-        configSeq.setOptionValue ('.jets', 'AnaJets.jvt')
-        configSeq.setOptionValue ('.met', 'AnaMET')
-        configSeq.setOptionValue ('.eventSelection', 'pass_ejets_%SYS%||pass_mujets_%SYS%')
-        configSeq.setOptionValue ('.topology', topology)
+        cfg = TopSpaNetConfig()
+        cfg.setOptionValue ('electrons', 'AnaElectrons.tight')
+        cfg.setOptionValue ('muons', 'AnaMuons.tight')
+        cfg.setOptionValue ('jets', 'AnaJets.jvt')
+        cfg.setOptionValue ('met', 'AnaMET')
+        cfg.setOptionValue ('eventSelection', 'pass_ejets_%SYS%||pass_mujets_%SYS%')
+        cfg.setOptionValue ('topology', topology)
+        configSeq.append(cfg)
 
     # TODO: give it a factory when moving to Athena
     if use_taus:
         from TopCPToolkit.DiTauMassConfig import DiTauMassConfig
-        configSeq += DiTauMassConfig()
-        configSeq.setOptionValue ('.electrons', 'AnaElectrons.tight')
-        configSeq.setOptionValue ('.muons', 'AnaMuons.tight')
-        configSeq.setOptionValue ('.taus', 'AnaTauJets.tight')
-        configSeq.setOptionValue ('.jets', 'AnaJets.jvt')
-        configSeq.setOptionValue ('.met', 'AnaMET')
-        configSeq.setOptionValue ('.eventSelection', '')
-        configSeq.setOptionValue ('.saveExtraVariables', True)
+        cfg += DiTauMassConfig()
+        cfg.setOptionValue ('electrons', 'AnaElectrons.tight')
+        cfg.setOptionValue ('muons', 'AnaMuons.tight')
+        cfg.setOptionValue ('taus', 'AnaTauJets.tight')
+        cfg.setOptionValue ('jets', 'AnaJets.jvt')
+        cfg.setOptionValue ('met', 'AnaMET')
+        cfg.setOptionValue ('eventSelection', '')
+        cfg.setOptionValue ('saveExtraVariables', True)
+        configSeq.append(cfg)
 
     # bootstraps
     configSeq += makeConfig ('Bootstraps')
@@ -376,7 +383,7 @@ SAVE
     configSeq.setOptionValue ('.runOnMC', True)
 
     # add NTuple output config
-    configSeq += makeConfig ('.Output')
+    configSeq += makeConfig ('Output')
     configSeq.setOptionValue ('.treeName', 'reco')
     configSeq.setOptionValue ('.vars', reco_branches)
     configSeq.setOptionValue ('.metVars', met_branches)
@@ -416,16 +423,18 @@ def makeTruthConfiguration(flags, algSeq):
 
     # TODO: give it a factory when moving to Athena
     from TopCPToolkit.truthConfig import truthConfig
-    configSeq += truthConfig()
-    configSeq.setOptionValue ('.histories', 'Ttbar.TtbarLight')
-    outputContainers.update( configSeq.getOutputContainers() )
+    cfg = truthConfig()
+    cfg.setOptionValue ('histories', 'Ttbar.TtbarLight')
+    configSeq.append(cfg)
+    outputContainers.update( cfg.getOutputContainers() )
 
     # NNLO reweighting
     # TODO: give it a factory when moving to Athena
     from TopCPToolkit.TtbarNNLORecursiveRewConfig import TtbarNNLORecursiveRewConfig
-    configSeq += TtbarNNLORecursiveRewConfig()
-    #configSeq.setOptionValue ('.reweightType','3D')
-    #configSeq.setOptionValue ('.sampleID', 'aMCH7')
+    cfg = TtbarNNLORecursiveRewConfig()
+    #cfg.setOptionValue ('reweightType','3D')
+    #cfg.setOptionValue ('sampleID', 'aMCH7')
+    configSeq.append(cfg)
 
     # add NTuple output config
     configSeq += makeConfig ('Output')
@@ -461,10 +470,11 @@ def makeParticleLevelConfiguration(flags, algSeq):
 
     # TODO: give it a factory when moving to Athena
     from TopCPToolkit.particleLevelConfig import particleLevelConfig
-    configSeq += particleLevelConfig()
-    configSeq.setOptionValue ('.useTruthLargeRJets', True)
-    configSeq.setOptionValue ('.useTruthPhotons', True)
-    configSeq.setOptionValue ('.useTruthTaus', True)
+    cfg = particleLevelConfig()
+    cfg.setOptionValue ('useTruthLargeRJets', True)
+    cfg.setOptionValue ('useTruthPhotons', True)
+    cfg.setOptionValue ('useTruthTaus', True)
+    configSeq.append(cfg)
     outputContainers.update( cfg.getOutputContainers() )
 
     # add NTuple output config

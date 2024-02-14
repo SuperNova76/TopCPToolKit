@@ -16,9 +16,8 @@ def makeRecoSequence(analysisName, flags, noSystematics=False, noFilter=False):
 
     configSeq = ConfigSequence()
     factory = ConfigFactory()
-    makeConfig = factory.makeConfig
 
-    configSeq += makeConfig('CommonServices')
+    configSeq += factory.makeConfig('CommonServices')
     configSeq.setOptionValue('.runSystematics', not noSystematics)
 
     import importlib
@@ -27,7 +26,7 @@ def makeRecoSequence(analysisName, flags, noSystematics=False, noFilter=False):
     except ModuleNotFoundError:
         raise Exception(f'The package and module for your --analysis could not be found: {analysisName}')
     try:
-        analysisModule.makeRecoConfiguration(flags, algSeq, configSeq, makeConfig, noFilter)
+        analysisModule.makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter)
     except AttributeError:
         raise Exception('The analysis you specified via --analysis does not have makeRecoConfiguration method implemented.'
                         'This is needed to configure the CP algorithms')
@@ -46,7 +45,7 @@ def add_event_cleaning(configSeq, factory, flags, runEventCleaning=True):
         GRLFiles = [metaConfig.get_grl(flags)]
     configSeq += factory.makeConfig ('EventCleaning')
     configSeq.setOptionValue ('.runEventCleaning', runEventCleaning)
-    configSeq.setOptionValue ('.userGRLFiles', GRLFiles if is_data else None)
+    configSeq.setOptionValue ('.userGRLFiles', GRLFiles if is_data else [])
 
 
 def makeTruthSequence(analysisName, flags, noSystematics=False):
