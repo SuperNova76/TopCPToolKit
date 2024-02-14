@@ -122,7 +122,7 @@
 :   the suffix (string) to use when looking for the histograms. The default is `_3iter_2023_LUX`.
 
 `nominalOnly`
-:   whether to disable systematics and run only the nominal NNLO reweighting. The default is `False`.
+:   whether to disable systematics and run only the nominal NNLO reweighting. The default is `True` (PMG recommendation: compare only the nominal NNLO weight).
 
 !!! success "Registers the following variables:"
     - `NNLO_type_weight`: NNLO weight (overall normalised to 1), where `type` reflects the `reweightType` option
