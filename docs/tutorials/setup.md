@@ -34,7 +34,7 @@ Note that we are now on the `main` branch, which is used for development.
 For the purposes of this tutorial, we will use a [stable release](../changelog/index.md) instead:
 ```sh
 git fetch -a
-git checkout tags/v2.5.0 -b mytutorial
+git checkout tags/v2.6.0 -b mytutorial
 ```
 
 ## Setting up the environment
@@ -52,25 +52,35 @@ source */setup.sh
 ??? tip "Re-using an existing setup"
     You may want to come back to the tutorial at a later time, or start again from a clean shell. You don't have to recompile everything from scratch! Simply run
     ```sh
-    setupATLAS
+    setupATLAS -q
     cd build
     asetup --restore
     source */setup.sh
     ```
     and you will recover your working environment.
 
+    **Tip**: put this code in a file `setup.sh` so you can easily call `source setup.sh`.
+
 ??? tip "Modifying files"
-    Throughout the tutorials, you will be invited to make modifications to the package. If these modifications are made on files that need compiling (e.g. `.cxx` or `.h`), you will need to go back to your `build` directory and run again
+    Throughout the tutorials, you will be invited to make modifications to the package. If these modifications are made on files that need compiling (e.g. `.cxx` or `.h`), you will need run again
     ```sh
+    cd build
     make -j4
     source */setup.sh
+    cd ../
     ```
 
+    **Tip**: put this code in a file `quick_compile.sh` so you can easily call `source quick_compile.sh`.
+
 ??? tip "Creating new files"
-    As above, we need to recompile the package, but also tell CMake to discover these new files. In your `build` directory:
+    As above, we need to recompile the package, but also tell CMake to discover these new files:
     ```sh
+    cd build
     cmake ../source
     make -j4
     source */setup.sh
+    cd ../
     ```
     When the changes are significant, it may sometimes be necessary to clear the `build` directory altogether and compile again from scratch.
+
+    **Tip**: put this code in a file `full_compile.sh` so you can easily call `source full_compile.sh`.
