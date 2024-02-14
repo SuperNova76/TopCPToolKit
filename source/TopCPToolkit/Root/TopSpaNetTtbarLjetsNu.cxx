@@ -1,4 +1,5 @@
 #include "TopSpaNet/TopologyTtbarLjetsNu.h"
+#include "AthContainers/ConstDataVector.h"
 
 namespace top {
 

@@ -35,8 +35,8 @@ namespace top {
   private:
     StatusCode execute_syst(const CP::SystematicSet &sys);
     // configurable properties
-    const std::string m_topology;
-    const std::string m_btagger;
+    std::string m_topology;
+    std::string m_btagger;
 
     // the SPA-Net object
     std::unique_ptr<TopSpaNetTopology> m_spanet_reco;

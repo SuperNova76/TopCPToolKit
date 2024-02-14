@@ -3,6 +3,14 @@
 #include "FourMomUtils/xAODP4Helpers.h"
 #include "TopCPToolkit/Tokenize.h"
 
+#ifdef XAOD_STANDALONE
+// access to tds in non-athena release
+#define TDS() evtStore()->tds()
+#else
+// access to tds in athena release
+#define TDS() evtStore()
+#endif
+
 namespace top {
   ParticleLevelAlg::ParticleLevelAlg(const std::string& name,
 				     ISvcLocator* pSvcLocator)
@@ -426,8 +434,8 @@ namespace top {
 	outputElectrons->push_back(electron);
       }
       outputSGKey = "ParticleLevelElectrons_NOSYS";
-      save = evtStore()->tds()->record(outputElectrons, outputSGKey);
-      saveAux = evtStore()->tds()->record(outputElectronsAux, outputSGKey + "Aux.");
+      save = TDS()->record(outputElectrons, outputSGKey);
+      saveAux = TDS()->record(outputElectronsAux, outputSGKey + "Aux.");
       if (!save || !saveAux)
 	return StatusCode::FAILURE;
     }
@@ -448,8 +456,8 @@ namespace top {
 	outputMuons->push_back(muon);
       }
       outputSGKey = "ParticleLevelMuons_NOSYS";
-      save = evtStore()->tds()->record(outputMuons, outputSGKey);
-      saveAux = evtStore()->tds()->record(outputMuonsAux, outputSGKey + "Aux.");
+      save = TDS()->record(outputMuons, outputSGKey);
+      saveAux = TDS()->record(outputMuonsAux, outputSGKey + "Aux.");
       if (!save)
 	return StatusCode::FAILURE;
     }
@@ -472,8 +480,8 @@ namespace top {
 	outputPhotons->push_back(photon);
       }
       outputSGKey = "ParticleLevelPhotons_NOSYS";
-      save = evtStore()->tds()->record(outputPhotons, outputSGKey);
-      saveAux = evtStore()->tds()->record(outputPhotonsAux, outputSGKey + "Aux.");
+      save = TDS()->record(outputPhotons, outputSGKey);
+      saveAux = TDS()->record(outputPhotonsAux, outputSGKey + "Aux.");
       if (!save || !saveAux)
 	return StatusCode::FAILURE;
     }
@@ -497,8 +505,8 @@ namespace top {
 	outputTaus->push_back(tau);
       }
       outputSGKey = "ParticleLevelTaus_NOSYS";
-      save = evtStore()->tds()->record(outputTaus, outputSGKey);
-      saveAux = evtStore()->tds()->record(outputTausAux, outputSGKey + "Aux.");
+      save = TDS()->record(outputTaus, outputSGKey);
+      saveAux = TDS()->record(outputTausAux, outputSGKey + "Aux.");
       if (!save || !saveAux)
 	return StatusCode::FAILURE;
     }
@@ -521,8 +529,8 @@ namespace top {
 	outputJets->push_back(jet);
       }
       outputSGKey = "ParticleLevelJets_NOSYS";
-      save = evtStore()->tds()->record(outputJets, outputSGKey);
-      saveAux = evtStore()->tds()->record(outputJetsAux, outputSGKey + "Aux.");
+      save = TDS()->record(outputJets, outputSGKey);
+      saveAux = TDS()->record(outputJetsAux, outputSGKey + "Aux.");
       if (!save || !saveAux)
 	return StatusCode::FAILURE;
     }
@@ -545,8 +553,8 @@ namespace top {
 	outputLargeRJets->push_back(ljet);
       }
       outputSGKey = "ParticleLevelLargeRJets_NOSYS";
-      save = evtStore()->tds()->record(outputLargeRJets, outputSGKey);
-      saveAux = evtStore()->tds()->record(outputLargeRJetsAux, outputSGKey + "Aux.");
+      save = TDS()->record(outputLargeRJets, outputSGKey);
+      saveAux = TDS()->record(outputLargeRJetsAux, outputSGKey + "Aux.");
       if (!save || !saveAux)
 	return StatusCode::FAILURE;
     }
@@ -567,8 +575,8 @@ namespace top {
 	outputMissingET->push_back(met);
       }
       outputSGKey = "ParticleLevelMissingET_NOSYS";
-      save = evtStore()->tds()->record(outputMissingET, outputSGKey);
-      saveAux = evtStore()->tds()->record(outputMissingETAux, outputSGKey + "Aux.");
+      save = TDS()->record(outputMissingET, outputSGKey);
+      saveAux = TDS()->record(outputMissingETAux, outputSGKey + "Aux.");
       if (!save || !saveAux)
 	return StatusCode::FAILURE;
     }
