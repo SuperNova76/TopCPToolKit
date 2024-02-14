@@ -14,7 +14,7 @@ Various scale factors are computed by the respective CP algorithms. The default 
 
 Calculates a per-event SF which is the product of per-object SFs, for objects passing an optional selection.
 
-`name`
+`algoName`
 :   unique name given to the underlying algorithm computing the per-event scale factors
 
 `particles`

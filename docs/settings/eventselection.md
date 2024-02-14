@@ -80,7 +80,7 @@ Performs multiple event selections, split into separate regions and subregions. 
 `preselection`
 :   the event-wise selection flag to start this event selection from. The default is `''` (empty string).
 
-`selectionCutsDicts`
+`selectionCutsDict`
 :   a dictionary of (keys) region names and (values) strings listing one selection cut per line. See [available keywords](). A region name starting with `SUB` is treated as a subregion (not saved, can be imported from another selection).
 
 `noFilter`
