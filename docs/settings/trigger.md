@@ -1,3 +1,4 @@
+<!---
 ## Make-methods
 
 ### [makeTriggerAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TriggerAnalysisAlgorithms/python/TriggerAnalysisConfig.py)
@@ -52,10 +53,12 @@ The default is `[]` (empty list).
     - `trigPassed`: whether a specific trigger is passed
     - `globalTriggerMatch`: whether the event passes trigger matching requirements
     - `globalTriggerEffSF`: the event-level global trigger efficiency SF
+--->
 
 ## Config blocks
 
 ### [TriggerAnalysisBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TriggerAnalysisAlgorithms/python/TriggerAnalysisConfig.py)
+Name in YAML: **Trigger**
 
 `configName`
 :   name of the block config, e.g. `Trigger`.

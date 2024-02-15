@@ -1,3 +1,4 @@
+<!---
 ## Make-methods
 
 ### [makeOverlapAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/OverlapAnalysisConfig.py)
@@ -67,10 +68,12 @@
 
 !!! tip
     It is also possible to pass a number of systematics-independent selections (event-level or per-object) to the overlap removal procedure. These are however not available from the `makeOverlapAnalysisConfig` method, and instead users must modify the config sequence directly. More details in [athena!65523](https://gitlab.cern.ch/atlas/athena/-/merge_requests/65523).
+--->
 
 ## Config blocks
 
 ### [OverlapAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/OverlapAnalysisConfig.py)
+Name in YAML: **OverlapRemoval**
 
 `configName`
 :   name of the block config, useful to distinguish the various blocks if different overlap removal strategies are set up. Set it to e.g. `OverlapRemoval`.

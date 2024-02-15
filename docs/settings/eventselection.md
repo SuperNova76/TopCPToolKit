@@ -50,6 +50,7 @@ Performs a single event selection. To define multiple selection regions, see [`m
 :   whether to generate cutflow histograms for the selection cuts (performs a call to [`makeEventCutFlowConfig`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)). The default is `False` (no histograms).
 
 ### [makeMultipleEventSelectionConfigs](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EventSelectionAlgorithms/python/EventSelectionConfig.py)
+Name in YAML: **EventSelection**
 
 Performs multiple event selections, split into separate regions and subregions. A final logical OR of all region selections is used as event filter. The arguments below are the same as for [`makeEventSelectionConfig`](eventselection.md#makeeventselectionconfig), except for `selectionCutsDict`!
 

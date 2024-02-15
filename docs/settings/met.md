@@ -1,3 +1,4 @@
+<!---
 ## Make-methods
 
 ### [makeMetAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/MetAnalysisAlgorithms/python/MetAnalysisConfig.py)
@@ -48,10 +49,12 @@
     - `mpy`: $p_{y,\mathrm{miss}} = - \sum p_y$
     - `met`: $p_{\mathrm{T},\mathrm{miss}} = \sqrt{p_{x,\mathrm{miss}}^2+p_{y,\mathrm{miss}}^2}$
     - `sumet`: $\Sigma E_{\mathrm{T}} = \sum p_{\mathrm{T}}$
+--->
 
 ## Config blocks
 
 ### [MetAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/MetAnalysisAlgorithms/python/MetAnalysisConfig.py)
+Name in YAML: **MissingET**
 
 `containerName`
 :   the name of the output container after calibration.

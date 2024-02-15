@@ -1,11 +1,14 @@
+<!---
 ## Make-methods
 
 !!! warning
     No such method exist yet for event reconstruction algorithms!
+--->
 
 ## Config blocks
 
 ### [DiTauMassConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/DiTauMassConfig.py)
+Name in YAML: **DiTauMMC**
 
 `electrons`
 :   the input electron container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
@@ -104,6 +107,7 @@
     The MMC method assumes that the MET in a given event originates mostly from the neutrinos associated to the decay of the di-tau system. If your topology has additional sources of MET (e.g. $t\bar{t}H(\to\tau\tau)$, $W(\to\ell\nu)H(\to\tau\tau)$), the MMC method is not recommended and will give nonsensical answers. See e.g. the ATLAS Run 2 search for BSM $VH(\to\tau\tau)$ in [ATL-COM-PHYS-2022-022](https://cds.cern.ch/record/2799543) where the MMC method is combined with alternatives. Additional neutrinos from the decay of B-hadrons typically do not lead to significant enough MET to be a problem, i.e. $t\bar{t}(\to\text{jets})H(\to\tau\tau)$ should be safe.
 
 ### [KLFitterConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/KLFitterConfig.py)
+Name in YAML: **KLFitter**
 
 `electrons`
 :   the input electron container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
@@ -152,6 +156,7 @@
     The source code and documentation for KLFitter are available from [github](https://github.com/KLFitter/KLFitter).
 
 ### [TopSpaNetConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/TopSpaNetConfig.py)
+Name in YAML: **SpaNet**
 
 `btagger`
 :   b-tagging algorithm to use, if only one is needed. The default is `DL1dv01`.

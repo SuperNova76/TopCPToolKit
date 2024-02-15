@@ -1,6 +1,7 @@
 ## Make-methods
 
 ### [makeJetAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/JetAnalysisAlgorithms/python/JetAnalysisConfig.py)
+Name in YAML: **Jets**
 
 `seq`
 :   the config sequence.
@@ -89,6 +90,7 @@
 
 
 ### [makeJetJvtAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/JetAnalysisAlgorithms/python/JetJvtAnalysisConfig.py)
+Name in YAML: **Jets.JVT**
 
 `seq`
 :   the config sequence.
@@ -115,6 +117,7 @@
     - `select_fjvt`: the per-jet fJVT selection flag
 
 ### [makeFTagAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagAnalysisConfig.py)
+Name in YAML: **Jets.FlavourTagging**
 
 `seq`
 :   the config sequence.
