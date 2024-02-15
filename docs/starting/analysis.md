@@ -10,12 +10,12 @@ and similarly to `makeTruthSequence` and `makeParticleLevelSequence`.
 
 These methods are defined in [commonAlgoConfig.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/commonAlgoConfig.py), and you can see that they perform the following actions:
 
-- create `AnaAlgSequence` and `ConfigSequence` objects, a (blank) chain of algorithms to be executed;
+- create `AnaAlgSequence` and `ConfigSequence` objects, a (blank) chain of algorithms to be executed, and the `ConfigFactory` to help populate them;
 - initialise the [`CommonServicesConfig`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py), which
     - checks whether we are running on data: if we are, we do not need to consider systematics or truth information!
     - creates an instance of the `CP::SystematicsSvc`, which will record and handle all the systematics that we need, based on the objects that we deal with;
     - creates an instance of the `CP::SelectionNameSvc`, to handle cutflows;
-- set up the very first algorithm, the `CP::VertexSelectionAlg`, to retain only events with a reconstructed primary vertex;
+- for truth-level analyses, set up the very first algorithm, the `CP::VertexSelectionAlg`, to retain only events with a reconstructed primary vertex;
 - **load and configure the requested analysis algorithms**;
 - add a final algorithm, the `CP::SysListDumperAlg`, helpful to monitor which systematics were collected.
 
@@ -43,10 +43,10 @@ def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
 
 ### Understanding the skeleton
 
-The first import allow us to define a `ConfigSequence` object, which we will pass to all subsequent config blocks we require.
+The first import allow us to define a `ConfigSequence` object, which we will populate with subsequent calls to the `ConfigFactory` (via `makeConfig`).
 For instance, when we we request to calibrate a new electron collection "AnaElectrons":
 ```python
-makeElectronCalibrationConfig(configSeq, 'AnaElectrons')
+configSeq += makeConfig ('Electrons', containerName='AnaElectrons')
 ```
 This particular config block is defined in [ElectronAnalyisConfig.py](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/python/ElectronAnalysisConfig.py), and sets up the various algorithms necessary to reconstructing and calibrating electrons: a $p_\mathrm{T}$/$\eta$ selection, a track selection, an Egamma quality cut, the `ElectronCalibrationAndSmearingAlg` itself, etc.
 
@@ -61,13 +61,11 @@ A very special config block is set up at the very end of our sequence: the [Outp
 It is responsible for creating the tree we will save, with all the branches we've declared in our successive config blocks, and eventually for filling said tree.
 It is set up as follows:
 ```python
-from AsgAnalysisAlgorithms.OutputAnalysisConfig import OutputAnalysisConfig
-cfg = OutputAnalysisConfig('reco')
-cfg.setOptionValue('treeName', 'reco')
-cfg.setOptionValue('vars', reco_branches)
-cfg.setOptionValue('metVars', met_branches)
-cfg.setOptionValue('containers', outputContainers)
-configSeq.append(cfg)
+configSeq += makeConfig ('Output')
+configSeq.setOptionValue ('.treeName', 'reco')
+configSeq.setOptionValue ('.vars', reco_branches)
+configSeq.setOptionValue ('.metVars', met_branches)
+configSeq.setOptionValue ('.containers', outputContainers)
 ```
 
 While `treeName` is straightforwardly the desired name of the output tree, some explanations are needed for the three other options.
@@ -87,7 +85,7 @@ While `treeName` is straightforwardly the desired name of the output tree, some 
 
 ### Running ML inference
 
-In case one wishes to run ML inference on trained models and store the model predictions to the output ntuple, a config block can be added to the algorithm sequence of your analysis module. One example can be founded here [TopSpaNetConfig.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/TopSpaNetConfig.py). This config block loads an algorithm `RunSpaNetAlg` defined in [RunSpaNetAlg.h](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/TopCPToolkit/RunSpaNetAlg.h). To run ML inference on custom models, a similar algorithm e.g. `RunCustomNNAlg` need to be added. This algorithm is responsible for:
+In case one wishes to run ML inference on trained models and store the model predictions to the output ntuple, a config block can be added to the algorithm sequence of your analysis module. One example can be founded in [TopSpaNetConfig.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/TopSpaNetConfig.py). This config block loads an algorithm `RunSpaNetAlg` defined in [RunSpaNetAlg.h](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/TopCPToolkit/RunSpaNetAlg.h). To run ML inference on custom models, a similar algorithm e.g. `RunCustomNNAlg` need to be added. This algorithm is responsible for:
 
 * applying event and object selections
 * computing input tensors for the models from selected objects
@@ -303,4 +301,5 @@ They should be arranged as up to three config files (`reco.yaml`, `particle.yaml
 We currently have:
 
 - [`exampleTtbarLjets`](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/tree/main/source/TopCPToolkit/share/configs/exampleTtbarLjets): an example $t\bar{t}\to\ell$+jets analysis, only for demonstration purposes.
+- [`tutorial`](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/tree/main/source/TopCPToolkit/share/configs/tutorial): used for the TopCPToolkit tutorial, only for demonstration purposes.
 - [`bTaggerCalibration`](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/tree/main/source/TopCPToolkit/share/configs/bTaggerCalibration): used by the FTAG group to run simple ntuple productions for calibration.
