@@ -27,6 +27,6 @@ class JetMatchingConfig(ConfigBlock):
         alg.reco_to_reco_jet_closest_dR = 'reco_to_reco_jet_closest_dR_%SYS%'
         alg.truth_to_truth_jet_closest_dR = 'truth_to_truth_jet_closest_dR_%SYS%'
         
-        config.addOutputVar(self.jets.split('.')[0], alg.truth_jet_paired_index, 'truth_jet_paired_index')
+        config.addOutputVar(self.jets.split('.')[0], alg.truth_jet_paired_index, 'truth_jet_paired_index', noSys=True)
         config.addOutputVar(self.jets.split('.')[0], alg.reco_to_reco_jet_closest_dR, 'reco_to_reco_jet_closest_dR')
-        config.addOutputVar(self.jets.split('.')[0], alg.truth_to_truth_jet_closest_dR, 'truth_to_truth_jet_closest_dR')
+        config.addOutputVar(self.jets.split('.')[0], alg.truth_to_truth_jet_closest_dR, 'truth_to_truth_jet_closest_dR', noSys=True)
