@@ -10,6 +10,8 @@
 ??? question "Who came up with the name 'TopCPToolkit'?"
     Our good friend ChatGPT :upside_down:. And DALL-E is responsible for the avatar of the project on GitLab.
 
+??? question "Do you have any recommendations about best practices for analyses?"
+    We do! Head over to [the dedicated page](../starting/best_practices.md).
 
 ## Warning messages
 
