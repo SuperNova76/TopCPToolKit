@@ -4,7 +4,7 @@ from AthenaConfiguration.AllConfigFlags import initConfigFlags
 from AthenaConfiguration.AutoConfigFlags import GetFileMD
 from AnalysisAlgorithmsConfig.ConfigAccumulator import DataType
 from argparse import ArgumentParser
-from TopCPToolkit import metaConfig
+from TopCPToolkit import metaConfig, bishop
 import ROOT
 import os, shutil
 
@@ -33,6 +33,7 @@ p.add_argument('-t', '--text-config', type=str,
                'and optionally particle.yaml and parton.yaml.')
 
 args = p.parse_args()
+bishop.warn(args)
 
 ROOT.xAOD.Init().ignore()
 sh = ROOT.SH.SampleHandler()

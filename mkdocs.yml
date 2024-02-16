@@ -48,6 +48,7 @@ nav:
         - Running the event loop: starting/running_local.md
         - Submitting jobs to the Grid: starting/running_grid.md
         - Writing your own analysis: starting/analysis.md
+        - Best practices for analysis: starting/best_practices.md
         - Changelog:
             - changelog/index.md
         - Contributing:
