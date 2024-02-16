@@ -7,9 +7,13 @@
 - [issue #90](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/90): reduce the large memory footprint
 - [issue #93](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/93): prepare a tutorial
 - [issue #94](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/94): add algorithm for NuFlows reconstruction
-- [issue #99](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/99): update to ConfigFactory syntax
 - [issue #100](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/100): deal with the correct ordering of JVT and OR
 - [issue #101](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/101): adapt to the new btagging event-wise SF
+
+### 2.6.1 <small>February 16, 2024</small>
+- We run on AB 24.2.41
+- [issue #99](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/99): update to ConfigFactory syntax
+- [issue #104](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/104): start documenting best practices for analysis
 
 ### 2.6.0 <small>February 14, 2024</small>
 - We run on AB 24.2.40
