@@ -104,12 +104,6 @@ Name in YAML: **Jets.JVT**
 `enableFJvt`
 :   whether to enable forward JVT calculations. The default is `False`.
 
-`globalSF`
-:   whether to calculate per-event SFs. The default is `True`.
-
-`runSelection`
-:   whether to run the JVT selection. The default is `True`.
-
 !!! success "Registers the following variables:"
     - `weight_jvt_effSF`: the event-level JVT efficiency SF
     - `weight_fjvt_effSF`: the event-level forward JVT efficiency SF
@@ -169,12 +163,6 @@ Name in YAML: **Jets.FlavourTagging**
 
 `enableFJvt`
 :   whether to enable forward JVT calculations. The default is `False`.
-
-`globalSF`
-:   whether to calculate per-event SFs. The default is `True`.
-
-`runSelection`
-:   whether to run the JVT selection. The default is `True`.
 
 !!! success "Registers the following variables:"
     - `weight_jvt_effSF`: the event-level JVT efficiency SF
