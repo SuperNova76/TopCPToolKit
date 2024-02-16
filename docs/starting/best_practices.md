@@ -32,8 +32,8 @@ See also the [Contributing page](../contributing/index.md).
 
 With the large and sometimes wildly fluctuating size of `DAOD_PHYS` (and `DAOD_PHYSLITE` to a lesser extent) files, it can be a bit tricky to get productions on the Grid to go smoothly.
 
-We recommend taking advantage of [all the options](../starting/running_grid.md#configuring-the-grid-submission-script) offered by our submission script based on `prun`.
-When running with full systematics and some form of event reconstruction, it may be necessary to set e.g. `--nFilesPerJob=2` in `otherOptions`.
+We recommend taking advantage of [all the options](../starting/running_grid.md#configuring-the-grid-submission-script) offered by our submission script based on [`prun`](https://panda-wms.readthedocs.io/en/latest/client/prun.html).
+When running with full systematics and some form of event reconstruction, it may be necessary to set e.g. `--nFilesPerJob` or `--maxNFilesPerJob` in `otherOptions`.
 
 It is also possible to **ask for the ntuple production to be centrally run!**
 See [this presentation](https://indico.cern.ch/event/1328739/#1-centralized-n-tuple-producti) and [this guide](https://atlassoftwaredocs.web.cern.ch/guides/ntuples_production/) to using the centralised production services.
@@ -83,7 +83,7 @@ Do not expect any help from anyone else if that is the path you choose.
 You may have always worked with the same name for jet collections, or only ever used a single type of overlap removal, so it feels "normal" to hardcode these names in the various handles of your algorithms.
 
 Instead, why not **keep other users in mind** and make it so that everything about your algorithm is customisable?
-By relying on systematic handles and `Gaudi::Property` objects, this is almost there for free anyway!
+By relying on systematic handles and property declarations, this is almost there for free anyway!
 All you need is to expose these options in your `ConfigBlock`.
 
 !!! tip
