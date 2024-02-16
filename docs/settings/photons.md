@@ -1,3 +1,4 @@
+<!---
 ## Make-methods
 
 ### [makePhotonCalibrationConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/python/PhotonAnalysisConfig.py)
@@ -65,10 +66,12 @@
     - `select`: whether the photon passes the ID and isolation cuts
     - `id_effSF`: the per-photon ID SF
     - `isol_effSF`: the per-photon isolation SF
+--->
 
 ## Config blocks
 
 ### [PhotonCalibrationConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/python/PhotonAnalysisConfig.py)
+Name in YAML: **Photons**
 
 `containerName`
 :   the name of the output container after calibration.
@@ -107,6 +110,7 @@
     - `phi`: photon $\phi$ (no systematics)
 
 ### [PhotonWorkingPointConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/python/PhotonAnalysisConfig.py)
+Name in YAML: **Photons.WorkingPoint**
 
 `containerName`
 :   the name of the input container.

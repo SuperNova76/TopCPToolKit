@@ -1,11 +1,14 @@
+<!---
 ## Make-methods
 
 !!! warning
     No such method exist yet for truth-related algorithms!
+--->
 
 ## Config blocks
 
 ### [truthConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/truthConfig.py)
+Name in YAML: **PartonHistory**
 
 `histories`
 :   parton-level interpretations of the MC truth record. Multiple histories can be provided as `history1.history2.etc`. See [possible values](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/truthConfig.py) (keys of the `truth_branches` dictionary).
@@ -14,6 +17,7 @@
     - in the format `history_MC_resonance_variable` (no systematics)
 
 ### [particleLevelConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/particleLevelConfig.py)
+Name in YAML: **ParticleLevel**
 
 `useTruthElectrons`
 :   whether to use electrons. The default is `True`.
@@ -108,6 +112,7 @@
     - `num_truth_bjets_nocuts`: number of truth c-jets according to [`HadronConeExclTruthLabelID`](https://ftag.docs.cern.ch/algorithms/labelling/jet_labels/#delta-r-matching-default-scheme-in-ftag) without any cuts per event (no systematics)
 
 ### [TtbarNNLORecursiveRewConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/TtbarNNLORecursiveRewConfig.py)
+Name in YAML: **TtbarNNLO**
 
 `sampleID`
 :   force the DSID (string) to be used to configure the reweighting. The default is `AutoConfig`, i.e. use the file metadata.
@@ -128,6 +133,7 @@
     - `NNLO_type_weight`: NNLO weight (overall normalised to 1), where `type` reflects the `reweightType` option
 
 ### [PartonToJetsMatchConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/PartonToJetsMatchConfig.py)
+Name in YAML: **PartonToJetsMatch**
 
 The algorithm matches jets with partons from ttbar lepton+jets topology. The output of the algorithm are four variables representing the indices (for the jets) of the b-jets from hadronically and semileptonically decaying tops, jets matched to the up-type and down-type quarks from the hadronic W decay. Finally, a flag is added for dilepton events.
 The matching algorithm looks for the closest jets in $\Delta R$. For multiple matches (or for dilepton events) the multi-matched objects have index set to -1.
@@ -152,6 +158,7 @@ The matching algorithm looks for the closest jets in $\Delta R$. For multiple ma
     - `event_is_dilepton`: flags whether the parton-level event is dileptonic
 
 ### [JetMatchingConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/JetMatchingConfig.py)
+Name in YAML: **JetMatching**
 
 The algorithm adds three variables for reco jets: index of matched truth jet, $\Delta R$ to the closest reco jet and $\Delta R$ of the matched truth jet and its closest truth jet. The matching is based on looking for minimal $\Delta R$. The reco jets with no matched truth jet (no truth jet found with $\Delta R$ within the critical $\Delta R$) have the index set to -1. If multiple reco jets are matched to the same truth jet their index is also set to -1.
 
@@ -173,6 +180,7 @@ The algorithm adds three variables for reco jets: index of matched truth jet, $\
     - `truth_to_truth_jet_closest_dR`: the minimum $\Delta R$ of the matched truth-level jet with respect to truth-level jets
 
 ### [IFFLeptonDecorationBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
+Name in YAML: **X.IFFClassification**, with X amongst: Electrons, Muons
 
 `containerName`
 :   the name of the input electron or muon container.

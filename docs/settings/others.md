@@ -1,12 +1,14 @@
 ## Make-methods
 
 ### [makeCommonServicesConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
+Name in YAML: **CommonServices**
 
 `seq`
 :   the config sequence.
 
 _Returns an instance of [`CommonServicesConfig`](#commonservicesconfig), see the available options below._
 
+<!---
 ### [makeEventCleaningConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/EventCleaningConfig.py)
 
 `seq`
@@ -20,8 +22,10 @@ _Returns an instance of [`CommonServicesConfig`](#commonservicesconfig), see the
 
 `userGRLFiles`
 :   a list of GRL files (list of strings) to select data from. The default is `[]` (empty list).
+--->
 
 ### [makeGeneratorAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
+Name in YAML: **GeneratorLevelAnalysis**
 
 `seq`
 :   the config sequence.
@@ -38,6 +42,7 @@ _Returns an instance of [`CommonServicesConfig`](#commonservicesconfig), see the
 !!! success "Registers the following variables:"
     - `generatorWeight`: the event-level PMG generator weight
 
+<!---
 ### [makePileupReweightingConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
 
 `seq`
@@ -78,6 +83,7 @@ _Returns an instance of [`CommonServicesConfig`](#commonservicesconfig), see the
 
 `runOnMC`
 :   toggle to force running on MC samples. The default is `False`, i.e. run only on data.
+--->
 
 ## Config blocks
 
@@ -93,6 +99,7 @@ _Returns an instance of [`CommonServicesConfig`](#commonservicesconfig), see the
         See the [guide](../starting/running_local.md#filtering-systematics) on how to use the systematics filter.
 
 ### [EventCleaningBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/EventCleaningConfig.py)
+Name in YAML: **EventCleaning**
 
 `runPrimaryVertexSelection`
 :   whether to run primary vertex selection. The default is `True`.
@@ -118,18 +125,19 @@ _Returns an instance of [`CommonServicesConfig`](#commonservicesconfig), see the
 ### [GeneratorAnalysisBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
 
 `saveCutBookkeepers`
-:   whether to save the cut bookkeepers information into the output file. The default is `False`.
+:   whether to save the cut bookkeepers information into the output file. The default is `True`.
 
 `runNumber`
 :   the MC runNumber (int). The default is `None` (autoconfigure from metadata).
 
 `cutBookkeepersSystematics`
-:   whether to also save the cut bookkeepers systematics. The default is `False`.
+:   whether to also save the cut bookkeepers systematics. The default is `None` (follows the global systematics flag). Set to `False` or `True` to override.
 
 !!! success "Registers the following variables:"
     - `generatorWeight`: the event-level PMG generator weight
 
 ### [PileupReweightingBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
+Name in YAML: **PileupReweighting**
 
 `campaign`
 :   the MC campaign for the PRW auto-configuration.
@@ -160,6 +168,7 @@ _Returns an instance of [`CommonServicesConfig`](#commonservicesconfig), see the
     - `weight_beamspot`: the weight to correct the beamspot size in Run 2 (no systematics)
 
 ### [BootstrapGeneratorConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/BootstrapGeneratorConfig.py)
+Name in YAML: **Bootstraps**
 
 `nReplicas`
 :   the number (int) of bootstrap replicas to generate. The default is 1000.

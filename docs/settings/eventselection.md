@@ -3,6 +3,7 @@
 !!! tip
     The recommendation is to use [`makeMultipleEventSelectionConfigs`](https://topcptoolkit.docs.cern.ch/settings/eventselection/#makemultipleeventselectionconfigs), which is available in the text-based config approach under the name `EventSelection`.
 
+<!---
 ### [makeEventSelectionConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EventSelectionAlgorithms/python/EventSelectionConfig.py)
 
 Performs a single event selection. To define multiple selection regions, see [`makeMultipleEventSelectionConfigs`](eventselection.md#makemultipleeventselectionconfigs) below.
@@ -48,10 +49,15 @@ Performs a single event selection. To define multiple selection regions, see [`m
 
 `cutFlowHistograms`
 :   whether to generate cutflow histograms for the selection cuts (performs a call to [`makeEventCutFlowConfig`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)). The default is `False` (no histograms).
+--->
 
 ### [makeMultipleEventSelectionConfigs](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EventSelectionAlgorithms/python/EventSelectionConfig.py)
+Name in YAML: **EventSelection**
 
-Performs multiple event selections, split into separate regions and subregions. A final logical OR of all region selections is used as event filter. The arguments below are the same as for [`makeEventSelectionConfig`](eventselection.md#makeeventselectionconfig), except for `selectionCutsDict`!
+Performs multiple event selections, split into separate regions and subregions. A final logical OR of all region selections is used as event filter. 
+<!---
+The arguments below are the same as for [`makeEventSelectionConfig`](eventselection.md#makeeventselectionconfig), except for `selectionCutsDict`!
+--->
 
 `seq`
 :   the config sequence.
@@ -80,7 +86,7 @@ Performs multiple event selections, split into separate regions and subregions. 
 `preselection`
 :   the event-wise selection flag to start this event selection from. The default is `''` (empty string).
 
-`selectionCutsDicts`
+`selectionCutsDict`
 :   a dictionary of (keys) region names and (values) strings listing one selection cut per line. See [available keywords](). A region name starting with `SUB` is treated as a subregion (not saved, can be imported from another selection).
 
 `noFilter`

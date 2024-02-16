@@ -1,3 +1,4 @@
+<!---
 ## Make-methods
 
 ### [makeTauCalibrationConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TauAnalysisAlgorithms/python/TauAnalysisConfig.py)
@@ -46,10 +47,12 @@
 !!! success "Registers the following variables:"
     - `select`: whether the tau-jet passes the ID cuts
     - `effSF`: the per-tau-jet reconstruction SF
+--->
 
 ## Config blocks
 
 ### [TauCalibrationConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TauAnalysisAlgorithms/python/TauAnalysisConfig.py)
+Name in YAML: **TauJets**
 
 `containerName`
 :   the name of the output container after calibration.
@@ -67,6 +70,7 @@
     - `charge`: tau-jet charge (no systematics)
 
 ### [TauWorkingPointConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TauAnalysisAlgorithms/python/TauAnalysisConfig.py)
+Name in YAML: **TauJets.WorkingPoint**
 
 `containerName`
 :   the name of the input container.

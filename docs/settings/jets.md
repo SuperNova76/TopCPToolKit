@@ -1,6 +1,7 @@
 ## Make-methods
 
 ### [makeJetAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/JetAnalysisAlgorithms/python/JetAnalysisConfig.py)
+Name in YAML: **Jets**
 
 `seq`
 :   the config sequence.
@@ -89,6 +90,7 @@
 
 
 ### [makeJetJvtAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/JetAnalysisAlgorithms/python/JetJvtAnalysisConfig.py)
+Name in YAML: **Jets.JVT**
 
 `seq`
 :   the config sequence.
@@ -115,6 +117,7 @@
     - `select_fjvt`: the per-jet fJVT selection flag
 
 ### [makeFTagAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagAnalysisConfig.py)
+Name in YAML: **Jets.FlavourTagging**
 
 `seq`
 :   the config sequence.
@@ -132,7 +135,7 @@
 :   the flavour tagging WP. The default is `FixedCutBEff_77`.
 
 `generator`
-:   MC generator setup, for MC/MC SFs. The default is `default` (Powheg+Pythia8). A DSID string is expected, see [MC/MC Scale Factors using Top Samples](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/PmgTopProcesses#FTAG_MC_MC_Scale_Factors_using_T).
+:   MC generator setup, for MC/MC SFs. The default is `"autoconfig"` (relies on the sample metadata). To override, a DSID string is expected, see [MC/MC Scale Factors using Top Samples](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/PmgTopProcesses#FTAG_MC_MC_Scale_Factors_using_T).
 
 `kinematicSelection`
 :   whether to run kinematic selection. The default is `True`.
@@ -194,7 +197,7 @@
 :   the flavour tagging WP. The default is `FixedCutBEff_77`.
 
 `generator`
-:   MC generator setup, for MC/MC SFs. The default is `default` (Powheg+Pythia8). A DSID string is expected, see [MC/MC Scale Factors using Top Samples](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/PmgTopProcesses#FTAG_MC_MC_Scale_Factors_using_T).
+:   MC generator setup, for MC/MC SFs. The default is `"autoconfig"` (relies on the sample metadata). To override, a DSID string is expected, see [MC/MC Scale Factors using Top Samples](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/PmgTopProcesses#FTAG_MC_MC_Scale_Factors_using_T).
 
 `kinematicSelection`
 :   whether to run kinematic selection. The default is `True`.

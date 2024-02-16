@@ -1,3 +1,4 @@
+<!---
 ## Make-methods
 
 ### [makeElectronCalibrationConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/python/ElectronAnalysisConfig.py)
@@ -69,10 +70,12 @@
     - `reco_effSF`: the per-electron reconstruction SF
     - `id_effSF`: the per-electron ID SF
     - `isol_effSF`: the per-electron isolation SF
+--->
 
 ## Config blocks
 
 ### [ElectronCalibrationConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/python/ElectronAnalysisConfig.py)
+Name in YAML: **Electrons**
 
 `containerName`
 :   the name of the output container after calibration.
@@ -108,6 +111,7 @@
     - `charge`: electron charge (no systematics)
 
 ### [ElectronWorkingPointConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/python/ElectronAnalysisConfig.py)
+Name in YAML: **Electrons.WorkingPoint**
 
 `containerName`
 :   the name of the input container.

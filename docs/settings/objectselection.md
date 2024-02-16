@@ -1,6 +1,7 @@
 ## Make-methods
 
 ### [makePtEtaSelectionConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
+Name in YAML: **X.PtEtaSelection**, with X amongst: Jets, Electrons, Photons, Muons, TauJets
 
 `seq`
 :   the config sequence.
@@ -26,6 +27,7 @@
 `selectionName`
 :   the name of the selection to append this to. The default is `''` (empty string), meaning that the cuts are applied to every object within the container. Specifying a name (e.g. `loose`) applies the cut only to those object who also pass that selection.
 
+<!---
 ### [makeOutputThinningConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
 
 `seq`
@@ -62,6 +64,7 @@
 
 `selectionName`
 :   the name of the selection to perform the cutflow for. The default is `''` (empty string), meaning that the cutflow is performed for every object within the container. Specifying a name (e.g. `loose`) generates the cutflow only for those object that also pass that selection.
+--->
 
 ## Config blocks
 
@@ -89,6 +92,7 @@
 :   the name of the selection to append this to. The default is `''` (empty string), meaning that the cuts are applied to every object within the container. Specifying a name (e.g. `loose`) applies the cut only to those object who also pass that selection.
 
 ### [OutputThinningBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
+Name in YAML: **Thinning**
 
 `containerName`
 :   the name of the input container.
@@ -109,6 +113,7 @@
 :   name of the block config, e.g. `Thinning`.
 
 ### [ObjectCutFlowBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
+Name in YAML: **ObjectCutFlow**
 
 `containerName`
 :   the name of the input container.

@@ -1,11 +1,14 @@
+<!---
 ## Make-methods
 
 !!! warning
     No such method exist for experimental algorithms!
+--->
 
 ## Config blocks
 
 ### [ExtraParticleDecorationConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/ExtraParticleDecorationConfig.py)
+Name in YAML: **ExtraParticleDecoration**
 
 Allows to add generic particle decorations and save them as output variables.
 
@@ -16,6 +19,7 @@ Allows to add generic particle decorations and save them as output variables.
     - `e`: object $E$
 
 ### [BTagScoresConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/BTagScoresConfig.py)
+Name in YAML: **BTaggingScores**
 
 Computes per-jet b-tagging score and jet origin (bottom/charm/light) probabilities.
 
@@ -41,6 +45,7 @@ Computes per-jet b-tagging score and jet origin (bottom/charm/light) probabiliti
     - `prob_pl`: the probability of the jet origin being related to a light quark.
 
 ### [SVMassAlg](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/SVMassConfig.py)
+Name in YAML: **SVMass**
 
 Decorates the output jets with the secondary vertex mass (SVMass).
 

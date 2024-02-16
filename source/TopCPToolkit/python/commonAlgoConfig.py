@@ -4,6 +4,7 @@ from AnaAlgorithm.AnaAlgSequence import AnaAlgSequence
 from AnalysisAlgorithmsConfig.ConfigSequence import ConfigSequence
 from AnalysisAlgorithmsConfig.ConfigAccumulator import ConfigAccumulator
 from AnalysisAlgorithmsConfig.ConfigText import TextConfig
+from AnalysisAlgorithmsConfig.ConfigFactory import ConfigFactory
 from AnaAlgorithm.DualUseConfig import createAlgorithm, createService
 from AnalysisAlgorithmsConfig.ConfigAccumulator import DataType
 from TopCPToolkit import metaConfig
@@ -14,9 +15,9 @@ def makeRecoSequence(analysisName, flags, noSystematics=False, noFilter=False):
     algSeq = AnaAlgSequence()
 
     configSeq = ConfigSequence()
+    factory = ConfigFactory()
 
-    from AsgAnalysisAlgorithms.AsgAnalysisConfig import makeCommonServicesConfig
-    makeCommonServicesConfig(configSeq)
+    configSeq += factory.makeConfig('CommonServices')
     configSeq.setOptionValue('.runSystematics', not noSystematics)
 
     import importlib
@@ -25,7 +26,7 @@ def makeRecoSequence(analysisName, flags, noSystematics=False, noFilter=False):
     except ModuleNotFoundError:
         raise Exception(f'The package and module for your --analysis could not be found: {analysisName}')
     try:
-        analysisModule.makeRecoConfiguration(flags, algSeq, configSeq, noFilter)
+        analysisModule.makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter)
     except AttributeError:
         raise Exception('The analysis you specified via --analysis does not have makeRecoConfiguration method implemented.'
                         'This is needed to configure the CP algorithms')
@@ -37,16 +38,14 @@ def makeRecoSequence(analysisName, flags, noSystematics=False, noFilter=False):
     return algSeq
 
 
-def add_event_cleaning(configSeq, flags, runEventCleaning=True):
+def add_event_cleaning(configSeq, factory, flags, runEventCleaning=True):
     # primary vertex ,event cleaning (jet clean loosebad) and GoodRunsList selection
-    from AsgAnalysisAlgorithms.EventCleaningConfig import makeEventCleaningConfig
     is_data = (flags.Input.DataType is DataType.Data)
     if is_data:
         GRLFiles = [metaConfig.get_grl(flags)]
-    makeEventCleaningConfig(configSeq,
-                            runPrimaryVertexSelection=True,
-                            runEventCleaning=runEventCleaning,
-                            userGRLFiles=(GRLFiles if is_data else None))
+    configSeq += factory.makeConfig ('EventCleaning')
+    configSeq.setOptionValue ('.runEventCleaning', runEventCleaning)
+    configSeq.setOptionValue ('.userGRLFiles', GRLFiles if is_data else [])
 
 
 def makeTruthSequence(analysisName, flags, noSystematics=False):

@@ -1,11 +1,14 @@
+<!---
 ## Make-methods
 
 !!! warning
     No such method exist for ntupling algorithms!
+--->
 
 ## Config blocks
 
 ### [OutputAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/OutputAnalysisConfig.py)
+Name in YAML: **Output**
 
 `postfix`
 :   a postfix to apply to decorations and algorithm names. Typically not needed here.

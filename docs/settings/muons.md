@@ -1,3 +1,4 @@
+<!---
 ## Make-methods
 
 ### [makeMuonCalibrationConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/MuonAnalysisAlgorithms/python/MuonAnalysisConfig.py)
@@ -55,10 +56,12 @@
     - `BadMuonVeto_effSF`: the dedicated "bad muon veto" SF, only with quality `HighPt`
     - `isol_effSF`: the per-muon isolation SF
     - `TTVA_effSF`: the per-muon track-to-vertex-association SF
+--->
 
 ## Config blocks
 
 ### [MuonCalibrationConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/MuonAnalysisAlgorithms/python/MuonAnalysisConfig.py)
+Name in YAML: **Muons**
 
 `containerName`
 :   the name of the output container after calibration.
@@ -85,6 +88,7 @@
     - `charge`: muon charge (no systematics)
 
 ### [MuonWorkingPointConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/MuonAnalysisAlgorithms/python/MuonAnalysisConfig.py)
+Name in YAML: **Muons.WorkingPoint**
 
 `containerName`
 :   the name of the input container.
