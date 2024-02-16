@@ -34,4 +34,4 @@ class PartonToJetsMatchConfig(ConfigBlock):
         config.addOutputVar('EventInfo', alg.hadronic_b_index, 'parton_truth_had_b_index')
         config.addOutputVar('EventInfo', alg.up_index, 'parton_truth_up_index')
         config.addOutputVar('EventInfo', alg.down_index, 'parton_truth_down_index')
-        config.addOutputVar('EventInfo', alg.event_is_dilepton, 'event_is_dilepton')
+        config.addOutputVar('EventInfo', alg.event_is_dilepton, 'event_is_dilepton', noSys=True)
