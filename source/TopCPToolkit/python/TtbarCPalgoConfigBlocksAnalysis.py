@@ -100,11 +100,10 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
             configSeq.setOptionValue ('.minPt', 25e3)
 
             # calculate per-event b-tagging SF (alternative to storing per-jet SFs)
-            # TODO: fix the argument "name"!
-            # configSeq += makeConfig ('PerEventSF', name=f'btagSFCalc_{btagger}_{WP}')
-            # configSeq.setOptionValue ('.particles', 'AnaJets.jvt')
-            # configSeq.setOptionValue ('.objectSF', f'ftag_effSF_{btagger}_{WP}_%SYS%')
-            # configSeq.setOptionValue ('.eventSF', f'weight_btagSF_{btagger}_{WP}_%SYS%')
+            configSeq += makeConfig ('PerEventSF', algoName=f'btagSFCalc_{btagger}_{WP}')
+            configSeq.setOptionValue ('.particles', 'AnaJets.jvt')
+            configSeq.setOptionValue ('.objectSF', f'ftag_effSF_{btagger}_{WP}_%SYS%')
+            configSeq.setOptionValue ('.eventSF', f'weight_btagSF_{btagger}_{WP}_%SYS%')
 
         outputContainers['jet_'] = 'OutJets'
 
