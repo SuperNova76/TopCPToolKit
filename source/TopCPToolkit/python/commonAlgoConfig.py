@@ -120,6 +120,9 @@ def makeTextBasedSequence(analysisName, filename, flags, noSystematics=False):
         return algSeq
 
     yamlconfig = PathResolver.find_file(f'{analysisName}/{filename}.yaml', "CALIBPATH", PathResolver.RecursiveSearch)
+    if not yamlconfig:
+        raise FileNotFoundError(f'PathResolver failed to locate \"{analysisName}/{filename}.yaml\" config file!'
+                                'Check if you have a typo in -t/--text-config argument or missing file in the analysis configuration sub-directory.')
     print(">>> Setting up configuration based on YAML config:")
     print(yamlconfig + "\n")
     config = TextConfig(yamlconfig)
