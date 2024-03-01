@@ -320,6 +320,29 @@ namespace top {
         selected_jets.push_back(jet);
     }
 
+    auto sortPt = [](ConstDataVector<xAOD::IParticleContainer> &particles, std::vector<size_t> indices) {
+      std::vector<std::pair<const xAOD::IParticle*, size_t>> particle_index(particles.size());
+      size_t indx {0};
+      for (const xAOD::IParticle* const p : particles) {
+        particle_index[indx] = {p, indx};
+        ++indx;
+      }
+      std::sort(particle_index.begin(), particle_index.end(),
+                [](std::pair<const xAOD::IParticle*, size_t>& x, std::pair<const xAOD::IParticle*, size_t>& y){return x.first->pt() > y.first->pt();});
+      ConstDataVector<xAOD::IParticleContainer> sorted_particles(particles.size());
+      indices.resize(particles.size());
+      indx = 0;
+      for (auto &elem : particle_index) {
+        sorted_particles[indx] = elem.first;
+        indices[indx] = elem.second;
+        ++indx;
+      }
+      return sorted_particles;
+    };
+
+    std::vector<size_t> electron_indices;
+    ConstDataVector<xAOD::IParticleContainer> sorted_selected_electrons = sortPt(selected_electrons, electron_indices);
+
     // add leptons to KLFitter particles
     ANA_CHECK(add_leptons(selected_electrons, selected_muons, myParticles));
 

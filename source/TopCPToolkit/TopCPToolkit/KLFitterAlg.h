@@ -58,6 +58,10 @@ namespace top {
 
     StatusCode evaluatePermutations(const CP::SystematicSet &sys);
 
+    template<typename T> sortPt(ConstDataVector<DataVector<T>> &particles,
+                                std::vector<size_t> indices) {
+    }
+
     // systematics
     CP::SysListHandle m_systematicsList {this};
 
