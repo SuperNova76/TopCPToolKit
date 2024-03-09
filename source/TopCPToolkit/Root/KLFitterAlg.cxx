@@ -320,34 +320,18 @@ namespace top {
         selected_jets.push_back(jet);
     }
 
-    auto sortPt = [](ConstDataVector<xAOD::IParticleContainer> &particles, std::vector<size_t> indices) {
-      std::vector<std::pair<const xAOD::IParticle*, size_t>> particle_index(particles.size());
-      size_t indx {0};
-      for (const xAOD::IParticle* const p : particles) {
-        particle_index[indx] = {p, indx};
-        ++indx;
-      }
-      std::sort(particle_index.begin(), particle_index.end(),
-                [](std::pair<const xAOD::IParticle*, size_t>& x, std::pair<const xAOD::IParticle*, size_t>& y){return x.first->pt() > y.first->pt();});
-      ConstDataVector<xAOD::IParticleContainer> sorted_particles(particles.size());
-      indices.resize(particles.size());
-      indx = 0;
-      for (auto &elem : particle_index) {
-        sorted_particles[indx] = elem.first;
-        indices[indx] = elem.second;
-        ++indx;
-      }
-      return sorted_particles;
-    };
-
     std::vector<size_t> electron_indices;
-    ConstDataVector<xAOD::IParticleContainer> sorted_selected_electrons = sortPt(selected_electrons, electron_indices);
+    const ConstDataVector<xAOD::ElectronContainer> selected_sorted_electrons = sortPt(selected_electrons, electron_indices);
+    std::vector<size_t> muon_indices;
+    const ConstDataVector<xAOD::MuonContainer> selected_sorted_muons = sortPt(selected_muons, muon_indices);
+    std::vector<size_t> jet_indices;
+    const ConstDataVector<xAOD::JetContainer> selected_sorted_jets = sortPt(selected_jets, jet_indices);
 
     // add leptons to KLFitter particles
-    ANA_CHECK(add_leptons(selected_electrons, selected_muons, myParticles));
+    ANA_CHECK(add_leptons(selected_sorted_electrons, selected_sorted_muons, myParticles));
 
     // add jets to KLFitter particles
-    ANA_CHECK(add_jets(selected_jets, myParticles));
+    ANA_CHECK(add_jets(selected_sorted_jets, myParticles));
 
     // add the particles to the fitter itself
     if (!m_myFitter->SetParticles(myParticles)) {
@@ -368,15 +352,15 @@ namespace top {
       return StatusCode::FAILURE;
     }
 
-    ANA_CHECK(evaluatePermutations(sys));
+    ANA_CHECK(evaluatePermutations(sys, electron_indices, muon_indices, jet_indices));
 
     delete myParticles;
 
     return StatusCode::SUCCESS;
   }
 
-  StatusCode KLFitterAlg::add_leptons(ConstDataVector<xAOD::ElectronContainer> &selected_electrons,
-                                      ConstDataVector<xAOD::MuonContainer> &selected_muons,
+  StatusCode KLFitterAlg::add_leptons(const ConstDataVector<xAOD::ElectronContainer> &selected_electrons,
+                                      const ConstDataVector<xAOD::MuonContainer> &selected_muons,
                                       KLFitter::Particles *myParticles) {
     // likelihoods with single lepton (either l+jets or ttZ 3lepton mixed lepton flavour)
     if (m_leptonTypeEnum == KLFEnums::LeptonType::kElectron) {
@@ -424,7 +408,7 @@ namespace top {
     return StatusCode::SUCCESS;
   }
 
-  StatusCode KLFitterAlg::add_jets(ConstDataVector<xAOD::JetContainer> &selected_jets,
+  StatusCode KLFitterAlg::add_jets(const ConstDataVector<xAOD::JetContainer> &selected_jets,
                                    KLFitter::Particles *myParticles) {
     if (m_useBtagPriority) {
       ANA_CHECK(setJetskBtagPriority(selected_jets, myParticles, m_njetsRequirement));
@@ -434,7 +418,7 @@ namespace top {
     return StatusCode::SUCCESS;
   }
 
-  StatusCode KLFitterAlg::setJetskLeadingN(ConstDataVector<xAOD::JetContainer> &selected_jets,
+  StatusCode KLFitterAlg::setJetskLeadingN(const ConstDataVector<xAOD::JetContainer> &selected_jets,
                                            KLFitter::Particles *inputParticles, size_t njets) {
 
     //If container has less jets than required, raise error
@@ -494,7 +478,7 @@ namespace top {
     return StatusCode::SUCCESS;
   }
 
-  StatusCode KLFitterAlg::setJetskBtagPriority(ConstDataVector<xAOD::JetContainer> &selected_jets,
+  StatusCode KLFitterAlg::setJetskBtagPriority(const ConstDataVector<xAOD::JetContainer> &selected_jets,
                                                KLFitter::Particles* inputParticles,
                                                const size_t maxJets) {
     // kBtagPriority mode first adds the b jets, then the light jets
@@ -568,7 +552,10 @@ namespace top {
     return StatusCode::SUCCESS;
   }
 
-  StatusCode KLFitterAlg::evaluatePermutations(const CP::SystematicSet &sys) {
+  StatusCode KLFitterAlg::evaluatePermutations(const CP::SystematicSet &sys,
+                                               const std::vector<size_t> &electron_indices,
+                                               const std::vector<size_t> &muon_indices,
+                                               const std::vector<size_t> &jet_indices) {
     // create or retrieve (if existent) the xAOD::KLFitterResultContainer
     auto resultAuxContainer = std::make_unique<xAOD::KLFitterResultAuxContainer>();
     auto resultContainer = std::make_unique<xAOD::KLFitterResultContainer>();
@@ -619,19 +606,19 @@ namespace top {
         result->setModel_bhad_eta(myModelParticles->Parton(0)->Eta());
         result->setModel_bhad_phi(myModelParticles->Parton(0)->Phi());
         result->setModel_bhad_E(myModelParticles->Parton(0)->E());
-        result->setModel_bhad_jetIndex((*myPermutedParticles)->JetIndex(0));
+        result->setModel_bhad_jetIndex(jet_indices.at((*myPermutedParticles)->JetIndex(0)));
 
         result->setModel_blep_pt(myModelParticles->Parton(1)->Pt());
         result->setModel_blep_eta(myModelParticles->Parton(1)->Eta());
         result->setModel_blep_phi(myModelParticles->Parton(1)->Phi());
         result->setModel_blep_E(myModelParticles->Parton(1)->E());
-        result->setModel_blep_jetIndex((*myPermutedParticles)->JetIndex(1));
+        result->setModel_blep_jetIndex(jet_indices.at((*myPermutedParticles)->JetIndex(1)));
 
         result->setModel_lq1_pt(myModelParticles->Parton(2)->Pt());
         result->setModel_lq1_eta(myModelParticles->Parton(2)->Eta());
         result->setModel_lq1_phi(myModelParticles->Parton(2)->Phi());
         result->setModel_lq1_E(myModelParticles->Parton(2)->E());
-        result->setModel_lq1_jetIndex((*myPermutedParticles)->JetIndex(2));
+        result->setModel_lq1_jetIndex(jet_indices.at((*myPermutedParticles)->JetIndex(2)));
 
         // boosted likelihood has only one light jet
         if (m_LHTypeEnum != KLFEnums::Likelihood::ttbar_BoostedLJets) {
@@ -639,20 +626,20 @@ namespace top {
           result->setModel_lq2_eta(myModelParticles->Parton(3)->Eta());
           result->setModel_lq2_phi(myModelParticles->Parton(3)->Phi());
           result->setModel_lq2_E(myModelParticles->Parton(3)->E());
-          result->setModel_lq2_jetIndex((*myPermutedParticles)->JetIndex(3));
+          result->setModel_lq2_jetIndex(jet_indices.at((*myPermutedParticles)->JetIndex(3)));
 
           if (m_LHTypeEnum == KLFEnums::Likelihood::ttH) {
             result->setModel_Higgs_b1_pt(myModelParticles->Parton(4)->Pt());
             result->setModel_Higgs_b1_eta(myModelParticles->Parton(4)->Eta());
             result->setModel_Higgs_b1_phi(myModelParticles->Parton(4)->Phi());
             result->setModel_Higgs_b1_E(myModelParticles->Parton(4)->E());
-            result->setModel_Higgs_b1_jetIndex((*myPermutedParticles)->JetIndex(4));
+            result->setModel_Higgs_b1_jetIndex(jet_indices.at((*myPermutedParticles)->JetIndex(4)));
 
             result->setModel_Higgs_b2_pt(myModelParticles->Parton(5)->Pt());
             result->setModel_Higgs_b2_eta(myModelParticles->Parton(5)->Eta());
             result->setModel_Higgs_b2_phi(myModelParticles->Parton(5)->Phi());
             result->setModel_Higgs_b2_E(myModelParticles->Parton(5)->E());
-            result->setModel_Higgs_b2_jetIndex((*myPermutedParticles)->JetIndex(5));
+            result->setModel_Higgs_b2_jetIndex(jet_indices.at((*myPermutedParticles)->JetIndex(5)));
           }
         }
 
@@ -664,19 +651,19 @@ namespace top {
           result->setModel_lep_E(myModelParticles->Electron(0)->E());
 
           if (m_leptonTypeEnum == KLFEnums::LeptonType::kTriElectron) {
-            result->setModel_lep_index((*myPermutedParticles)->ElectronIndex(0));
+            result->setModel_lep_index(electron_indices.at((*myPermutedParticles)->ElectronIndex(0)));
 
             result->setModel_lepZ1_pt(myModelParticles->Electron(1)->Pt());
             result->setModel_lepZ1_eta(myModelParticles->Electron(1)->Eta());
             result->setModel_lepZ1_phi(myModelParticles->Electron(1)->Phi());
             result->setModel_lepZ1_E(myModelParticles->Electron(1)->E());
-            result->setModel_lepZ1_index((*myPermutedParticles)->ElectronIndex(1));
+            result->setModel_lepZ1_index(electron_indices.at((*myPermutedParticles)->ElectronIndex(1)));
 
             result->setModel_lepZ2_pt(myModelParticles->Electron(2)->Pt());
             result->setModel_lepZ2_eta(myModelParticles->Electron(2)->Eta());
             result->setModel_lepZ2_phi(myModelParticles->Electron(2)->Phi());
             result->setModel_lepZ2_E(myModelParticles->Electron(2)->E());
-            result->setModel_lepZ2_index((*myPermutedParticles)->ElectronIndex(2));
+            result->setModel_lepZ2_index(electron_indices.at((*myPermutedParticles)->ElectronIndex(2)));
           }
         }
 
@@ -688,19 +675,19 @@ namespace top {
           result->setModel_lep_E(myModelParticles->Muon(0)->E());
 
           if (m_leptonTypeEnum == KLFEnums::LeptonType::kTriMuon) {
-            result->setModel_lep_index((*myPermutedParticles)->MuonIndex(0));
+            result->setModel_lep_index(muon_indices.at((*myPermutedParticles)->MuonIndex(0)));
 
             result->setModel_lepZ1_pt(myModelParticles->Muon(1)->Pt());
             result->setModel_lepZ1_eta(myModelParticles->Muon(1)->Eta());
             result->setModel_lepZ1_phi(myModelParticles->Muon(1)->Phi());
             result->setModel_lepZ1_E(myModelParticles->Muon(1)->E());
-            result->setModel_lepZ1_index((*myPermutedParticles)->MuonIndex(1));
+            result->setModel_lepZ1_index(muon_indices.at((*myPermutedParticles)->MuonIndex(1)));
 
             result->setModel_lepZ2_pt(myModelParticles->Muon(2)->Pt());
             result->setModel_lepZ2_eta(myModelParticles->Muon(2)->Eta());
             result->setModel_lepZ2_phi(myModelParticles->Muon(2)->Phi());
             result->setModel_lepZ2_E(myModelParticles->Muon(2)->E());
-            result->setModel_lepZ2_index((*myPermutedParticles)->MuonIndex(2));
+            result->setModel_lepZ2_index(muon_indices.at((*myPermutedParticles)->MuonIndex(2)));
           }
         }
 
@@ -713,37 +700,37 @@ namespace top {
         result->setModel_b_from_top1_eta(myModelParticles->Parton(0)->Eta());
         result->setModel_b_from_top1_phi(myModelParticles->Parton(0)->Phi());
         result->setModel_b_from_top1_E(myModelParticles->Parton(0)->E());
-        result->setModel_b_from_top1_jetIndex((*myPermutedParticles)->JetIndex(0));
+        result->setModel_b_from_top1_jetIndex(jet_indices.at((*myPermutedParticles)->JetIndex(0)));
 
         result->setModel_b_from_top2_pt(myModelParticles->Parton(1)->Pt());
         result->setModel_b_from_top2_eta(myModelParticles->Parton(1)->Eta());
         result->setModel_b_from_top2_phi(myModelParticles->Parton(1)->Phi());
         result->setModel_b_from_top2_E(myModelParticles->Parton(1)->E());
-        result->setModel_b_from_top2_jetIndex((*myPermutedParticles)->JetIndex(1));
+        result->setModel_b_from_top2_jetIndex(jet_indices.at((*myPermutedParticles)->JetIndex(1)));
 
         result->setModel_lj1_from_top1_pt(myModelParticles->Parton(2)->Pt());
         result->setModel_lj1_from_top1_eta(myModelParticles->Parton(2)->Eta());
         result->setModel_lj1_from_top1_phi(myModelParticles->Parton(2)->Phi());
         result->setModel_lj1_from_top1_E(myModelParticles->Parton(2)->E());
-        result->setModel_lj1_from_top1_jetIndex((*myPermutedParticles)->JetIndex(2));
+        result->setModel_lj1_from_top1_jetIndex(jet_indices.at((*myPermutedParticles)->JetIndex(2)));
 
         result->setModel_lj2_from_top1_pt(myModelParticles->Parton(3)->Pt());
         result->setModel_lj2_from_top1_eta(myModelParticles->Parton(3)->Eta());
         result->setModel_lj2_from_top1_phi(myModelParticles->Parton(3)->Phi());
         result->setModel_lj2_from_top1_E(myModelParticles->Parton(3)->E());
-        result->setModel_lj2_from_top1_jetIndex((*myPermutedParticles)->JetIndex(3));
+        result->setModel_lj2_from_top1_jetIndex(jet_indices.at((*myPermutedParticles)->JetIndex(3)));
 
         result->setModel_lj1_from_top2_pt(myModelParticles->Parton(4)->Pt());
         result->setModel_lj1_from_top2_eta(myModelParticles->Parton(4)->Eta());
         result->setModel_lj1_from_top2_phi(myModelParticles->Parton(4)->Phi());
         result->setModel_lj1_from_top2_E(myModelParticles->Parton(4)->E());
-        result->setModel_lj1_from_top2_jetIndex((*myPermutedParticles)->JetIndex(4));
+        result->setModel_lj1_from_top2_jetIndex(jet_indices.at((*myPermutedParticles)->JetIndex(4)));
 
         result->setModel_lj2_from_top2_pt(myModelParticles->Parton(5)->Pt());
         result->setModel_lj2_from_top2_eta(myModelParticles->Parton(5)->Eta());
         result->setModel_lj2_from_top2_phi(myModelParticles->Parton(5)->Phi());
         result->setModel_lj2_from_top2_E(myModelParticles->Parton(5)->E());
-        result->setModel_lj2_from_top2_jetIndex((*myPermutedParticles)->JetIndex(5));
+        result->setModel_lj2_from_top2_jetIndex(jet_indices.at((*myPermutedParticles)->JetIndex(5)));
       }
     } // Loop over permutations
 
