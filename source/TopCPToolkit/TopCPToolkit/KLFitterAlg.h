@@ -40,27 +40,27 @@ namespace top {
 
   private:
     StatusCode execute_syst(const CP::SystematicSet &sys);
-    StatusCode add_leptons(const ConstDataVector<xAOD::ElectronContainer> &selected_electrons,
-                           const ConstDataVector<xAOD::MuonContainer> &selected_muons,
+    StatusCode add_leptons(const std::vector<const xAOD::Electron*> &selected_electrons,
+                           const std::vector<const xAOD::Muon*> &selected_muons,
                            KLFitter::Particles *myParticles);
 
-    StatusCode add_jets(const ConstDataVector<xAOD::JetContainer> &selected_jets,
+    StatusCode add_jets(const std::vector<const xAOD::Jet*> &selected_jets,
                         KLFitter::Particles *myParticles);
 
-    StatusCode setJetskLeadingN(const ConstDataVector<xAOD::JetContainer> &selected_jets,
+    StatusCode setJetskLeadingN(const std::vector<const xAOD::Jet*> &selected_jets,
                                 KLFitter::Particles *inputParticles, const size_t njets);
 
     StatusCode retrieveEfficiencies(const xAOD::Jet *jet, float *eff, float *ineff);
 
-    StatusCode setJetskBtagPriority(const ConstDataVector<xAOD::JetContainer> &selected_jets,
+    StatusCode setJetskBtagPriority(const std::vector<const xAOD::Jet*> &selected_jets,
                                     KLFitter::Particles* inputParticles,
                                     const size_t maxJets);
 
     StatusCode evaluatePermutations(const CP::SystematicSet &sys, const std::vector<size_t> &electron_indices,
                                     const std::vector<size_t> &muon_indices, const std::vector<size_t> &jet_indices);
 
-    template<typename T> ConstDataVector<DataVector<T>> sortPt(const ConstDataVector<DataVector<T>> &particles,
-                                                               std::vector<size_t> &indices) {
+    template<typename T> std::vector<const T*> sortPt(const std::vector<const T*> &particles,
+                                                      std::vector<size_t> &indices) {
       std::vector<std::pair<const T*, size_t>> particle_index(particles.size());
       size_t indx {0};
       for (const T* const p : particles) {
@@ -69,7 +69,7 @@ namespace top {
       }
       std::sort(particle_index.begin(), particle_index.end(),
                 [](std::pair<const T*, size_t>& x, std::pair<const T*, size_t>& y){return x.first->pt() > y.first->pt();});
-      ConstDataVector<DataVector<T>> sorted_particles(particles.size(), SG::VIEW_ELEMENTS);
+      std::vector<const T*> sorted_particles(particles.size());
       indx = 0;
       indices.resize(particles.size());
       for (auto &elem : particle_index) {

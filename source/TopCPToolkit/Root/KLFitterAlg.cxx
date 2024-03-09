@@ -300,9 +300,9 @@ namespace top {
     // perform selection of objects
     KLFitter::Particles* myParticles = new KLFitter::Particles {};
 
-    ConstDataVector<xAOD::ElectronContainer> selected_electrons(SG::VIEW_ELEMENTS);
-    ConstDataVector<xAOD::MuonContainer> selected_muons(SG::VIEW_ELEMENTS);
-    ConstDataVector<xAOD::JetContainer> selected_jets(SG::VIEW_ELEMENTS);
+    std::vector<const xAOD::Electron*> selected_electrons;
+    std::vector<const xAOD::Muon*> selected_muons;
+    std::vector<const xAOD::Jet*> selected_jets;
 
     // select particles
     for (const xAOD::Electron *el : *electrons) {
@@ -321,11 +321,11 @@ namespace top {
     }
 
     std::vector<size_t> electron_indices;
-    const ConstDataVector<xAOD::ElectronContainer> selected_sorted_electrons = sortPt(selected_electrons, electron_indices);
+    const std::vector<const xAOD::Electron*> selected_sorted_electrons = sortPt(selected_electrons, electron_indices);
     std::vector<size_t> muon_indices;
-    const ConstDataVector<xAOD::MuonContainer> selected_sorted_muons = sortPt(selected_muons, muon_indices);
+    const std::vector<const xAOD::Muon*> selected_sorted_muons = sortPt(selected_muons, muon_indices);
     std::vector<size_t> jet_indices;
-    const ConstDataVector<xAOD::JetContainer> selected_sorted_jets = sortPt(selected_jets, jet_indices);
+    const std::vector<const xAOD::Jet*> selected_sorted_jets = sortPt(selected_jets, jet_indices);
 
     // add leptons to KLFitter particles
     ANA_CHECK(add_leptons(selected_sorted_electrons, selected_sorted_muons, myParticles));
@@ -359,8 +359,8 @@ namespace top {
     return StatusCode::SUCCESS;
   }
 
-  StatusCode KLFitterAlg::add_leptons(const ConstDataVector<xAOD::ElectronContainer> &selected_electrons,
-                                      const ConstDataVector<xAOD::MuonContainer> &selected_muons,
+  StatusCode KLFitterAlg::add_leptons(const std::vector<const xAOD::Electron*> &selected_electrons,
+                                      const std::vector<const xAOD::Muon*> &selected_muons,
                                       KLFitter::Particles *myParticles) {
     // likelihoods with single lepton (either l+jets or ttZ 3lepton mixed lepton flavour)
     if (m_leptonTypeEnum == KLFEnums::LeptonType::kElectron) {
@@ -408,7 +408,7 @@ namespace top {
     return StatusCode::SUCCESS;
   }
 
-  StatusCode KLFitterAlg::add_jets(const ConstDataVector<xAOD::JetContainer> &selected_jets,
+  StatusCode KLFitterAlg::add_jets(const std::vector<const xAOD::Jet*> &selected_jets,
                                    KLFitter::Particles *myParticles) {
     if (m_useBtagPriority) {
       ANA_CHECK(setJetskBtagPriority(selected_jets, myParticles, m_njetsRequirement));
@@ -418,7 +418,7 @@ namespace top {
     return StatusCode::SUCCESS;
   }
 
-  StatusCode KLFitterAlg::setJetskLeadingN(const ConstDataVector<xAOD::JetContainer> &selected_jets,
+  StatusCode KLFitterAlg::setJetskLeadingN(const std::vector<const xAOD::Jet*> &selected_jets,
                                            KLFitter::Particles *inputParticles, size_t njets) {
 
     //If container has less jets than required, raise error
@@ -478,7 +478,7 @@ namespace top {
     return StatusCode::SUCCESS;
   }
 
-  StatusCode KLFitterAlg::setJetskBtagPriority(const ConstDataVector<xAOD::JetContainer> &selected_jets,
+  StatusCode KLFitterAlg::setJetskBtagPriority(const std::vector<const xAOD::Jet*> &selected_jets,
                                                KLFitter::Particles* inputParticles,
                                                const size_t maxJets) {
     // kBtagPriority mode first adds the b jets, then the light jets
