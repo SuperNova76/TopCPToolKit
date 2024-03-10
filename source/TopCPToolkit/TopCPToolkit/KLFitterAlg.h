@@ -47,12 +47,12 @@ namespace top {
     StatusCode add_jets(const std::vector<const xAOD::Jet*> &selected_jets,
                         KLFitter::Particles *myParticles);
 
-    StatusCode setJetskLeadingN(const std::vector<const xAOD::Jet*> &selected_jets,
+    StatusCode setJetskLeadingN(const std::vector<const xAOD::Jet*> &jets,
                                 KLFitter::Particles *inputParticles, const size_t njets);
 
     StatusCode retrieveEfficiencies(const xAOD::Jet *jet, float *eff, float *ineff);
 
-    StatusCode setJetskBtagPriority(const std::vector<const xAOD::Jet*> &selected_jets,
+    StatusCode setJetskBtagPriority(const std::vector<const xAOD::Jet*> &jets,
                                     KLFitter::Particles* inputParticles,
                                     const size_t maxJets);
 

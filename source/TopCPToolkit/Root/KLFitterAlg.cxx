@@ -408,31 +408,31 @@ namespace top {
     return StatusCode::SUCCESS;
   }
 
-  StatusCode KLFitterAlg::add_jets(const std::vector<const xAOD::Jet*> &selected_jets,
+  StatusCode KLFitterAlg::add_jets(const std::vector<const xAOD::Jet*> &jets,
                                    KLFitter::Particles *myParticles) {
     if (m_useBtagPriority) {
-      ANA_CHECK(setJetskBtagPriority(selected_jets, myParticles, m_njetsRequirement));
+      ANA_CHECK(setJetskBtagPriority(jets, myParticles, m_njetsRequirement));
     } else {
-      ANA_CHECK(setJetskLeadingN(selected_jets, myParticles, m_njetsRequirement));
+      ANA_CHECK(setJetskLeadingN(jets, myParticles, m_njetsRequirement));
     }
     return StatusCode::SUCCESS;
   }
 
-  StatusCode KLFitterAlg::setJetskLeadingN(const std::vector<const xAOD::Jet*> &selected_jets,
+  StatusCode KLFitterAlg::setJetskLeadingN(const std::vector<const xAOD::Jet*> &jets,
                                            KLFitter::Particles *inputParticles, size_t njets) {
 
     //If container has less jets than required, raise error
     if (m_failOnLessThanXJets) {
-      if (selected_jets.size() < njets) {
+      if (jets.size() < njets) {
         ANA_MSG_ERROR("KLFitterTool::setJetskLeadingX: You required " << njets
-                      << " jets. Event has " << selected_jets.size() << " jets!");
+                      << " jets. Event has " << jets.size() << " jets!");
         return StatusCode::FAILURE;
       }
     }
 
     size_t index(0);
     
-    for (const xAOD::Jet *jet : selected_jets) {
+    for (const xAOD::Jet *jet : jets) {
       if (index > njets - 1) break;
 
       TLorentzVector jet_p4;
@@ -478,7 +478,7 @@ namespace top {
     return StatusCode::SUCCESS;
   }
 
-  StatusCode KLFitterAlg::setJetskBtagPriority(const std::vector<const xAOD::Jet*> &selected_jets,
+  StatusCode KLFitterAlg::setJetskBtagPriority(const std::vector<const xAOD::Jet*> &jets,
                                                KLFitter::Particles* inputParticles,
                                                const size_t maxJets) {
     // kBtagPriority mode first adds the b jets, then the light jets
@@ -486,9 +486,9 @@ namespace top {
 
     //If container has less jets than required, raise error
     if (m_failOnLessThanXJets) {
-      if (selected_jets.size() < maxJets) {
+      if (jets.size() < maxJets) {
         ANA_MSG_ERROR("KLFitterTool::setJetskBtagPriority: You required " << maxJets
-                      << " jets. Event has " << selected_jets.size() << " jets!");
+                      << " jets. Event has " << jets.size() << " jets!");
         return StatusCode::FAILURE;
       }
     }
@@ -497,7 +497,7 @@ namespace top {
 
     // First find the b-jets
     unsigned int index(0);
-    for (const xAOD::Jet *jet : selected_jets) {
+    for (const xAOD::Jet *jet : jets) {
       if (totalJets >= maxJets) break;
 
       if (!m_bTagDecoAcc->isAvailable(*jet)) {
@@ -528,7 +528,7 @@ namespace top {
 
     // Second, find the light jets
     index = 0;
-    for (const xAOD::Jet *jet : selected_jets) {
+    for (const xAOD::Jet *jet : jets) {
       if (totalJets >= maxJets) break;
       if (!(*m_bTagDecoAcc)(*jet)) {
         TLorentzVector jet_p4;
