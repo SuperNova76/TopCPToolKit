@@ -19,5 +19,6 @@
   <class name="DiTauMassCalculatorAlg" />
   <class name="BTaggingScoresAlg" />
   <class name="SVMassAlg" />
+  <function name="top::preloadComponentFactories" />
    
 </lcgdict>

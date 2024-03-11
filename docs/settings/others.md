@@ -98,6 +98,12 @@ Name in YAML: **GeneratorLevelAnalysis**
     !!! tip
         See the [guide](../starting/running_local.md#filtering-systematics) on how to use the systematics filter.
 
+`systematicsHistogram`
+:   the name (string) of the histogram to which a list of executed systematics will be printed. The default is `None` (don't write out the histogram).
+
+    !!! tip
+        We recommend using the string `'listOfSystematics'` for interfacing with [`FastFrames`](https://gitlab.cern.ch/atlas-amglab/fastframes).
+
 ### [EventCleaningBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/EventCleaningConfig.py)
 Name in YAML: **EventCleaning**
 

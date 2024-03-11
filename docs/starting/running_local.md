@@ -86,7 +86,7 @@ The bin content is irrelevant, and simply represents the number of individual fi
 ### List of systematics
 
 There are multiple ways one could retrieve the list of systematics run by the various algorithms.
-The most robust one is to rely on the [`CP::SysListDumperAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/Root/SysListDumperAlg.cxx), an instance of which is automatically set up when running TopCPToolkit (see [commonAlgoConfig.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/commonAlgoConfig.py)).
+The most robust one is to rely on the [`CP::SysListDumperAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/Root/SysListDumperAlg.cxx), an instance of which can be set up via the [`CommonServicesConfig`](../settings/others.md#commonservicesconfig) (see [commonAlgoConfig.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/commonAlgoConfig.py)).
 
 In the same `output.root`, it generates an empty histogram `listOfSystematics` whose bin labels are the various systematics (including `NOSYS` to represent the nominal calibrations).
 

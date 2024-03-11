@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "-----------------------------------------------"
-echo "    Setting up the latest release for 24.2   "
+echo "    Setting up the latest release for 25.2   "
 echo "-----------------------------------------------"
 echo "    Entering Development directory...          "
 echo "-----------------------------------------------"
@@ -17,9 +17,9 @@ echo "-----------------------------------------------"
 echo "
 import sys
 all_rel = sys.argv[1:]
-print sorted(all_rel, key=lambda x : int(x.split(\".\")[-1]))[-2]
+print(sorted(all_rel, key=lambda x : int(x.split(\".\")[-1]))[-2])
 " > script.py
-TAG=`python script.py \`ls /cvmfs/atlas.cern.ch/repo/sw/software/24.2/AnalysisBase | xargs\``
+TAG=`python3 script.py \`ls /cvmfs/atlas.cern.ch/repo/sw/software/25.2/AnalysisBase | xargs\``
 # Print info
 echo "-> Setup release... $TAG"
 echo "--------------------------------------------------------"

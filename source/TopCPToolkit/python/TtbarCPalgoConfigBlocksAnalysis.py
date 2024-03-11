@@ -75,6 +75,8 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
         outputContainers['mu_'] = 'OutMuons'
 
     # small-R jets
+    WPs = ['FixedCutBEff_85','FixedCutBEff_77','FixedCutBEff_70','FixedCutBEff_60','Continuous']
+    btagger = 'DL1dv01'
     if use_jets:
         jetContainer = 'AntiKt4EMPFlowJets'
         configSeq += makeConfig ('Jets', containerName='AnaJets', jetCollection=jetContainer)
@@ -91,19 +93,11 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
         configSeq.setOptionValue ('.maxEta', 2.5)
 
         # b-tagging
-        WPs = ['FixedCutBEff_85','FixedCutBEff_77','FixedCutBEff_70','FixedCutBEff_60','Continuous']
-        btagger = 'DL1dv01'
         for WP in WPs:
             configSeq += makeConfig ('Jets.FlavourTagging', containerName='AnaJets', selectionName=f'{btagger}_{WP}')
             configSeq.setOptionValue ('.btagger', btagger)
             configSeq.setOptionValue ('.btagWP', WP)
             configSeq.setOptionValue ('.minPt', 25e3)
-
-            # calculate per-event b-tagging SF (alternative to storing per-jet SFs)
-            configSeq += makeConfig ('PerEventSF', algoName=f'btagSFCalc_{btagger}_{WP}')
-            configSeq.setOptionValue ('.particles', 'AnaJets.jvt')
-            configSeq.setOptionValue ('.objectSF', f'ftag_effSF_{btagger}_{WP}_%SYS%')
-            configSeq.setOptionValue ('.eventSF', f'weight_btagSF_{btagger}_{WP}_%SYS%')
 
         outputContainers['jet_'] = 'OutJets'
 
@@ -182,7 +176,7 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
     configSeq.setOptionValue ('.electrons', 'AnaElectrons.tight' if use_electrons else '')
     configSeq.setOptionValue ('.muons', 'AnaMuons.tight' if use_muons else '')
     configSeq.setOptionValue ('.photons', 'AnaPhotons.tight&&selectPtEta' if use_photons else '')
-    configSeq.setOptionValue ('.jets', 'AnaJets.jvt' if use_jets else '')
+    configSeq.setOptionValue ('.jets', 'AnaJets.baselineJvt' if use_jets else '')
     configSeq.setOptionValue ('.taus', 'AnaTauJets.tight' if use_taus else '')
     configSeq.setOptionValue ('.inputLabel', 'preselectOR')
     configSeq.setOptionValue ('.outputLabel', 'passesOR')
@@ -215,7 +209,7 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
     if use_photons:
         configSeq += makeConfig ('ObjectCutFlow', containerName='AnaPhotons', selectionName='tight')
     if use_jets:
-        configSeq += makeConfig ('ObjectCutFlow', containerName='AnaJets', selectionName='jvt')
+        configSeq += makeConfig ('ObjectCutFlow', containerName='AnaJets', selectionName='baselineJvt')
     if use_largeR_jets:
         configSeq += makeConfig ('ObjectCutFlow', containerName='AnaLargeRJets', selectionName='')
     if use_track_jets:
@@ -229,6 +223,13 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
     cfg.setOptionValue ('muons', 'AnaMuons.tight')
     cfg.setOptionValue ('lepton_postfix', 'tight')
     configSeq.append(cfg)
+
+    # calculate per-event b-tagging SF (alternative to storing per-jet SFs)
+    for WP in WPs:
+        configSeq += makeConfig ('PerEventSF', algoName=f'btagSFCalc_{btagger}_{WP}')
+        configSeq.setOptionValue ('.particles', 'AnaJets.baselineJvt')
+        configSeq.setOptionValue ('.objectSF', f'ftag_effSF_{btagger}_{WP}_%SYS%')
+        configSeq.setOptionValue ('.eventSF', f'weight_btagSF_{btagger}_{WP}_%SYS%')
 
     # energy decorations
     # TODO: give it a factory when moving to Athena
@@ -265,7 +266,7 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
         configSeq.setOptionValue ('.outputName', 'OutMuons')
     if use_jets:
         configSeq += makeConfig ('Thinning', containerName='AnaJets')
-        configSeq.setOptionValue ('.selectionName', 'jvt')
+        configSeq.setOptionValue ('.selectionName', 'baselineJvt')
         configSeq.setOptionValue ('.outputName', 'OutJets')
     if use_photons:
         configSeq += makeConfig ('Thinning', containerName='AnaPhotons')
@@ -326,7 +327,7 @@ SAVE
                              electrons='AnaElectrons.loose',
                              muons='AnaMuons.tight',
                              met='AnaMET',
-                             jets='AnaJets.jvt',
+                             jets='AnaJets.baselineJvt',
                              btagDecoration='ftag_select_DL1dv01_FixedCutBEff_85',
                              selectionCutsDict=mycuts,
                              noFilter=noFilter,
@@ -337,7 +338,7 @@ SAVE
     cfg = KLFitterConfig('KLFitterResult')
     cfg.setOptionValue ('electrons', 'AnaElectrons.tight')
     cfg.setOptionValue ('muons', 'AnaMuons.tight')
-    cfg.setOptionValue ('jets', 'AnaJets.jvt')
+    cfg.setOptionValue ('jets', 'AnaJets.baselineJvt')
     cfg.setOptionValue ('met', 'AnaMET')
     cfg.setOptionValue ('likelihoodType', 'ttbar')
     cfg.setOptionValue ('jetSelectionMode', 'kBtagPriorityFourJets')
@@ -357,7 +358,7 @@ SAVE
         cfg = TopSpaNetConfig()
         cfg.setOptionValue ('electrons', 'AnaElectrons.tight')
         cfg.setOptionValue ('muons', 'AnaMuons.tight')
-        cfg.setOptionValue ('jets', 'AnaJets.jvt')
+        cfg.setOptionValue ('jets', 'AnaJets.baselineJvt')
         cfg.setOptionValue ('met', 'AnaMET')
         cfg.setOptionValue ('eventSelection', 'pass_ejets_%SYS%||pass_mujets_%SYS%')
         cfg.setOptionValue ('topology', topology)
@@ -370,7 +371,7 @@ SAVE
         cfg.setOptionValue ('electrons', 'AnaElectrons.tight')
         cfg.setOptionValue ('muons', 'AnaMuons.tight')
         cfg.setOptionValue ('taus', 'AnaTauJets.tight')
-        cfg.setOptionValue ('jets', 'AnaJets.jvt')
+        cfg.setOptionValue ('jets', 'AnaJets.baselineJvt')
         cfg.setOptionValue ('met', 'AnaMET')
         cfg.setOptionValue ('eventSelection', '')
         cfg.setOptionValue ('saveExtraVariables', True)

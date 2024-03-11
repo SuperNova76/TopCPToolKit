@@ -19,6 +19,7 @@ def makeRecoSequence(analysisName, flags, noSystematics=False, noFilter=False):
 
     configSeq += factory.makeConfig('CommonServices')
     configSeq.setOptionValue('.runSystematics', not noSystematics)
+    configSeq.setOptionValue('.systematicsHistogram', 'listOfSystematics')
 
     import importlib
     try:
@@ -30,10 +31,6 @@ def makeRecoSequence(analysisName, flags, noSystematics=False, noFilter=False):
     except AttributeError:
         raise Exception('The analysis you specified via --analysis does not have makeRecoConfiguration method implemented.'
                         'This is needed to configure the CP algorithms')
-
-    # Add an histogram to keep track of all the systematic names
-    algSeq += createAlgorithm('CP::SysListDumperAlg', 'SystematicsPrinter')
-    algSeq.SystematicsPrinter.histogramName = 'listOfSystematics'
 
     return algSeq
 
@@ -182,9 +179,8 @@ def makeTextBasedSequence(analysisName, filename, flags, noSystematics=False):
     print(">>> Configuration used:")
     config.printConfig()
 
-    configAccumulator = ConfigAccumulator(dataType=flags.Input.DataType, campaign=flags.Input.MCCampaign,
-                                          geometry=flags.Input.LHCPeriod, autoconfigFromFlags=flags,
-                                          algSeq=algSeq, isPhyslite=flags.Input.isPHYSLITE,
+    configAccumulator = ConfigAccumulator(autoconfigFromFlags=flags,
+                                          algSeq=algSeq,
                                           noSystematics=noSystematics)
     configSeq.fullConfigure(configAccumulator)
 

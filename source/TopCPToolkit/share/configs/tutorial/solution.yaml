@@ -1,4 +1,5 @@
-CommonServices: {}
+CommonServices:
+  systematicsHistogram: 'listOfSystematics'
 
 PileupReweighting: {}
 
@@ -30,7 +31,7 @@ Jets:
 
 PerEventSF:
   - name: 'btagSFCalc_DL1dv01_Continuous'
-    particles: 'AnaJets.jvt'
+    particles: 'AnaJets.baselineJvt'
     objectSF: 'ftag_effSF_DL1dv01_Continuous_%SYS%'
     eventSF: 'weight_btagSF_DL1dv01_Continuous_%SYS%'
 
@@ -75,7 +76,7 @@ OverlapRemoval:
   inputLabel: 'preselectOR'
   outputLabel: 'passesOR'
   # Format should follow Object: '<containerName>.<postfix>'
-  jets: 'AnaJets.jvt'
+  jets: 'AnaJets.baselineJvt'
   electrons: 'AnaElectrons.tight'
   muons: 'AnaMuons.tight'
 
@@ -83,14 +84,14 @@ ObjectCutFlow:
   - containerName: 'AnaElectrons'
     selectionName: 'tight'
   - containerName: 'AnaJets'
-    selectionName: 'jvt'
+    selectionName: 'baselineJvt'
   - containerName: 'AnaMuons'
     selectionName: 'tight'
 
 Thinning:
   - containerName: 'AnaJets'
     outputName: 'OutJets'
-    selectionName: 'jvt'
+    selectionName: 'baselineJvt'
   - containerName: 'AnaElectrons'
     outputName: 'OutElectrons'
     selectionName: 'tight||loose'
@@ -129,7 +130,7 @@ Trigger:
 EventSelection:
   - electrons: 'AnaElectrons.loose'
     muons: 'AnaMuons.tight'
-    jets: 'AnaJets.jvt'
+    jets: 'AnaJets.baselineJvt'
     met: 'AnaMET'
     btagDecoration: 'ftag_select_DL1dv01_FixedCutBEff_85'
     noFilter: False
@@ -165,7 +166,6 @@ Output:
       jet_: 'OutJets'
       met_: 'AnaMET'
       '': 'EventInfo'
-  systematicsHistogram: 'listOfSystematics'
   commands:
     # Turn output branches on and off with 'enable' and 'disable'
     - disable jet_.*_eff.*
