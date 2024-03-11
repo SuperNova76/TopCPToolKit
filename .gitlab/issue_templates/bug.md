@@ -14,7 +14,7 @@ Describe what behavior you expect to see.
 
 ### Environment
 
-AnalysisBase release: **24.2.xx**
+AnalysisBase release: **25.2.xx**
 
 Analysis template: `TtbarCPalgoConfigBlocksAnalysis`
 

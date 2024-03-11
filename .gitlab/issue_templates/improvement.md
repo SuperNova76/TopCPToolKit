@@ -18,7 +18,7 @@ Link any relevant twiki, code, issue or merge request.
 
 ### Environment
 
-AnalysisBase release: **24.2.xx**
+AnalysisBase release: **25.2.xx**
 
 Analysis template: `TtbarCPalgoConfigBlocksAnalysis`
 

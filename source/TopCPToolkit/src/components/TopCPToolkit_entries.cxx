@@ -11,10 +11,21 @@
 #include <TopCPToolkit/RunPartonHistoryAlg.h>
 #include <TopCPToolkit/RunSpaNetAlg.h>
 #include <TopCPToolkit/RunTtbarNNLORecursiveRewAlg.h>
-#include <TopCPToolkit/DiTauMassCalculatorAlg.h>
 #include <TopCPToolkit/JetMatchingAlg.h>
 #include <TopCPToolkit/DiTauMassCalculatorAlg.h>
-#include <TopCPToolkit/BTaggingScores.h>
+#include <TopCPToolkit/BTaggingScoresAlg.h>
 #include <TopCPToolkit/SVMassAlg.h>
 
-DECLARE_COMPONENT (TtbarCPalgoAnalysis)
+DECLARE_COMPONENT (SVMassAlg)
+DECLARE_COMPONENT (top::RunTtbarNNLORecursiveRewAlg)
+DECLARE_COMPONENT (top::RunSpaNetAlg)
+DECLARE_COMPONENT (top::RunPartonHistoryAlg)
+DECLARE_COMPONENT (top::PartonToJetsMatchAlg)
+DECLARE_COMPONENT (top::ParticleLevelAlg)
+DECLARE_COMPONENT (top::LeptonSFCalculatorAlg)
+DECLARE_COMPONENT (top::KLFitterFinalizeOutputAlg)
+DECLARE_COMPONENT (top::KLFitterAlg)
+DECLARE_COMPONENT (top::JetMatchingAlg)
+DECLARE_COMPONENT (top::ExtraParticleDecorationAlg)
+DECLARE_COMPONENT (DiTauMassCalculatorAlg)
+DECLARE_COMPONENT (BTaggingScoresAlg)

@@ -3,6 +3,7 @@ from SimulationConfig.SimEnums import SimulationFlavour
 from AthenaConfiguration.Enums import LHCPeriod
 from PathResolver import PathResolver
 from AnalysisAlgorithmsConfig.ConfigAccumulator import DataType
+from AthenaConfiguration.AutoConfigFlags import GetFileMD
 
 _campaigns_AMITag = {
     # NOTE this is a "fallback" approach to read campaign based on standard r-tag with pile-up for
@@ -60,11 +61,15 @@ def parse_input_filelist(path):
     return files
 
 
-def populate_config_flags(flags, metadata):
+def populate_config_flags(flags):
     """
-    Populate additional information in the AllConfigFlags from FileMetaData
+    Populate additional information in the AllConfigFlags.
+    Use the FileMetaData if crucial items are missing.
     """
-    flags.addFlag('Input.AMITag', metadata.get('AMITag', ''))
+    # we will only fill this metadata object if we need to
+    metadata = None
+    # similarly, here are some flags we shouldn't need on good derivations
+    flags.addFlag('Input.AMITag', 'not required')
     if len(flags.Input.RunNumbers) != 1:
         print('WARNING (metaConfig.populate_config_flags): FileMetaData reports RunNumber list '
               f'with not exactly 1 entry: {flags.Input.RunNumbers}')
@@ -73,9 +78,11 @@ def populate_config_flags(flags, metadata):
     is_data = (flags.Input.DataType is DataType.Data)
     if not is_data:
         # try a fallback solution to determine MC campaign
-        # this is for samples, that don't include the MCCampaign entry in FileMetaData
+        # this is for samples that don't include the MCCampaign entry in FileMetaData
         # this problem should be fixed in p58XX tags
         if flags.Input.MCCampaign == Campaign.Unknown:
+            if metadata is None: metadata = GetFileMD(flags.Input.Files)
+            flags.Input.AMITag = metadata.get('AMITag', 'not found!')
             flags.Input.MCCampaign = get_campaign_fallback
     flags.addFlag('Input.LHCPeriod', get_LHCgeometry)
     flags.addFlag('Input.isRun3', isRun3)

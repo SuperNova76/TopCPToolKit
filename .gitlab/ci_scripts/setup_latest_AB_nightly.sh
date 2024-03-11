@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "-----------------------------------------------"
-echo "    Setting up the nightly release for 24.2   "
+echo "    Setting up the nightly release for 25.2   "
 echo "-----------------------------------------------"
 echo "    Entering Development directory...          "
 echo "-----------------------------------------------"
@@ -14,7 +14,7 @@ source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh
 echo "Sourced"
 
 # Print info to get the most recent nightly as sometimes it is not built
-REL=`ls -t -d /cvmfs/atlas-nightlies.cern.ch/repo/sw/main_AnalysisBase_x86_64-centos7-gcc11-opt/*-* | head -1 | xargs basename`
+REL=`ls -t -d /cvmfs/atlas-nightlies.cern.ch/repo/sw/main_AnalysisBase_x86_64-el9-gcc13-opt/*-* | head -1 | xargs basename`
 echo "-> Setup nightly... $REL"
 echo "--------------------------------------------------------"
 echo "-> Running command : asetup AnalysisBase,main,$REL,here"

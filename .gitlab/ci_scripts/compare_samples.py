@@ -180,7 +180,7 @@ if __name__ == '__main__':
     print("Validation script called with the following arguments", sys.argv)
     if len(sys.argv) != 3:
         logger.error(f"{red_code}The script compare_samples.py requires 2 arguments!{reset_code}")
-        logger.error("Please run it as : python compare_samples.py <reference.root> <new.root>")
+        logger.error("Please run it as : python3 compare_samples.py <reference.root> <new.root>")
         exit(1)
     
     ref_f = TFile.Open(sys.argv[1],"READ")

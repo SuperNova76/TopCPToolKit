@@ -1,4 +1,4 @@
-image: gitlab-registry.cern.ch/atlasphys-top/reco/ci-docker-cc7
+image: gitlab-registry.cern.ch/atlas-sit/docker/alma9-atlasos-dev:latest
 
 stages:
   - build

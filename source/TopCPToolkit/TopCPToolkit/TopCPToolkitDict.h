@@ -1,6 +1,7 @@
 #ifndef TOPCPTOOLKIT_DICT_H
 #define TOPCPTOOLKIT_DICT_H
 
+#include "TopCPToolkit/ComponentFactoryPreloader.h"
 #include "TopCPToolkit/ExtraParticleDecorationAlg.h"
 #include "TopCPToolkit/LeptonSFCalculatorAlg.h"
 #include "TopCPToolkit/KLFitterAlg.h"
