@@ -33,9 +33,9 @@
     myAlgo = config.createAlgorithm( 'CP::SomethingAlg', 'someName' )
     myAlgo.OutputLevel = 2 # sets to DEBUG
     ```
-    and `myAlgo` will printout messages wrapped with `ATH_MSG_DEBUG`. Any tool declared by `CP::SomethingAlg` can inherit the current message level (and therefore be driven entirely in python), by setting the corresponding property (in the C++ code):
+    and `myAlgo` will printout messages wrapped with `ANA_MSG_DEBUG`. Any tool declared by `CP::SomethingAlg` can inherit the current message level (and therefore be driven entirely in python), by setting the corresponding property (in the C++ code):
     ```cpp
-        ATH_CHECK( tool->setProperty("OutputLevel", msg().level()) );
+        ANA_CHECK( tool->setProperty("OutputLevel", msg().level()) );
     ```
     (or equivalently for our purposes, `ANA_CHECK`).
 
