@@ -60,6 +60,26 @@ validateRun3:
     INPUTFILE: ${CI_PROJECT_DIR}/job_latestABreleaseRun3/${RUN_DIR}/output_job_latestABreleaseRun3.root
   needs: [referenceRun3, latestABreleaseRun3, latestABrelease]
 
+validateRun2data:
+  extends: .base_validation_job_template
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
+  variables:
+    JOBNAME: job_validateRun2data
+    REFERENCEFILE: ${CI_PROJECT_DIR}/job_referenceRun2data/${RUN_DIR}/output_job_referenceRun2data.root
+    INPUTFILE: ${CI_PROJECT_DIR}/job_latestABreleaseRun2data/${RUN_DIR}/output_job_latestABreleaseRun2dataroot
+  needs: [referenceRun2data, latestABreleaseRun2data, latestABrelease]
+
+validateRun3data:
+  extends: .base_validation_job_template
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
+  variables:
+    JOBNAME: job_validateRun3data
+    REFERENCEFILE: ${CI_PROJECT_DIR}/job_referenceRun3data/${RUN_DIR}/output_job_referenceRun3data.root
+    INPUTFILE: ${CI_PROJECT_DIR}/job_latestABreleaseRun3data/${RUN_DIR}/output_job_latestABreleaseRun3data.root
+  needs: [referenceRun3data, latestABreleaseRun3data, latestABrelease]
+
 validateLastWeekRun2:
   extends: .base_validation_job_template
   rules:
@@ -80,6 +100,26 @@ validateLastWeekRun3:
     INPUTFILE: ${CI_PROJECT_DIR}/job_referenceRun3/${RUN_DIR}/output_job_referenceRun3.root
   needs: [referenceRun3, lastweekRun3, latestABrelease]
 
+validateLastWeekRun2data:
+  extends: .base_validation_job_template
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+  variables:
+    JOBNAME: job_validateLastWeekRun2data
+    REFERENCEFILE: ${CI_PROJECT_DIR}/job_lastweekRun2data/${RUN_DIR}/output_job_lastweekRun2data.root
+    INPUTFILE: ${CI_PROJECT_DIR}/job_referenceRun2data/${RUN_DIR}/output_job_referenceRun2data.root
+  needs: [referenceRun2data, lastweekRun2data, latestABrelease]
+
+validateLastWeekRun3data:
+  extends: .base_validation_job_template
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+  variables:
+    JOBNAME: job_validateLastWeekRun3data
+    REFERENCEFILE: ${CI_PROJECT_DIR}/job_lastweekRun3data/${RUN_DIR}/output_job_lastweekRun3data.root
+    INPUTFILE: ${CI_PROJECT_DIR}/job_referenceRun3data/${RUN_DIR}/output_job_referenceRun3data.root
+  needs: [referenceRun3data, lastweekRun3data, latestABrelease]
+
 validateYAMLRun2:
   extends: .base_validation_job_template
   rules:
@@ -99,3 +139,23 @@ validateYAMLRun3:
     REFERENCEFILE: ${CI_PROJECT_DIR}/job_latestABnightlyRun3/${RUN_DIR}/output_job_latestABnightlyRun3.root
     INPUTFILE: ${CI_PROJECT_DIR}/job_latestABnightlyRun3YAML/${RUN_DIR}/output_job_latestABnightlyRun3YAML.root
   needs: [latestABnightlyRun3, latestABnightlyRun3YAML, latestABnightly]
+
+validateYAMLRun2data:
+  extends: .base_validation_job_template
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
+  variables:
+    JOBNAME: job_validateYAMLRun2data
+    REFERENCEFILE: ${CI_PROJECT_DIR}/job_latestABnightlyRun2data/${RUN_DIR}/output_job_latestABnightlyRun2data.root
+    INPUTFILE: ${CI_PROJECT_DIR}/job_latestABnightlyRun2YAMLdata/${RUN_DIR}/output_job_latestABnightlyRun2YAMLdata.root
+  needs: [latestABnightlyRun2data, latestABnightlyRun2YAMLdata, latestABnightly]
+
+validateYAMLRun3data:
+  extends: .base_validation_job_template
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
+  variables:
+    JOBNAME: job_validateYAMLRun3data
+    REFERENCEFILE: ${CI_PROJECT_DIR}/job_latestABnightlyRun3data/${RUN_DIR}/output_job_latestABnightlyRun3data.root
+    INPUTFILE: ${CI_PROJECT_DIR}/job_latestABnightlyRun3YAMLdata/${RUN_DIR}/output_job_latestABnightlyRun3YAMLdata.root
+  needs: [latestABnightlyRun3data, latestABnightlyRun3YAMLdata, latestABnightly]

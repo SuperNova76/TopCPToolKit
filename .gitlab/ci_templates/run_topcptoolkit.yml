@@ -23,6 +23,7 @@ variables:
   - cd ../
 
 .switch_tags: &switch_tags
+  - git config --global --add safe.directory ${CI_PROJECT_DIR}
   - >
       if [ -f "${CI_PROJECT_DIR}/${ASETUP_PATH}/tag.txt" ]; then
         git config user.email "atlas.top.reconstruction@cern.ch"
@@ -188,6 +189,26 @@ referenceRun3:
   needs: [referenceTopCPToolkitTag]
   allow_failure: true
 
+referenceRun2data:
+  extends: .reference_job_template
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
+  variables:
+    JOBNAME: job_referenceRun2data
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_data18.txt
+  needs: [referenceTopCPToolkitTag]
+  allow_failure: true
+
+referenceRun3data:
+  extends: .reference_job_template
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
+  variables:
+    JOBNAME: job_referenceRun3data
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_data22.txt
+  needs: [referenceTopCPToolkitTag]
+  allow_failure: true
+
 lastweekRun2:
   extends: .reference_job_template
   rules:
@@ -208,6 +229,26 @@ lastweekRun3:
   needs: [lastweekTopCPToolkitTag]
   allow_failure: true
 
+lastweekRun2data:
+  extends: .reference_job_template
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+  variables:
+    JOBNAME: job_lastweekRun2data
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_data18.txt
+  needs: [lastweekTopCPToolkitTag]
+  allow_failure: true
+
+lastweekRun3data:
+  extends: .reference_job_template
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+  variables:
+    JOBNAME: job_lastweekRun3data
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_data22.txt
+  needs: [lastweekTopCPToolkitTag]
+  allow_failure: true
+
 latestABnightlyRun2YAML:
   extends: .latest_job_yaml_template
   rules:
@@ -225,5 +266,25 @@ latestABnightlyRun3YAML:
   variables:
     JOBNAME: job_latestABnightlyRun3YAML
     INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc21.txt
+  needs: [latestABnightly]
+  allow_failure: true
+
+latestABnightlyRun2YAMLdata:
+  extends: .latest_job_yaml_template
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
+  variables:
+    JOBNAME: job_latestABnightlyRun2YAMLdata
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_data18.txt
+  needs: [latestABnightly]
+  allow_failure: true
+
+latestABnightlyRun3YAMLdata:
+  extends: .latest_job_yaml_template
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
+  variables:
+    JOBNAME: job_latestABnightlyRun3YAMLdata
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_data22.txt
   needs: [latestABnightly]
   allow_failure: true
