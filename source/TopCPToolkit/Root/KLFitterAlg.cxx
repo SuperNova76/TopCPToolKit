@@ -61,6 +61,12 @@ namespace top {
       return StatusCode::FAILURE;
     }
 
+    // FIXME -- at the moment the JetAngles likelihood is not supported -- needs review & bugfixing
+    if (m_LHTypeEnum == KLFEnums::Likelihood::ttbar_JetAngles) {
+      ANA_MSG_ERROR("The ttbar_JetAngles likelihood is currently not supported!");
+      return StatusCode::FAILURE;
+    }
+
     // parse lepton type
     try {
       m_leptonTypeEnum = KLFEnums::strToLeptonType.at(m_leptonType);
