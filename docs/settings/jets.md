@@ -107,8 +107,8 @@ Name in YAML: **Jets.JVT**
 !!! success "Registers the following variables:"
     - `weight_jvt_effSF`: the event-level JVT efficiency SF
     - `weight_fjvt_effSF`: the event-level forward JVT efficiency SF
-    - `select_jvt`: the per-jet JVT selection flag
-    - `select_fjvt`: the per-jet fJVT selection flag
+    - `select_baselineJvt`: the per-jet selection flag for baseline selection and JVT
+    - `select_baselineFJvt`: the per-jet selection flag for baseline selection and forward JVT
 
 ### [makeFTagAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagAnalysisConfig.py)
 Name in YAML: **Jets.FlavourTagging**
@@ -167,8 +167,8 @@ Name in YAML: **Jets.FlavourTagging**
 !!! success "Registers the following variables:"
     - `weight_jvt_effSF`: the event-level JVT efficiency SF
     - `weight_fjvt_effSF`: the event-level forward JVT efficiency SF
-    - `select_jvt`: the per-jet JVT selection flag
-    - `select_fjvt`: the per-jet fJVT selection flag
+    - `select_baselineJvt`: the per-jet selection flag for baseline selection and JVT
+    - `select_baselineFJvt`: the per-jet selection flag for baseline selection and forward JVT
 
 ### [FTagConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagAnalysisConfig.py)
 
