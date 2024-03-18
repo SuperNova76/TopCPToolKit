@@ -26,3 +26,9 @@ Output:
       'jet_': 'ParticleLevelJets'
       'ljet_': 'ParticleLevelLargeRJets'
       'met_': 'ParticleLevelMissingET'
+
+AddConfigBlocks:
+    - modulePath: 'TopCPToolkit.particleLevelConfig'
+      functionName: 'particleLevelConfig'
+      algName: 'ParticleLevel'
+      pos: 'Output'
