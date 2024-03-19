@@ -195,6 +195,8 @@ The symbol `$` below is a placeholder for any of the following comparison operat
 | `MLL_OSSF` | `low high`<br>`low high veto` | Selects the event if `low < MLL_OSSF < high` (in MeV).<br>Rejects the event if `low < MLL_OSSF < high` (in MeV). |
 | `OS` | None | Selects the event if it contains two opposite-sign leptons. |
 | `SS` | None | Selects the event if it contains two same-sign leptons. |
+| `EVENTFLAG` | `sel` | Checks that the event passes the selection `sel`.<br>Allows to fold `sel` into the output branch<br>`pass_<region>_%SYS%` defined below.<br>Useful to save storage space as you can now filter out the<br>`sel` branches themselves. |
+| `GLOBALTRIGMATCH` | None | Selects the event if it passes global trigger<br>matching (electrons/muons/photons).|
 | `SAVE` | None | Saves the current selection (can be retrieved as `pass_<region>_%SYS%`). |
 | `IMPORT` | `subreg` | Applies the selection cuts defined in another region `subreg`. |
 
