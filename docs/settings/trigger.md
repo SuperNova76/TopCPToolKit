@@ -43,8 +43,8 @@ The default is `[]` (empty list).
 `noEffSF`
 :   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. Still performs the global trigger matching (same behaviour as on data). The default is `False`.
 
-`noGlobalTrigger`
-:   disables the global trigger tool, which is only suited for electron/muon/photon trigger legs. The default is `False`.
+`noGlobalTriggerEff`
+:   disables the global trigger efficiency tool (including matching), which is only suited for electron/muon/photon trigger legs. The default is `False`.
 
 !!! success "Registers the following variables:"
     - `trigPassed`: whether a specific trigger is passed (no systematics)
