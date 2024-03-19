@@ -145,7 +145,7 @@ def makeTextBasedSequence(analysisName, filename, flags, noSystematics=False):
                              alg=TopSpaNetConfig, pos='Output')
     from TopCPToolkit.particleLevelConfig import particleLevelConfig
     config.addAlgConfigBlock(algName='ParticleLevel',
-                             alg=particleLevelConfig, pos='Output')
+                             alg=particleLevelConfig, pos='EventSelection')
     from TopCPToolkit.truthConfig import truthConfig
     config.addAlgConfigBlock(algName='PartonHistory',
                              alg=truthConfig, pos='Output')
