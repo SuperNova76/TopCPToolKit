@@ -35,16 +35,6 @@ def makeRecoSequence(analysisName, flags, noSystematics=False, noFilter=False):
     return algSeq
 
 
-def add_event_cleaning(configSeq, factory, flags, runEventCleaning=True):
-    # primary vertex ,event cleaning (jet clean loosebad) and GoodRunsList selection
-    is_data = (flags.Input.DataType is DataType.Data)
-    if is_data:
-        GRLFiles = [metaConfig.get_grl(flags)]
-    configSeq += factory.makeConfig ('EventCleaning')
-    configSeq.setOptionValue ('.runEventCleaning', runEventCleaning)
-    configSeq.setOptionValue ('.userGRLFiles', GRLFiles if is_data else [])
-
-
 def makeTruthSequence(analysisName, flags, noSystematics=False):
     algSeq = AnaAlgSequence()
 
