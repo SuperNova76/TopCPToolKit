@@ -150,11 +150,7 @@ class particleLevelConfig(ConfigBlock):
     
     def createAndFillOutputContainer(self, config, container, map_key, isMET=False):
         # create the output container for that object collection
-        if not isMET:
-            config.setSourceName(container, container)
-            config.addOutputContainer(container, container)
-        else:
-            _ = config.writeName(container, isMet=True)
+        _ = config.writeName(container, isMet=isMET)
 
         # loop over branch mappings
         for mapping in particlelevel_branch_mappings[map_key]:
