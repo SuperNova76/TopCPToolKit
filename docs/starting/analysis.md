@@ -29,7 +29,6 @@ Schematically, it looks like this:
 ```python
 from AnalysisAlgorithmsConfig.ConfigSequence import ConfigSequence
 from AnalysisAlgorithmsConfig.ConfigAccumulator import ConfigAccumulator
-from TopCPToolkit import metaConfig, commonAlgoConfig
 
 def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
 
@@ -52,8 +51,6 @@ This particular config block is defined in [ElectronAnalyisConfig.py](https://ac
 
 The second import creates an instance of `ConfigAccumulator`, which (as the name suggests) will read the chain of config blocks and accumulate it into a sequence of algorithms.
 It communicates all the relevant metadata between blocks during the configuration, and keeps track of all the input and output containers needed at each stage.
-
-The two imports from TopCPToolkit are generally quite useful: `metaConfig` allows easy access to metadata (such as data type or MC campaign), while `commonAlgoConfig` contains standard calls for event cleaning, PMG MC weights or automatic PRW settings.
 
 ### Creating the output ntuple
 
