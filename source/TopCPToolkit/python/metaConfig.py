@@ -84,6 +84,7 @@ def populate_config_flags(flags):
             if metadata is None: metadata = GetFileMD(flags.Input.Files)
             flags.Input.AMITag = metadata.get('AMITag', 'not found!')
             flags.Input.MCCampaign = get_campaign_fallback
+        flags.addFlag('Input.eTag', get_etag)
     flags.addFlag('Input.LHCPeriod', get_LHCgeometry)
     flags.addFlag('Input.isRun3', isRun3)
     flags.addFlag('Input.isPHYSLITE', isPhysLite)
@@ -143,6 +144,9 @@ def isPhysLite(flags):
     return False
 
 def isRun3(flags):
+    """
+    Check whether the sample has Run 3 geometry
+    """
     if flags.Input.DataType is DataType.Data:
         year = get_data_year(flags)
         return (year >= 2022)
@@ -152,6 +156,9 @@ def isRun3(flags):
 
 
 def get_LHCgeometry(flags):
+    """
+    Return the LHCPeriod of the sample
+    """
     if isRun3(flags):
         return LHCPeriod.Run3
     else:
@@ -159,12 +166,27 @@ def get_LHCgeometry(flags):
 
 
 def get_grl(flags):
+    """
+    Get default GRLs based on data year
+    """
     year = get_data_year(flags)
     try:
         return _year_GRL[year]
     except KeyError:
         raise Exception(f'Unrecognized year for GRL {year}')
 
+def get_etag(flags):
+    """
+    Get the e-tag (generator) for MC samples
+    """
+    if flags.Input.DataType is DataType.Data:
+        return -1
+    from PyUtils.AMITagHelperConfig import inputAMITags
+    tags = inputAMITags(flags, fixBroken=True, silent=True)
+    tag = None
+    if tags and tags[0].startswith("e"):
+        tag = tags[0]
+    return tag
 
 def pretty_print(flags):
     """
@@ -184,4 +206,5 @@ def pretty_print(flags):
     print(" "*2, "isPHYSLITE:     ", flags.Input.isPHYSLITE)
     print(" "*2, "MCCampaign:     ", flags.Input.MCCampaign)
     print(" "*2, "GeneratorInfo:  ", flags.Input.GeneratorsInfo)
+    print(" "*2, "eTag:           ", flags.Input.eTag)
     print("="*73)
