@@ -1,6 +1,7 @@
 from AnaAlgorithm.DualUseConfig import createAlgorithm, addPrivateTool
 from AnaAlgorithm.AnaAlgSequence import AnaAlgSequence
 from AnalysisAlgorithmsConfig.ConfigBlock import ConfigBlock
+from AnalysisAlgorithmsConfig.ConfigAccumulator import DataType
 
 particlelevel_branch_mappings = {
     "electrons": [
@@ -92,6 +93,9 @@ class particleLevelConfig(ConfigBlock):
         self.addOption('ljetCollection', None, type=str)
     
     def makeAlgs(self, config):
+
+        if config.dataType() is DataType.Data: return
+
         alg = config.createAlgorithm("top::ParticleLevelAlg", "TopParticleLevel")
         alg.useTruthElectrons  = self.useTruthElectrons
         alg.useTruthMuons      = self.useTruthMuons
