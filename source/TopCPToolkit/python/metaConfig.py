@@ -77,14 +77,14 @@ def populate_config_flags(flags):
     flags.addFlag('Input.DataType', get_data_type)
     is_data = (flags.Input.DataType is DataType.Data)
     if not is_data:
+        if metadata is None: metadata = GetFileMD(flags.Input.Files)
+        flags.Input.AMITag = metadata.get('AMITag', 'not found!')
         # try a fallback solution to determine MC campaign
         # this is for samples that don't include the MCCampaign entry in FileMetaData
         # this problem should be fixed in p58XX tags
         if flags.Input.MCCampaign == Campaign.Unknown:
-            if metadata is None: metadata = GetFileMD(flags.Input.Files)
-            flags.Input.AMITag = metadata.get('AMITag', 'not found!')
             flags.Input.MCCampaign = get_campaign_fallback
-        flags.addFlag('Input.eTag', get_etag)
+    flags.addFlag('Input.eTag', get_etag)
     flags.addFlag('Input.LHCPeriod', get_LHCgeometry)
     flags.addFlag('Input.isRun3', isRun3)
     flags.addFlag('Input.isPHYSLITE', isPhysLite)
@@ -179,13 +179,10 @@ def get_etag(flags):
     """
     Get the e-tag (generator) for MC samples
     """
-    if flags.Input.DataType is DataType.Data:
-        return -1
-    from PyUtils.AMITagHelperConfig import inputAMITags
-    tags = inputAMITags(flags, fixBroken=True, silent=True)
-    tag = None
-    if tags and tags[0].startswith("e"):
-        tag = tags[0]
+    tag = "unavailable"
+    amiTags = flags.Input.AMITag
+    if amiTags.startswith("e"):
+        tag = str(amiTags.split("_")[0])
     return tag
 
 def pretty_print(flags):
