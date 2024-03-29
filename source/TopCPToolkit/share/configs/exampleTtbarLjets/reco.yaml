@@ -357,3 +357,7 @@ AddConfigBlocks:
       functionName: 'PartonToJetsMatchConfig'
       algName: 'PartonToJetsMatch'
       pos: 'Output'
+    - modulePath: 'TopCPToolkit.FakeBkgConfig'
+      functionName: 'FakeBkgConfig'
+      algName: 'FakeBkgCalculator'
+      pos: 'Output'
