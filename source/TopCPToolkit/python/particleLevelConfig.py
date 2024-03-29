@@ -1,5 +1,3 @@
-from AnaAlgorithm.DualUseConfig import createAlgorithm, addPrivateTool
-from AnaAlgorithm.AnaAlgSequence import AnaAlgSequence
 from AnalysisAlgorithmsConfig.ConfigBlock import ConfigBlock
 
 particlelevel_branch_mappings = {
