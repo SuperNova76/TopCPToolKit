@@ -4,7 +4,7 @@ class ExtraParticleDecorationConfig(ConfigBlock):
     """ConfigBlock to add generic particle decorations"""
     
     def __init__(self, name=''):
-        super(ExtraParticleDecorationConfig, self).__init__('ExtraParticleDecoration')
+        super(ExtraParticleDecorationConfig, self).__init__()
         self.addOption('particles', None, type=str)
         self.name = name
     

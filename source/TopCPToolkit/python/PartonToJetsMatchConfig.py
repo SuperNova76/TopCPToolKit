@@ -4,7 +4,7 @@ class PartonToJetsMatchConfig(ConfigBlock):
     """ConfigBlock for jet matching algorithms"""
 
     def __init__(self):
-        super(PartonToJetsMatchConfig, self).__init__('PartonToJetsMatchConfig')
+        super(PartonToJetsMatchConfig, self).__init__()
         self.addOption('jets', 'AntiKt4TruthDressedWZJets', type=str)
         self.addOption('eventSelection', 'pass_ejets_%SYS%||pass_mujets_%SYS%', type=str)
         self.addOption('criticalDR', 0.3, type=float)

@@ -5,7 +5,7 @@ class TopSpaNetConfig(ConfigBlock):
     """ConfigBlock for SPA-Net algorithms"""
 
     def __init__(self):
-        super(TopSpaNetConfig, self).__init__('RunSpaNetAlgConfig')
+        super(TopSpaNetConfig, self).__init__()
         self.addOption('btagger', 'Dl1dv01', type=str)
         self.addOption('electrons', '', type=str)
         self.addOption('muons', '', type=str)

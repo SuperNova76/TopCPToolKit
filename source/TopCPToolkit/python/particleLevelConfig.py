@@ -62,7 +62,7 @@ class particleLevelConfig(ConfigBlock):
     """ConfigBlock for particle-level objects"""
 
     def __init__(self):
-        super(particleLevelConfig, self).__init__('particleLevel')
+        super(particleLevelConfig, self).__init__()
         self.addOption('useTruthElectrons', True, type=bool)
         self.addOption('useTruthMuons', True, type=bool)
         self.addOption('useTruthPhotons', False, type=bool)

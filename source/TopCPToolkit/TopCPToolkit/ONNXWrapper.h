@@ -2,8 +2,7 @@
 #define TOPCPTOOLKIT_ONNXWRAPPER_H
 
 // ONNX includes
-#include <core/session/experimental_onnxruntime_cxx_api.h>
-#include <core/session/onnxruntime_cxx_api.h>
+#include <onnxruntime_cxx_api.h>
 
 // useful
 #include <PathResolver/PathResolver.h>
@@ -24,10 +23,15 @@ namespace top {
       std::vector<Ort::Value>& input_tensors,
       unsigned index_network = 0
     ) {
-      auto session = m_sessions[index_network];
-      auto output_tensors = session->Run(
-        m_input_node_names, input_tensors, m_output_node_names, Ort::RunOptions{nullptr}
-      );
+      Ort::Session& session ATLAS_THREAD_SAFE = *m_sessions[index_network];
+      
+      std::vector<const char*> inputNames(m_input_node_names.size());
+      std::vector<const char*> outputNames(m_output_node_names.size());
+      for (size_t i = 0; i < m_input_node_names.size(); ++i)
+        inputNames[i] = m_input_node_names[i].c_str();
+      for (size_t i = 0; i < m_output_node_names.size(); ++i)
+        outputNames[i] = m_output_node_names[i].c_str();
+      auto output_tensors = session.Run(Ort::RunOptions{nullptr}, inputNames.data(), input_tensors.data(), input_tensors.size(), outputNames.data(), outputNames.size());
       return output_tensors;
     }
 
@@ -111,7 +115,7 @@ namespace top {
     // ort
     std::shared_ptr<Ort::Env> m_env;
     std::shared_ptr<Ort::SessionOptions> m_session_options;
-    std::vector<std::shared_ptr<Ort::Experimental::Session>> m_sessions;
+    std::vector<std::shared_ptr<Ort::Session>> m_sessions;
     std::vector<std::string> m_input_node_names;
     std::vector<std::string> m_output_node_names;
     std::vector<std::vector<int64_t>> m_input_shapes;

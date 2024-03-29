@@ -5,7 +5,7 @@ class JetMatchingConfig(ConfigBlock):
     """ConfigBlock for jet matching algorithms"""
 
     def __init__(self):
-        super(JetMatchingConfig, self).__init__('JetMatchingAlgConfig')
+        super(JetMatchingConfig, self).__init__()
         self.addOption('criticalDR', 0.3, type=float)
         self.addOption('jets', 'AnaJets', type=str)
         self.addOption('truthJets', 'AntiKt4TruthDressedWZJets', type=str)
