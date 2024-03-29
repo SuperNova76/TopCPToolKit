@@ -124,58 +124,20 @@ def makeTextBasedSequence(analysisName, filename, flags, noSystematics=False):
     print(yamlconfig + "\n")
     config = TextConfig(yamlconfig)
 
-
     # ==============================
     # INSERT CUSTOM BLOCKS BELOW
     # it's a good idea to keep "pos='Output'" to make sure the custom block
     # is configured *before* the Output one, so custom containers are
     # treated properly.
 
-    from TopCPToolkit.LeptonSFCalculatorConfig import LeptonSFCalculatorConfig
-    config.addAlgConfigBlock(algName='LeptonSF',
-                             alg=LeptonSFCalculatorConfig, pos='Output')
-    from TopCPToolkit.ExtraParticleDecorationConfig import ExtraParticleDecorationConfig
-    config.addAlgConfigBlock(algName='ExtraParticleDecoration',
-                             alg=ExtraParticleDecorationConfig, pos='Output')
-    from TopCPToolkit.KLFitterConfig import KLFitterConfig
-    config.addAlgConfigBlock(algName='KLFitter',
-                             alg=KLFitterConfig, pos='Output')
-    from TopCPToolkit.TopSpaNetConfig import TopSpaNetConfig
-    config.addAlgConfigBlock(algName='SpaNet',
-                             alg=TopSpaNetConfig, pos='Output')
-    from TopCPToolkit.particleLevelConfig import particleLevelConfig
-    config.addAlgConfigBlock(algName='ParticleLevel',
-                             alg=particleLevelConfig, pos='EventSelection')
-    from TopCPToolkit.truthConfig import truthConfig
-    config.addAlgConfigBlock(algName='PartonHistory',
-                             alg=truthConfig, pos='Output')
-    from TopCPToolkit.TtbarNNLORecursiveRewConfig import TtbarNNLORecursiveRewConfig
-    config.addAlgConfigBlock(algName='TtbarNNLO',
-                             alg=TtbarNNLORecursiveRewConfig, pos='Output')
-    from TopCPToolkit.DiTauMassConfig import DiTauMassConfig
-    config.addAlgConfigBlock(algName='DiTauMMC',
-                             alg=DiTauMassConfig, pos='Output')
-    
-    ## new block
-    from TopCPToolkit.JetMatchingConfig import JetMatchingConfig
-    config.addAlgConfigBlock(algName='JetMatching',
-                             alg=JetMatchingConfig, pos='Output')
-    from TopCPToolkit.BTagScoresConfig import BTagScoresConfig
-    config.addAlgConfigBlock(algName='BTaggingScores',
-                             alg=BTagScoresConfig, superBlocks='Jets')
-    from TopCPToolkit.SVMassConfig import SVMassConfig
-    config.addAlgConfigBlock(algName='SVMass',
-                             alg=SVMassConfig, superBlocks='Jets')
-    from TopCPToolkit.PartonToJetsMatchConfig import PartonToJetsMatchConfig
-    config.addAlgConfigBlock(algName='PartonToJetsMatch',
-                             alg=PartonToJetsMatchConfig, pos='Output')
-    
-    from TopCPToolkit.FakeBkgConfig import FakeBkgConfig
-    config.addAlgConfigBlock(algName='FakeBkgCalculator',
-                             alg=FakeBkgConfig, pos='Output')
-    
+    # from TopCPToolkit.<module> import <config block>
+    # config.addAlgConfigBlock(algName='<short name>',
+    #                          alg=<config block>, pos='Output')
+    # or use the "AddConfigBlocks:" block directly in YAML.
+
     # END OF CUSTOM BLOCKS
     # ===============================
+
     print(">>> Configuring algorithms based on YAML file")
     configSeq = config.configure()
 

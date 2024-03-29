@@ -87,6 +87,23 @@ Name in YAML: **GeneratorLevelAnalysis**
 
 ## Config blocks
 
+### [addNewConfigBlocks](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AnalysisAlgorithmsConfig/python/ConfigText.py)
+Name in YAML: **AddConfigBlocks**
+
+See [Registering new blocks](../starting/analysis.md#registering-new-blocks-directly-in-the-yaml-config-since-analysisbase-24240) for how to use this tool.
+
+`modulePath`
+:   the pythonic location of the module, i.e. `Package.Module`.
+
+`functionName`
+:   the name of the function or config block to call.
+
+`algName`
+:   the name to give the block in the YAML config file.
+
+`pos`
+:   where to insert the new block amongst the list of registered config blocks, i.e. an already registered `algName`. Recommended: `Output`.
+
 ### [CommonServicesConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
 
 `runSystematics`
