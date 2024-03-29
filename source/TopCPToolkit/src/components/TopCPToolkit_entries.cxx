@@ -15,6 +15,7 @@
 #include <TopCPToolkit/DiTauMassCalculatorAlg.h>
 #include <TopCPToolkit/BTaggingScoresAlg.h>
 #include <TopCPToolkit/SVMassAlg.h>
+#include <TopCPToolkit/FakeBkgCalculatorAlg.h>
 
 DECLARE_COMPONENT (SVMassAlg)
 DECLARE_COMPONENT (top::RunTtbarNNLORecursiveRewAlg)
