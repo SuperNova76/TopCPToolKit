@@ -20,5 +20,6 @@
   <class name="BTaggingScoresAlg" />
   <class name="SVMassAlg" />
   <function name="top::preloadComponentFactories" />
-   
+  <class name="FakeBkgCalculatorAlg" />
+
 </lcgdict>

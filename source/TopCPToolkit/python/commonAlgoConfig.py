@@ -170,7 +170,10 @@ def makeTextBasedSequence(analysisName, filename, flags, noSystematics=False):
     config.addAlgConfigBlock(algName='PartonToJetsMatch',
                              alg=PartonToJetsMatchConfig, pos='Output')
     
-
+    from TopCPToolkit.FakeBkgConfig import FakeBkgConfig
+    config.addAlgConfigBlock(algName='FakeBkgCalculator',
+                             alg=FakeBkgConfig, pos='Output')
+    
     # END OF CUSTOM BLOCKS
     # ===============================
     print(">>> Configuring algorithms based on YAML file")
