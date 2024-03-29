@@ -163,7 +163,7 @@ if __name__ == '__main__':
     ##############
 
     f = ROOT.TFile(f'{finalfile}', "UPDATE")
-    h_metadata = ROOT.TH1I('metadata', 'Sample metadata:Look at the bin labels:Number of files in this sample', 3, 0, 3)
+    h_metadata = ROOT.TH1I('metadata', 'Sample metadata:Look at the bin labels:Number of files in this sample', 4, 0, 4)
     h_metadata.GetXaxis().SetBinLabel( 1, str(flags.Input.DataType.value) )
     if flags.Input.DataType != DataType.Data:
         campaign = str(flags.Input.MCCampaign.value)
@@ -171,5 +171,6 @@ if __name__ == '__main__':
         campaign = str(flags.Input.DataYear)
     h_metadata.GetXaxis().SetBinLabel( 2, campaign )
     h_metadata.GetXaxis().SetBinLabel( 3, str(flags.Input.MCChannelNumber) )
+    h_metadata.GetXaxis().SetBinLabel( 4, flags.Input.eTag )
     h_metadata.Write()
     f.Close()
