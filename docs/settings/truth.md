@@ -22,74 +22,77 @@ Name in YAML: **ParticleLevel**
 `useTruthElectrons`
 :   whether to use electrons. The default is `True`.
 
-`el_ptMin`
+`elPtMin`
 :   minimum electron $p_\mathrm{T}$, in MeV. The default is 25 GeV.
 
-`el_etaMax`
+`elEtaMax`
 :   maximum electron $\vert\eta\vert$. The default is 2.5.
 
-`el_notFromHadron`
+`elNotFromHadron`
 :   whether to reject electrons originating from hadronic decays. The default is `True` (reject them).
 
-`el_tauIsHadron`
+`elTauIsHadron`
 :   whether to consider tauons as hadrons in the above rejection. The default is `False` (don't consider them as hadrons).
 
 `useTruthMuons`
 :   whether to use muons. The default is `True`.
 
-`mu_ptMin`
+`muPtMin`
 :   minimum muon $p_\mathrm{T}$, in MeV. The default is 25 GeV.
 
-`mu_etaMax`
+`muEtaMax`
 :   maximum muon $\vert\eta\vert$. The default is 2.5.
 
-`mu_notFromHadron`
+`muNotFromHadron`
 :   whether to reject muons originating from hadronic decays. The default is `True` (reject them).
 
-`mu_tauIsHadron`
+`muTauIsHadron`
 :   whether to consider tauons as hadrons in the above rejection. The default is `False` (don't consider them as hadrons).
 
 `useTruthPhotons`
 :   whether to use photons. The default is `False`.
 
-`ph_ptMin`
+`phPtMin`
 :   minimum photon $p_\mathrm{T}$, in MeV. The default is 25 GeV.
 
-`ph_etaMax`
+`phEtaMax`
 :   maximum photon $\vert\eta\vert$. The default is 2.5.
 
-`ph_origin`
+`phOrigin`
 :   comma-separated list (string) of particle origin values as given by the `MCTruthClassifier`. See [possible values](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/MCTruthClassifier/MCTruthClassifier/MCTruthClassifierDefs.h). The default is `''` (empty string).
 
-`ph_isolation`
+`phIsolation`
 :   space-separated isolation variable and isolation cut (string), i.e. in the format `var cut` where `var` is an isolation variable and `cut` is applied as `var / pt < cut`. The default is `''` (empty string).
 
 `useTruthTaus`
 :   whether to use taus. The default is `False.`
 
-`tau_ptMin`
+`tauPtMin`
 :   minimum tau $p_\mathrm{T}$, in MeV. The default is 25 GeV.
 
-`tau_etaMax`
+`tauEtaMax`
 :   maximum tau $\vert\eta\vert$. The default is 2.5.
 
 `useTruthJets`
 :   whether to use jets. The default is `True`.
 
-`ph_ptMin`
+`jetPtMin`
 :   minimum jet $p_\mathrm{T}$, in MeV. The default is 25 GeV.
 
-`ph_etaMax`
+`jetEtaMax`
 :   maximum jet $\vert\eta\vert$. The default is 2.5.
 
 `useTruthLargeRJets`
 :   whether to use large-R jets. The default is `True`.
 
-`ljet_ptMin`
+`ljetPtMin`
 :   minimum large-R jet $p_\mathrm{T}$, in MeV. The default is 25 GeV.
 
-`ljet_etaMax`
+`ljetEtaMax`
 :   maximum large-R jet $\vert\eta\vert$. The default is 2.5.
+
+`ljetCollection`
+:   the large-R jet collection to run on. The default is `AntiKt10TruthTrimmedPtFrac5SmallR20Jets` for `DAOD_PHYS`, and `AntiKt10TruthSoftDropBeta100Zcut10Jets` for `DAOD_PHYSLITE`.
 
 `useTruthMET`
 :   whether to use MET. The default is `True`.

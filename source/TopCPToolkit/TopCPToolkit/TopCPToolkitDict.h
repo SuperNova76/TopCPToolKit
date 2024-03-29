@@ -18,5 +18,6 @@
 #include "TopCPToolkit/JetMatchingAlg.h"
 #include "TopCPToolkit/BTaggingScoresAlg.h"
 #include "TopCPToolkit/SVMassAlg.h"
+#include "TopCPToolkit/FakeBkgCalculatorAlg.h"
 
 #endif

@@ -1,6 +1,6 @@
 # File for configuration of common stuff
 # includes event cleaning, GRL, PRW and MC weight
-from AnaAlgorithm.AnaAlgSequence import AnaAlgSequence
+from AnaAlgorithm.AlgSequence import AlgSequence
 from AnalysisAlgorithmsConfig.ConfigSequence import ConfigSequence
 from AnalysisAlgorithmsConfig.ConfigAccumulator import ConfigAccumulator
 from AnalysisAlgorithmsConfig.ConfigText import TextConfig
@@ -12,7 +12,7 @@ from ROOT import PathResolver
 
 
 def makeRecoSequence(analysisName, flags, noSystematics=False, noFilter=False):
-    algSeq = AnaAlgSequence()
+    algSeq = AlgSequence()
 
     configSeq = ConfigSequence()
     factory = ConfigFactory()
@@ -36,7 +36,7 @@ def makeRecoSequence(analysisName, flags, noSystematics=False, noFilter=False):
 
 
 def makeTruthSequence(analysisName, flags, noSystematics=False):
-    algSeq = AnaAlgSequence()
+    algSeq = AlgSequence()
 
     if flags.Input.DataType is DataType.Data:
         return algSeq
@@ -68,7 +68,7 @@ def makeTruthSequence(analysisName, flags, noSystematics=False):
     return algSeq
 
 def makeParticleLevelSequence(analysisName, flags, noSystematics=False):
-    algSeq = AnaAlgSequence()
+    algSeq = AlgSequence()
 
     if flags.Input.DataType is DataType.Data:
         return algSeq
@@ -101,7 +101,7 @@ def makeParticleLevelSequence(analysisName, flags, noSystematics=False):
     return algSeq
 
 def makeTextBasedSequence(analysisName, filename, flags, noSystematics=False):
-    algSeq = AnaAlgSequence()
+    algSeq = AlgSequence()
 
     if flags.Input.DataType is DataType.Data and filename in ['particle','parton']:
         return algSeq
@@ -160,7 +160,10 @@ def makeTextBasedSequence(analysisName, filename, flags, noSystematics=False):
     config.addAlgConfigBlock(algName='PartonToJetsMatch',
                              alg=PartonToJetsMatchConfig, pos='Output')
     
-
+    from TopCPToolkit.FakeBkgConfig import FakeBkgConfig
+    config.addAlgConfigBlock(algName='FakeBkgCalculator',
+                             alg=FakeBkgConfig, pos='Output')
+    
     # END OF CUSTOM BLOCKS
     # ===============================
     print(">>> Configuring algorithms based on YAML file")

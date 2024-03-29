@@ -187,3 +187,42 @@ Name in YAML: **SpaNet**
 
 !!! note "Documentation"
     See [arXiv:2106.03898](https://arxiv.org/abs/2106.03898) and [arXiv:2309.01886](https://arxiv.org/abs/2309.01886).
+
+### [FakeBkgConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/FakeBkgConfig.py)
+Name in YAML: **FakeBkgCalculator**
+
+`algoName`
+:   unique name given to the underlying algorithm estimating the fake background.
+
+`electrons`
+:   the input electron container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
+
+`electronsTarget`
+:   the input electron tight selection in the format `selection`.
+
+`muons`
+:   the input muon container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
+
+`muonsTarget`
+:   the input muon tight selection in the format `selection`.
+
+`eventPreselection`
+:   the event selection flag to estimate the fake background. The default is '' (empty string).
+
+`fakeTool`
+:   the tool for fake lepton estimate among the different [FakeBkgTools](https://gitlab.cern.ch/atlas/athena/-/tree/main/PhysicsAnalysis/AnalysisCommon/FakeBkgTools). The currently available one is `CP::AsymptMatrixTool`.
+
+`config`
+:   the input to the tool (ROOT or XML file). Some test files (deprecated and computed in Release 21) can be found in `dev/AnalysisTop/FakeBkgToolsData/`.
+
+`definition`
+:   this argument allows the user to specify the definition of the region of interest, in terms of how many (tight) leptons are selected, and how extra leptons are treated (vetoed or not). This must describe the way events are selected in the main analysis. More details [here](https://gitlab.cern.ch/atlas/athena/-/blob/main/PhysicsAnalysis/AnalysisCommon/FakeBkgTools/doc/arg_selection.md).
+
+`process`
+:   this argument allows one to set what kind of processes, in terms of number of real and fake/non-prompt leptons in the final state, are estimated by the fake lepton background yields or weights computed by the tools. More details [here](https://gitlab.cern.ch/atlas/athena/-/blob/main/PhysicsAnalysis/AnalysisCommon/FakeBkgTools/doc/arg_process.md).
+
+!!! success "Registers the following variable:"
+    - `weight_fake_`+`algoName`: the fake lepton weight
+
+!!! abstract "Documentation"
+    The source code and documentation for FakeBkgTools are available from [athena](https://gitlab.cern.ch/atlas/athena/-/tree/main/PhysicsAnalysis/AnalysisCommon/FakeBkgTools).

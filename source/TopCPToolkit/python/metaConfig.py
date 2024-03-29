@@ -68,13 +68,14 @@ def populate_config_flags(flags):
     flags.addFlag('Input.DataType', get_data_type)
     is_data = (flags.Input.DataType is DataType.Data)
     if not is_data:
+        if metadata is None: metadata = GetFileMD(flags.Input.Files)
+        flags.Input.AMITag = metadata.get('AMITag', 'not found!')
         # try a fallback solution to determine MC campaign
         # this is for samples that don't include the MCCampaign entry in FileMetaData
         # this problem should be fixed in p58XX tags
         if flags.Input.MCCampaign == Campaign.Unknown:
-            if metadata is None: metadata = GetFileMD(flags.Input.Files)
-            flags.Input.AMITag = metadata.get('AMITag', 'not found!')
             flags.Input.MCCampaign = get_campaign_fallback
+    flags.addFlag('Input.eTag', get_etag)
     flags.addFlag('Input.LHCPeriod', get_LHCgeometry)
     flags.addFlag('Input.isRun3', isRun3)
     flags.addFlag('Input.isPHYSLITE', isPhysLite)
@@ -134,6 +135,9 @@ def isPhysLite(flags):
     return False
 
 def isRun3(flags):
+    """
+    Check whether the sample has Run 3 geometry
+    """
     if flags.Input.DataType is DataType.Data:
         year = get_data_year(flags)
         return (year >= 2022)
@@ -143,10 +147,24 @@ def isRun3(flags):
 
 
 def get_LHCgeometry(flags):
+    """
+    Return the LHCPeriod of the sample
+    """
     if isRun3(flags):
         return LHCPeriod.Run3
     else:
         return LHCPeriod.Run2
+
+
+def get_etag(flags):
+    """
+    Get the e-tag (generator) for MC samples
+    """
+    tag = "unavailable"
+    amiTags = flags.Input.AMITag
+    if amiTags.startswith("e"):
+        tag = str(amiTags.split("_")[0])
+    return tag
 
 
 def pretty_print(flags):
@@ -167,4 +185,5 @@ def pretty_print(flags):
     print(" "*2, "isPHYSLITE:     ", flags.Input.isPHYSLITE)
     print(" "*2, "MCCampaign:     ", flags.Input.MCCampaign)
     print(" "*2, "GeneratorInfo:  ", flags.Input.GeneratorsInfo)
+    print(" "*2, "eTag:           ", flags.Input.eTag)
     print("="*73)

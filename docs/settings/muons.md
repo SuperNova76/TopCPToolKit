@@ -81,6 +81,9 @@ Name in YAML: **Muons**
 `maxEta`
 :   maximum muon $\vert\eta\vert$ (float). The default is 2.7.
 
+`excludeNSWFromPrecisionLayers`
+:   whether to ignore NSW hits. Expert option, for testing purposes or to fix a crash with older derivations (p-tag < p5834). The default is `False`.
+
 !!! success "Registers the following variables:"
     - `pt`: muon $p_\mathrm{T}$
     - `eta`: muon $\eta$ (no systematics)
@@ -116,6 +119,9 @@ Name in YAML: **Muons.WorkingPoint**
 
 `onlyRecoEffSF`
 :   same as `noEffSF`, but retains the ID scale factor. Experimental! only useful for CI tests. The default is `False`.
+
+`excludeNSWFromPrecisionLayers`
+:   whether to ignore NSW hits. Expert option, for testing purposes or to fix a crash with older derivations (p-tag < p5834). The default is `False`.
 
 !!! success "Registers the following variables:"
     - `select`: whether the muon passes the quality and isolation cuts

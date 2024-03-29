@@ -145,6 +145,27 @@ Name in YAML: **Jets.FlavourTagging**
     - `quantile`: only for pseudo-continuous b-tagging, the per-jet PCBT bin (no systematics)
     - `eff`: the per-jet b-tagging efficiency SF
 
+### [makeFTagEventSFAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagEventSFnalysisConfig.py)
+Name in YAML: **Jets.FlavourTaggingEventSF**
+
+`seq`
+:   the config sequence.
+
+`containerName`
+:   the name of the input container.
+
+`selectionName`
+:   a postfix to apply to decorations and algorithm names. Typically not needed here as internally the string `f"{btagger}_{btagWP}"` is used.
+
+`btagger`
+:   the flavour tagging algorithm: `DL1dv01`, `GN2v00`. The default is `DL1r`.
+
+`btagWP`
+:   the flavour tagging WP. The default is `FixedCutBEff_77`.
+
+!!! success "Registers the following variables:"
+    - `weight_ftag_effSF_{btagger}_{btagWP}`: the per-event b-tagging efficiency SF
+
 ## Config blocks
 
 ### Jet calibration
@@ -203,3 +224,20 @@ Name in YAML: **Jets.FlavourTagging**
     - `select`: the per-jet tagging decision (no systematics)
     - `quantile`: only for pseudo-continuous b-tagging, the per-jet PCBT bin (no systematics)
     - `eff`: the per-jet b-tagging efficiency SF
+
+### [FTagEventSFConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagEventSFAnalysisConfig.py)
+
+`containerName`
+:   the name of the input container.
+
+`selectionName`
+:   a postfix to apply to decorations and algorithm names. Typically not needed here as internally the string `f"{btagger}_{btagWP}"` is used.
+
+`btagger`
+:   the flavour tagging algorithm: `DL1dv01`, `GN2v00`. The default is `DL1r`.
+
+`btagWP`
+:   the flavour tagging WP. The default is `FixedCutBEff_77`.
+
+!!! success "Registers the following variables:"
+    - `weight_ftag_effSF_{btagger}_{btagWP}`: the per-event b-tagging efficiency SF
