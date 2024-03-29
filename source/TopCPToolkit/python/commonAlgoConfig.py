@@ -82,9 +82,14 @@ def makeParticleLevelSequence(analysisName, flags, noSystematics=False, noFilter
 
     if flags.Input.DataType is DataType.Data:
         return algSeq
-    sysService = createService('CP::SystematicsSvc', 'SystematicsSvc', sequence=algSeq)
+
+    configSeq = ConfigSequence()
+    factory = ConfigFactory()
+
+    configSeq += factory.makeConfig('CommonServices')
     # we always want systematics!
-    sysService.sigmaRecommended = 1
+    configSeq.setOptionValue('.runSystematics', True)
+    configSeq.setOptionValue('.systematicsHistogram', 'listOfSystematicsParticleLevel')
 
     # filter-out events without primary vertex
     algSeq += createAlgorithm('CP::VertexSelectionAlg',
@@ -98,15 +103,10 @@ def makeParticleLevelSequence(analysisName, flags, noSystematics=False, noFilter
     except ModuleNotFoundError:
         raise Exception(f'The package and module for your --analysis could not be found: {analysisName}')
     try:
-        analysisModule.makeParticleLevelConfiguration(flags, algSeq, noFilter)
+        analysisModule.makeParticleLevelConfiguration(flags, algSeq, configSeq, factory, noFilter)
     except AttributeError:
         raise Exception('The analysis you specified via --analysis does not have makeParticleLevelConfiguration method implemented.'
                         'This is needed to configure the CP algorithms')
-
-    # Add an histogram to keep track of all the systematic names
-    algSeq += createAlgorithm('CP::SysListDumperAlg', 'SystematicsPrinter')
-    algSeq.SystematicsPrinter.histogramName = 'listOfSystematicsParticleLevel'
-
 
     return algSeq
 

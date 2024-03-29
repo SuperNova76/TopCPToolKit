@@ -450,9 +450,8 @@ def makeTruthConfiguration(flags, algSeq):
     configSeq.fullConfigure(configAccumulator)
 
 
-def makeParticleLevelConfiguration(flags, algSeq, noFilter=False):
-    configSeq = ConfigSequence()
-    factory = ConfigFactory()
+def makeParticleLevelConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
+
     makeConfig = factory.makeConfig
 
     particleLevel_branches = []
@@ -496,7 +495,7 @@ SAVE
     configSeq += makeConfig ('EventSelection',
                              electrons='ParticleLevelElectrons',
                              muons='ParticleLevelMuons',
-                             met='ParticleLevelMET',
+                             met='ParticleLevelMissingET',
                              metTerm='NonInt',
                              jets='ParticleLevelJets',
                              selectionCutsDict=mycuts,
