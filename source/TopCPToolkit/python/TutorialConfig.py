@@ -4,7 +4,7 @@ class TutorialConfig(ConfigBlock):
     """Skeleton of a Config Block, for the TopCPToolkit tutorial"""
 
     def __init__(self):
-        super(TutorialConfig, self).__init__('TopCPToolkitTutorial')
+        super(TutorialConfig, self).__init__()
         self.addOption('electrons', None, type=str)
         self.addOption('silliness', False, type=bool)
     

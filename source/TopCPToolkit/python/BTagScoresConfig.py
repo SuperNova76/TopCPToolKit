@@ -3,7 +3,7 @@ from AnalysisAlgorithmsConfig.ConfigBlock import ConfigBlock
 class BTagScoresConfig(ConfigBlock):
 
     def __init__ (self, containerName) :
-        super (BTagScoresConfig, self).__init__ (containerName)
+        super (BTagScoresConfig, self).__init__()
         self.containerName = containerName
         self.addOption('bTagCalibFile', None, type=str)
         self.addOption('eventSelection', '', type=str)

@@ -5,7 +5,7 @@ class DiTauMassConfig(ConfigBlock):
   """ConfigBlock for the di-tau Missing Mass Calculator algorithm"""
 
   def __init__(self):
-    super(DiTauMassConfig, self).__init__('DiTauMassCalculatorAlgConfig')
+    super(DiTauMassConfig, self).__init__()
     self.addOption('electrons', '', type=str)
     self.addOption('muons', '', type=str)
     self.addOption('jets', '', type=str)

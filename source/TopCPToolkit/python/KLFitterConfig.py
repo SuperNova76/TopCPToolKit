@@ -5,7 +5,7 @@ class KLFitterConfig(ConfigBlock):
     """ConfigBlock for KLFitter algorithms"""
 
     def __init__(self, containerName):
-        super(KLFitterConfig, self).__init__(containerName)
+        super(KLFitterConfig, self).__init__()
         self.containerName = containerName
         self.addOption('electrons', '', type=str)
         self.addOption('muons', '', type=str)

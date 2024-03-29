@@ -29,39 +29,42 @@ namespace top {
 
       ANA_MSG_VERBOSE("Load model from " << fp);
 
-      m_sessions.emplace_back(new Ort::Experimental::Session(*m_env, fp, *m_session_options));
+      m_sessions.emplace_back(new Ort::Session(*m_env, fp.c_str(), *m_session_options));
     }
 
     // retrieve the list of input and output tensor names
-    m_input_node_names = m_sessions.front()->GetInputNames();
-    m_output_node_names = m_sessions.front()->GetOutputNames();
-
-    for (size_t inode = 0; inode < m_input_node_names.size(); inode++) {
-      m_input_name_index[ m_input_node_names[inode] ] = inode;
+    Ort::AllocatorWithDefaultOptions allocator;
+    Ort::Session* session = m_sessions.front().get();
+    for (size_t inode = 0; inode < session->GetInputCount(); inode++) {
+      m_input_name_index[ session->GetInputNameAllocated(inode, allocator).get() ] = inode;
+      m_input_node_names.push_back(session->GetInputNameAllocated(inode, allocator).get());
     }
-    for (size_t inode = 0; inode < m_output_node_names.size(); inode++) {
-      m_output_name_index[ m_output_node_names[inode] ] = inode;
+    for (size_t inode = 0; inode < session->GetOutputCount(); inode++) {
+      m_output_name_index[ session->GetOutputNameAllocated(inode, allocator).get() ] = inode;
+      m_output_node_names.push_back(session->GetOutputNameAllocated(inode, allocator).get());
     }
 
     if (m_verbose){
       ANA_MSG_VERBOSE("Inputs:");
-      for (long unsigned int i=0; i<m_input_node_names.size(); ++i){
-        ANA_MSG_VERBOSE(m_input_node_names[i]);
+      for (long unsigned int i=0; i<m_input_name_index.size(); ++i){
+        ANA_MSG_VERBOSE(session->GetInputNameAllocated(i, allocator).get() << " ");
       }
       ANA_MSG_VERBOSE("Outputs:");
-      for (long unsigned int i=0; i<m_output_node_names.size(); ++i){
-        ANA_MSG_VERBOSE(m_output_node_names[i] << " ");
+      for (long unsigned int i=0; i<m_output_name_index.size(); ++i){
+        ANA_MSG_VERBOSE(session->GetOutputNameAllocated(i, allocator).get() << " ");
       }
     }
 
     // first vector -- the individual input nodes
     // // second vector -- the shape of the input node, e.g. for 1xN shape, the vector has two elements with values {1, N}
-    m_input_shapes = m_sessions.front()->GetInputShapes();
+    size_t input_node_count = session->GetInputCount();
+    m_input_shapes = std::vector<std::vector<int64_t>> (input_node_count);
+    for (size_t i = 0; i < input_node_count; i++) m_input_shapes[i] = session->GetInputTypeInfo(i).GetTensorTypeAndShapeInfo().GetShape();
 
     if (m_verbose) {
       ANA_MSG_VERBOSE("input shapes = ");
       for (long unsigned int i=0; i < m_input_shapes.size(); ++i){
-        ANA_MSG_VERBOSE(m_input_node_names[i] << ": " << m_input_shapes[i].size());
+        ANA_MSG_VERBOSE(session->GetInputNameAllocated(i, allocator).get() << ": " << m_input_shapes[i].size());
 
         Ort::TypeInfo type_info = m_sessions.front()->GetInputTypeInfo(i);
         auto tensor_info = type_info.GetTensorTypeAndShapeInfo();
@@ -77,11 +80,14 @@ namespace top {
     }
 
     // output shape
-    m_output_shapes = m_sessions.front()->GetOutputShapes();
+    size_t output_node_count = session->GetOutputCount();
+    m_output_shapes = std::vector<std::vector<int64_t>> (output_node_count);
+    for (size_t i = 0; i < output_node_count; i++) m_output_shapes[i] = session->GetOutputTypeInfo(i).GetTensorTypeAndShapeInfo().GetShape();
+    
     if (m_verbose) {
       ANA_MSG_VERBOSE("output shapes = ");
       for (long unsigned int i=0; i < m_output_shapes.size(); ++i){
-        ANA_MSG_VERBOSE(m_output_node_names[i] << ": " << m_output_shapes[i].size());
+        ANA_MSG_VERBOSE(session->GetOutputNameAllocated(i, allocator).get() << ": " << m_output_shapes[i].size());
 
         Ort::TypeInfo type_info = m_sessions.front()->GetOutputTypeInfo(i);
         auto tensor_info = type_info.GetTensorTypeAndShapeInfo();

@@ -6,7 +6,7 @@ class LeptonSFCalculatorConfig(ConfigBlock):
     """ConfigBlock for our test analysis algorithm"""
 
     def __init__(self):
-        super(LeptonSFCalculatorConfig, self).__init__('LeptonSFCalculator')
+        super(LeptonSFCalculatorConfig, self).__init__()
         self.addOption('electrons', None, type=str)
         self.addOption('muons', None, type=str)
         self.addOption('lepton_postfix', None, type=str)
