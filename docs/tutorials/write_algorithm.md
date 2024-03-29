@@ -505,6 +505,25 @@ This could be left open to the user, who could map the decorations onto branches
                              alg=TutorialConfig, pos='Output')
     ```
 
+!!! warning
+    This is the new version, but needs a newer release!
+
+    Look at the very last part of `reco.yaml`.
+    You'll find the special `AddConfigBlocks:` block, which is also documented [here]((../starting/analysis.md#registering-new-blocks-directly-in-the-yaml-config-since-analysisbase-24240)).
+    Here we can connect our python config block with a custom name to use in our YAML config file, via the property `algName`.
+
+    !!! example "Exercise"
+        Add the `TutorialConfig` block to the YAML, under the custom name "Tutorial".
+
+    ??? success "Solution"
+        Add the following list element to `AddConfigBlocks:`:
+        ```yaml
+        - modulePath: 'TopCPToolkit.TutorialConfig'
+          functionName: 'TutorialConfig'
+          algName: 'Tutorial'
+          pos: 'Output'
+        ```
+
 We can now set up our config block in the `reco.yaml` file we've been using so far.
 
 !!! example "Exercise"

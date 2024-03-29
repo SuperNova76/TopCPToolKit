@@ -36,15 +36,6 @@ _campaigns_R3 = [
     Campaign.MC21a, Campaign.MC23a, Campaign.MC23c,
 ]
 
-_year_GRL = {
-    2015: 'GoodRunsLists/data15_13TeV/20170619/data15_13TeV.periodAllYear_DetStatus-v89-pro21-02_Unknown_PHYS_StandardGRL_All_Good_25ns.xml',
-    2016: 'GoodRunsLists/data16_13TeV/20180129/data16_13TeV.periodAllYear_DetStatus-v89-pro21-01_DQDefects-00-02-04_PHYS_StandardGRL_All_Good_25ns.xml',
-    2017: 'GoodRunsLists/data17_13TeV/20180619/data17_13TeV.periodAllYear_DetStatus-v99-pro22-01_Unknown_PHYS_StandardGRL_All_Good_25ns_Triggerno17e33prim.xml',
-    2018: 'GoodRunsLists/data18_13TeV/20190318/data18_13TeV.periodAllYear_DetStatus-v102-pro22-04_Unknown_PHYS_StandardGRL_All_Good_25ns_Triggerno17e33prim.xml',
-    2022: 'GoodRunsLists/data22_13p6TeV/20230207/data22_13p6TeV.periodAllYear_DetStatus-v109-pro28-04_MERGED_PHYS_StandardGRL_All_Good_25ns.xml',
-    2023: 'GoodRunsLists/data23_13p6TeV/20230712/data23_13p6TeV.periodAllYear_DetStatus-v110-pro31-05_MERGED_PHYS_StandardGRL_All_Good_25ns.xml'
-}
-
 
 def parse_input_filelist(path):
     """
@@ -88,6 +79,11 @@ def populate_config_flags(flags):
     flags.addFlag('Input.LHCPeriod', get_LHCgeometry)
     flags.addFlag('Input.isRun3', isRun3)
     flags.addFlag('Input.isPHYSLITE', isPhysLite)
+    flags.addFlag('Input.isTRUTH', isTRUTH)
+    # we have to fill this one ourselves when running on TRUTH derivations
+    if flags.Input.isTRUTH:
+        flags.GeoModel.AtlasVersion = 'ATLAS-R2'
+
 
 
 def get_data_type(flags):
@@ -143,6 +139,17 @@ def isPhysLite(flags):
               'in the metadata. Will assume that it was regular PHYS.')
     return False
 
+def isTRUTH(flags):
+    """
+    Check whether the derivation format is TRUTHx.
+    """
+    if flags.Input.ProcessingTags is not None:
+        return 'StreamDAOD_TRUTH1' in flags.Input.ProcessingTags or 'StreamDAOD_TRUTH3' in flags.Input.ProcessingTags
+    else:
+        print('WARNING Could not find any information about the sample being TRUTHx '
+              'in the metadata. Will assume that it was regular PHYS.')
+    return False
+
 def isRun3(flags):
     """
     Check whether the sample has Run 3 geometry
@@ -165,16 +172,6 @@ def get_LHCgeometry(flags):
         return LHCPeriod.Run2
 
 
-def get_grl(flags):
-    """
-    Get default GRLs based on data year
-    """
-    year = get_data_year(flags)
-    try:
-        return _year_GRL[year]
-    except KeyError:
-        raise Exception(f'Unrecognized year for GRL {year}')
-
 def get_etag(flags):
     """
     Get the e-tag (generator) for MC samples
@@ -184,6 +181,7 @@ def get_etag(flags):
     if amiTags.startswith("e"):
         tag = str(amiTags.split("_")[0])
     return tag
+
 
 def pretty_print(flags):
     """
@@ -201,6 +199,7 @@ def pretty_print(flags):
     print(" "*2, "AMITag:         ", flags.Input.AMITag)
     print(" "*2, "isRun3:         ", flags.Input.isRun3)
     print(" "*2, "isPHYSLITE:     ", flags.Input.isPHYSLITE)
+    print(" "*2, "isTRUTH:        ", flags.Input.isTRUTH)
     print(" "*2, "MCCampaign:     ", flags.Input.MCCampaign)
     print(" "*2, "GeneratorInfo:  ", flags.Input.GeneratorsInfo)
     print(" "*2, "eTag:           ", flags.Input.eTag)

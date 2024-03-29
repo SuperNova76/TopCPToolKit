@@ -1,8 +1,6 @@
 from AnalysisAlgorithmsConfig.ConfigSequence import ConfigSequence
 from AnalysisAlgorithmsConfig.ConfigAccumulator import ConfigAccumulator
 from AnalysisAlgorithmsConfig.ConfigFactory import ConfigFactory
-from AsgAnalysisAlgorithms.AsgAnalysisConfig import makePtEtaSelectionConfig, PerEventSFBlock
-from TopCPToolkit import metaConfig, commonAlgoConfig
 
 
 def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
@@ -23,7 +21,8 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
     met_branches = []
 
     # primary vertex ,event cleaning (jet clean loosebad) and GoodRunsList selection
-    commonAlgoConfig.add_event_cleaning(configSeq, factory, flags)
+    configSeq += makeConfig ('EventCleaning')
+    configSeq.setOptionValue ('.runEventCleaning', True)
 
     # run PMG TruthWeightTool on MC only
     configSeq += makeConfig ('GeneratorLevelAnalysis')
@@ -450,9 +449,8 @@ def makeTruthConfiguration(flags, algSeq):
     configSeq.fullConfigure(configAccumulator)
 
 
-def makeParticleLevelConfiguration(flags, algSeq):
-    configSeq = ConfigSequence()
-    factory = ConfigFactory()
+def makeParticleLevelConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
+
     makeConfig = factory.makeConfig
 
     particleLevel_branches = []
@@ -476,6 +474,32 @@ def makeParticleLevelConfiguration(flags, algSeq):
     cfg.setOptionValue ('useTruthTaus', True)
     configSeq.append(cfg)
     outputContainers.update( cfg.getOutputContainers() )
+
+    # event selection
+    mycuts = {
+        'SUBcommon': """
+JET_N 25000 >= 4
+MET >= 20000
+SAVE
+""",
+        'ejets': """
+IMPORT SUBcommon
+EL_N 25000 >= 1
+MU_N 25000 == 0
+MWT < 170000
+MET+MWT > 40000
+SAVE
+"""
+    }
+    configSeq += makeConfig ('EventSelection',
+                             electrons='ParticleLevelElectrons',
+                             muons='ParticleLevelMuons',
+                             met='ParticleLevelMissingET',
+                             metTerm='NonInt',
+                             jets='ParticleLevelJets',
+                             selectionCutsDict=mycuts,
+                             noFilter=noFilter,
+                             cutFlowHistograms=True)
 
     # add NTuple output config
     configSeq += makeConfig ('Output')

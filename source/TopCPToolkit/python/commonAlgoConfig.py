@@ -35,16 +35,6 @@ def makeRecoSequence(analysisName, flags, noSystematics=False, noFilter=False):
     return algSeq
 
 
-def add_event_cleaning(configSeq, factory, flags, runEventCleaning=True):
-    # primary vertex ,event cleaning (jet clean loosebad) and GoodRunsList selection
-    is_data = (flags.Input.DataType is DataType.Data)
-    if is_data:
-        GRLFiles = [metaConfig.get_grl(flags)]
-    configSeq += factory.makeConfig ('EventCleaning')
-    configSeq.setOptionValue ('.runEventCleaning', runEventCleaning)
-    configSeq.setOptionValue ('.userGRLFiles', GRLFiles if is_data else [])
-
-
 def makeTruthSequence(analysisName, flags, noSystematics=False):
     algSeq = AlgSequence()
 
@@ -77,14 +67,19 @@ def makeTruthSequence(analysisName, flags, noSystematics=False):
 
     return algSeq
 
-def makeParticleLevelSequence(analysisName, flags, noSystematics=False):
+def makeParticleLevelSequence(analysisName, flags, noSystematics=False, noFilter=False):
     algSeq = AlgSequence()
 
     if flags.Input.DataType is DataType.Data:
         return algSeq
-    sysService = createService('CP::SystematicsSvc', 'SystematicsSvc', sequence=algSeq)
+
+    configSeq = ConfigSequence()
+    factory = ConfigFactory()
+
+    configSeq += factory.makeConfig('CommonServices')
     # we always want systematics!
-    sysService.sigmaRecommended = 1
+    configSeq.setOptionValue('.runSystematics', True)
+    configSeq.setOptionValue('.systematicsHistogram', 'listOfSystematicsParticleLevel')
 
     # filter-out events without primary vertex
     algSeq += createAlgorithm('CP::VertexSelectionAlg',
@@ -98,15 +93,10 @@ def makeParticleLevelSequence(analysisName, flags, noSystematics=False):
     except ModuleNotFoundError:
         raise Exception(f'The package and module for your --analysis could not be found: {analysisName}')
     try:
-        analysisModule.makeParticleLevelConfiguration(flags, algSeq)
+        analysisModule.makeParticleLevelConfiguration(flags, algSeq, configSeq, factory, noFilter)
     except AttributeError:
         raise Exception('The analysis you specified via --analysis does not have makeParticleLevelConfiguration method implemented.'
                         'This is needed to configure the CP algorithms')
-
-    # Add an histogram to keep track of all the systematic names
-    algSeq += createAlgorithm('CP::SysListDumperAlg', 'SystematicsPrinter')
-    algSeq.SystematicsPrinter.histogramName = 'listOfSystematicsParticleLevel'
-
 
     return algSeq
 
@@ -124,58 +114,20 @@ def makeTextBasedSequence(analysisName, filename, flags, noSystematics=False):
     print(yamlconfig + "\n")
     config = TextConfig(yamlconfig)
 
-
     # ==============================
     # INSERT CUSTOM BLOCKS BELOW
     # it's a good idea to keep "pos='Output'" to make sure the custom block
     # is configured *before* the Output one, so custom containers are
     # treated properly.
 
-    from TopCPToolkit.LeptonSFCalculatorConfig import LeptonSFCalculatorConfig
-    config.addAlgConfigBlock(algName='LeptonSF',
-                             alg=LeptonSFCalculatorConfig, pos='Output')
-    from TopCPToolkit.ExtraParticleDecorationConfig import ExtraParticleDecorationConfig
-    config.addAlgConfigBlock(algName='ExtraParticleDecoration',
-                             alg=ExtraParticleDecorationConfig, pos='Output')
-    from TopCPToolkit.KLFitterConfig import KLFitterConfig
-    config.addAlgConfigBlock(algName='KLFitter',
-                             alg=KLFitterConfig, pos='Output')
-    from TopCPToolkit.TopSpaNetConfig import TopSpaNetConfig
-    config.addAlgConfigBlock(algName='SpaNet',
-                             alg=TopSpaNetConfig, pos='Output')
-    from TopCPToolkit.particleLevelConfig import particleLevelConfig
-    config.addAlgConfigBlock(algName='ParticleLevel',
-                             alg=particleLevelConfig, pos='Output')
-    from TopCPToolkit.truthConfig import truthConfig
-    config.addAlgConfigBlock(algName='PartonHistory',
-                             alg=truthConfig, pos='Output')
-    from TopCPToolkit.TtbarNNLORecursiveRewConfig import TtbarNNLORecursiveRewConfig
-    config.addAlgConfigBlock(algName='TtbarNNLO',
-                             alg=TtbarNNLORecursiveRewConfig, pos='Output')
-    from TopCPToolkit.DiTauMassConfig import DiTauMassConfig
-    config.addAlgConfigBlock(algName='DiTauMMC',
-                             alg=DiTauMassConfig, pos='Output')
-    
-    ## new block
-    from TopCPToolkit.JetMatchingConfig import JetMatchingConfig
-    config.addAlgConfigBlock(algName='JetMatching',
-                             alg=JetMatchingConfig, pos='Output')
-    from TopCPToolkit.BTagScoresConfig import BTagScoresConfig
-    config.addAlgConfigBlock(algName='BTaggingScores',
-                             alg=BTagScoresConfig, superBlocks='Jets')
-    from TopCPToolkit.SVMassConfig import SVMassConfig
-    config.addAlgConfigBlock(algName='SVMass',
-                             alg=SVMassConfig, superBlocks='Jets')
-    from TopCPToolkit.PartonToJetsMatchConfig import PartonToJetsMatchConfig
-    config.addAlgConfigBlock(algName='PartonToJetsMatch',
-                             alg=PartonToJetsMatchConfig, pos='Output')
-    
-    from TopCPToolkit.FakeBkgConfig import FakeBkgConfig
-    config.addAlgConfigBlock(algName='FakeBkgCalculator',
-                             alg=FakeBkgConfig, pos='Output')
-    
+    # from TopCPToolkit.<module> import <config block>
+    # config.addAlgConfigBlock(algName='<short name>',
+    #                          alg=<config block>, pos='Output')
+    # or use the "AddConfigBlocks:" block directly in YAML.
+
     # END OF CUSTOM BLOCKS
     # ===============================
+
     print(">>> Configuring algorithms based on YAML file")
     configSeq = config.configure()
 

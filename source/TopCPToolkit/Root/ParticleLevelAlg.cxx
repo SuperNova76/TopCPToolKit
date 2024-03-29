@@ -166,9 +166,6 @@ namespace top {
     // decorators
     static const SG::AuxElement::Decorator<float> dec_particle_charge("charge");
     static const SG::AuxElement::Decorator<float> dec_particle_energy("e");
-    static const SG::AuxElement::Decorator<float> dec_particle_pt("pt");
-    static const SG::AuxElement::Decorator<float> dec_particle_eta("eta");
-    static const SG::AuxElement::Decorator<float> dec_particle_phi("phi");
     static const SG::AuxElement::Decorator<int> dec_num_truth_bjets_nocuts("num_truth_bjets_nocuts");
     static const SG::AuxElement::Decorator<int> dec_num_truth_cjets_nocuts("num_truth_cjets_nocuts");
 
@@ -472,9 +469,6 @@ namespace top {
 	xAOD::TruthParticle* photon = new xAOD::TruthParticle();
 	photon->makePrivateStore(*phPtr);
 
-	dec_particle_pt(*photon) = photon->pt();
-	dec_particle_eta(*photon) = photon->eta();
-	dec_particle_phi(*photon) = photon->phi();
 	dec_particle_energy(*photon) = photon->e();
 
 	outputPhotons->push_back(photon);
@@ -496,9 +490,6 @@ namespace top {
 	xAOD::TruthParticle* tau = new xAOD::TruthParticle();
 	tau->makePrivateStore(*tauPtr);
 
-	dec_particle_pt(*tau) = tau->pt();
-	dec_particle_eta(*tau) = tau->eta();
-	dec_particle_phi(*tau) = tau->phi();
 	dec_particle_energy(*tau) = tau->e();
 	dec_particle_charge(*tau) = tau->charge();
 
@@ -521,9 +512,6 @@ namespace top {
 	xAOD::Jet* jet = new xAOD::Jet();
 	jet->makePrivateStore(*jetPtr);
 
-	dec_particle_pt(*jet) = jet->pt();
-	dec_particle_eta(*jet) = jet->eta();
-	dec_particle_phi(*jet) = jet->phi();
 	dec_particle_energy(*jet) = jet->e();
 
 	outputJets->push_back(jet);
@@ -545,9 +533,6 @@ namespace top {
 	xAOD::Jet* ljet = new xAOD::Jet();
 	ljet->makePrivateStore(*jetPtr);
 
-	dec_particle_pt(*ljet) = ljet->pt();
-	dec_particle_eta(*ljet) = ljet->eta();
-	dec_particle_phi(*ljet) = ljet->phi();
 	dec_particle_energy(*ljet) = ljet->e();
 
 	outputLargeRJets->push_back(ljet);

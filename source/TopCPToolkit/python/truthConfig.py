@@ -1,4 +1,5 @@
 from AnalysisAlgorithmsConfig.ConfigBlock import ConfigBlock
+from AnalysisAlgorithmsConfig.ConfigAccumulator import DataType
 
 truth_branches = {
     "Ttbar" : [
@@ -419,6 +420,9 @@ class truthConfig(ConfigBlock):
         self.addOption('histories', None, type=str)
 
     def makeAlgs(self, config):
+
+        if config.dataType() is DataType.Data: return
+
         # loop over all histories
         for history in self.getPartonHistories():
             alg = config.createAlgorithm("top::RunPartonHistoryAlg", "TopPartonHistory" + history)
