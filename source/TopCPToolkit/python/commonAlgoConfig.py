@@ -67,14 +67,19 @@ def makeTruthSequence(analysisName, flags, noSystematics=False):
 
     return algSeq
 
-def makeParticleLevelSequence(analysisName, flags, noSystematics=False):
+def makeParticleLevelSequence(analysisName, flags, noSystematics=False, noFilter=False):
     algSeq = AlgSequence()
 
     if flags.Input.DataType is DataType.Data:
         return algSeq
-    sysService = createService('CP::SystematicsSvc', 'SystematicsSvc', sequence=algSeq)
+
+    configSeq = ConfigSequence()
+    factory = ConfigFactory()
+
+    configSeq += factory.makeConfig('CommonServices')
     # we always want systematics!
-    sysService.sigmaRecommended = 1
+    configSeq.setOptionValue('.runSystematics', True)
+    configSeq.setOptionValue('.systematicsHistogram', 'listOfSystematicsParticleLevel')
 
     # filter-out events without primary vertex
     algSeq += createAlgorithm('CP::VertexSelectionAlg',
@@ -88,15 +93,10 @@ def makeParticleLevelSequence(analysisName, flags, noSystematics=False):
     except ModuleNotFoundError:
         raise Exception(f'The package and module for your --analysis could not be found: {analysisName}')
     try:
-        analysisModule.makeParticleLevelConfiguration(flags, algSeq)
+        analysisModule.makeParticleLevelConfiguration(flags, algSeq, configSeq, factory, noFilter)
     except AttributeError:
         raise Exception('The analysis you specified via --analysis does not have makeParticleLevelConfiguration method implemented.'
                         'This is needed to configure the CP algorithms')
-
-    # Add an histogram to keep track of all the systematic names
-    algSeq += createAlgorithm('CP::SysListDumperAlg', 'SystematicsPrinter')
-    algSeq.SystematicsPrinter.histogramName = 'listOfSystematicsParticleLevel'
-
 
     return algSeq
 
@@ -124,7 +124,6 @@ def makeTextBasedSequence(analysisName, filename, flags, noSystematics=False):
     # config.addAlgConfigBlock(algName='<short name>',
     #                          alg=<config block>, pos='Output')
     # or use the "AddConfigBlocks:" block directly in YAML.
-    
 
     # END OF CUSTOM BLOCKS
     # ===============================

@@ -27,6 +27,8 @@ def parse_arguments():
                    help='Configure the job to run with no systematics.')
     p.add_argument('--no-filter', action='store_true',
                    help='Skip filtering of events due to event selection (selection flags are still stored.)')
+    p.add_argument('--no-reco', action='store_true',
+                   help='Skip running the detector-level analysis. Useful for running on TRUTH derivations.')
     p.add_argument('-t', '--text-config', type=str,
                    default=None,
                    help='Name of the analysis to run. Should be a directory containing reco.yaml,'
@@ -65,7 +67,8 @@ def run_job(sample_handler, output_stream_name, level_name, args, flags):
         elif level_name == 'particle':
             from TopCPToolkit.commonAlgoConfig import makeParticleLevelSequence
             algSeq = makeParticleLevelSequence(args.analysis, flags,
-                                               noSystematics=args.no_systematics)
+                                               noSystematics=args.no_systematics,
+                                               noFilter=args.no_filter)
         elif level_name == 'parton':
             from TopCPToolkit.commonAlgoConfig import makeTruthSequence
             algSeq = makeTruthSequence(args.analysis, flags,
@@ -116,18 +119,21 @@ if __name__ == '__main__':
     # the final file to keep
     finalfile = f'{args.output_name}.root'
 
-    pid = os.fork()
-    if pid:
-        os.wait()
-        move_with_symlink_handling(outfile, recofile)
-        move_with_symlink_handling(histofile, 'only_reco_histograms.root')
-    else:
-        run_job(sh, outputStreamName, 'reco', args, flags)
+    if not args.no_reco:
+        pid = os.fork()
+        if pid:
+            os.wait()
+            move_with_symlink_handling(outfile, recofile)
+            move_with_symlink_handling(histofile, 'only_histograms.root')
+        else:
+            run_job(sh, outputStreamName, 'reco', args, flags)
     if args.particle:
         pid = os.fork()
         if pid:
             os.wait()
             move_with_symlink_handling(outfile, particlefile)
+            if args.no_reco:
+                move_with_symlink_handling(histofile, 'only_histograms.root')
         else:
             run_job(sh, outputStreamName, 'particle', args, flags)
     if args.parton:
@@ -135,22 +141,22 @@ if __name__ == '__main__':
         if pid:
             os.wait()
             move_with_symlink_handling(outfile, partonfile)
+            if args.no_reco and not args.particle:
+                move_with_symlink_handling(histofile, 'only_histograms.root')
         else:
             run_job(sh, outputStreamName, 'parton', args, flags)
 
-    if args.parton and not args.particle:
-        os.system(f'hadd -f {finalfile} only_reco_histograms.root {recofile} {partonfile}')
-        os.system(f'rm {recofile} {partonfile} only_reco_histograms.root')
-    elif not args.parton and args.particle:
-        os.system(f'hadd -f {finalfile} only_reco_histograms.root {recofile} {particlefile}')
-        os.system(f'rm {recofile} {particlefile} only_reco_histograms.root')
-    elif args.parton and args.particle:
-        os.system(f'hadd -f {finalfile} only_reco_histograms.root {recofile} {particlefile} {partonfile}')
-        os.system(f'rm {recofile} {partonfile} {particlefile} only_reco_histograms.root')
-    else:
-        os.system(f'hadd -f {finalfile} only_reco_histograms.root {recofile} ')
-        os.system(f'rm {recofile} only_reco_histograms.root')
-        os.system(f'rm -rf {args.output_name}')
+    files_to_merge = ['only_histograms.root']
+    if not args.no_reco:
+        files_to_merge.append(f'{recofile}')
+    if args.particle:
+        files_to_merge.append(f'{particlefile}')
+    if args.parton:
+        files_to_merge.append(f'{partonfile}')
+
+    os.system(f'hadd -f {finalfile} ' + ' '.join(files_to_merge))
+    os.system('rm ' + ' '.join(files_to_merge))
+    os.system(f'rm -rf {args.output_name}')
 
     ##############
     ## METADATA ##

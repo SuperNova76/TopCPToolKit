@@ -79,6 +79,11 @@ def populate_config_flags(flags):
     flags.addFlag('Input.LHCPeriod', get_LHCgeometry)
     flags.addFlag('Input.isRun3', isRun3)
     flags.addFlag('Input.isPHYSLITE', isPhysLite)
+    flags.addFlag('Input.isTRUTH', isTRUTH)
+    # we have to fill this one ourselves when running on TRUTH derivations
+    if flags.Input.isTRUTH:
+        flags.GeoModel.AtlasVersion = 'ATLAS-R2'
+
 
 
 def get_data_type(flags):
@@ -134,6 +139,17 @@ def isPhysLite(flags):
               'in the metadata. Will assume that it was regular PHYS.')
     return False
 
+def isTRUTH(flags):
+    """
+    Check whether the derivation format is TRUTHx.
+    """
+    if flags.Input.ProcessingTags is not None:
+        return 'StreamDAOD_TRUTH1' in flags.Input.ProcessingTags or 'StreamDAOD_TRUTH3' in flags.Input.ProcessingTags
+    else:
+        print('WARNING Could not find any information about the sample being TRUTHx '
+              'in the metadata. Will assume that it was regular PHYS.')
+    return False
+
 def isRun3(flags):
     """
     Check whether the sample has Run 3 geometry
@@ -183,6 +199,7 @@ def pretty_print(flags):
     print(" "*2, "AMITag:         ", flags.Input.AMITag)
     print(" "*2, "isRun3:         ", flags.Input.isRun3)
     print(" "*2, "isPHYSLITE:     ", flags.Input.isPHYSLITE)
+    print(" "*2, "isTRUTH:        ", flags.Input.isTRUTH)
     print(" "*2, "MCCampaign:     ", flags.Input.MCCampaign)
     print(" "*2, "GeneratorInfo:  ", flags.Input.GeneratorsInfo)
     print(" "*2, "eTag:           ", flags.Input.eTag)
