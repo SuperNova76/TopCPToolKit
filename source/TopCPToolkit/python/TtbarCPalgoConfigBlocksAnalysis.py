@@ -1,8 +1,6 @@
 from AnalysisAlgorithmsConfig.ConfigSequence import ConfigSequence
 from AnalysisAlgorithmsConfig.ConfigAccumulator import ConfigAccumulator
 from AnalysisAlgorithmsConfig.ConfigFactory import ConfigFactory
-from AsgAnalysisAlgorithms.AsgAnalysisConfig import makePtEtaSelectionConfig, PerEventSFBlock
-from TopCPToolkit import metaConfig, commonAlgoConfig
 
 
 def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
@@ -23,7 +21,8 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
     met_branches = []
 
     # primary vertex ,event cleaning (jet clean loosebad) and GoodRunsList selection
-    commonAlgoConfig.add_event_cleaning(configSeq, factory, flags)
+    configSeq += makeConfig ('EventCleaning')
+    configSeq.setOptionValue ('.runEventCleaning', True)
 
     # run PMG TruthWeightTool on MC only
     configSeq += makeConfig ('GeneratorLevelAnalysis')
