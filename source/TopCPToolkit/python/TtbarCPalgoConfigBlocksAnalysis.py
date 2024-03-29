@@ -450,7 +450,7 @@ def makeTruthConfiguration(flags, algSeq):
     configSeq.fullConfigure(configAccumulator)
 
 
-def makeParticleLevelConfiguration(flags, algSeq):
+def makeParticleLevelConfiguration(flags, algSeq, noFilter=False):
     configSeq = ConfigSequence()
     factory = ConfigFactory()
     makeConfig = factory.makeConfig

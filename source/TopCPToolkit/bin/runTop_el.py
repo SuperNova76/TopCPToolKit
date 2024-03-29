@@ -67,7 +67,8 @@ def run_job(sample_handler, output_stream_name, level_name, args, flags):
         elif level_name == 'particle':
             from TopCPToolkit.commonAlgoConfig import makeParticleLevelSequence
             algSeq = makeParticleLevelSequence(args.analysis, flags,
-                                               noSystematics=args.no_systematics)
+                                               noSystematics=args.no_systematics,
+                                               noFilter=args.no_filter)
         elif level_name == 'parton':
             from TopCPToolkit.commonAlgoConfig import makeTruthSequence
             algSeq = makeTruthSequence(args.analysis, flags,

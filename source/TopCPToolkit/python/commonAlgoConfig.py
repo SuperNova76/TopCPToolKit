@@ -77,7 +77,7 @@ def makeTruthSequence(analysisName, flags, noSystematics=False):
 
     return algSeq
 
-def makeParticleLevelSequence(analysisName, flags, noSystematics=False):
+def makeParticleLevelSequence(analysisName, flags, noSystematics=False, noFilter=False):
     algSeq = AnaAlgSequence()
 
     if flags.Input.DataType is DataType.Data:
@@ -98,7 +98,7 @@ def makeParticleLevelSequence(analysisName, flags, noSystematics=False):
     except ModuleNotFoundError:
         raise Exception(f'The package and module for your --analysis could not be found: {analysisName}')
     try:
-        analysisModule.makeParticleLevelConfiguration(flags, algSeq)
+        analysisModule.makeParticleLevelConfiguration(flags, algSeq, noFilter)
     except AttributeError:
         raise Exception('The analysis you specified via --analysis does not have makeParticleLevelConfiguration method implemented.'
                         'This is needed to configure the CP algorithms')
