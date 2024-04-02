@@ -509,7 +509,7 @@ This could be left open to the user, who could map the decorations onto branches
     This is the new version, but needs a newer release!
 
     Look at the very last part of `reco.yaml`.
-    You'll find the special `AddConfigBlocks:` block, which is also documented [here]((../starting/analysis.md#registering-new-blocks-directly-in-the-yaml-config-since-analysisbase-24240)).
+    You'll find the special `AddConfigBlocks:` block, which is also documented [here](../starting/analysis.md#registering-new-blocks-directly-in-the-yaml-config-since-analysisbase-24240).
     Here we can connect our python config block with a custom name to use in our YAML config file, via the property `algName`.
 
     !!! example "Exercise"
