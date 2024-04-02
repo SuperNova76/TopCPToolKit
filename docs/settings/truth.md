@@ -163,16 +163,25 @@ The matching algorithm looks for the closest jets in $\Delta R$. For multiple ma
 ### [JetMatchingConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/JetMatchingConfig.py)
 Name in YAML: **JetMatching**
 
-The algorithm adds three variables for reco jets: index of matched truth jet, $\Delta R$ to the closest reco jet and $\Delta R$ of the matched truth jet and its closest truth jet. The matching is based on looking for minimal $\Delta R$. The reco jets with no matched truth jet (no truth jet found with $\Delta R$ within the critical $\Delta R$) have the index set to -1. If multiple reco jets are matched to the same truth jet their index is also set to -1.
+The algorithm adds three variables for reco jets: index of matched truth jet, $\Delta R$ to the closest reco jet and $\Delta R$ of the matched truth jet and its closest truth jet. The matching is based on looking for minimal $\Delta R$. The reco jets with no matched truth jet (no truth jet found with $\Delta R$ within the critical $\Delta R$) have the index set to -1. If multiple reco jets are matched to the same truth jet their index is also set to -1. The algorithm also labels reco jets that have a truth lepton within $\Delta R$ < 0.4 from them. If they do, it also adds the $p_\mathrm{T}$ value of that overlapping truth lepton (otherwise the value will be -1).
 
 `criticalDR`
 :   maximum $\Delta R$ (float) used for matching. The default is `0.3`.
+
+`criticalDR_leptons`
+:   min $\Delta R$ (float) required between reco jets and truth leptons. The default is `0.4`.
 
 `jets`
 :   reco jets container name (string). The default is `AnaJets`.
 
 `truthJets`
 :   truth jets collection name (string). The default is `AntiKt4TruthDressedWZJets`.
+
+`truthElectrons`
+:   truth electrons collection name (string). The default is None.
+
+`truthMuons`
+:   truth muons collection name (string). The default is None.
 
 `eventSelection`
 :   event selection (string) to run the algorithm on. The default is ` ` (run over all events).
@@ -181,6 +190,8 @@ The algorithm adds three variables for reco jets: index of matched truth jet, $\
     - `truth_jet_paired_index`: the index of the truth-level jets matched to the detector-level jets
     - `reco_to_reco_jet_closest_dR`: the minimum $\Delta R$ with respect to detector-level jets
     - `truth_to_truth_jet_closest_dR`: the minimum $\Delta R$ of the matched truth-level jet with respect to truth-level jets
+    - `has_truth_lepton`: label for reco jets if they have an overlapping truth lepton 
+    - `overlapping_truth_lepton_pt`: $p_\mathrm{T}$ of the truth lepton that overlaps with the reco jet
 
 ### [IFFLeptonDecorationBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
 Name in YAML: **X.IFFClassification**, with X amongst: Electrons, Muons

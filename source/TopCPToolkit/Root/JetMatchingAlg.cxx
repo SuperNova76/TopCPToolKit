@@ -7,6 +7,7 @@ namespace top {
     : EL::AnaAlgorithm(name, pSvcLocator)
   {
     declareProperty("criticalDR", m_criticalDR, "Maximum delta R for matching");
+    declareProperty("criticalDR_leptons", m_criticalDR_leptons, "Minimum delta R required between reco jet and truth prompt lepton");
   }
 
   StatusCode JetMatchingAlg::initialize() {
@@ -15,12 +16,16 @@ namespace top {
     ANA_CHECK(m_eventInfoHandle.initialize(m_systematicsList));
     ANA_CHECK(m_jetsHandle.initialize(m_systematicsList));
     ANA_CHECK(m_truthJetsHandle.initialize(m_systematicsList));
+    ANA_CHECK(m_truthElectronsHandle.initialize(m_systematicsList));
+    ANA_CHECK(m_truthMuonsHandle.initialize(m_systematicsList));
     ANA_CHECK(m_jetSelection.initialize(m_systematicsList, m_jetsHandle, SG::AllowEmpty));
     ANA_CHECK(m_selection.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
 
     ANA_CHECK(m_truth_jet_paired_index.initialize(m_systematicsList, m_jetsHandle));
     ANA_CHECK(m_reco_to_reco_jet_closest_dR.initialize(m_systematicsList, m_jetsHandle));
     ANA_CHECK(m_truth_to_truth_jet_closest_dR.initialize(m_systematicsList, m_jetsHandle));
+    ANA_CHECK(m_has_truth_lepton.initialize(m_systematicsList, m_jetsHandle));
+    ANA_CHECK(m_overlapping_truth_lepton_pt.initialize(m_systematicsList, m_jetsHandle));
 
     ANA_CHECK(m_systematicsList.initialize());
 
@@ -39,10 +44,18 @@ namespace top {
       const xAOD::JetContainer *truth_jets = nullptr;
       ANA_CHECK(m_truthJetsHandle.retrieve(truth_jets, sys));
 
+      const xAOD::TruthParticleContainer *truth_electrons = nullptr;
+      ANA_CHECK(m_truthElectronsHandle.retrieve(truth_electrons, sys));
+
+      const xAOD::TruthParticleContainer *truth_muons = nullptr;
+      ANA_CHECK(m_truthMuonsHandle.retrieve(truth_muons, sys));
+
       for (const xAOD::Jet *jet : *jets) {
         m_truth_jet_paired_index.set(*jet, -1, sys);
         m_reco_to_reco_jet_closest_dR.set(*jet, -1, sys);
         m_truth_to_truth_jet_closest_dR.set(*jet, -1, sys);
+        m_has_truth_lepton.set(*jet, false, sys);
+        m_overlapping_truth_lepton_pt.set(*jet, -1, sys);
       }
 
       if (m_selection && !m_selection.getBool(*evtInfo, sys))
@@ -57,6 +70,7 @@ namespace top {
       std::vector<int> matched_truth_jet_indices;
       std::vector<float> reco_to_reco_jet_closest_dR;
       std::vector<float> truth_to_truth_jet_closest_dR;
+
       unsigned int ireco = 0;
       //loop over all selected reco jet
       for (const xAOD::Jet *recojet : selected_jets) {
@@ -87,12 +101,18 @@ namespace top {
           }
         }
       }
+
       //loop over selected reco jets and decorate them
       int ijet = 0;
       for (const xAOD::Jet *jet : selected_jets) {
         m_truth_jet_paired_index.set(*jet, matched_truth_jet_indices.at(ijet), sys);
         m_reco_to_reco_jet_closest_dR.set(*jet, reco_to_reco_jet_closest_dR.at(ijet), sys);
         m_truth_to_truth_jet_closest_dR.set(*jet, truth_to_truth_jet_closest_dR.at(ijet), sys);
+        //is there a truth lepton within dR<0.4 from the reco jet?
+        TLorentzVector reco_jet = jet->p4();
+        double overlapping_truth_lepton_pt = -1;
+        m_has_truth_lepton.set(*jet, JetMatchingAlg::find_close_lepton(reco_jet, *truth_electrons, *truth_muons, overlapping_truth_lepton_pt), sys); 
+        m_overlapping_truth_lepton_pt.set(*jet, overlapping_truth_lepton_pt, sys);
         ijet++;
       }
     }
@@ -130,6 +150,24 @@ namespace top {
     }
     if (minDR > m_criticalDR) truth_jet_index = -1;
     return truth_jet_index;
+  }
+
+  bool JetMatchingAlg::find_close_lepton(TLorentzVector& reco_jet, const xAOD::TruthParticleContainer &truth_electrons, const xAOD::TruthParticleContainer &truth_muons, double& overlapping_truth_lepton_pt) {
+    for (const xAOD::TruthParticle *electron : truth_electrons) {
+      const TLorentzVector& TLVelectron = electron->p4();
+      if (reco_jet.DeltaR(TLVelectron) < m_criticalDR_leptons) {
+          overlapping_truth_lepton_pt = TLVelectron.Pt();
+          return true;
+      }
+    }
+    for (const xAOD::TruthParticle *muon : truth_muons) {
+      const TLorentzVector& TLVmuon = muon->p4();
+      if (reco_jet.DeltaR(TLVmuon) < m_criticalDR_leptons) {
+        overlapping_truth_lepton_pt = TLVmuon.Pt();
+        return true;
+      }
+    }
+    return false;
   }
    
   float JetMatchingAlg::get_minDR_truth(const xAOD::JetContainer &truth_jets, int truth_jet_index) {
