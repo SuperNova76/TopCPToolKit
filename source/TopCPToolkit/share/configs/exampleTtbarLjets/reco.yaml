@@ -361,3 +361,7 @@ AddConfigBlocks:
       functionName: 'FakeBkgConfig'
       algName: 'FakeBkgCalculator'
       pos: 'Output'
+    - modulePath: 'TopCPToolkit.JetReclusteringConfig'
+      functionName: 'JetReclusteringConfig'
+      algName: 'JetReclustering'
+      pos: 'EventSelection'

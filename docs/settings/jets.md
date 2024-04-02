@@ -225,6 +225,24 @@ Name in YAML: **Jets.FlavourTaggingEventSF**
     - `quantile`: only for pseudo-continuous b-tagging, the per-jet PCBT bin (no systematics)
     - `eff`: the per-jet b-tagging efficiency SF
 
+### [JetReclusteringConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/JetReclusteringConfig.py)
+Name in YAML: **JetReclustering**
+
+The algorithm to run FastJet with small-R jets as an input. The output of the algorithm is a new container containing the reclustered jets.
+The default output variables are: pt, eta, phi and e of the reclustered jets as well as a vector of indices pointing to the small-R jets that formed the reclusted jets
+
+`containerName`
+:   Name of the output reclustered jets container.
+
+`jets`
+:   Input jets to be used for reclustering (including the selection), e.g. `AnaJets.baselineJvt`.
+
+`reclusteredJetsRadius`
+:   R parameter of the anti-kt algorithm for the reclustered jets. Default is 1.0.
+
+`minPt`
+:   Minimum pT requirement for the reclustered jets. Can be used for thinning/selection, the decoration name is `passed_pt`. Default is 200000 (200 GeV).
+
 ### [FTagEventSFConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagEventSFAnalysisConfig.py)
 
 `containerName`
