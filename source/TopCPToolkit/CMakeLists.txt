@@ -6,6 +6,9 @@ atlas_subdir(TopCPToolkit)
 find_package(KLFitter)
 find_package(onnxruntime)
 
+# FastJet - needed for jet reclustering
+find_package( FastJet COMPONENTS fastjetplugins fastjettools )
+
 # Add the shared library:
 if( XAOD_STANDALONE )
   atlas_add_library(
@@ -25,9 +28,9 @@ else ()
     TopCPToolkitLib
     TopCPToolkit/*.h TopPartons/*.h TopParticleLevel/*.h TopSpaNet/*.h TopNNLOReweighter/*.h
     Root/*.cxx
-    INCLUDE_DIRS ${KLFITTER_INCLUDE_DIRS} ${ONNXRUNTIME_INCLUDE_DIRS}
+    INCLUDE_DIRS ${KLFITTER_INCLUDE_DIRS} ${ONNXRUNTIME_INCLUDE_DIRS} ${FASTJET_INCLUDE_DIRS}
     PUBLIC_HEADERS TopCPToolkit TopPartons TopParticleLevel TopSpaNet TopNNLOReweighter
-    LINK_LIBRARIES ${KLFITTER_LIBRARIES} ${ONNXRUNTIME_LIBRARIES}
+    LINK_LIBRARIES ${KLFITTER_LIBRARIES} ${ONNXRUNTIME_LIBRARIES} ${FASTJET_LIBRARIES}
     AnaAlgorithmLib AsgAnalysisAlgorithmsLib xAODMissingET xAODJet xAODBTagging xAODEgamma xAODMuon xAODTau xAODTruth xAODCore PathResolver FourMomUtils DiTauMassToolsLib FTagAnalysisInterfacesLib SystematicsHandlesLib SelectionHelpersLib MCTruthClassifierLib
     )
 endif ()

@@ -12,6 +12,7 @@
 #include <TopCPToolkit/RunSpaNetAlg.h>
 #include <TopCPToolkit/RunTtbarNNLORecursiveRewAlg.h>
 #include <TopCPToolkit/JetMatchingAlg.h>
+#include <TopCPToolkit/JetReclusteringAlg.h>
 #include <TopCPToolkit/DiTauMassCalculatorAlg.h>
 #include <TopCPToolkit/BTaggingScoresAlg.h>
 #include <TopCPToolkit/SVMassAlg.h>
@@ -27,6 +28,7 @@ DECLARE_COMPONENT (top::LeptonSFCalculatorAlg)
 DECLARE_COMPONENT (top::KLFitterFinalizeOutputAlg)
 DECLARE_COMPONENT (top::KLFitterAlg)
 DECLARE_COMPONENT (top::JetMatchingAlg)
+DECLARE_COMPONENT (top::JetReclusteringAlg)
 DECLARE_COMPONENT (top::ExtraParticleDecorationAlg)
 DECLARE_COMPONENT (DiTauMassCalculatorAlg)
 DECLARE_COMPONENT (BTaggingScoresAlg)
