@@ -108,6 +108,7 @@ Electrons:
     PtEtaSelection:
         minPt: 25000.0
         maxEta: 2.47
+        useClusterEta: True
 
 # Photons:
 #   - containerName: 'AnaPhotons'
@@ -124,6 +125,7 @@ Electrons:
 #     PtEtaSelection:
 #         minPt: 25000.0
 #         maxEta: 2.5
+#         useClusterEta: True
 
 Muons:
   - containerName: 'AnaMuons'
