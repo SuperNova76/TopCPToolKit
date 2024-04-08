@@ -49,6 +49,7 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
         configSeq.setOptionValue ('.selectionDecoration', 'selectPtEta')
         configSeq.setOptionValue ('.minPt', 25e3)
         configSeq.setOptionValue ('.maxEta', 2.47)
+        configSeq.setOptionValue ('.useClusterEta', True)
 
         outputContainers['el_'] = 'OutElectrons'
 
@@ -142,6 +143,7 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
         configSeq.setOptionValue ('.selectionDecoration', 'selectPtEta')
         configSeq.setOptionValue ('.minPt', 25e3)
         configSeq.setOptionValue ('.maxEta', 2.5)
+        configSeq.setOptionValue ('.useClusterEta', True)
 
         outputContainers['ph_'] = 'OutPhotons'
 

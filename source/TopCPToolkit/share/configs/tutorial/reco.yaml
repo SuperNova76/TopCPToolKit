@@ -49,6 +49,7 @@ Electrons:
     PtEtaSelection:
         minPt: 25000.0
         maxEta: 2.47
+        useClusterEta: True
 
 MissingET:
   - containerName: 'AnaMET'

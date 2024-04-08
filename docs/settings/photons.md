@@ -80,7 +80,7 @@ Name in YAML: **Photons**
 :   a postfix to apply to decorations and algorithm names. Typically not needed here since the calibration is common to all photons.
 
 `crackVeto`
-:   whether to perform LAr crack veto, i.e. remove photons within $1.37<\vert\eta\vert<1.52$. The default is `False`.
+:   whether to perform LAr crack veto based on the cluster $\eta$, i.e. remove photons within $1.37<\vert\eta\vert<1.52$. The default is `False`.
 
 `enableCleaning`
 :   whether to enable photon cleaning (`DFCommonPhotonsCleaning`). The default is `True`.
