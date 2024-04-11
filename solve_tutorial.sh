@@ -28,9 +28,9 @@ Tutorial:\
     selection: '\''pass_ejets_%SYS% || pass_mujets_%SYS%'\''' "$SCRIPT_DIR/source/TopCPToolkit/share/configs/tutorial/reco.yaml"
 
 sed -i '$a\
-  - modulePath: '\''TopCPToolkit.TutorialConfig'\''\
-    functionName: '\''TutorialConfig'\''\
-    algName: '\''Tutorial'\''\
-    pos: '\''Output'\''' "$SCRIPT_DIR/source/TopCPToolkit/share/configs/tutorial/reco.yaml"
+    - modulePath: '\''TopCPToolkit.TutorialConfig'\''\
+      functionName: '\''TutorialConfig'\''\
+      algName: '\''Tutorial'\''\
+      pos: '\''Output'\''' "$SCRIPT_DIR/source/TopCPToolkit/share/configs/tutorial/reco.yaml"
 
 echo "Done!"
