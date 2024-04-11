@@ -34,7 +34,7 @@ Note that we are now on the `main` branch, which is used for development.
 For the purposes of this tutorial, we will use a [stable release](../changelog/index.md) instead:
 ```sh
 git fetch -a
-git checkout tags/v2.6.0 -b mytutorial
+git checkout tags/v2.8.0 -b mytutorial
 ```
 
 ## Setting up the environment
@@ -43,7 +43,7 @@ Assuming you are working on Lxplus or an equivalent setup with access to CVMFS, 
 ```sh
 setupATLAS
 cd build
-asetup AnalysisBase,24.2.38
+asetup AnalysisBase,25.2.6
 cmake ../source
 make -j4
 source */setup.sh

@@ -47,7 +47,7 @@ For now, we'll use the `tutorial` folder, which contains a `reco.yaml`, a `parti
 Let's now have our first exercise. You can toggle the solution block below if needed.
 
 !!! example "Exercise"
-    Run TopCPToolkit on the tutorial config (`tutorial`) and input file (`input.txt`), but only the first 100 events and without systematics. The output file should be called `output.root`
+    Run TopCPToolkit on the tutorial config (`tutorial`) and input file (`input.txt`), but only for the first 100 events and without systematics. The output file should be called `output.root`
 
 ??? success "Solution"
     ```
@@ -74,8 +74,7 @@ You may now want to investigate the structure of the `reco` TTree.
 You'll find quite a lot of branches, with scalar or vector content.
 Notice for instance the branches associated to electrons, prefixed with `el_`: these are vectors (of length the number of electrons in the event) of e.g. $\eta$ (`el_eta`), $\phi$ (`el_phi`), charge (`el_charge`).
 There is also a branch for the electron $p_\mathrm{T}$, with a different naming convention: `el_pt_NOSYS`.
-This is a quantity that is affected by the EGamma calibration,
-If you run with systematis enabled, you'll see that we still get only a single version of e.g. `el_eta`, `el_phi` and `el_charge`, but different values of `el_pt_%SYS%`.
+This is a quantity that is affected by the EGamma calibration: if you run with systematis enabled, you'll see that we still get only a single version of e.g. `el_eta`, `el_phi` and `el_charge`, but different values of `el_pt_%SYS%`.
 
 Here are a few more easy exercises to keep you engaged :wink:
 
@@ -133,11 +132,13 @@ and eventually, if everything is in order, we get a summary of the metadata that
    RunNumber:       [410000]
    MCChannelNumber: 601229
    RunNumberAsInt:  410000
-   AMITag:          not required
+   AMITag:          e8472_e8475_s3873_s3874_r13829_r13831_p5855
    isRun3:          True
    isPHYSLITE:      False
+   isTRUTH:         False
    MCCampaign:      Campaign.MC21a
    GeneratorInfo:   {'Powheg': None, 'Pythia8': '307', 'EvtGen': '2.1.1'}
+   eTag:            e8472
 =========================================================================
 ```
 
@@ -218,22 +219,23 @@ Once the event loop has terminated, each algorithm in the sequence undergoes its
 Most of the time, this is a do-nothing operation.
 In a few cases, we may get some useful printouts, such as:
 ```
-SystematicsSvc           INFO    no systematics were run.
+SystematicsPrinter       INFO    Systematics regex '' matched:
+SystematicsPrinter       INFO      ''
 PrimaryVertexSelectorAlg INFO    accepted 100 out of 100 events for filter VertexSelection (vertex selection)
 EventFlagSelectionAlg    INFO    accepted 100 out of 100 events for filter JetCleaning (selecting events passing: DFCommonJets_eventClean_LooseBad,as_char)
 CutBookkeeperAlg         INFO    CutBookkeeper information will be stored in CutBookkeeper_601229_410000_NOSYS
 ```
 
-The first line is the `SystematicsSvc` informing that we ineed ran without systematics in this example.
-The second and third lines are our first examples of **event selection reports**: here requiring that events have a primary vertex and that they pass basic jet cleaning cuts.
+The first two lines are the `SystematicsPrinter` informing that we indeed ran without systematics in this example.
+The third and fourth lines are our first examples of **event selection reports**: here requiring that events have a primary vertex and that they pass basic jet cleaning cuts.
 Several other algorithms come with such event selections, e.g. trigger selection and matching, or as we will see in a next section, analysis-specific cuts.
 The last line is the `CutBookkeeper` histogram we briefly mentioned earlier, that will also show up in the output file and contains the sum of MC weights seen, for cross section normalisation purposes.
 
 !!! example "Exercise"
-    What do the `SystematicsSvc` and `CutBookkeeperAlg` return in their finalisation stage, when systematics are enabled?
+    What do the `SystematicsPrinter` and `CutBookkeeperAlg` return in their finalisation stage, when systematics are enabled?
 
 ??? success "Solution"
-    The `SystematicsSvc` prints out the names of all systematics that affect the object collections we defined (electrons, jets, flavour-tagging, etc.). The `CutBookkeeperAlg` lists all the PMG weights (scales, PDFs, etc.).
+    The `SystematicsPrinter` prints out the names of all systematics that affect the object collections we defined (electrons, jets, flavour-tagging, etc.). The `CutBookkeeperAlg` lists all the PMG weights (scales, PDFs, etc.).
 
 At the very bottom, we find some printouts from the EventLoop manager (and usually some summaries from `CalibrationDataInterfaceROOT`, perfectly fine).
 A successful job will end with
@@ -318,6 +320,7 @@ Electrons:
     PtEtaSelection:
         minPt: 25000.0
         maxEta: 2.47
+        useClusterEta: True
 ```
 
 Observe that we are mixing "Pascal case" (e.g. `WorkingPoint`) and "Camel case" (e.g. `selectionName`).
@@ -369,7 +372,7 @@ In this case, avoiding us the trouble of tracking the container names (and other
 Using the documentation, see if you can answer the following questions:
 
 !!! example "Exercise"
-    What does the line with `IFFClassification:{}` set up, in our example electron config?
+    What does the line with `IFFClassification: {}` set up, in our example electron config?
 
 ??? success "Solution"
     It runs an instance of the [`IFFLeptonDecorationBlock`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py) on the calibrated electrons, using the default settings of the block. Specifically, these default settings mean that we end up with a separate IFF class for charge-flipped electrons, and that the IFF class is decorated as `IFFClass_%SYS%` onto each electron. Furthermore, this decoration is saved as a branch in the output ntuple.
