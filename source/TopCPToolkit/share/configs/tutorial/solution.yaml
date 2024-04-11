@@ -170,3 +170,13 @@ Output:
     # Turn output branches on and off with 'enable' and 'disable'
     - disable jet_.*_eff.*
     - disable jet_jvtEfficiency.*
+
+AddConfigBlocks:
+    - modulePath: 'TopCPToolkit.LeptonSFCalculatorConfig'
+      functionName: 'LeptonSFCalculatorConfig'
+      algName: 'LeptonSF'
+      pos: 'Output'
+    - modulePath: 'TopCPToolkit.ExtraParticleDecorationConfig'
+      functionName: 'ExtraParticleDecorationConfig'
+      algName: 'ExtraParticleDecoration'
+      pos: 'Output'
