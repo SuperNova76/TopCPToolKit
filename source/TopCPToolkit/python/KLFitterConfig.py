@@ -63,7 +63,8 @@ class KLFitterConfig(ConfigBlock):
             btagWP = perRegionConfig.get('btagWP', self.btagWP)
             alg.BTaggingDecoration = f'ftag_select_{btagAlgo}_{btagWP}'
 
-            if perRegionConfig.get('btaggingMethod', self.btaggingMethod) == 'kWorkingPoint':
+            alg.BTaggingMethod = perRegionConfig.get('btaggingMethod', self.btaggingMethod)
+            if alg.BTaggingMethod == 'kWorkingPoint':
                 config.addPrivateTool('BTaggingEfficiencyTool', 'BTaggingEfficiencyTool')
                 alg.BTaggingEfficiencyTool.TaggerName = self.btagger
                 alg.BTaggingEfficiencyTool.OperatingPoint = self.btagWP
