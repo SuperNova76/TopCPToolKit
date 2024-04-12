@@ -1,23 +1,23 @@
-# Running on the grid
+!!! abstract "In this session you will..."
+    - Submit jobs on the grid
+    - Search and add samples for the grid jobs
+    - Monitor and diagnose grid job issues
+    - Download output files from the grid
 
-Pretty much any analysis will need to run AnalysisTop on the grid simply due to the huge disk size of the derivations and the processing time required.
+_For this part, we assume you have successfully built the project following the ["Initial setup"](setup.md) instructions._
+
+Pretty much any analysis will need to run TopCPToolkit on the grid simply due to the huge disk size of the derivations and the processing time required.
 
 ## Preparing for grid submission
 
-In what follows we will use a mixture of the old `TOPQ1` and the new `DAOD_PHYS` termininology. This caveat will be updated in the future once we have created the necessary `DAOD_PHYS` files.
-
-AnalysisTop contains a bunch of helper python scripts to ease the submission of grid jobs, which are located in the [TopExamples](https://gitlab.cern.ch/atlas/athena/-/blob/21.2//PhysicsAnalysis/TopPhys/xAOD/TopExamples) package. To obtain copies of these scripts for yourself:
+TopCPToolkit contains a bunch of helper python scripts to ease the submission of grid jobs, which are located in the [GridSubmission](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/tree/main/source/GridSubmission) directory. To obtain copies of these scripts for yourself:
 ```bash
 cd run # go to the run sub-directory in the directory where you set things up
-mkdir grid
-cd grid
-cp $AnalysisBase_DIR/bin/01SubmitToGrid_Tutorial.py .
-cp $AnalysisBase_DIR/bin/Data_rel21.py .
-cp $AnalysisBase_DIR/bin/MC16_TOPQ1.py .
-cp $AnalysisBase_DIR/bin/DerivationTags.py .
-cd ../
+getExamples
 ```
-We assume you have a fresh shell opened with AnalysisTop set up. Additionally, we will need to setup:
+This script will create a `grid` directory and copy a grid job submission script as well as two sample files into `grid`.
+
+Additionally, we will need to setup:
 ```bash
 lsetup rucio panda pyami
 voms-proxy-init -voms atlas # set up grid proxy, enter password for your grid certificate, if asked
@@ -25,13 +25,13 @@ voms-proxy-init -voms atlas # set up grid proxy, enter password for your grid ce
 
 ### Grid submission scripts configuration
 
-Open the copied `01SubmitToGrid_Tutorial.py` and examine its contents. Firstly, the `config.settingsFile` option controls which AnalysisTop config file will be used for execution on grid, i.e.:
+Open the copied `submitToGrid.py` and examine its contents. Firstly, the `config.code` option controls what command will be used for execution on grid, i.e.:
 ```python
-config.settingsFile  = 'custom-saver-test.txt'
+config.code = 'runTop_el.py --no-systematics --parton --particle'  # run nominal only with parton and particle level
 ```
 Whenever preparing a config file for grid jobs, there are some **important considerations** to keep in mind:
 
-- Are you setting `NEvents` in config to a fixed value ? Perhaps you ran a local check with a few hundred events, but on grid you in general want to run over all events available in a dataset.
+- Are you accidentally including e.g. `-e 100` in the command to run only for a small number of events? Perhaps you ran a local check with a few hundred events, but on grid you in general want to run over all events available in a dataset.
 - Do you need to run systematic uncertainties or not ? Running with systematics takes order of magnitude longer, and the output is also typically order of magnitude larger, so consider if you need to run systematics or only some studies with nominal TTree.
 
 Next, you should set the `config.gridUsername` to your CERN account (what you use for login to lxplus) name and `config.suffix` to something unique and understandable (e.g. put date or release into the suffix). Here the task at grid will have name composed of the dataset name and the suffix, and note that you cannot submit jobs with the same name multiple times.
@@ -40,42 +40,35 @@ One of the greatest difficulties with efficient running on grid is determining n
 ```python
 config.maxNFilesPerJob = '10'
 ```
-Internally, the grid submission scripts call the `prun` command for job submission to grid, so any other options relevant to the prun (e.g. see this [twiki](https://twiki.cern.ch/twiki/bin/view/PanDA/PandaRun)) can be supplied via:
+Internally, the grid submission scripts call the `prun` command for job submission to grid, so any other options relevant to the prun (e.g. see this [page](https://panda-wms.readthedocs.io/en/latest/client/prun.html)) can be supplied via:
 ```python
 config.otherOptions = '' # anything that prun accepts
 ```
 
 Next up, the submission script contains a list sample groups which will be submitted:
 ```python
-names = ['TOPQ1_ttbar_PowPy8',
-#    'Data16_TOPQ1',
-] 
-
+names = ['PHYS_ttbar_PP8_mc20e']
 ```
-Each entry represents one group of samples defined in the `MC16_TOPQ1.py` and `DATA_rel21.py` files (for the later we don't yet have a R22 version), which we copied as well. You can create your own list as well based on these examples and import it in the grid submission script. For example, the `MC16_TOPQ1.py` list contains entries such as:
+Each entry represents one group of samples defined in the `MC20_PHYS.py` and `MC21_PHYS.py` files, which we copied as well. You can create your own list as well based on these examples and import it in the grid submission script. For example, the `MC20_PHYS.py` list contains entries such as:
 ```python
-TopExamples.grid.Add("TOPQ1_ttbar_PowPy8").datasets = [
-    'mc16_13TeV.410501.PowhegPythia8EvtGen_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_TOPQ1.e5458_s3126_r9364_r9315_p3215',
-    ]
+GridSubmission.grid.Add('PHYS_ttbar_PP8_mc20e').datasets = [
+    'mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_p5855'
+]
 ```
-where the `PHYS_ttbar_PowPy8` defines a group of datasets, and those are specified in the python list assigned.
+where the `PHYS_ttbar_PP8_mc20e` defines a group of datasets, and those are specified in the python list assigned.
 
 Obviously, the files we copied are only how-to examples, you have to make sure to use up-to-date samples. Let's do a simple check, whether the sample above is a reasonable choice.
-The first thing you notice that this is an old `DAOD_TOPQ1` sample. In `R22` we will use `DAOD_PHYS` so lets look instead for:
-```bash
-mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_p4856
-```
 
 Type the following:
 ```bash
-rucio list-dids mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_p4856
+rucio list-dids mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_p5855
 ```
 The command above lists samples matching the search pattern:
 ```bash
 +---------------------------------------------------------------------------------------------------------------+-------------------+
 | SCOPE:NAME                                                                                                    | [DID TYPE]        |
 |---------------------------------------------------------------------------------------------------------------+-------------------|
-| mc20_13TeV:mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_p4856 | DIDType.CONTAINER |
+| mc20_13TeV:mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_p5855 | DIDType.CONTAINER |
 +---------------------------------------------------------------------------------------------------------------+-------------------+
 ```
 Note that the fact that a dataset container is listed by rucio does not mean the sample has not been deleted. To check that, do:
@@ -84,6 +77,25 @@ rucio list-files mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv
 ```
 and you should get
 ```
++---------------------------------------------------+--------------------------------------+-------------+------------+----------+
+| SCOPE:NAME                                        | GUID                                 | ADLER32     | FILESIZE   | EVENTS   |
+|---------------------------------------------------+--------------------------------------+-------------+------------+----------|
+| mc20_13TeV:DAOD_PHYS.34865851._000001.pool.root.1 | A9B6EAAC-51A4-614E-8FFD-ADE98D610F36 | ad:12d4865c | 1.169 GB   | 30000    |
+
+...
+
+| mc20_13TeV:DAOD_PHYS.34865833._000917.pool.root.1 | 9741DB52-4D25-B74F-9E73-C808E066C149 | ad:c7bc3d89 | 1.558 GB   | 40000    |
++---------------------------------------------------+--------------------------------------+-------------+------------+----------+
+Total files : 2251
+Total size : 7.678 TB
+Total events : 197768000
+```
+This derivation is indeed available! Should we have checked an older version (by using a smaller p-tag), for example:
+```
+rucio list-files mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_p4856
+```
+we would get an empty list
+```
 +--------------+--------+-----------+------------+----------+
 | SCOPE:NAME   | GUID   | ADLER32   | FILESIZE   | EVENTS   |
 |--------------+--------+-----------+------------+----------|
@@ -91,9 +103,19 @@ and you should get
 Total files : 0
 Total size : 0.000 B
 ```
-in other words, this derivation has been deleted -- not really surprising as this was a very old version (one can tell by the last 5 characters, the p-tag p4856, recent samples have >= p5xxx, for example for this tutorial we used p5226).
+which means this derivation has been deleted.
 
-Each sub-group of the [Physics Modelling Group (PMG)](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/PhysicsModellingGroup) group maintains information about recommended MC samples, for example the PMG TopProcesses subgroup twiki [lists recomended top-related samples](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/PmgTopProcesses#Practical_information), here you can see that the DSID 410470 is the current recommended ttbar MC sample. If we don't know the full dataset name, it is usually possible to search it out via rucio following some assumptions. Let's assume that the derivation format we want is `DAOD_PHYS`, and the DSID is 410470. To obtain simulation for full Run-II dataset, we will need three samples corresponding to the 2015-16 (mc16a), 2017 (mc16d) and 2018 (mc16e) data-taking period. This can be distinguished based on the r-tag, which is 13167, r13144 and r13145, respectively. Let's search for the most up-to-date 410470 mc16d sample:
+!!! example "Exercise"
+    What is the latest p-tag for this sample?
+
+??? success "Solution"
+    Rucio accepts wildcards. Try
+    ```
+    rucio list-dids mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_p*
+    ```
+    and look for the one with the largest p-tag.
+
+Each sub-group of the [Physics Modelling Group (PMG)](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/PhysicsModellingGroup) group maintains information about recommended MC samples, for example the PMG TopProcesses subgroup twiki [lists recomended top-related samples](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/PmgTopProcesses#Practical_information), here you can see that the DSID 410470 is the current recommended ttbar MC sample. If we don't know the full dataset name, it is usually possible to search it out via rucio following some assumptions. Let's assume that the derivation format we want is `DAOD_PHYS`, and the DSID is 410470. To obtain simulation for full Run-II dataset, we will need three samples corresponding to the 2015-16 (mc20a), 2017 (mc20d) and 2018 (mc20e) data-taking period. This can be distinguished based on the r-tag, which is 13167, r13144 and r13145, respectively. Let's search for the most up-to-date 410470 mc20e sample:
 ```bash
 rucio list-dids 'mc20_13TeV.410470*deriv.DAOD_PHYS*r13145*' | grep CONTAINER
 ```
@@ -170,62 +192,44 @@ where `<username>` is your `lxplus` username and
 ```python
 config.noSubmit = True
 ```
-Next, let's put an actual up-to-date sample in the `MC16_TOPQ1.py`:
-```python
-TopExamples.grid.Add("TOPQ1_ttbar_PowPy8_mc16a").datasets = [
-    'mc20_13TeV:mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_p5226',
-    ]
-```
 
-and in `01SubmitToGrid_Tutorial.py` we specify the list we want to run on:
-```python
-names = [
-    'TOPQ1_ttbar_PowPy8_mc16a',
-]
-```
-
-Finally, let's try to execute in shell:
+Let's try to execute in shell:
 ```bash
-python grid/01SubmitToGrid_Tutorial.py
+python grid/submitToGrid.py
 ```
 You should see the following output:
-``` bash
+```bash
+PHYS_ttbar_PP8_mc20e (1 dataset)
+ - mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_p5855 (found, latest p-tag: p6026)
 Analysis Settings:
- -Code:           top-xaod
- -CutsFile:       custom-saver-test.txt (exists)
- -Combine_outputFile:       None
- -Combine_prefixes:       None
+ -Code:           runTop_el.py --no-systematics --parton --particle
 Grid Settings:
  -GridUsername:   username 
- -Suffix:         04-05-23
+ -Suffix:         230320-v0
  -ExcludedSites:  
  -ForceSite:      
  -NoSubmit:       True
  -MergeType:      Default out of (None, Default, xAOD)
  -memory:         2000 in MB
  -maxNFilesPerJob 
- -skipShowerCheck False
  -OtherOptions:   
- -nameShortener:  <bound method basicInDSNameShortener of <TopExamples.grid.Config object at 0x7efca2f8bdc0>>
+ -nameShortener:  <bound method basicInDSNameShortener of <GridSubmission.grid.Config object at 0x7fddac9813a0>>
  -reuseTarBall:   False
- -checkPRW:       False
  -DestSE          <not set>
 
-None
-/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/dev/AnalysisTop/TopDataPreparation/XSection-MC16-13TeV.data
 For these samples
 
 Starting submission of 1 sample
 
 Submitting 1 of 1
 prun \
---inDS=mc20_13TeV:mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_p5226 \
---outDS=user.username.410470.PhPy8EG.DAOD_PHYS.e6337_s3681_r13145_p5226.04-05-23 \
---useAthenaPackages --cmtConfig=x86_64-centos7-gcc11-opt \
+--inDS=mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_p5855 \
+--outDS=user.username.410470.PhPy8EG.DAOD_PHYS.e6337_s3681_r13145_p5855.230320-v0 \
+--useAthenaPackages --cmtConfig=x86_64-el9-gcc13-opt \
 --writeInputToTxt=IN:in.txt \
---outputs=output-modifiedSelection_CustomSaver_root:output-modifiedSelection_CustomSaver.root \
---exec="top-xaod custom-saver-test.txt in.txt" \
---outTarBall=top-xaod.tar.gz \
+--outputs=output:output.root \
+--exec="runTop_el.py --no-systematics --parton --particle -i in.txt -o output" \
+--outTarBall=top-el.tar.gz \
 --noSubmit \
 --mergeOutput \
 --memory=2000 \
@@ -234,51 +238,20 @@ If you haven't specified your username you will see a corresponding error.
 
 As you can see, what the script does is to list your settings and then put everything together in a `prun` command.
 
-From `outDS` parameter, you can see the name that the output dataset will have (the dataset for the root files will be e.g. in this example above called `user.username.410470.PhPy8EG.DAOD_PHYS.e6337_s3681_r13145_p5226.04-05-2_output_root/`, the username and the suffix depending on what you specify in the submission script.
+From `outDS` parameter, you can see the name that the output dataset will have (the dataset for the root files will be e.g. in this example above called `user.username.410470.PhPy8EG.DAOD_PHYS.e6337_s3681_r13145_p5855.230320-v0`, the username and the suffix depending on what you specify in the submission script.
 
-To make sure the jobs do not fail on the grid, the submission script will automatically check that the datasets that you want to run over have a valid shower type defined in the TopDataPreparation file (see [AnalysisTop basics](ATBasics.md#topdatapreparation) for more on TopDataPreparation).
+To make sure the jobs do not fail on the grid, the submission script will automatically check that the datasets that you want to run over are available.
 
 ### Handling external files during grid submission
 
-In certain cases, external files are required for running AnalysisTop, typical examples include:
-
-- own pileup-reweighting files for samples for which centrally-provided PRW files don't exist
-- custom flavour composition file for JetUncertainties
-- custom TopDataPreparation database for some experiments with b-tagging showering MC/MC scale factors
-
-In all of these cases, the files usually must be properly specified in the grid submission scripts and correct path must be used in the configuration file for AnalysisTop.
+In certain cases, external files are required for running jobs on the grid. In this case, the files usually must be properly specified in the grid submission scripts and correct path must be used in the configuration file.
 
 Firstly, **panda often likes to skip external files**, especially `.root` files and files above certain size limit (the logic isn't entirely trivial). The files to be included must be specified via `--extFile argument`. In your grid submission python script, you need:
 ```python
 config.otherOptions = '--extFile=file1,file2,...' # just the names of the files should be sufficient, but relative paths should also (probably) work
 ```
 
-Secondly, **never use absolute paths**, e.g. `/afs.cern.ch/user/...` in AnalysisTop config files, as the directory structure on a grid site is different, the contents of the files sent to grid are extracted to some path on grid that you in general have no control over. There are two approaches usable here:
-
-- If you use your own package with AnalysisTop, e.g. for custom event saver, the easiest thing is to put all files under `package/share/` directory (where `package` is the name of your package) and **do a full cmake rebuild** (needed to pick up the paths to the files). Suppose you have a .root file
-```
-package/share/foobar.root
-```
-In your AnalysisTop config, the path to the file should then be
-```
-package/foobar.root
-```
-Notice the missing `share` in the path, this approach levarages the `PathResolver` logic, which has its own set of (peculiar) rules for file paths.
-
-- The other approach (not requiring a package) is to make sure to use relative paths with respect to the submission directory. Let's suppose you have the following structure, where **it is important to have the external files in the directory with submission scripts, or a sub-directory.**
-```
-run/
-  -> grid/
-       -> someDirectory/
-            -> foobar.root
-      -> 01SubmitToGrid.py
-      -> MC16_TOPQ1.py
-      -> my-cuts.txt
-```
-Then, it is possible to specify path to `foobar.root` inside the config file `my-cuts.txt` simply as
-```
-someDirectory/foobar.root
-```
+Secondly, **never use absolute paths**, e.g. `/afs.cern.ch/user/...` in config files, as the directory structure on a grid site is different, the contents of the files sent to grid are extracted to some path on grid that you in general have no control over. 
 
 ### Other useful features of the grid submission scripts
 
@@ -294,9 +267,10 @@ You can find site names on [bigpanda.cern.ch](https://bigpanda.cern.ch)
 ```python
 config.destSE = 'SOMESTORAGEELEMENT' (for example AGLT2_LOCALGROUPDISK)
 ```
-**Note** Where you can store files (and how much in terms of size) is subject to permissions and grid quotas.
+!!! note
+    Where you can store files (and how much in terms of size) is subject to permissions and grid quotas.
 
-- To speed-up submission, you can re-use existing compressed `top-xaod.tar.gz` archive. **Beware** it is easy to forget about this if you change some files and forget to remove the `top-xaod.tar.gz`, hence your jobs will not be re-submitted with new input!
+- To speed-up submission, you can re-use existing compressed `top-el.tar.gz` archive. **Beware** it is easy to forget about this if you change some files and forget to remove the `top-el.tar.gz`, hence your jobs will not be re-submitted with new input!
 ```python
 config.reuseTarBall = True
 ```
@@ -316,7 +290,7 @@ kill([taskID1,taskID2]) # basically this is a python prompt so anything that yie
 
  The information above is a baseline that should be a starting point for investigating issues with jobs. We will try to expand on some typical issues when running on grid below. Note that this section is more like a short reference rather than an interactive tutorial (and yes, we are not kidding about the briefness of this section when considering how much stuff can go wrong on grid...)
 
-- **I changed my code/scripts, submitted another task, but my changes are not reflected at grid!** Check if you have `config.reuseTarBall=True` option in the submission script. If yes, this means that if a compressed tarball that is sent to grid exists in the directory (`top-xaod.tar.gz`) it has been re-uploaded without actually updating with your changes! This option is very nice when submitting many jobs at once, but if you use it, make sure to always delete the `top-xaod.tar.gz` tarball before you submit new tasks with changes.
+- **I changed my code/scripts, submitted another task, but my changes are not reflected at grid!** Check if you have `config.reuseTarBall=True` option in the submission script. If yes, this means that if a compressed tarball that is sent to grid exists in the directory (`top-el.tar.gz`) it has been re-uploaded without actually updating with your changes! This option is very nice when submitting many jobs at once, but if you use it, make sure to always delete the `top-el.tar.gz` tarball before you submit new tasks with changes.
 
 - **Jobs take forever to start.** This can be seen by large time to start of the job. This could be related to your priority (check the priority of the jobs running on the site). If this is not the case, the site may be busy (too many jobs in the site queues) or some other issue (in which case it may be advisable to ask the DAST experts -- see [DAST twiki](https://twiki.cern.ch/twiki/bin/viewauth/AtlasComputing/AtlasDAST) for more info, and for mailing lists for support).
 
@@ -328,11 +302,12 @@ retry(taskID, newOpts={'nFilesPerJob':5})
 ```
 Ideally, it is useful to download a single file from the offending sample and try to run it locally to get an idea how long does it take to process N events and guesstimate the number of files accordingly to fit into the site walltime. For full-systematics NTuple production with KLFitter for instance, it is not unexpected having to run with single file per job for signal samples (and any samples that have high event selection efficiency in general)!
 
-- **Broken tasks.** Each task runs several (typically 10?) scout jobs, which are used to check if the task does not crash, if the site meets requirements such as sufficient memory, etc. If all of the scout jobs fail, the task is sent to broken state, and no further jobs of the task are executed. This calls for investigating why the jobs crashed and fixing the issue. Either your jobs have crashed due to your fault, or the crashes are site-related, in both cases you encounter an issue, where the job to be resubmitted needs a new unique name. It is possible to resubmit a job with identical name, by running the 01SubmitToGrid.py script with the specific sample and additional parameter (**DRAGONS AHEAD**):
+- **Broken tasks.** Each task runs several (typically 10?) scout jobs, which are used to check if the task does not crash, if the site meets requirements such as sufficient memory, etc. If all of the scout jobs fail, the task is sent to broken state, and no further jobs of the task are executed. This calls for investigating why the jobs crashed and fixing the issue. Either your jobs have crashed due to your fault, or the crashes are site-related, in both cases you encounter an issue, where the job to be resubmitted needs a new unique name. It is possible to resubmit a job with identical name, by running the submitToGrid.py script with the specific sample and additional parameter (**DRAGONS AHEAD**):
 ```python
 config.newOpts = ' --allowTaskDuplication'
 ```
-**NOTE: When downloading output from grid from duplicated task, output of all duplicates will be downloaded!** In case of a broken task, where all jobs crashed, there is no output, so in such a case it is safe to use this option. Otherwise, prepare for duplicate events. Additionally, in case of site-related issues, it may be necessary to exclude it using the `config.excludedSites` option in the submission script.
+!!! note
+    When downloading output from grid from duplicated task, output of all duplicates will be downloaded!** In case of a broken task, where all jobs crashed, there is no output, so in such a case it is safe to use this option. Otherwise, prepare for duplicate events. Additionally, in case of site-related issues, it may be necessary to exclude it using the `config.excludedSites` option in the submission script.
 
 - **Retrying failed task in pbook on a different site.** Sometimes, the only way to overcome a problem is to retry a job on a different site. This can be done using pbook:
 ```python
@@ -357,7 +332,8 @@ To download output from grid, we use `rucio` tool, which can be set up via
 ```bash
 lsetup rucio
 ```
-**NOTE** It is advisable to setup rucio in a new shell. This is in particular true if you already have AnalysisBase set up in a shell, rucio has known compatibility issues with AB.
+!!! note
+    It is advisable to setup rucio in a new shell. This is in particular true if you already have AnalysisBase set up in a shell, rucio has known compatibility issues with AB.
 
 Downloading of a dataset:
 ```bash
@@ -365,10 +341,11 @@ rucio download output-dataset-name
 ```
 where the output dataset name for analysistop jobs is typically of the format of user.USERNAME.DSID....tags.SUFFIX. Rucio accepts `*` wildcards, so you can batch download many samples at once, for example:
 ```bash
-rucio download 'user.omajersk.*AT212173test'
+rucio download 'user.username.*230320-v0'
 ```
-where in the submission script, the `config.suffix` was set to `AT212173test`. **NOTE** Always encompass the download argument in *single quotes*, because otherwise your shell may attempt to interpret the `*` characters.
+where in the submission script, the `config.suffix` was set to `230320-v0`. **NOTE** Always encompass the download argument in *single quotes*, because otherwise your shell may attempt to interpret the `*` characters.
 
-Tip: You may be interested in the how-to on replicating of datasets (including output) to various grid sites, described in [this part](Storage.md#replicating-datasets-on-the-top-grid-disks) of the tutorial.
+!!! tip
+    You may be interested in the how-to on replicating of datasets (including output) to various grid sites, described in [this tutorial](https://topreco-tutorials.docs.cern.ch/TopWorkshop2023/Storage/#replicating-datasets-on-the-top-grid-disks).
 
 Sometimes, if downloading file fails repeatedly, one potential trick is to make a temporary replica (see the link above) to a different grid site scratch disk and repeat the download. If this fails, contacting DAST mailing list (`hn-atlas-dist-analysis-help@cern.ch`) may be appropriate.
