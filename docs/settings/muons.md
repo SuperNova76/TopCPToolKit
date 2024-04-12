@@ -41,7 +41,7 @@
 `qualitySelectionOutput`
 :   whether to retain only muons satisfying the quality requirements (bad muon veto). The default is `True`.
 
-`systematicsBreakdown`
+`systematicBreakdown`
 :   enables the full breakdown of efficiency SF systematics (1 NP per uncertainty source, instead of 1 NP in total). The default is `False`.
 
 `noEffSF`
@@ -111,7 +111,7 @@ Name in YAML: **Muons.WorkingPoint**
 `qualitySelectionOutput`
 :   whether to retain only muons satisfying the quality requirements (bad muon veto). The default is `True`.
 
-`systematicsBreakdown`
+`systematicBreakdown`
 :   enables the full breakdown of efficiency SF systematics (1 NP per uncertainty source, instead of 1 NP in total). The default is `False`.
 
 `noEffSF`
