@@ -18,7 +18,7 @@ elif len(sys.argv) > 2:
 # We cannot use a wildcard anymore as everything is stored in /bin/
 list_of_scripts = ["submitToGrid.py", 
                    "MC20_PHYS.py",
-                   "MC21_PHYS.py"
+                   "MC23_PHYS.py"
                    ]
 
 print('Using PathResolver to copy scripts to', output)

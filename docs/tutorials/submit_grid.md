@@ -19,7 +19,8 @@ This script will create a `grid` directory and copy a grid job submission script
 
 Additionally, we will need to setup:
 ```bash
-lsetup rucio panda pyami
+lsetup "rucio -w"
+lsetup panda pyami
 voms-proxy-init -voms atlas # set up grid proxy, enter password for your grid certificate, if asked
 ```
 
@@ -36,10 +37,13 @@ Whenever preparing a config file for grid jobs, there are some **important consi
 
 Next, you should set the `config.gridUsername` to your CERN account (what you use for login to lxplus) name and `config.suffix` to something unique and understandable (e.g. put date or release into the suffix). Here the task at grid will have name composed of the dataset name and the suffix, and note that you cannot submit jobs with the same name multiple times.
 
-One of the greatest difficulties with efficient running on grid is determining number of files a single job should process, since grid sites have limits on maximum job time, as well as memory and storage constraints. Panda tries to determine this automatically, but you do have the option to set an upper limit per job:
+One of the greatest difficulties with efficient running on grid is determining number of files a single job should process, since grid sites have limits on maximum job time, as well as memory and storage constraints. Panda tries to determine this automatically, but you do have the option to set an upper limit per job, for example:
 ```python
-config.maxNFilesPerJob = '10'
+config.maxNFilesPerJob = '4'
 ```
+!!! tip
+    You may want to run with a very small number of `maxNFilesPerJob`, given that the PHYS derivations have a lot of events per file (and also quite a lot of variance).
+
 Internally, the grid submission scripts call the `prun` command for job submission to grid, so any other options relevant to the prun (e.g. see this [page](https://panda-wms.readthedocs.io/en/latest/client/prun.html)) can be supplied via:
 ```python
 config.otherOptions = '' # anything that prun accepts
@@ -49,7 +53,7 @@ Next up, the submission script contains a list sample groups which will be submi
 ```python
 names = ['PHYS_ttbar_PP8_mc20e']
 ```
-Each entry represents one group of samples defined in the `MC20_PHYS.py` and `MC21_PHYS.py` files, which we copied as well. You can create your own list as well based on these examples and import it in the grid submission script. For example, the `MC20_PHYS.py` list contains entries such as:
+Each entry represents one group of samples defined in the `MC20_PHYS.py` and `MC23_PHYS.py` files, which we copied as well. You can create your own list as well based on these examples and import it in the grid submission script. For example, the `MC20_PHYS.py` list contains entries such as:
 ```python
 GridSubmission.grid.Add('PHYS_ttbar_PP8_mc20e').datasets = [
     'mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_p5855'
@@ -115,74 +119,95 @@ which means this derivation has been deleted.
     ```
     and look for the one with the largest p-tag.
 
-Each sub-group of the [Physics Modelling Group (PMG)](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/PhysicsModellingGroup) group maintains information about recommended MC samples, for example the PMG TopProcesses subgroup twiki [lists recomended top-related samples](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/PmgTopProcesses#Practical_information), here you can see that the DSID 410470 is the current recommended ttbar MC sample. If we don't know the full dataset name, it is usually possible to search it out via rucio following some assumptions. Let's assume that the derivation format we want is `DAOD_PHYS`, and the DSID is 410470. To obtain simulation for full Run-II dataset, we will need three samples corresponding to the 2015-16 (mc20a), 2017 (mc20d) and 2018 (mc20e) data-taking period. This can be distinguished based on the r-tag, which is 13167, r13144 and r13145, respectively. Let's search for the most up-to-date 410470 mc20e sample:
-```bash
-rucio list-dids 'mc20_13TeV.410470*deriv.DAOD_PHYS*r13145*' | grep CONTAINER
-```
-The output of the command above may still yield a long list of samples (most of which are obsolete) but the samples with highest p-tag listed should include:
-```
-| mc20_13TeV:mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_r13145_p4856                         | DIDType.CONTAINER |
-| mc20_13TeV:mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_r13145_p4926                         | DIDType.CONTAINER |
-| mc20_13TeV:mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_r13145_p4931                         | DIDType.CONTAINER |
-| mc20_13TeV:mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_r13145_p5057                         | DIDType.CONTAINER |
-| mc20_13TeV:mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_r13145_p5089                         | DIDType.CONTAINER |
-| mc20_13TeV:mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_r13145_p5226                         | DIDType.CONTAINER |
-| mc20_13TeV:mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_r13145_p5267                         | DIDType.CONTAINER |
-| mc20_13TeV:mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_r13145_p5440                         | DIDType.CONTAINER |
-| mc20_13TeV:mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_r13145_p5477                         | DIDType.CONTAINER |
-| mc20_13TeV:mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_r13145_p5487                         | DIDType.CONTAINER |
-| mc20_13TeV:mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_r13145_p5511                         | DIDType.CONTAINER |
-| mc20_13TeV:mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_r13145_p5631                         | DIDType.CONTAINER |
-```
+Different MC campaigns exist which correspond to different years of data-taking and different releases. In particular, MC campaign MC20 corresponds to Run-2 data and release 22 (R22), and MC campaign MC23 corresponds to Run-3 data and release 25 (R25). See [here](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/DataMCForAnalysis#Corresponding_MC_campaigns_for_d) for a table of summary. 
 
-The MC20 campaign identifies the `DIGI` and `RECO` reprocessing in R22 of MC16 simulated samples.
-For this reason the production starts from hits in the MC16 campaign. The sub-campaign of AODs and RDOs reprocessed in R22 will be mc20a/mc20d/mc20e, following the original sub-campaign of mc16 HITS.
+For both release 22 and release 25, two derivation formats are available: `DAOD_PHYS` and `DAOD_PHYSLITE`. TopCPToolkit can work with either format. More information on `DAOD_PHYS` and `DAOD_PHYSLITE` can be found [here](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/DAODPhys).
 
-In the following a short description of the individual tags is given.
+The [Physics Modelling Group (PMG)](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/PhysicsModellingGroup) group maintains information about recommended MC samples:
+- [Central page for MC20](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/CentralMC20ProductionListNew)
+- [Central page for MC23](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/CentralMC23ProductionListNew)
+
+If we don't know the full dataset name, it is usually possible to search it out via rucio following some assumptions. Let's assume that the derivation format we want is `DAOD_PHYSLITE`, and the DSID is 601229 (everyone's favorite PowhegPythia semi-leptonic ttbar sample in MC23). To obtain simulation for currently available Run-3 datasets, we will need two samples corresponding to the 2022 (mc23a) and 2023 (mc23d) data-taking period. This can be distinguished based on the r-tag, which is r14622 and r15224, respectively. 
+
+!!! example "Exercise"
+    Let's search for the 601229 mc23a samples.
+
+??? tip "Hint"
+    The scope for MC23 samples is `mc23_13p6TeV`. The part indicating the derivation format in the sample name we are looking for is `deriv.DAOD_PHYSLITE`. Also it is useful to add the option `--filter 'type=CONTAINER'` to only list the dataset container.
+
+??? success "Solution"
+    ```bash
+    rucio list-dids --filter 'type=CONTAINER' 'mc23_13p6TeV.601229*deriv.DAOD_PHYSLITE*r14622*'
+    ```
+    The output of the command above may yield a list of samples:
+    ```
+    +------------------------------------------------------------------------------------------------------------------------------------------+-------------------+
+    | SCOPE:NAME                                                                                                                               | [DID TYPE]        |
+    |------------------------------------------------------------------------------------------------------------------------------------------+-------------------|
+    | mc23_13p6TeV:mc23_13p6TeV.601229.PhPy8EG_A14_ttbar_hdamp258p75_SingleLep.deriv.DAOD_PHYSLITE.e8514_e8528_s4162_s4114_r14622_r14663_p5855 | DIDType.CONTAINER |
+    | mc23_13p6TeV:mc23_13p6TeV.601229.PhPy8EG_A14_ttbar_hdamp258p75_SingleLep.deriv.DAOD_PHYSLITE.e8514_e8528_s4162_s4114_r14622_r14663_p6026 | DIDType.CONTAINER |
+    | mc23_13p6TeV:mc23_13p6TeV.601229.PhPy8EG_A14_ttbar_hdamp258p75_SingleLep.deriv.DAOD_PHYSLITE.e8514_s4162_r14622_p5855                    | DIDType.CONTAINER |
+    | mc23_13p6TeV:mc23_13p6TeV.601229.PhPy8EG_A14_ttbar_hdamp258p75_SingleLep.deriv.DAOD_PHYSLITE.e8514_s4162_r14622_p6026                    | DIDType.CONTAINER |
+    +------------------------------------------------------------------------------------------------------------------------------------------+-------------------+
+    ```
+
+Information on how a sample was processed is encoded in its tags. In the following a short description of of the individual tags is given and standard tags of each MC (sub-)campaign are listed.
 
 #### Simulation
 
- * `s3681` for full simulation with Geant4 (this is the output of the re-simulation, which takes as input the original hits produced in R21 with tag `s3126` and re-simulate long-lived hadrons and tau leptons). The corresponding tag for full simulation with Geant4, simulating also long lived particles from the beginning is `s3797`.
- * `a899` for fast simulation samples, produced with Atlfast3. All Standard Model samples produced with Atlfast2 in mc16 has been re-simulated with Atlfast3, which provides improved modeling, in R22. Beyond Standard Model samples are produced on request.
+Simulation tags start with `s` are for full simulation (FS) with Geant4, and tags start with `a` are for fast simulation samples produced with the fast simulation AtlFast3 (AF3) with R22 or R25.
+
+- [MC20](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/AtlasProductionGroupMC20#Simulation):
+    - FS: `s3681`
+    - AF3: `a907`
+- [MC23a](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/AtlasProductionGroupMC23a#Hard_scatter_simulation):
+    - FS: `s4162` (AMI tag), `s4114` (merging tag)
+    - AF3: `a910` (AMI tag), `s4114` (merging tag)
+- [MC23d](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/AtlasProductionGroupMC23d#Hard_scatter_simulation):
+    - FS: `s4159` (AMI tag), `s4114` (merging tag)
+    - AF3: `a911` (AMI tag), `s4114` (merging tag)
 
 Physics considerations need to be made here, which choice is feasible. Full-sim is generally preferred for physics description (e.g. for example for description of substructure of jets, since fast simulation performs approximations of calorimeter shower evolution), but is much more CPU-expensive to simulate, therefore for some processes there may not be any full-sim samples generated
 
 #### Reconstruction:
-The following default tags are used for MC20 physics:
 
- * `r13167` recon (overlay+trigger+reconstruction) for `MC20a`
- * `r13144` recon (overlay+trigger+reconstruction) for `MC20d`
- * `r13145` recon (overlay+trigger+reconstruction) for `MC20e`
+- [MC20](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/AtlasProductionGroupMC20#Reconstruction):
+    - Nominal:
+        - MC20a: `r13167`
+        - MC20d: `r13144`
+        - MC20e: `r13145`
+        - MC20a (AF3 only): `r14859`
+        - MC20d (AF3 only): `r14860`
+        - MC20e (AF3 only): `r14861`
+    - Without pile-up:
+        - MC20a: `r13297`
+        - MC20d: `r13298`
+        - MC20e: `r13299`
+        - MC20a (AF3 only): `r14862`
+        - MC20d (AF3 only): `r14863`
+        - MC20e (AF3 only): `r14864`
+- [MC23a](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/AtlasProductionGroupMC23a#Reconstruction):
+    - Nominal: `r14622` (AMI tag), `r14663` (merging tag)
+    - Without pile-up: 	`r14716` (AMI tag), `r14663` (merging tag)
+    - Nominal (AF3 only): `r14932` (AMI tag), `r14663` (merging tag)
+    - Without pile-up (AF3 only): `r14933` (AMI tag), `r14663` (merging tag)
+        
+- [MC23d](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/AtlasProductionGroupMC23d#Reconstruction):
+    - Nominal: `r15224` (AMI tag), `r15225` (merging tag)
+    - Without pile-up: 	`r15439` (AMI tag), `r15225` (merging tag)
 
-Tags without pile-up:
-
- * `r13297` recon (digitization+trigger+reconstruction) for `MC20a`
- * `r13298` recon (digitization+trigger+reconstruction) for `MC20d`
- * `r13299` recon (digitization+trigger+reconstruction) for `MC20e`
-
-#### Pile-up presampling:
- * `d1713` MC20a RDO production (mc20_13TeV.900149.PG_single_nu_Pt50.digit.RDO.e8307_s3482_s3136_d1713)
- * `d1714` MC20d RDO production (mc20_13TeV.900149.PG_single_nu_Pt50.digit.RDO.e8307_s3482_s3136_d1714)
- * `d1715` MC20e RDO production (mc20_13TeV.900149.PG_single_nu_Pt50.digit.RDO.e8307_s3482_s3136_d1715)
-
-#### special tags:
-
- * `r13146` AOD merge
- * `p4836` NTUP_PILEUP creation
- * `p4837` NTUP_PILEUP merge 
-
-More information on the `a,s,r` tags can be found in [AtlasProductionGroup twiki](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/AtlasProductionGroupMC20).
+!!! note
+    More information on the `a,s,r` tags including the non-standard ones can be found on the [ATLAS Production Group twiki](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/AtlasProductionGroup#Specific_Information_on_MC_campa).
 
 As for the various p-tags, typically the newer p-tag the better, and in general samples with older p-tags are obsoleted and deleted unless exceptions are requested. To find out what AthDerivation release was used to produce a given p-tag sample, and what are the changes in the release, refer to [DerivationProduction twiki](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/DerivationProductionTeam).
 
-For R22 only `DAOD_PHYS` is supposed to be used. You can find more information on it [here](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/DerivationProductionTeam?topic=DAODPhys).
+!!! tip
+    The following resources may prove invaluable when dealing with datasets:
 
-The following resources may prove invaluable when dealing with datasets:
-
-- [This page](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/TopDerivationsRun3) provides information on the derivation production of the ATLAS top group.
-- For data derivation lists, see [TopGroupDataDerivationList page](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/TopGroupDataDerivationList).
-- [AMI website](https://ami.in2p3.fr/) for metadata relevant for various tags and samples.
-- AMI information can be obtained also via command line tool ami (which we set up via `lsetup pyami`), see some documentation [here](https://ami.in2p3.fr/pyAMI/).
+    - [This page](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/TopDerivationsRun3) provides information on the derivation production of the ATLAS top group.
+    - For data derivation lists, see [TopGroupDataDerivationList page](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/TopGroupDataDerivationList).
+    - [AMI website](https://ami.in2p3.fr/) for metadata relevant for various tags and samples.
+    - AMI information can be obtained also via command line tool ami (which we set up via `lsetup pyami`), see some documentation [here](https://ami.in2p3.fr/pyAMI/).
 
 Finally, let's test actual dataset submission. We will not be actually running the sample on grid, only to check whether the submission command looks ok. For this purpose, in the submission script, set:
 ```python
@@ -294,52 +319,46 @@ kill([taskID1,taskID2]) # basically this is a python prompt so anything that yie
 
 - **Jobs take forever to start.** This can be seen by large time to start of the job. This could be related to your priority (check the priority of the jobs running on the site). If this is not the case, the site may be busy (too many jobs in the site queues) or some other issue (in which case it may be advisable to ask the DAST experts -- see [DAST twiki](https://twiki.cern.ch/twiki/bin/viewauth/AtlasComputing/AtlasDAST) for more info, and for mailing lists for support).
 
-- **Jobs crash.** In this case the error message displayed in the job list may or may not be helpfull, in any case it is useful to examine the log files. Log files can be accessed by opening the specific crashing job and examining log files (log files on panda), in particular the `athena_stdout.txt` or `payload_stdout.txt` log files, that include output from AnalysisTop run (or any other task you run on grid in general).
+- **Jobs crash.** In this case the error message displayed in the job list may or may not be helpfull, in any case it is useful to examine the log files. Log files can be accessed by opening the specific crashing job and examining log files (log files on panda), in particular the `setup.stdout` or `payload.stdout` log files, that include output from TopCPToolkit run (or any other task you run on grid in general).
 
 - **Jobs take forever to run or crash due to exceeding site walltime limit.** Check if the job is running long for the first time, or if it has been retried. If the latter, this may indicate some issue with the code (a crash perhaps, see point above), or some issue related to the grid site potentially. Note that all grid sites have a limit on maximum time of a job (walltime). Thus you may have an issue due to your job being simply too long -- either the time to process an event is on average very high and/or the number of events to process in a single job is very high. This can become an issue in particular, if you are processing many systematics and/or using CPU-intensive algorithms, such as complex kinematic reconstruction algorithms (e.g. KLFitter, NeutrinoWeighting, etc). In this case, lowering the number of files per job may be desired. When submitting a sample to grid, this can be achieved by the `config.maxNFilesPerJob` setting, limiting the maximum amount of files per job. Alternatively, if you are retrying a job via pbook, it is possible to use the `nFilesPerJob` option specifying exact number of files per job (note, that you cannot use maxNFilesPerJob in pbook):
-```python
-retry(taskID, newOpts={'nFilesPerJob':5})
-```
-Ideally, it is useful to download a single file from the offending sample and try to run it locally to get an idea how long does it take to process N events and guesstimate the number of files accordingly to fit into the site walltime. For full-systematics NTuple production with KLFitter for instance, it is not unexpected having to run with single file per job for signal samples (and any samples that have high event selection efficiency in general)!
+    ```python
+    retry(taskID, newOpts={'nFilesPerJob':2})
+    ```
+    Ideally, it is useful to download a single file from the offending sample and try to run it locally to get an idea how long does it take to process N events and guesstimate the number of files accordingly to fit into the site walltime. For full-systematics NTuple production with KLFitter for instance, it is not unexpected having to run with single file per job for signal samples (and any samples that have high event selection efficiency in general)!
 
 - **Broken tasks.** Each task runs several (typically 10?) scout jobs, which are used to check if the task does not crash, if the site meets requirements such as sufficient memory, etc. If all of the scout jobs fail, the task is sent to broken state, and no further jobs of the task are executed. This calls for investigating why the jobs crashed and fixing the issue. Either your jobs have crashed due to your fault, or the crashes are site-related, in both cases you encounter an issue, where the job to be resubmitted needs a new unique name. It is possible to resubmit a job with identical name, by running the submitToGrid.py script with the specific sample and additional parameter (**DRAGONS AHEAD**):
-```python
-config.newOpts = ' --allowTaskDuplication'
-```
+    ```python
+    config.newOpts = ' --allowTaskDuplication'
+    ```
 !!! note
     When downloading output from grid from duplicated task, output of all duplicates will be downloaded!** In case of a broken task, where all jobs crashed, there is no output, so in such a case it is safe to use this option. Otherwise, prepare for duplicate events. Additionally, in case of site-related issues, it may be necessary to exclude it using the `config.excludedSites` option in the submission script.
 
 - **Retrying failed task in pbook on a different site.** Sometimes, the only way to overcome a problem is to retry a job on a different site. This can be done using pbook:
-```python
-#to exclude sites XXX and YYY, where XXX and YYY must match the bigpanda name
-retry(taskID, newOpts={'excludedSite':'XXX,YYY'})
-```
+    ```python
+    #to exclude sites XXX and YYY, where XXX and YYY must match the bigpanda name
+    retry(taskID, newOpts={'excludedSite':'XXX,YYY'})
+    ```
 
-- **Debugging memory-related problems on bigpanda.** Majority of the grid sites have a limit on memory for single-core jobs of 2GB. Unfortunately, for analyses using complex computations and many objects, and precision recommendations (looots of systematics), this becoming more and more commong of a problem. First, in case of memory leaks, typically panda will show warnings on the task details page about jobs consuming excessive amount of memory, or kill your jobs right away. It is possible to view the memory consumption and input/output (I/O) of job as a function of time in graphs in the detailed view of a specific job and opening the Memory and IO plots. There may be legitimate reasons for high memory consumption, as outlined below.
+- **Debugging memory-related problems on bigpanda.** Majority of the grid sites have a limit on memory for single-core jobs of 2GB. Unfortunately, for analyses using complex computations and many objects, and precision recommendations (looots of systematics), this becoming more and more common of a problem. First, in case of memory leaks, typically panda will show warnings on the task details page about jobs consuming excessive amount of memory, or kill your jobs right away. It is possible to view the memory consumption and input/output (I/O) of job as a function of time in graphs in the detailed view of a specific job and opening the Memory and IO plots. There may be legitimate reasons for high memory consumption, as outlined below.
 
 
-- **Large RAM consumption due to branch buffer optimization.** Another frequent issue in case of large NTuples (many systematics and or plenty of branches, and/or heavy branches, such as vectors) is the RAM consumption of the branch buffer optimization. This problem manifests itself by a sharp increase in RAM consumption after a certain amount of time, when output events were processed which are about to be written to file. By default TTree cache in memory and the output is written out every 1000 events. The easiest recommendation is to reduce the size of NTuples as much as possible and consider if some of the stored variables could be computed offline instead. Another option, if running with systematics, is to split systematics into multiple jobs. Finally, if that is not enough, it is possible to play with the following parameter in AT configuration file, but please mind that THIS MAY LEAD TO I/O PERFORMANCE ISSUES when reading the produced NTuples:
-```
-OutputFileBasketSizePrimitive 4096 # initial buffer size for bool, int, float, ...
-OutputFileBasketSizeVector 40960 # initial buffer size for vector
-OutputFileNEventAutoFlush 1000 # number of saved events after which buffer sizes are optimized
-```
-More realistic values for initial buffer sizes may reduce the amount of memory needed for the reoptimization and decreasing the `OutputFileNEventAutoFlush` value reduces the amount of cached events to be written out, but note that lowering the value does also reduce the I/O performance for the output files (meaning, offline analysis of these files will have slower read performance as well).
+- **Large RAM consumption due to branch buffer optimization.** Another frequent issue in case of large NTuples (many systematics and or plenty of branches, and/or heavy branches, such as vectors) is the RAM consumption of the branch buffer optimization. This problem manifests itself by a sharp increase in RAM consumption after a certain amount of time, when output events were processed which are about to be written to file. By default TTree cache in memory and the output is written out every 1000 events. The easiest recommendation is to reduce the size of NTuples as much as possible and consider if some of the stored variables could be computed offline instead. Another option, if running with systematics, is to split systematics into multiple jobs.
 
 ## Downloading grid output
 
 To download output from grid, we use `rucio` tool, which can be set up via
 ```bash
-lsetup rucio
+lsetup "rucio -w"
 ```
 !!! note
-    It is advisable to setup rucio in a new shell. This is in particular true if you already have AnalysisBase set up in a shell, rucio has known compatibility issues with AB.
+    It is advisable to setup rucio as a wrapper or in a new shell. This is in particular true if you already have AnalysisBase set up in a shell, rucio has known compatibility issues with AB.
 
 Downloading of a dataset:
 ```bash
 rucio download output-dataset-name
 ```
-where the output dataset name for analysistop jobs is typically of the format of user.USERNAME.DSID....tags.SUFFIX. Rucio accepts `*` wildcards, so you can batch download many samples at once, for example:
+where the output dataset name is typically of the format of user.USERNAME.DSID....tags.SUFFIX. Rucio accepts `*` wildcards, so you can batch download many samples at once, for example:
 ```bash
 rucio download 'user.username.*230320-v0'
 ```
