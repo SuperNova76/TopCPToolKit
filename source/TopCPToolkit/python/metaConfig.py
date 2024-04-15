@@ -15,6 +15,7 @@ _campaigns_AMITag = {
     Campaign.MC21a: ['r13829'],
     Campaign.MC23a: ['r14622'],
     Campaign.MC23c: ['r14799'],
+    Campaign.MC23d: ['r15224'],
 }
 
 _years_runNumbers = {
@@ -33,7 +34,7 @@ _campaigns_R2 = [
 ]
 
 _campaigns_R3 = [
-    Campaign.MC21a, Campaign.MC23a, Campaign.MC23c,
+    Campaign.MC21a, Campaign.MC23a, Campaign.MC23c, Campaign.MC23d,
 ]
 
 
