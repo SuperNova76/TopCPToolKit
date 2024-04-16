@@ -143,6 +143,7 @@ runTop_el.py -h
 | `--text-config`<br>`-t` | None                                           | Specify the text config to run as `folderName`. Alternative to loading an analysis module. |
 | `--parton`              | False                                          | Toggles the parton-level analysis. |
 | `--particle`            | False                                          | Toggles the particle-level analysis. |
+| `--no-reco`             | False                                          | Toggles off the detector-level analysis. |
 | `--no-systematics`      | False                                          | Toggles off the computation of systematics. |
 | `--no-filter`           | False                                          | Save all events regardless of analysis filters (still saves the decision). |
 

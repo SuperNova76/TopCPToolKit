@@ -20,3 +20,9 @@ Output:
       'mu_': 'ParticleLevelMuons'
       'jet_': 'ParticleLevelJets'
       'met_': 'ParticleLevelMissingET'
+
+AddConfigBlocks:
+    - modulePath: 'TopCPToolkit.particleLevelConfig'
+      functionName: 'particleLevelConfig'
+      algName: 'ParticleLevel'
+      pos: 'EventSelection'

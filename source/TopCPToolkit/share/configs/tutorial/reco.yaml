@@ -30,7 +30,7 @@ Jets:
         minPt: 25000.0
 
 PerEventSF:
-  - name: 'btagSFCalc_DL1dv01_Continuous'
+  - algoName: 'btagSFCalc_DL1dv01_Continuous'
     particles: 'AnaJets.baselineJvt'
     objectSF: 'ftag_effSF_DL1dv01_Continuous_%SYS%'
     eventSF: 'weight_btagSF_DL1dv01_Continuous_%SYS%'
@@ -135,3 +135,13 @@ Output:
     # Turn output branches on and off with 'enable' and 'disable'
     - disable jet_.*_eff.*
     - disable jet_jvtEfficiency.*
+
+AddConfigBlocks:
+    - modulePath: 'TopCPToolkit.LeptonSFCalculatorConfig'
+      functionName: 'LeptonSFCalculatorConfig'
+      algName: 'LeptonSF'
+      pos: 'Output'
+    - modulePath: 'TopCPToolkit.ExtraParticleDecorationConfig'
+      functionName: 'ExtraParticleDecorationConfig'
+      algName: 'ExtraParticleDecoration'
+      pos: 'Output'

@@ -67,7 +67,7 @@ validateRun2data:
   variables:
     JOBNAME: job_validateRun2data
     REFERENCEFILE: ${CI_PROJECT_DIR}/job_referenceRun2data/${RUN_DIR}/output_job_referenceRun2data.root
-    INPUTFILE: ${CI_PROJECT_DIR}/job_latestABreleaseRun2data/${RUN_DIR}/output_job_latestABreleaseRun2dataroot
+    INPUTFILE: ${CI_PROJECT_DIR}/job_latestABreleaseRun2data/${RUN_DIR}/output_job_latestABreleaseRun2data.root
   needs: [referenceRun2data, latestABreleaseRun2data, latestABrelease]
 
 validateRun3data:
