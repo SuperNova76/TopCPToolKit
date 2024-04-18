@@ -29,6 +29,8 @@ def parse_arguments():
                    help='Skip filtering of events due to event selection (selection flags are still stored.)')
     p.add_argument('--no-reco', action='store_true',
                    help='Skip running the detector-level analysis. Useful for running on TRUTH derivations.')
+    p.add_argument('--direct-driver', action='store_true',
+                   help='Use EL::DirectDriver instead of EL::ExecDriver. Temporary solution to fix some issues on the Grid.')
     p.add_argument('-t', '--text-config', type=str,
                    default=None,
                    help='Name of the analysis to run. Should be a directory containing reco.yaml,'
@@ -44,7 +46,10 @@ def move_with_symlink_handling(inputfile, outputfile):
     just a symlink to a hard output (avoids overwriting symlinks)
     """
     real_source = os.path.realpath(inputfile)
-    shutil.move(real_source, outputfile)
+    try:
+        shutil.move(real_source, outputfile)
+    except Exception as e:
+        print(f"Error moving file: {e}")
     return
 
 def run_job(sample_handler, output_stream_name, level_name, args, flags):
@@ -53,7 +58,8 @@ def run_job(sample_handler, output_stream_name, level_name, args, flags):
     job.options().setBool(ROOT.EL.Job.optAlgorithmMemoryMonitor, False)
     job.options().setDouble(ROOT.EL.Job.optMaxEvents, args.max_events)
     job.options().setString(ROOT.EL.Job.optSubmitDirMode, 'overwrite')
-    job.options().setString(ROOT.EL.Job.optFactoryPreload, 'libTopCPToolkitDict.so,top::preloadComponentFactories' )
+    if not args.direct_driver:
+        job.options().setString(ROOT.EL.Job.optFactoryPreload, 'libTopCPToolkitDict.so,top::preloadComponentFactories' )
     if args.text_config:
         from TopCPToolkit.commonAlgoConfig import makeTextBasedSequence
         algSeq = makeTextBasedSequence(args.text_config, level_name, flags,
@@ -97,7 +103,11 @@ if __name__ == '__main__':
         sample.add(f)
     sh.add(sample)
 
-    driver = ROOT.EL.ExecDriver()
+    driver = None
+    if args.direct_driver:
+        driver = ROOT.EL.DirectDriver()
+    else:
+        driver = ROOT.EL.ExecDriver()
     driver.options().setBool(ROOT.EL.Job.optGridReporting, True)
 
     # read FileMetadata
@@ -119,32 +129,48 @@ if __name__ == '__main__':
     # the final file to keep
     finalfile = f'{args.output_name}.root'
 
-    if not args.no_reco:
-        pid = os.fork()
-        if pid:
-            os.wait()
+    if not args.direct_driver:
+        if not args.no_reco:
+            pid = os.fork()
+            if pid:
+                os.wait()
+                move_with_symlink_handling(outfile, recofile)
+                move_with_symlink_handling(histofile, 'only_histograms.root')
+            else:
+                run_job(sh, outputStreamName, 'reco', args, flags)
+        if args.particle:
+            pid = os.fork()
+            if pid:
+                os.wait()
+                move_with_symlink_handling(outfile, particlefile)
+                if args.no_reco:
+                    move_with_symlink_handling(histofile, 'only_histograms.root')
+            else:
+                run_job(sh, outputStreamName, 'particle', args, flags)
+        if args.parton:
+            pid = os.fork()
+            if pid:
+                os.wait()
+                move_with_symlink_handling(outfile, partonfile)
+                if args.no_reco and not args.particle:
+                    move_with_symlink_handling(histofile, 'only_histograms.root')
+            else:
+                run_job(sh, outputStreamName, 'parton', args, flags)
+    else:
+        if not args.no_reco:
+            run_job(sh, outputStreamName, 'reco', args, flags)
             move_with_symlink_handling(outfile, recofile)
             move_with_symlink_handling(histofile, 'only_histograms.root')
-        else:
-            run_job(sh, outputStreamName, 'reco', args, flags)
-    if args.particle:
-        pid = os.fork()
-        if pid:
-            os.wait()
+        if args.particle:
+            run_job(sh, outputStreamName, 'particle', args, flags)
             move_with_symlink_handling(outfile, particlefile)
             if args.no_reco:
                 move_with_symlink_handling(histofile, 'only_histograms.root')
-        else:
-            run_job(sh, outputStreamName, 'particle', args, flags)
-    if args.parton:
-        pid = os.fork()
-        if pid:
-            os.wait()
+        if args.parton:
+            run_job(sh, outputStreamName, 'parton', args, flags)
             move_with_symlink_handling(outfile, partonfile)
             if args.no_reco and not args.particle:
                 move_with_symlink_handling(histofile, 'only_histograms.root')
-        else:
-            run_job(sh, outputStreamName, 'parton', args, flags)
 
     files_to_merge = ['only_histograms.root']
     if not args.no_reco:
