@@ -17,6 +17,7 @@
 #include <TopCPToolkit/BTaggingScoresAlg.h>
 #include <TopCPToolkit/SVMassAlg.h>
 #include <TopCPToolkit/FakeBkgCalculatorAlg.h>
+#include <TopCPToolkit/VGammaORAlg.h>
 
 DECLARE_COMPONENT (SVMassAlg)
 DECLARE_COMPONENT (top::RunTtbarNNLORecursiveRewAlg)

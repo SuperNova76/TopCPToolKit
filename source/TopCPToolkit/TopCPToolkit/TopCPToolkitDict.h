@@ -20,5 +20,6 @@
 #include "TopCPToolkit/BTaggingScoresAlg.h"
 #include "TopCPToolkit/SVMassAlg.h"
 #include "TopCPToolkit/FakeBkgCalculatorAlg.h"
+#include "TopCPToolkit/VGammaORAlg.h"
 
 #endif

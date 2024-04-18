@@ -22,5 +22,6 @@
   <class name="SVMassAlg" />
   <function name="top::preloadComponentFactories" />
   <class name="FakeBkgCalculatorAlg" />
+  <class name="VGammaORAlg" />
 
 </lcgdict>
