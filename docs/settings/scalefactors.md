@@ -51,3 +51,20 @@ Computes the per-event lepton SF, i.e. a product over the individual reconstruct
 
 !!! success "Registers the following variables:"
     - `leptonSF`: the per-event lepton SF, the product of the electron reconstruction/ID/isolation SFs, the muon reconstruction/TTVA/isolation SFs, and the photon ID/isolation SFs
+
+### [FTagEventSFConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagEventSFAnalysisConfig.py)
+Name in YAML: **FlavourTaggingEventSF**
+
+Computes the per-event b-tagging SF, i.e. a product of b-tagging efficiency/inefficiency SFs over all jets in the specified jet container, which are within the region of validity of the FTAG calibrations. See the `containerName` argument below for passing jets with specific selection. The per-event scale factor `weight_ftag_effSF_<selectionName>` is decorated to EventInfo object (see `selectionName` below).
+
+`containerName`
+:   the input jet container with a possible selection, in the format `container` or `container.selection`. Default recommendation is to pass `container.baselineJvt` selection, e.g. if the calibrated jets container is `AnaJets`, recommendation is to pass `AnaJet.baselineJvt`.
+
+`selectionName`
+:   A postfix to apply to the scale factor decoration. By default not needed as the default selectionName is `<btagger>_<btagWP>`.
+
+`btagger`
+:   the flavour tagging algorithm: `DL1dv01`, `GN2v00`. The default is `DL1r`.
+
+`btagWP`
+:   the flavour tagging WP. The default is `FixedCutBEff_77`.
