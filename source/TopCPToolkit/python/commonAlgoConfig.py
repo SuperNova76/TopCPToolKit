@@ -27,7 +27,7 @@ def makeRecoSequence(analysisName, flags, noSystematics=False, noFilter=False):
     except ModuleNotFoundError:
         raise Exception(f'The package and module for your --analysis could not be found: {analysisName}')
     try:
-        analysisModule.makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter)
+        analysisModule.makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics, noFilter)
     except AttributeError:
         raise Exception('The analysis you specified via --analysis does not have makeRecoConfiguration method implemented.'
                         'This is needed to configure the CP algorithms')
@@ -56,7 +56,7 @@ def makeTruthSequence(analysisName, flags, noSystematics=False):
     except ModuleNotFoundError:
         raise Exception(f'The package and module for your --analysis could not be found: {analysisName}')
     try:
-        analysisModule.makeTruthConfiguration(flags, algSeq)
+        analysisModule.makeTruthConfiguration(flags, algSeq, noSystematics)
     except AttributeError:
         raise Exception('The analysis you specified via --analysis does not have makeTruthConfiguration method implemented.'
                         'This is needed to configure the CP algorithms')
@@ -93,7 +93,7 @@ def makeParticleLevelSequence(analysisName, flags, noSystematics=False, noFilter
     except ModuleNotFoundError:
         raise Exception(f'The package and module for your --analysis could not be found: {analysisName}')
     try:
-        analysisModule.makeParticleLevelConfiguration(flags, algSeq, configSeq, factory, noFilter)
+        analysisModule.makeParticleLevelConfiguration(flags, algSeq, configSeq, factory, noSystematics, noFilter)
     except AttributeError:
         raise Exception('The analysis you specified via --analysis does not have makeParticleLevelConfiguration method implemented.'
                         'This is needed to configure the CP algorithms')

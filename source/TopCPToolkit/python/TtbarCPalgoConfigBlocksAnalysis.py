@@ -3,7 +3,7 @@ from AnalysisAlgorithmsConfig.ConfigAccumulator import ConfigAccumulator
 from AnalysisAlgorithmsConfig.ConfigFactory import ConfigFactory
 
 
-def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
+def makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics=False, noFilter=False):
 
     makeConfig = factory.makeConfig
 
@@ -400,11 +400,12 @@ SAVE
     configAccumulator = ConfigAccumulator(algSeq, flags.Input.DataType,
                                           isPhyslite=flags.Input.isPHYSLITE,
                                           geometry=flags.Input.LHCPeriod,
-                                          autoconfigFromFlags=flags)
+                                          autoconfigFromFlags=flags,
+                                          noSystematics=noSystematics)
     configSeq.fullConfigure(configAccumulator)
 
 
-def makeTruthConfiguration(flags, algSeq):
+def makeTruthConfiguration(flags, algSeq, noSystematics=False):
     configSeq = ConfigSequence()
     factory = ConfigFactory()
     makeConfig = factory.makeConfig
@@ -447,11 +448,12 @@ def makeTruthConfiguration(flags, algSeq):
     configAccumulator = ConfigAccumulator(algSeq, flags.Input.DataType,
                                           isPhyslite=flags.Input.isPHYSLITE,
                                           geometry=flags.Input.LHCPeriod,
-                                          autoconfigFromFlags=flags)
+                                          autoconfigFromFlags=flags,
+                                          noSystematics=noSystematics)
     configSeq.fullConfigure(configAccumulator)
 
 
-def makeParticleLevelConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
+def makeParticleLevelConfiguration(flags, algSeq, configSeq, factory, noSystematics=False, noFilter=False):
 
     makeConfig = factory.makeConfig
 
@@ -514,5 +516,6 @@ SAVE
     configAccumulator = ConfigAccumulator(algSeq, flags.Input.DataType,
                                           isPhyslite=flags.Input.isPHYSLITE,
                                           geometry=flags.Input.LHCPeriod,
-                                          autoconfigFromFlags=flags)
+                                          autoconfigFromFlags=flags,
+                                          noSystematics=noSystematics)
     configSeq.fullConfigure(configAccumulator)
