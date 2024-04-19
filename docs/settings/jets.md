@@ -123,10 +123,10 @@ Name in YAML: **Jets.FlavourTagging**
 :   a postfix to apply to decorations and algorithm names. Typically not needed here as internally the string `f"{btagger}_{btagWP}"` is used.
 
 `btagger`
-:   the flavour tagging algorithm: `DL1dv01`, `GN2v00`. The default is `DL1r`.
+:   the flavour tagging algorithm: `DL1dv01`, `GN2v00`.
 
 `btagWP`
-:   the flavour tagging WP. The default is `FixedCutBEff_77`.
+:   the flavour tagging WP, e.g. `FixedCutBEff_77`, `Continuous`, etc.
 
 `generator`
 :   MC generator setup, for MC/MC SFs. The default is `"autoconfig"` (relies on the sample metadata). To override, a DSID string is expected, see [MC/MC Scale Factors using Top Samples](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/PmgTopProcesses#FTAG_MC_MC_Scale_Factors_using_T).
@@ -152,10 +152,10 @@ Name in YAML: **Jets.FlavourTaggingEventSF**
 :   a postfix to apply to decorations and algorithm names. Typically not needed here as internally the string `f"{btagger}_{btagWP}"` is used.
 
 `btagger`
-:   the flavour tagging algorithm: `DL1dv01`, `GN2v00`. The default is `DL1r`.
+:   the flavour tagging algorithm: `DL1dv01`, `GN2v00`.
 
 `btagWP`
-:   the flavour tagging WP. The default is `FixedCutBEff_77`.
+:   the flavour tagging WP, e.g. `FixedCutBEff_77`, `Continuous`, etc.
 
 !!! success "Registers the following variables:"
     - `weight_ftag_effSF_{btagger}_{btagWP}`: the per-event b-tagging efficiency SF
@@ -194,10 +194,10 @@ Name in YAML: **Jets.FlavourTaggingEventSF**
 :   a postfix to apply to decorations and algorithm names. Typically not needed here as internally the string `f"{btagger}_{btagWP}"` is used.
 
 `btagger`
-:   the flavour tagging algorithm: `DL1dv01`, `GN2v00`. The default is `DL1r`.
+:   the flavour tagging algorithm: `DL1dv01`, `GN2v00`.
 
 `btagWP`
-:   the flavour tagging WP. The default is `FixedCutBEff_77`.
+:   the flavour tagging WP, e.g. `FixedCutBEff_77`, `Continuous`, etc.
 
 `generator`
 :   MC generator setup, for MC/MC SFs. The default is `"autoconfig"` (relies on the sample metadata). To override, a DSID string is expected, see [MC/MC Scale Factors using Top Samples](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/PmgTopProcesses#FTAG_MC_MC_Scale_Factors_using_T).
@@ -240,10 +240,10 @@ The default output variables are: pt, eta, phi and e of the reclustered jets as 
 :   a postfix to apply to decorations and algorithm names. Typically not needed here as internally the string `f"{btagger}_{btagWP}"` is used.
 
 `btagger`
-:   the flavour tagging algorithm: `DL1dv01`, `GN2v00`. The default is `DL1r`.
+:   the flavour tagging algorithm: `DL1dv01`, `GN2v00`.
 
 `btagWP`
-:   the flavour tagging WP. The default is `FixedCutBEff_77`.
+:   the flavour tagging WP, e.g. `FixedCutBEff_77`, `Continuous`, etc.
 
 !!! success "Registers the following variables:"
     - `weight_ftag_effSF_{btagger}_{btagWP}`: the per-event b-tagging efficiency SF
