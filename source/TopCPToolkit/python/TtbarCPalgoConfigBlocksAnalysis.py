@@ -130,7 +130,7 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
     if use_photons:
         configSeq += makeConfig ('Photons', containerName='AnaPhotons')
 
-        WPLoose = ["Loose", "Undefined"]
+        WPLoose = ["Loose", "NonIso"]
         WPTight = ["Tight", "FixedCutTight"]
         configSeq += makeConfig ('Photons.WorkingPoint', containerName='AnaPhotons', selectionName='loose')
         configSeq.setOptionValue ('.qualityWP', WPLoose[0])
@@ -222,6 +222,7 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
     cfg = LeptonSFCalculatorConfig()
     cfg.setOptionValue ('electrons', 'AnaElectrons.tight')
     cfg.setOptionValue ('muons', 'AnaMuons.tight')
+    #cfg.setOptionValue ('photons', 'AnaPhotons.tight')
     cfg.setOptionValue ('lepton_postfix', 'tight')
     configSeq.append(cfg)
 
