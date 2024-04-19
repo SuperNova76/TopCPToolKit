@@ -38,34 +38,40 @@ namespace top {
       ANA_CHECK(m_eventInfoHandle.retrieve(evtInfo, syst));
 
       const xAOD::ElectronContainer *electrons {nullptr};
-      ANA_CHECK(m_electronsHandle.retrieve(electrons, syst));
+      if (m_electronsHandle) ANA_CHECK(m_electronsHandle.retrieve(electrons, syst));
 
       const xAOD::MuonContainer *muons {nullptr};
-      ANA_CHECK(m_muonsHandle.retrieve(muons, syst));
+      if (m_muonsHandle) ANA_CHECK(m_muonsHandle.retrieve(muons, syst));
 
       const xAOD::PhotonContainer *photons {nullptr};
-      ANA_CHECK(m_photonsHandle.retrieve(photons, syst));
+      if (m_photonsHandle) ANA_CHECK(m_photonsHandle.retrieve(photons, syst));
 
       double leptonSF {1.};
-      for (const xAOD::Electron *el : *electrons) {
-        if (m_electronSelection.getBool(*el, syst)) {
-          leptonSF *= m_electronRecoSF.get(*el, syst);
-          leptonSF *= m_electronIDSF.get(*el, syst);
-          leptonSF *= m_electronIsolSF.get(*el, syst);
-        }
+      if (m_electronsHandle){
+	for (const xAOD::Electron *el : *electrons) {
+	  if (m_electronSelection.getBool(*el, syst)) {
+	    leptonSF *= m_electronRecoSF.get(*el, syst);
+	    leptonSF *= m_electronIDSF.get(*el, syst);
+	    leptonSF *= m_electronIsolSF.get(*el, syst);
+	  }
+	}
       }
-      for (const xAOD::Muon *mu : *muons) {
-        if (m_muonSelection.getBool(*mu, syst)) {
-          leptonSF *= m_muonRecoSF.get(*mu, syst);
-          leptonSF *= m_muonIsolSF.get(*mu, syst);
+      if (m_muonsHandle){
+	for (const xAOD::Muon *mu : *muons) {
+	  if (m_muonSelection.getBool(*mu, syst)) {
+	    leptonSF *= m_muonRecoSF.get(*mu, syst);
+	    leptonSF *= m_muonIsolSF.get(*mu, syst);
           leptonSF *= m_muonTTVASF.get(*mu, syst);
-        }
+	  }
+	}
       }
-      for (const xAOD::Photon *ph : *photons) {
-        if (m_photonSelection.getBool(*ph, syst)) {
-          leptonSF *= m_photonIDSF.get(*ph, syst);
-          leptonSF *= m_photonIsolSF.get(*ph, syst);
-        }
+      if (m_photonsHandle){
+	for (const xAOD::Photon *ph : *photons) {
+	  if (m_photonSelection.getBool(*ph, syst)) {
+	    leptonSF *= m_photonIDSF.get(*ph, syst);
+	    leptonSF *= m_photonIsolSF.get(*ph, syst);
+	  }
+	}
       }
 
       m_event_leptonSF.set(*evtInfo, leptonSF, syst);
