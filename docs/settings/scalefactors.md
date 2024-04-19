@@ -35,7 +35,7 @@ Calculates a per-event SF which is the product of per-object SFs, for objects pa
 ### [LeptonSFCalculatorConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/LeptonSFCalculatorConfig.py)
 Name in YAML: **LeptonSF**
 
-Computes the per-event lepton SF, i.e. a product over the individual reconstruction, identification and isolation SFs for all electrons and muons in the event.
+Computes the per-event lepton SF, i.e. a product over the individual reconstruction, identification and isolation SFs for all electrons, muons or photons in the event.
 
 `electrons`
 :   the input electron container, with a possible selection, in the format `container` or `container.selection`.
@@ -43,8 +43,11 @@ Computes the per-event lepton SF, i.e. a product over the individual reconstruct
 `muons`
 :   the input muon container, with a possible selection, in the format `container` or `container.selection`.
 
+`photons`
+:   the input photon container, with a possible selection, in the format `container` or `container.selection`.
+
 `lepton_postfix`
 :   the common postfix for both electrons and muons, e.g. `'tight'`.
 
 !!! success "Registers the following variables:"
-    - `leptonSF`: the per-event lepton SF, the product of the electron reconstruction/ID/isolation SFs and the muon reconstruction/TTVA/isolation SFs
+    - `leptonSF`: the per-event lepton SF, the product of the electron reconstruction/ID/isolation SFs, the muon reconstruction/TTVA/isolation SFs, and the photon ID/isolation SFs
