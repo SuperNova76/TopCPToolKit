@@ -21,19 +21,14 @@ Jets:
     FlavourTagging:
       - btagger: 'DL1dv01'
         btagWP: 'FixedCutBEff_85'
-        minPt: 25000.0
       - btagger: 'DL1dv01'
         btagWP: 'FixedCutBEff_70'
-        minPt: 25000.0
       - btagger: 'DL1dv01'
         btagWP: 'Continuous'
-        minPt: 25000.0
-
-PerEventSF:
-  - algoName: 'btagSFCalc_DL1dv01_Continuous'
-    particles: 'AnaJets.baselineJvt'
-    objectSF: 'ftag_effSF_DL1dv01_Continuous_%SYS%'
-    eventSF: 'weight_btagSF_DL1dv01_Continuous_%SYS%'
+    FlavourTaggingEventSF:
+      - containerName: 'AnaJets.baselineJvt'
+        btagger: 'DL1dv01'
+        btagWP: 'Continuous'
 
 Electrons:
   - containerName: 'AnaElectrons'
