@@ -42,7 +42,7 @@ namespace top {
     CP::SysReadHandle<xAOD::PhotonContainer> m_photonsHandle {
       this, "photons", "", "the photon container to use"
     };
-    CP::SysReadSelectionHandle m_muonSelection {
+    CP::SysReadSelectionHandle m_photonSelection {
       this, "photonSelection", "", "the selection on the input photons"
     };
 

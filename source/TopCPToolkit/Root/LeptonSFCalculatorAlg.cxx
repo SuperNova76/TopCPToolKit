@@ -14,7 +14,7 @@ namespace top {
 
     ANA_CHECK(m_electronSelection.initialize(m_systematicsList, m_electronsHandle, SG::AllowEmpty));
     ANA_CHECK(m_muonSelection.initialize(m_systematicsList, m_muonsHandle, SG::AllowEmpty));
-    ANA_CHECK(m_photonSelection.intiialize(m_systematicsList, m_photonsHandle, SG::AllowEmpty));
+    ANA_CHECK(m_photonSelection.initialize(m_systematicsList, m_photonsHandle, SG::AllowEmpty));
 
     ANA_CHECK(m_electronRecoSF.initialize(m_systematicsList, m_electronsHandle));
     ANA_CHECK(m_electronIDSF.initialize(m_systematicsList, m_electronsHandle));
