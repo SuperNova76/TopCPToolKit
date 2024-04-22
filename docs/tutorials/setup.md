@@ -43,7 +43,7 @@ Assuming you are working on Lxplus or an equivalent setup with access to CVMFS, 
 ```sh
 setupATLAS
 cd build
-asetup AnalysisBase,25.2.6
+asetup AnalysisBase,25.2.7
 cmake ../source
 make -j4
 source */setup.sh
