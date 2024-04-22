@@ -94,10 +94,12 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics=False
 
         # b-tagging
         for WP in WPs:
-            configSeq += makeConfig ('Jets.FlavourTagging', containerName='AnaJets', selectionName=f'{btagger}_{WP}')
+            configSeq += makeConfig ('Jets.FlavourTagging', containerName='AnaJets')
             configSeq.setOptionValue ('.btagger', btagger)
             configSeq.setOptionValue ('.btagWP', WP)
-            configSeq.setOptionValue ('.minPt', 25e3)
+            configSeq += makeConfig ('Jets.FlavourTaggingEventSF', containerName='AnaJets.baselineJvt')
+            configSeq.setOptionValue ('.btagger', btagger)
+            configSeq.setOptionValue ('.btagWP', WP)
 
         outputContainers['jet_'] = 'OutJets'
 
@@ -225,13 +227,6 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics=False
     #cfg.setOptionValue ('photons', 'AnaPhotons.tight')
     cfg.setOptionValue ('lepton_postfix', 'tight')
     configSeq.append(cfg)
-
-    # calculate per-event b-tagging SF (alternative to storing per-jet SFs)
-    for WP in WPs:
-        configSeq += makeConfig ('PerEventSF', algoName=f'btagSFCalc_{btagger}_{WP}')
-        configSeq.setOptionValue ('.particles', 'AnaJets.baselineJvt')
-        configSeq.setOptionValue ('.objectSF', f'ftag_effSF_{btagger}_{WP}_%SYS%')
-        configSeq.setOptionValue ('.eventSF', f'weight_btagSF_{btagger}_{WP}_%SYS%')
 
     # energy decorations
     # TODO: give it a factory when moving to Athena

@@ -131,14 +131,8 @@ Name in YAML: **Jets.FlavourTagging**
 `generator`
 :   MC generator setup, for MC/MC SFs. The default is `"autoconfig"` (relies on the sample metadata). To override, a DSID string is expected, see [MC/MC Scale Factors using Top Samples](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/PmgTopProcesses#FTAG_MC_MC_Scale_Factors_using_T).
 
-`kinematicSelection`
-:   whether to run kinematic selection. The default is `True`.
-
 `noEffSF`
 :   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. The default is `False`.
-
-`minPt`
-:   minimum jet $p_\mathrm{T}$ used in the kinematic selection of jets. The default is 20 GeV for EMPFlow and EMTopo jets, or 10 GeV for VR-track jets.
 
 !!! success "Registers the following variables (all names preceded by the tagger + WP combination):"
     - `select`: the per-jet tagging decision (no systematics)
@@ -208,14 +202,8 @@ Name in YAML: **Jets.FlavourTaggingEventSF**
 `generator`
 :   MC generator setup, for MC/MC SFs. The default is `"autoconfig"` (relies on the sample metadata). To override, a DSID string is expected, see [MC/MC Scale Factors using Top Samples](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/PmgTopProcesses#FTAG_MC_MC_Scale_Factors_using_T).
 
-`kinematicSelection`
-:   whether to run kinematic selection. The default is `True`.
-
 `noEffSF`
 :   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. The default is `False`.
-
-`minPt`
-:   minimum jet $p_\mathrm{T}$ used in the kinematic selection of jets. The default is 20 GeV for EMPFlow and EMTopo jets, or 10 GeV for VR-track jets.
 
 `bTagCalibFile`
 :   path (string) to a custom b-tagging CDI file. The default is `None`, which uses the latest available recommendations.
@@ -244,18 +232,21 @@ The default output variables are: pt, eta, phi and e of the reclustered jets as 
 :   Minimum pT requirement for the reclustered jets. Can be used for thinning/selection, the decoration name is `passed_pt`. Default is 200000 (200 GeV).
 
 ### [FTagEventSFConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagEventSFAnalysisConfig.py)
+Name in YAML: **FlavourTaggingEventSF**
+
+Computes the per-event b-tagging SF, i.e. a product of b-tagging efficiency/inefficiency SFs over all jets in the specified jet container, which are within the region of validity of the FTAG calibrations. See the `containerName` argument below for passing jets with specific selection. The per-event scale factor `weight_ftag_effSF_<selectionName>` is decorated to EventInfo object (see `selectionName` below).
 
 `containerName`
-:   the name of the input container.
+:   the input jet container with a possible selection, in the format `container` or `container.selection`. The default recommendation is to pass `container.baselineJvt` selection, e.g. if the calibrated jets container is `AnaJets`, the recommendation is to pass `AnaJet.baselineJvt`.
 
 `selectionName`
 :   a postfix to apply to decorations and algorithm names. Typically not needed here as internally the string `f"{btagger}_{btagWP}"` is used.
 
 `btagger`
-:   the flavour tagging algorithm: `DL1dv01`, `GN2v00`. The default is `DL1r`.
+:   the flavour tagging algorithm: `DL1dv01`, `GN2v00`.
 
 `btagWP`
-:   the flavour tagging WP. The default is `FixedCutBEff_77`.
+:   the flavour tagging WP, e.g. `FixedCutBEff_77`, `Continuous`, etc.
 
 !!! success "Registers the following variables:"
     - `weight_ftag_effSF_{btagger}_{btagWP}`: the per-event b-tagging efficiency SF
