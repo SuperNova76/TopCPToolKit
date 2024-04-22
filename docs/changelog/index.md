@@ -3,10 +3,19 @@
 ## TopCPToolkit releases
 
 ### Upcoming release
-
-- [issue #93](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/93): prepare a tutorial
 - [issue #94](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/94): add algorithm for NuFlows reconstruction
+- [issue #125](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/125): Add a tutorial on deploying trained ML models for inference
+
+### 2.8.0 <small>April 22, 2024</small>
+- We run on AB 25.2.7
+- [issue #93](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/93): prepare a tutorial
 - [issue #101](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/101): adapt to the new btagging event-wise SF
+- [issue #122](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/122): adding VGammaORTool as a new Algorithm
+- [issue #123](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/123): Cmake export compile commands should be enabled by default
+- [issue #124](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/124): Pass the bTaggingMethod option in KLFitterConfig to KLFitterAlg
+- [issue #126](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/126): Add the option to run with EL::DirectDriver
+- [issue #127](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/127): Add photon components to event-wise leptonSF
+- [issue #128](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/128): Fix behaviour of Cutbookkeepers in the python version
 
 ### 2.7.0 <small>April 2, 2024</small>
 - We run on AB 25.2.5
