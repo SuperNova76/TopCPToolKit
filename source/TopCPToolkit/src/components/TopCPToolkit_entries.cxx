@@ -3,6 +3,7 @@
 */
 
 #include <TopCPToolkit/ExtraParticleDecorationAlg.h>
+#include <TopCPToolkit/ExtraPhotonDecorationAlg.h>
 #include <TopCPToolkit/LeptonSFCalculatorAlg.h>
 #include <TopCPToolkit/KLFitterAlg.h>
 #include <TopCPToolkit/KLFitterFinalizeOutputAlg.h>
@@ -31,5 +32,6 @@ DECLARE_COMPONENT (top::KLFitterAlg)
 DECLARE_COMPONENT (top::JetMatchingAlg)
 DECLARE_COMPONENT (top::JetReclusteringAlg)
 DECLARE_COMPONENT (top::ExtraParticleDecorationAlg)
+DECLARE_COMPONENT (top::ExtraPhotonDecorationAlg)
 DECLARE_COMPONENT (DiTauMassCalculatorAlg)
 DECLARE_COMPONENT (BTaggingScoresAlg)

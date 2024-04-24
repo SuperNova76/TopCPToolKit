@@ -4,6 +4,7 @@
        should be created. -->
 
   <class name="top::ExtraParticleDecorationAlg" />
+  <class name="top::ExtraPhotonDecorationAlg" />
   <class name="top::LeptonSFCalculatorAlg" />
   <class name="top::RunPartonHistoryAlg" />
   <class name="top::ParticleLevelAlg" />
