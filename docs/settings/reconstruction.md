@@ -142,6 +142,9 @@ Name in YAML: **KLFitter**
 `btagWP`
 :   b-tagging efficiency WP to use, if only one is needed. The default is `FixedCutBEff_77`.
 
+`btagIgnoreOutOfValidityRange`
+:   Whether or not the b-tagger should ignore (and not fail) when a jet is outside the calibration range. The default is `False`.
+
 `selectionRegionsConfig`
 :   string of the form `selectionName: sel1, optionA: opA, optionB: opB; selectionName: sel2, ...` where options can be `likelihoodType`, `leptonType`, `jetSelectionMode`, `btaggingMethod`, `btagger` or `btagWP`. The default is `''` (empty string).
 
