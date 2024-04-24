@@ -129,7 +129,12 @@ Name in YAML: **Jets.FlavourTagging**
 :   the flavour tagging WP. The default is `FixedCutBEff_77`.
 
 `generator`
-:   MC generator setup, for MC/MC SFs. The default is `"autoconfig"` (relies on the sample metadata). To override, a DSID string is expected, see [MC/MC Scale Factors using Top Samples](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/PmgTopProcesses#FTAG_MC_MC_Scale_Factors_using_T).
+:   MC generator setup, for MC/MC SFs. The default is `"autoconfig"` (relies on the sample metadata). To override, a generator string is expected, see [the lists of recognized strings for Run2 and Run3](https://gitlab.cern.ch/atlas/athena/-/blob/release/25.2.7/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagAnalysisConfig.py?ref_type=tags#L198-203).
+
+    !!! note
+        The link above is for release `25.2.7`. The list of supported generators could be updated between releases. The most latest ones can be found by switching to the `main` branch.
+
+    Also see [MC/MC Scale Factors using Top Samples](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/PmgTopProcesses#FTAG_MC_MC_Scale_Factors_using_T).
 
 `noEffSF`
 :   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. The default is `False`.
