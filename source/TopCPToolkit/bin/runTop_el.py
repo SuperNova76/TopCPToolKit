@@ -181,8 +181,19 @@ if __name__ == '__main__':
     if args.parton:
         files_to_merge.append(f'{partonfile}')
 
-    os.system(f'hadd -f {finalfile} ' + ' '.join(files_to_merge))
+    # run the hadd operation, but filter out harmless warnings
+    tmp_stderr_file = 'hadd_stderr.txt'
+    stderr_output = ""
+    os.system(f'hadd -f {finalfile} ' + ' '.join(files_to_merge) + f' 2>{tmp_stderr_file}')
     os.system('rm ' + ' '.join(files_to_merge))
+    with open(tmp_stderr_file, 'r') as ferr:
+        stderr_output = ferr.read()
+    filtered_stderr_output = stderr_output.replace("Warning in <TList::Merge>: input list is empty - nothing to merge with", "")
+    if filtered_stderr_output.strip():
+        print(filtered_stderr_output)
+    else:
+        print("hadd was successful.")
+    os.system(f'rm {tmp_stderr_file}')
     os.system(f'rm -rf {args.output_name}')
 
     ##############
