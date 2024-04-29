@@ -60,6 +60,7 @@ def run_job(sample_handler, output_stream_name, level_name, args, flags):
     job.options().setString(ROOT.EL.Job.optSubmitDirMode, 'overwrite')
     if not args.direct_driver:
         job.options().setString(ROOT.EL.Job.optFactoryPreload, 'libTopCPToolkitDict.so,top::preloadComponentFactories' )
+        job.options().setDouble(ROOT.EL.Job.optFilesPerWorker, 10000)
     if args.text_config:
         from TopCPToolkit.commonAlgoConfig import makeTextBasedSequence
         algSeq = makeTextBasedSequence(args.text_config, level_name, flags,
