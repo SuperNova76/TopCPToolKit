@@ -87,6 +87,23 @@ Name in YAML: **GeneratorLevelAnalysis**
 
 ## Config blocks
 
+### [addNewConfigBlocks](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AnalysisAlgorithmsConfig/python/ConfigText.py)
+Name in YAML: **AddConfigBlocks**
+
+See [Registering new blocks](../starting/analysis.md#registering-new-blocks-directly-in-the-yaml-config-since-analysisbase-24240) for how to use this tool.
+
+`modulePath`
+:   the pythonic location of the module, i.e. `Package.Module`.
+
+`functionName`
+:   the name of the function or config block to call.
+
+`algName`
+:   the name to give the block in the YAML config file.
+
+`pos`
+:   where to insert the new block amongst the list of registered config blocks, i.e. an already registered `algName`. Recommended: `Output`.
+
 ### [CommonServicesConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
 
 `runSystematics`
@@ -195,7 +212,3 @@ information into configuration flags. The configuration flags are documented in 
 ### [commonAlgoConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/commonAlgoConfig.py)
 
 This module contains the master sequencing functions `makeRecoSequence` / `makeTruthSequence` / `makeParticleLevelSequence` / `makeTextBasedSequence`, as [explained in the guide](../starting/analysis.md#analysis-modules).
-Loading the module also enables the following methods to easily set up very common algorithms:
-
-`add_event_cleaning`
-:   wraps around [`makeEventCleaningConfig`](#makeEventCleaningConfig), allowing to configure `runEventCleaning`. Automates the GRL settings.

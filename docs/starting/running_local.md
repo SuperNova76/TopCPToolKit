@@ -102,8 +102,8 @@ Any valid regexp string can be passed: any systematic name that matches will be 
 
 For example:
 
-- `".*(JER|PRW).*?"` will **select only those systematics that contains** "JER" (jet energy resolution) or "PRW" (pileup reweighting) in their name, or the empty string (the `?` at the end) corresponding to nominal.
-- `"(?:(?!JER|PRW).)*"` will **veto any systematic that doesn't contain** "JER" or "PRW" in their name, but still accept the empty string.
+- `"^(?=.*(?:JER|PRW)|$).*"` will **select only those systematics that contains** "JER" (jet energy resolution) or "PRW" (pileup reweighting) in their name, or the empty string (the `?` at the end) corresponding to nominal.
+- `"(?:(?!JER|PRW).)*"` will **veto any systematic that contains** "JER" or "PRW" in their name, but still accept the empty string.
 
 !!! warning
     The CP algorithms always require the nominal variation (empty string, turned into "NOSYS" internally) to be available within the list of systematics.
@@ -143,6 +143,7 @@ runTop_el.py -h
 | `--text-config`<br>`-t` | None                                           | Specify the text config to run as `folderName`. Alternative to loading an analysis module. |
 | `--parton`              | False                                          | Toggles the parton-level analysis. |
 | `--particle`            | False                                          | Toggles the particle-level analysis. |
+| `--no-reco`             | False                                          | Toggles off the detector-level analysis. |
 | `--no-systematics`      | False                                          | Toggles off the computation of systematics. |
 | `--no-filter`           | False                                          | Save all events regardless of analysis filters (still saves the decision). |
 

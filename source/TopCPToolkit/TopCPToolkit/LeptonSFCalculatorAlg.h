@@ -10,6 +10,7 @@
 
 #include <xAODEgamma/ElectronContainer.h>
 #include <xAODMuon/MuonContainer.h>
+#include <xAODEgamma/PhotonContainer.h>
 #include <xAODEventInfo/EventInfo.h>
 
 namespace top {
@@ -38,6 +39,13 @@ namespace top {
       this, "muonSelection", "", "the selection on the input muons"
     };
 
+    CP::SysReadHandle<xAOD::PhotonContainer> m_photonsHandle {
+      this, "photons", "", "the photon container to use"
+    };
+    CP::SysReadSelectionHandle m_photonSelection {
+      this, "photonSelection", "", "the selection on the input photons"
+    };
+
     CP::SysReadHandle<xAOD::EventInfo> m_eventInfoHandle {
       this, "eventInfo", "EventInfo", "the EventInfo container to decorate selection decisions to"
     };
@@ -64,6 +72,14 @@ namespace top {
 
     CP::SysReadDecorHandle<float> m_muonTTVASF {
       this, "muonTTVASF", "TTVA_effSF_%SYS%", "Decorated per-muon TTVA SF"
+    };
+
+    CP::SysReadDecorHandle<float> m_photonIDSF {
+      this, "photonIDSF", "id_effSF_%SYS%", "Decorated per-photon ID SF"
+    };
+
+    CP::SysReadDecorHandle<float> m_photonIsolSF {
+      this, "photonIsolSF", "isol_effSF_%SYS%", "Decorated per-photon isolation SF"
     };
 
     CP::SysWriteDecorHandle<float> m_event_leptonSF {

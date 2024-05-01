@@ -22,74 +22,77 @@ Name in YAML: **ParticleLevel**
 `useTruthElectrons`
 :   whether to use electrons. The default is `True`.
 
-`el_ptMin`
+`elPtMin`
 :   minimum electron $p_\mathrm{T}$, in MeV. The default is 25 GeV.
 
-`el_etaMax`
+`elEtaMax`
 :   maximum electron $\vert\eta\vert$. The default is 2.5.
 
-`el_notFromHadron`
+`elNotFromHadron`
 :   whether to reject electrons originating from hadronic decays. The default is `True` (reject them).
 
-`el_tauIsHadron`
+`elTauIsHadron`
 :   whether to consider tauons as hadrons in the above rejection. The default is `False` (don't consider them as hadrons).
 
 `useTruthMuons`
 :   whether to use muons. The default is `True`.
 
-`mu_ptMin`
+`muPtMin`
 :   minimum muon $p_\mathrm{T}$, in MeV. The default is 25 GeV.
 
-`mu_etaMax`
+`muEtaMax`
 :   maximum muon $\vert\eta\vert$. The default is 2.5.
 
-`mu_notFromHadron`
+`muNotFromHadron`
 :   whether to reject muons originating from hadronic decays. The default is `True` (reject them).
 
-`mu_tauIsHadron`
+`muTauIsHadron`
 :   whether to consider tauons as hadrons in the above rejection. The default is `False` (don't consider them as hadrons).
 
 `useTruthPhotons`
 :   whether to use photons. The default is `False`.
 
-`ph_ptMin`
+`phPtMin`
 :   minimum photon $p_\mathrm{T}$, in MeV. The default is 25 GeV.
 
-`ph_etaMax`
+`phEtaMax`
 :   maximum photon $\vert\eta\vert$. The default is 2.5.
 
-`ph_origin`
+`phOrigin`
 :   comma-separated list (string) of particle origin values as given by the `MCTruthClassifier`. See [possible values](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/MCTruthClassifier/MCTruthClassifier/MCTruthClassifierDefs.h). The default is `''` (empty string).
 
-`ph_isolation`
+`phIsolation`
 :   space-separated isolation variable and isolation cut (string), i.e. in the format `var cut` where `var` is an isolation variable and `cut` is applied as `var / pt < cut`. The default is `''` (empty string).
 
 `useTruthTaus`
 :   whether to use taus. The default is `False.`
 
-`tau_ptMin`
+`tauPtMin`
 :   minimum tau $p_\mathrm{T}$, in MeV. The default is 25 GeV.
 
-`tau_etaMax`
+`tauEtaMax`
 :   maximum tau $\vert\eta\vert$. The default is 2.5.
 
 `useTruthJets`
 :   whether to use jets. The default is `True`.
 
-`ph_ptMin`
+`jetPtMin`
 :   minimum jet $p_\mathrm{T}$, in MeV. The default is 25 GeV.
 
-`ph_etaMax`
+`jetEtaMax`
 :   maximum jet $\vert\eta\vert$. The default is 2.5.
 
 `useTruthLargeRJets`
 :   whether to use large-R jets. The default is `True`.
 
-`ljet_ptMin`
+`ljetPtMin`
 :   minimum large-R jet $p_\mathrm{T}$, in MeV. The default is 25 GeV.
 
-`ljet_etaMax`
+`ljetEtaMax`
 :   maximum large-R jet $\vert\eta\vert$. The default is 2.5.
+
+`ljetCollection`
+:   the large-R jet collection to run on. The default is `AntiKt10TruthTrimmedPtFrac5SmallR20Jets` for `DAOD_PHYS`, and `AntiKt10TruthSoftDropBeta100Zcut10Jets` for `DAOD_PHYSLITE`.
 
 `useTruthMET`
 :   whether to use MET. The default is `True`.
@@ -160,16 +163,25 @@ The matching algorithm looks for the closest jets in $\Delta R$. For multiple ma
 ### [JetMatchingConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/JetMatchingConfig.py)
 Name in YAML: **JetMatching**
 
-The algorithm adds three variables for reco jets: index of matched truth jet, $\Delta R$ to the closest reco jet and $\Delta R$ of the matched truth jet and its closest truth jet. The matching is based on looking for minimal $\Delta R$. The reco jets with no matched truth jet (no truth jet found with $\Delta R$ within the critical $\Delta R$) have the index set to -1. If multiple reco jets are matched to the same truth jet their index is also set to -1.
+The algorithm adds three variables for reco jets: index of matched truth jet, $\Delta R$ to the closest reco jet and $\Delta R$ of the matched truth jet and its closest truth jet. The matching is based on looking for minimal $\Delta R$. The reco jets with no matched truth jet (no truth jet found with $\Delta R$ within the critical $\Delta R$) have the index set to -1. If multiple reco jets are matched to the same truth jet their index is also set to -1. The algorithm also labels reco jets that have a truth lepton within $\Delta R$ < 0.4 from them. If they do, it also adds the $p_\mathrm{T}$ value of that overlapping truth lepton (otherwise the value will be -1).
 
 `criticalDR`
 :   maximum $\Delta R$ (float) used for matching. The default is `0.3`.
+
+`criticalDR_leptons`
+:   min $\Delta R$ (float) required between reco jets and truth leptons. The default is `0.4`.
 
 `jets`
 :   reco jets container name (string). The default is `AnaJets`.
 
 `truthJets`
 :   truth jets collection name (string). The default is `AntiKt4TruthDressedWZJets`.
+
+`truthElectrons`
+:   truth electrons collection name (string). The default is None.
+
+`truthMuons`
+:   truth muons collection name (string). The default is None.
 
 `eventSelection`
 :   event selection (string) to run the algorithm on. The default is ` ` (run over all events).
@@ -178,6 +190,8 @@ The algorithm adds three variables for reco jets: index of matched truth jet, $\
     - `truth_jet_paired_index`: the index of the truth-level jets matched to the detector-level jets
     - `reco_to_reco_jet_closest_dR`: the minimum $\Delta R$ with respect to detector-level jets
     - `truth_to_truth_jet_closest_dR`: the minimum $\Delta R$ of the matched truth-level jet with respect to truth-level jets
+    - `has_truth_lepton`: label for reco jets if they have an overlapping truth lepton 
+    - `overlapping_truth_lepton_pt`: $p_\mathrm{T}$ of the truth lepton that overlaps with the reco jet
 
 ### [IFFLeptonDecorationBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
 Name in YAML: **X.IFFClassification**, with X amongst: Electrons, Muons

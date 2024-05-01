@@ -57,3 +57,29 @@ Decorates the output jets with the secondary vertex mass (SVMass).
 
 !!! success "Registers the following variables:"
     - `SVMass`: the secondary vertex mass of every jet.
+
+### [ExtraPhotonDecorationConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/ExtraPhotonDecorationConfig.py)
+Name in YAML: **ExtraPhotonDecoration**
+
+Decorates the output photons with the conversion type and calo eta.
+
+`photons`
+:   the input photon container.
+
+!!! success "Registers the following variables:"
+    - `conversionType`: photon conversion type.
+    - `caloEta`: calorimeter eta.
+
+### [VGammaORConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/VGammaORConfig.py)
+Name in YAML: **VGammaOR**
+
+Adds a new event-level variable `in_vgamma_overlap` using the [VGammaORTool](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/VGammaORTool). The new variable can be used to remove to overlap between V+jets and Vy+jets samples.
+
+`dR_lepton_photon_cuts`
+:   list of cuts on dR between lepton and photon.
+
+`photon_pT_cuts`
+:   cuts of photon $p_\mathrm{T}$.
+
+!!! success "Registers the following variables:"
+    - `in_vgamma_overlap`: can either be 0 or 1 for an event. An event should be kept if it is 0 for V+jets samples or if it is 1 for V$\gamma$+jets samples.

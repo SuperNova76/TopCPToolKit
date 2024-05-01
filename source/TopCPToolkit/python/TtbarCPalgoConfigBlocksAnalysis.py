@@ -1,11 +1,9 @@
 from AnalysisAlgorithmsConfig.ConfigSequence import ConfigSequence
 from AnalysisAlgorithmsConfig.ConfigAccumulator import ConfigAccumulator
 from AnalysisAlgorithmsConfig.ConfigFactory import ConfigFactory
-from AsgAnalysisAlgorithms.AsgAnalysisConfig import makePtEtaSelectionConfig, PerEventSFBlock
-from TopCPToolkit import metaConfig, commonAlgoConfig
 
 
-def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
+def makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics=False, noFilter=False):
 
     makeConfig = factory.makeConfig
 
@@ -23,7 +21,8 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
     met_branches = []
 
     # primary vertex ,event cleaning (jet clean loosebad) and GoodRunsList selection
-    commonAlgoConfig.add_event_cleaning(configSeq, factory, flags)
+    configSeq += makeConfig ('EventCleaning')
+    configSeq.setOptionValue ('.runEventCleaning', True)
 
     # run PMG TruthWeightTool on MC only
     configSeq += makeConfig ('GeneratorLevelAnalysis')
@@ -50,6 +49,7 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
         configSeq.setOptionValue ('.selectionDecoration', 'selectPtEta')
         configSeq.setOptionValue ('.minPt', 25e3)
         configSeq.setOptionValue ('.maxEta', 2.47)
+        configSeq.setOptionValue ('.useClusterEta', True)
 
         outputContainers['el_'] = 'OutElectrons'
 
@@ -94,10 +94,12 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
 
         # b-tagging
         for WP in WPs:
-            configSeq += makeConfig ('Jets.FlavourTagging', containerName='AnaJets', selectionName=f'{btagger}_{WP}')
+            configSeq += makeConfig ('Jets.FlavourTagging', containerName='AnaJets')
             configSeq.setOptionValue ('.btagger', btagger)
             configSeq.setOptionValue ('.btagWP', WP)
-            configSeq.setOptionValue ('.minPt', 25e3)
+            configSeq += makeConfig ('Jets.FlavourTaggingEventSF', containerName='AnaJets.baselineJvt')
+            configSeq.setOptionValue ('.btagger', btagger)
+            configSeq.setOptionValue ('.btagWP', WP)
 
         outputContainers['jet_'] = 'OutJets'
 
@@ -130,7 +132,7 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
     if use_photons:
         configSeq += makeConfig ('Photons', containerName='AnaPhotons')
 
-        WPLoose = ["Loose", "Undefined"]
+        WPLoose = ["Loose", "NonIso"]
         WPTight = ["Tight", "FixedCutTight"]
         configSeq += makeConfig ('Photons.WorkingPoint', containerName='AnaPhotons', selectionName='loose')
         configSeq.setOptionValue ('.qualityWP', WPLoose[0])
@@ -143,6 +145,7 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
         configSeq.setOptionValue ('.selectionDecoration', 'selectPtEta')
         configSeq.setOptionValue ('.minPt', 25e3)
         configSeq.setOptionValue ('.maxEta', 2.5)
+        configSeq.setOptionValue ('.useClusterEta', True)
 
         outputContainers['ph_'] = 'OutPhotons'
 
@@ -221,15 +224,9 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noFilter=False):
     cfg = LeptonSFCalculatorConfig()
     cfg.setOptionValue ('electrons', 'AnaElectrons.tight')
     cfg.setOptionValue ('muons', 'AnaMuons.tight')
+    #cfg.setOptionValue ('photons', 'AnaPhotons.tight')
     cfg.setOptionValue ('lepton_postfix', 'tight')
     configSeq.append(cfg)
-
-    # calculate per-event b-tagging SF (alternative to storing per-jet SFs)
-    for WP in WPs:
-        configSeq += makeConfig ('PerEventSF', algoName=f'btagSFCalc_{btagger}_{WP}')
-        configSeq.setOptionValue ('.particles', 'AnaJets.baselineJvt')
-        configSeq.setOptionValue ('.objectSF', f'ftag_effSF_{btagger}_{WP}_%SYS%')
-        configSeq.setOptionValue ('.eventSF', f'weight_btagSF_{btagger}_{WP}_%SYS%')
 
     # energy decorations
     # TODO: give it a factory when moving to Athena
@@ -399,11 +396,12 @@ SAVE
     configAccumulator = ConfigAccumulator(algSeq, flags.Input.DataType,
                                           isPhyslite=flags.Input.isPHYSLITE,
                                           geometry=flags.Input.LHCPeriod,
-                                          autoconfigFromFlags=flags)
+                                          autoconfigFromFlags=flags,
+                                          noSystematics=noSystematics)
     configSeq.fullConfigure(configAccumulator)
 
 
-def makeTruthConfiguration(flags, algSeq):
+def makeTruthConfiguration(flags, algSeq, noSystematics=False):
     configSeq = ConfigSequence()
     factory = ConfigFactory()
     makeConfig = factory.makeConfig
@@ -446,13 +444,13 @@ def makeTruthConfiguration(flags, algSeq):
     configAccumulator = ConfigAccumulator(algSeq, flags.Input.DataType,
                                           isPhyslite=flags.Input.isPHYSLITE,
                                           geometry=flags.Input.LHCPeriod,
-                                          autoconfigFromFlags=flags)
+                                          autoconfigFromFlags=flags,
+                                          noSystematics=noSystematics)
     configSeq.fullConfigure(configAccumulator)
 
 
-def makeParticleLevelConfiguration(flags, algSeq):
-    configSeq = ConfigSequence()
-    factory = ConfigFactory()
+def makeParticleLevelConfiguration(flags, algSeq, configSeq, factory, noSystematics=False, noFilter=False):
+
     makeConfig = factory.makeConfig
 
     particleLevel_branches = []
@@ -477,6 +475,32 @@ def makeParticleLevelConfiguration(flags, algSeq):
     configSeq.append(cfg)
     outputContainers.update( cfg.getOutputContainers() )
 
+    # event selection
+    mycuts = {
+        'SUBcommon': """
+JET_N 25000 >= 4
+MET >= 20000
+SAVE
+""",
+        'ejets': """
+IMPORT SUBcommon
+EL_N 25000 >= 1
+MU_N 25000 == 0
+MWT < 170000
+MET+MWT > 40000
+SAVE
+"""
+    }
+    configSeq += makeConfig ('EventSelection',
+                             electrons='ParticleLevelElectrons',
+                             muons='ParticleLevelMuons',
+                             met='ParticleLevelMissingET',
+                             metTerm='NonInt',
+                             jets='ParticleLevelJets',
+                             selectionCutsDict=mycuts,
+                             noFilter=noFilter,
+                             cutFlowHistograms=True)
+
     # add NTuple output config
     configSeq += makeConfig ('Output')
     configSeq.setOptionValue('.treeName', 'particleLevel')
@@ -488,5 +512,6 @@ def makeParticleLevelConfiguration(flags, algSeq):
     configAccumulator = ConfigAccumulator(algSeq, flags.Input.DataType,
                                           isPhyslite=flags.Input.isPHYSLITE,
                                           geometry=flags.Input.LHCPeriod,
-                                          autoconfigFromFlags=flags)
+                                          autoconfigFromFlags=flags,
+                                          noSystematics=noSystematics)
     configSeq.fullConfigure(configAccumulator)

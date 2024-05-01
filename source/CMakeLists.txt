@@ -31,6 +31,9 @@ endforeach()
 set( ATLAS_PROJECT ${_defaultParentProject}
    CACHE STRING "The name of the parent project to build against" )
 
+# Generate compile commands json file
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 # Clean up:
 unset( _parentProjectNames )
 unset( _defaultParentProject )

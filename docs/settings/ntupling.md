@@ -16,6 +16,9 @@ Name in YAML: **Output**
 `vars`
 :   a list of mappings (list of strings) between containers and decorations to output branches. The default is `[]` (empty list).
 
+`varsOnlyForMC`
+:   same as `vars`, but for MC-only variables so as to avoid a crash when running on data. The default is `[]` (empty list).
+
 `metVars`
 :   a list of mappings (list of strings) between containers and decorations to output branches. Specficially for MET variables, where only the final MET term is retained. The default is `[]` (empty list).
 

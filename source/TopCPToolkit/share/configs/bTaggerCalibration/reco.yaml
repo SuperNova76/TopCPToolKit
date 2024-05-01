@@ -1,4 +1,5 @@
-CommonServices: {}
+CommonServices:
+  systematicsHistogram: 'listOfSystematics'
 
 PileupReweighting: {}
 
@@ -15,86 +16,45 @@ Jets:
     systematicsModelJER: 'Full'
     JVT: {}
     PtEtaSelection:
-        minPt: 25000.0
+        minPt: 20000.0
         maxEta: 2.5
     FlavourTagging:
-      # DL1D tagger
-      - btagger: 'DL1dv01'
+      # GN2 v01
+      - btagger: 'GN2v01'
         btagWP: 'FixedCutBEff_85'
         generator: 'autoconfig'
-        minPt: 25000.0
-      - btagger: 'DL1dv01'
+        minPt: 20000.0
+        bTagCalibFile : /cvmfs/atlas.cern.ch/repo/sw/database/GroupData/xAODBTaggingEfficiency/13p6TeV/2021-22-13TeV-MC21-CDI_GN2v01_Test_smooth.root
+        noEffSF : True
+      - btagger: 'GN2v01'
         btagWP: 'FixedCutBEff_77'
         generator: 'autoconfig'
-        minPt: 25000.0
-      - btagger: 'DL1dv01'
+        minPt: 20000.0
+        bTagCalibFile : /cvmfs/atlas.cern.ch/repo/sw/database/GroupData/xAODBTaggingEfficiency/13p6TeV/2021-22-13TeV-MC21-CDI_GN2v01_Test_smooth.root
+        noEffSF : True
+      - btagger: 'GN2v01'
         btagWP: 'FixedCutBEff_70'
         generator: 'autoconfig'
-        minPt: 25000.0
-      - btagger: 'DL1dv01'
-        btagWP: 'FixedCutBEff_60'
+        minPt: 20000.0
+        bTagCalibFile : /cvmfs/atlas.cern.ch/repo/sw/database/GroupData/xAODBTaggingEfficiency/13p6TeV/2021-22-13TeV-MC21-CDI_GN2v01_Test_smooth.root
+        noEffSF : True
+      - btagger: 'GN2v01'
+        btagWP: 'FixedCutBEff_65'
         generator: 'autoconfig'
-        minPt: 25000.0
-      - btagger: 'DL1dv01'
-        btagWP: 'Continuous'
-        generator: 'autoconfig'
-        minPt: 25000.
-      # GN2 tagger legacy WP
-      - btagger: 'GN2v00LegacyWP'
-        btagWP: 'FixedCutBEff_85'
-        generator: 'autoconfig'
-        minPt: 25000.0
-        bTagCalibFile : /cvmfs/atlas.cern.ch/repo/sw/database/GroupData/xAODBTaggingEfficiency/13p6TeV/2023-22-13p6TeV-MC21-CDI_Test_2023-08-1_v1.root
-      - btagger: 'GN2v00LegacyWP'
-        btagWP: 'FixedCutBEff_77'
-        generator: 'autoconfig'
-        minPt: 25000.0
-        bTagCalibFile : /cvmfs/atlas.cern.ch/repo/sw/database/GroupData/xAODBTaggingEfficiency/13p6TeV/2023-22-13p6TeV-MC21-CDI_Test_2023-08-1_v1.root
-      - btagger: 'GN2v00LegacyWP'
-        btagWP: 'FixedCutBEff_70'
-        generator: 'autoconfig'
-        minPt: 25000.0
-        bTagCalibFile : /cvmfs/atlas.cern.ch/repo/sw/database/GroupData/xAODBTaggingEfficiency/13p6TeV/2023-22-13p6TeV-MC21-CDI_Test_2023-08-1_v1.root
-      - btagger: 'GN2v00LegacyWP'
-        btagWP: 'FixedCutBEff_60'
-        generator: 'autoconfig'
-        minPt: 25000.0
-        bTagCalibFile : /cvmfs/atlas.cern.ch/repo/sw/database/GroupData/xAODBTaggingEfficiency/13p6TeV/2023-22-13p6TeV-MC21-CDI_Test_2023-08-1_v1.root
+        minPt: 20000.0
+        bTagCalibFile : /cvmfs/atlas.cern.ch/repo/sw/database/GroupData/xAODBTaggingEfficiency/13p6TeV/2021-22-13TeV-MC21-CDI_GN2v01_Test_smooth.root
+        noEffSF : True
 
     # Add tag scores to the output
     BTaggingScores:
-      - bTagCalibFile : /cvmfs/atlas.cern.ch/repo/sw/database/GroupData/xAODBTaggingEfficiency/13p6TeV/2023-22-13p6TeV-MC21-CDI_Test_2023-08-1_v1.root
-        taggerName: 'GN2v00LegacyWP'
-        minPt: 25000.0
+      - bTagCalibFile : /cvmfs/atlas.cern.ch/repo/sw/database/GroupData/xAODBTaggingEfficiency/13p6TeV/2021-22-13TeV-MC21-CDI_GN2v01_Test_smooth.root
+        taggerName: 'GN2v01'
+        minPt: 20000.0
         saveAllProbabilities: True
         eventSelection : ''
     # Add SV Mass to the output
     SVMass: {}
       
-
-PerEventSF:
-  - algoName: 'btagSFCalc_DL1dv01_FixedCutBEff_85'
-    particles: 'AnaJets'
-    objectSF: 'ftag_effSF_DL1dv01_FixedCutBEff_85_%SYS%'
-    eventSF: 'btagSF_DL1dv01_FixedCutBEff_85_%SYS%'
-  - algoName: 'btagSFCalc_DL1dv01_FixedCutBEff_77'
-    particles: 'AnaJets'
-    objectSF: 'ftag_effSF_DL1dv01_FixedCutBEff_77_%SYS%'
-    eventSF: 'btagSF_DL1dv01_FixedCutBEff_77_%SYS%'
-  - algoName: 'btagSFCalc_DL1dv01_FixedCutBEff_70'
-    particles: 'AnaJets'
-    objectSF: 'ftag_effSF_DL1dv01_FixedCutBEff_70_%SYS%'
-    eventSF: 'btagSF_DL1dv01_FixedCutBEff_70_%SYS%'
-  - algoName: 'btagSFCalc_DL1dv01_FixedCutBEff_60'
-    particles: 'AnaJets'
-    objectSF: 'ftag_effSF_DL1dv01_FixedCutBEff_60_%SYS%'
-    eventSF: 'btagSF_DL1dv01_FixedCutBEff_60_%SYS%'
-  - algoName: 'btagSFCalc_DL1dv01_Continuous'
-    particles: 'AnaJets'
-    objectSF: 'ftag_effSF_DL1dv01_Continuous_%SYS%'
-    eventSF: 'btagSF_DL1dv01_Continuous_%SYS%'
-
-
 Electrons:
   - containerName: 'AnaElectrons'
     crackVeto: True
@@ -108,6 +68,7 @@ Electrons:
     PtEtaSelection:
         minPt: 25000.0
         maxEta: 2.47
+        useClusterEta: True
 
 # Photons:
 #   - containerName: 'AnaPhotons'
@@ -124,6 +85,7 @@ Electrons:
 #     PtEtaSelection:
 #         minPt: 25000.0
 #         maxEta: 2.5
+#         useClusterEta: True
 
 Muons:
   - containerName: 'AnaMuons'
@@ -151,6 +113,17 @@ Muons:
 GeneratorLevelAnalysis: {}
 
 # containerName and postfix must be defined in their respective blocks
+OverlapRemoval:
+  inputLabel: 'preselectOR'
+  outputLabel: 'passesOR'
+  # Format should follow Object: '<containerName>.<postfix>'
+  jets: 'AnaJets.baselineJvt'
+  #taus: 'AnaTauJets.tight'
+  electrons: 'AnaElectrons.tight'
+  #photons: 'AnaPhotons.tight'
+  muons: 'AnaMuons.tight'
+
+# containerName and postfix must be defined in their respective blocks
 MissingET:
   - containerName: 'AnaMET'
     # Format should follow Object: '<containerName>.<postfix>'
@@ -160,16 +133,6 @@ MissingET:
     #photons: 'AnaPhotons.tight&&selectPtEta'
     muons: 'AnaMuons.tight'
 
-# containerName and postfix must be defined in their respective blocks
-OverlapRemoval:
-  inputLabel: 'preselectOR'
-  outputLabel: 'passesOR'
-  # Format should follow Object: '<containerName>.<postfix>'
-  jets: 'AnaJets.jvt'
-  #taus: 'AnaTauJets.tight'
-  electrons: 'AnaElectrons.tight'
-  #photons: 'AnaPhotons.tight'
-  muons: 'AnaMuons.tight'
 
 ObjectCutFlow:
   - containerName: 'AnaElectrons'
@@ -181,12 +144,12 @@ ObjectCutFlow:
   # - containerName: 'AnaPhotons'
   #   selectionName: 'tight'
   - containerName: 'AnaJets'
-    selectionName: 'jvt'
+    selectionName: 'baselineJvt'
 
 Thinning:
   - containerName: 'AnaJets'
     outputName: 'OutJets'
-    selectionName: 'jvt'
+    selectionName: 'baselineJvt'
   - containerName: 'AnaElectrons'
     outputName: 'OutElectrons'
     selectionName: 'tight||loose'
@@ -217,7 +180,7 @@ Trigger:
     triggerChainsPerYear:
         '2015':
             - 'HLT_e24_lhmedium_L1EM20VH || HLT_e60_lhmedium || HLT_e120_lhloose'
-            - 'HLT_mu20_iloose_L1MU15 || HLT_mu50'
+            - 'HLT_mu20_iloose_L1MU15 || HLT_mu40'
         '2016':
             - 'HLT_e26_lhtight_nod0_ivarloose || HLT_e60_lhmedium_nod0 || HLT_e140_lhloose_nod0'
             - 'HLT_mu26_ivarmedium || HLT_mu50'
@@ -237,66 +200,77 @@ Trigger:
     electronIsol: 'Tight_VarRad'
     muonID: 'Medium'
 
-
 EventSelection:
-  - electrons: 'AnaElectrons.loose'
+  - electrons: 'AnaElectrons.tight'
     muons: 'AnaMuons.tight'
-    jets: 'AnaJets.jvt'
+    jets: 'AnaJets.baselineJvt'
     met: 'AnaMET'
     btagDecoration: 'ftag_select_DL1dv01_FixedCutBEff_85'
     noFilter: True
     cutFlowHistograms: True
     selectionCutsDict:
      'SUBcommon': |
-       JET_N_BTAG GN2v00LegacyWP:FixedCutBEff_85 >= 1
-       JET_N 25000 >= 4
+       JET_N_BTAG GN2v01:FixedCutBEff_85 >= 1
+       JET_N 20000 == 4
        MET >= 20000
        SAVE
      'ejets': |
        IMPORT SUBcommon
        EL_N 25000 >= 1
-       MU_N 20000 == 0
+       MU_N 25000 == 0
        SAVE
      'mujets': |
        IMPORT SUBcommon
-       EL_N 20000 == 0
+       EL_N 25000 == 0
        MU_N 25000 >= 1
        SAVE
+     'emu': |
+       EL_N 25000 == 1
+       MU_N 25000 == 1
+       JET_N 20000 >= 2
+       SAVE
      'dielec': |
-       EL_N 20000 == 2
-       MU_N 20000 == 0
-       MLL >= 10000
+       EL_N 28000 >= 1
+       EL_N 18000 == 2
+       MU_N 18000 == 0
+       OS
+       MLL > 81000
+       MLL < 101000
        SAVE
      'dimuon': |
-       EL_N 20000 == 0
-       MU_N 20000 == 2
-       MLL >= 10000
+       MU_N 28000 >= 1
+       MU_N 18000 == 2
+       EL_N 18000 == 0
+       OS
+       MLL > 81000
+       MLL < 101000
        SAVE
 
 KLFitter:
   - containerName: 'KLFitterResult'
     electrons: 'AnaElectrons.tight'
     muons: 'AnaMuons.tight'
-    jets: 'AnaJets.jvt'
+    jets: 'AnaJets.baselineJvt'
     met: 'AnaMET'
     likelihoodType: 'ttbar'
-    jetSelectionMode: 'kBtagPriorityFourJets'
-    btaggingMethod: 'kWorkingPoint'
-    btagger: 'DL1dv01'
-    btagWP: 'FixedCutBEff_77'
+    jetSelectionMode: 'kLeadingFour'
+    btaggingMethod: 'kNoTag'
+    bTagCDIFile: /cvmfs/atlas.cern.ch/repo/sw/database/GroupData/xAODBTaggingEfficiency/13p6TeV/2021-22-13TeV-MC21-CDI_GN2v01_Test_smooth.root
+    btagger: 'GN2v01'
+    btagWP: 'FixedCutBEff_85'
     selectionRegionsConfig: 'selectionName:pass_ejets, leptonType: kElectron;selectionName:pass_mujets, leptonType: kMuon'
 
 SpaNet:
   - topology: 'TtbarLjets'
     electrons: 'AnaElectrons.tight'
     muons: 'AnaMuons.tight'
-    jets: 'AnaJets.jvt'
+    jets: 'AnaJets.baselineJvt'
     met: 'AnaMET'
     eventSelection: 'pass_ejets_%SYS%||pass_mujets_%SYS%'
   - topology: 'TtbarLjetsNu'
     electrons: 'AnaElectrons.tight'
     muons: 'AnaMuons.tight'
-    jets: 'AnaJets.jvt'
+    jets: 'AnaJets.baselineJvt'
     met: 'AnaMET'
     eventSelection: 'pass_ejets_%SYS%||pass_mujets_%SYS%'
 
@@ -307,7 +281,9 @@ Bootstraps:
 # After configuring each container, many variables will be saved automatically.
 Output:
   treeName: 'reco'
-  vars: [OutJets_NOSYS.HadronConeExclTruthLabelID -> jet_TruthFlavour, OutJets_NOSYS.HadronConeExclExtendedTruthLabelID -> jet_TruthFlavouExtended]
+  vars: [OutJets_NOSYS.HadronConeExclTruthLabelID -> jet_TruthFlavour, OutJets_NOSYS.HadronConeExclExtendedTruthLabelID -> jet_TruthFlavouExtended,
+  KLFitterResult_%SYS%.model_bhad_jetIndex -> b_from_tophad_jetIndex_%SYS%, KLFitterResult_%SYS%.model_blep_jetIndex -> b_from_toplep_jetIndex_%SYS%,
+  KLFitterResult_%SYS%.model_lq1_jetIndex -> jet1_from_W_jetIndex_%SYS%, KLFitterResult_%SYS%.model_lq2_jetIndex -> jet2_from_W_jetIndex_%SYS%]
   metVars: []
   containers:
       # Format should follow: '<suffix>:<output container>'
@@ -319,3 +295,37 @@ Output:
       met_: 'AnaMET'
       klfitter_: 'KLFitterResult'
       '': 'EventInfo'
+
+AddConfigBlocks:
+    - modulePath: 'TopCPToolkit.ExtraParticleDecorationConfig'
+      functionName: 'ExtraParticleDecorationConfig'
+      algName: 'ExtraParticleDecoration'
+      pos: 'Output'
+    - modulePath: 'TopCPToolkit.KLFitterConfig'
+      functionName: 'KLFitterConfig'
+      algName: 'KLFitter'
+      pos: 'Output'
+    - modulePath: 'TopCPToolkit.TopSpaNetConfig'
+      functionName: 'TopSpaNetConfig'
+      algName: 'SpaNet'
+      pos: 'Output'
+    - modulePath: 'TopCPToolkit.particleLevelConfig'
+      functionName: 'particleLevelConfig'
+      algName: 'ParticleLevel'
+      pos: 'Output'
+    - modulePath: 'TopCPToolkit.truthConfig'
+      functionName: 'truthConfig'
+      algName: 'PartonHistory'
+      pos: 'Output'
+    - modulePath: 'TopCPToolkit.TtbarNNLORecursiveRewConfig'
+      functionName: 'TtbarNNLORecursiveRewConfig'
+      algName: 'TtbarNNLO'
+      pos: 'Output'
+    - modulePath: 'TopCPToolkit.BTagScoresConfig'
+      functionName: 'BTagScoresConfig'
+      algName: 'BTaggingScores'
+      superBlocks: 'Jets'
+    - modulePath: 'TopCPToolkit.SVMassConfig'
+      functionName: 'SVMassConfig'
+      algName: 'SVMass'
+      superBlocks: 'Jets'

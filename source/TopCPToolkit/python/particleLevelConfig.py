@@ -1,6 +1,5 @@
-from AnaAlgorithm.DualUseConfig import createAlgorithm, addPrivateTool
-from AnaAlgorithm.AnaAlgSequence import AnaAlgSequence
 from AnalysisAlgorithmsConfig.ConfigBlock import ConfigBlock
+from AnalysisAlgorithmsConfig.ConfigAccumulator import DataType
 
 particlelevel_branch_mappings = {
     "electrons": [
@@ -62,7 +61,7 @@ class particleLevelConfig(ConfigBlock):
     """ConfigBlock for particle-level objects"""
 
     def __init__(self):
-        super(particleLevelConfig, self).__init__('particleLevel')
+        super(particleLevelConfig, self).__init__()
         self.addOption('useTruthElectrons', True, type=bool)
         self.addOption('useTruthMuons', True, type=bool)
         self.addOption('useTruthPhotons', False, type=bool)
@@ -92,6 +91,9 @@ class particleLevelConfig(ConfigBlock):
         self.addOption('ljetCollection', None, type=str)
     
     def makeAlgs(self, config):
+
+        if config.dataType() is DataType.Data: return
+
         alg = config.createAlgorithm("top::ParticleLevelAlg", "TopParticleLevel")
         alg.useTruthElectrons  = self.useTruthElectrons
         alg.useTruthMuons      = self.useTruthMuons
@@ -150,11 +152,7 @@ class particleLevelConfig(ConfigBlock):
     
     def createAndFillOutputContainer(self, config, container, map_key, isMET=False):
         # create the output container for that object collection
-        if not isMET:
-            config.setSourceName(container, container)
-            config.addOutputContainer(container, container)
-        else:
-            _ = config.writeName(container, isMet=True)
+        _ = config.writeName(container, isMet=isMET)
 
         # loop over branch mappings
         for mapping in particlelevel_branch_mappings[map_key]:

@@ -11,6 +11,7 @@
 #include <xAODEgamma/ElectronContainer.h>
 #include <xAODMuon/MuonContainer.h>
 #include <xAODJet/JetContainer.h>
+#include <xAODTruth/TruthParticleContainer.h>
 #include <xAODMissingET/MissingETContainer.h>
 #include <xAODEventInfo/EventInfo.h>
 
@@ -35,6 +36,12 @@ namespace top {
     CP::SysReadHandle<xAOD::JetContainer> m_truthJetsHandle {
       this, "truthJets", "", "the truthjet container to use"
     };
+    CP::SysReadHandle<xAOD::TruthParticleContainer> m_truthElectronsHandle {
+      this, "truthElectrons", "", "the electron container to use"
+    };
+    CP::SysReadHandle<xAOD::TruthParticleContainer> m_truthMuonsHandle {
+      this, "truthMuons", "", "the muon container to use"
+    };
     CP::SysReadSelectionHandle m_jetSelection {
       this, "jetSelection", "", "the selection on the input jets"
     };
@@ -52,12 +59,22 @@ namespace top {
     CP::SysWriteDecorHandle<float> m_truth_to_truth_jet_closest_dR {
       this, "truth_to_truth_jet_closest_dR", "truth_to_truth_jet_closest_dR_%SYS%", "dR between the matched truth jet and its closest truth jet"
     };
+    CP::SysWriteDecorHandle<bool> m_has_truth_lepton {
+      this, "has_truth_lepton", "has_truth_lepton_%SYS%", "reco jet has truth lepton at dR < 0.4"
+    };
+    
+    CP::SysWriteDecorHandle<float> m_overlapping_truth_lepton_pt {
+      this, "overlapping_truth_lepton_pt", "overlapping_truth_lepton_pt_%SYS%", "pt of the overlapping truth lepton"
+    };
+    
     
     float m_criticalDR = 0.3;
+    float m_criticalDR_leptons = 0.4;
     
     float get_minDR_reco(TLorentzVector jet1, unsigned int ijet1, ConstDataVector<xAOD::JetContainer> selected_jets);
     float get_minDR_truth(const xAOD::JetContainer &truth_jets, int truth_jet_index);
     int get_matched_truth(TLorentzVector reco_jet, const xAOD::JetContainer &truth_jets);
+    bool find_close_lepton(TLorentzVector& reco_jet, const xAOD::TruthParticleContainer &truth_electrons, const xAOD::TruthParticleContainer &truth_muons, double& overlapping_truth_lepton_pt);
     
   };
 

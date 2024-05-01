@@ -437,7 +437,7 @@ You can find a skeleton of that config block in [source/TopCPToolkit/python/Tuto
 
 ??? success "Solution"
     The config block is a class `TutorialConfig`, which inherits from `ConfigBlock`.
-    It is named `TopCPToolkitTutorial` by default, and is used to set up an instance of the `top::TutorialAlg` (here called `tutorialStuff`).
+    It is used to set up an instance of the `top::TutorialAlg` (here called `tutorialStuff`).
 
     The config block itself currently has two options: a string `electrons`, which is not set by default, and will be used for the algorithm; and a completely unrelated boolean `silliness`, which prints out a message if turned on.
 
@@ -495,14 +495,20 @@ This could be left open to the user, who could map the decorations onto branches
 
 ### Connecting to YAML
 
-!!! warning
-    To be filled at a later stage!
+Look at the very last part of `reco.yaml`.
+You'll find the special `AddConfigBlocks:` block, which is also documented [here](../starting/analysis.md#registering-new-blocks-directly-in-the-yaml-config-since-analysisbase-24240).
+Here we can connect our python config block with a custom name to use in our YAML config file, via the property `algName`.
 
-    For now, just add the following lines at the bottom of `commonAlgoConfig.py`:
-    ```python
-    from TopCPToolkit.TutorialConfig import TutorialConfig
-    config.addAlgConfigBlock(algName='Tutorial',
-                             alg=TutorialConfig, pos='Output')
+!!! example "Exercise"
+    Add the `TutorialConfig` block to the YAML, under the custom name "Tutorial".
+
+??? success "Solution"
+    Add the following list element to `AddConfigBlocks:`:
+    ```yaml
+    - modulePath: 'TopCPToolkit.TutorialConfig'
+      functionName: 'TutorialConfig'
+      algName: 'Tutorial'
+      pos: 'Output'
     ```
 
 We can now set up our config block in the `reco.yaml` file we've been using so far.

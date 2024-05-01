@@ -19,3 +19,13 @@ Output:
       '': 'EventInfo'
       'Ttbar_': 'TopPartonHistoryTtbar'
       'TtbarLight_': 'TopPartonHistoryTtbarLight'
+
+AddConfigBlocks:
+    - modulePath: 'TopCPToolkit.truthConfig'
+      functionName: 'truthConfig'
+      algName: 'PartonHistory'
+      pos: 'Output'
+    - modulePath: 'TopCPToolkit.TtbarNNLORecursiveRewConfig'
+      functionName: 'TtbarNNLORecursiveRewConfig'
+      algName: 'TtbarNNLO'
+      pos: 'Output'

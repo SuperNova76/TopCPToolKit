@@ -3,7 +3,7 @@ from AnalysisAlgorithmsConfig.ConfigBlock import ConfigBlock
 class SVMassConfig(ConfigBlock):
 
     def __init__ (self, containerName) :
-        super (SVMassConfig, self).__init__ (containerName)
+        super (SVMassConfig, self).__init__()
         self.containerName = containerName
         self.addOption('eventSelection', '', type=str)
 

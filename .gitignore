@@ -8,3 +8,5 @@ compile_commands.json
 **/.asetup.save
 samples/*
 AthSummary.txt
+*__pycache__*
+*.tar.gz

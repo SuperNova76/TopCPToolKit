@@ -7,7 +7,7 @@ class TtbarNNLORecursiveRewConfig(ConfigBlock):
     """ConfigBlock for ttbar NNLO reweighting algorithms"""
 
     def __init__(self):
-        super(TtbarNNLORecursiveRewConfig, self).__init__('RunTtbarNNLORecursiveRewAlg')
+        super(TtbarNNLORecursiveRewConfig, self).__init__()
         self.addOption('sampleID', 'AutoConfig', type=str)
         self.addOption('reweightType', '2D', type=str)
         self.addOption('reweightPath', 'dev/AnalysisTop/TTbarNNLOReweighter', type=str)

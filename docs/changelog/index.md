@@ -3,12 +3,40 @@
 ## TopCPToolkit releases
 
 ### Upcoming release
-
-- [issue #90](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/90): reduce the large memory footprint
-- [issue #93](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/93): prepare a tutorial
 - [issue #94](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/94): add algorithm for NuFlows reconstruction
-- [issue #100](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/100): deal with the correct ordering of JVT and OR
+- [issue #125](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/125): Add a tutorial on deploying trained ML models for inference
+
+### 2.8.0 <small>April 22, 2024</small>
+- We run on AB 25.2.7
+- [issue #93](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/93): prepare a tutorial
 - [issue #101](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/101): adapt to the new btagging event-wise SF
+- [issue #122](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/122): adding VGammaORTool as a new Algorithm
+- [issue #123](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/123): Cmake export compile commands should be enabled by default
+- [issue #124](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/124): Pass the bTaggingMethod option in KLFitterConfig to KLFitterAlg
+- [issue #126](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/126): Add the option to run with EL::DirectDriver
+- [issue #127](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/127): Add photon components to event-wise leptonSF
+- [issue #128](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/128): Fix behaviour of Cutbookkeepers in the python version
+
+### 2.7.0 <small>April 2, 2024</small>
+- We run on AB 25.2.5
+- [issue #90](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/90): reduce the large memory footprint
+- [issue #100](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/100): deal with the correct ordering of JVT and OR
+- [issue #105](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/105): sort KLFitter inputs by pT
+- [issue #106](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/106): clearer error message when YAML config file is not found
+- [issue #107](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/107): update to new JVT selection names
+- [issue #108](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/108): more data tests for the CI
+- [issue #109](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/109): new algorithm for FakeBkgTools
+- [issue #110](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/110): various minor updates to the docs
+- [issue #111](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/111): improve ONNX support
+- [issue #112](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/112): new way to add custom blocks directly in the YAML config
+- [issue #114](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/114): improvements to the global trigger config
+- [issue #115](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/115): save information about e-tags in the output metadata
+- [issue #116](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/116): move to central GRLs
+- [issue #117](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/117): improve analysis at particle-level
+- [issue #120](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/120): new algorithm for Jet Reclustering
+
+### 2.6.2 <small>March 29, 2024</small>
+- For internal use only!
 
 ### 2.6.1 <small>February 16, 2024</small>
 - We run on AB 24.2.41
@@ -22,7 +50,6 @@
 - [issue #98](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/98): document the declaration of blocks in YAML
 - [issue #102](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/102): allow to run NNLO reweighting in nominal-only mode
 - [issue #103](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/103): compatibility with AthAnalysis
-
 
 ### 2.5.0 <small>January 19, 2024</small>
 - We run on AB 24.2.37
@@ -96,9 +123,7 @@
 - [issue #52](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/52): simplify the output structure and store metadata
 - [issue #53](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/53): adapt to single-file output also on the Grid
 
-
 ### 1.6.0 <small>October 10, 2023</small>
-
 - We run on AB 24.2.25
 - [issue #31](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/31): algorithm to generate statistical bootstraps
 - [issue #38](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/38): migration of the event selection algorithms to Athena
@@ -107,15 +132,12 @@
 - [issue #41](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/41): fix SPA-Net CI tests
 
 ### 1.5.0 <small>September 26, 2023</small>
-
 - We run on AB 24.2.23
 - [issue #30](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/30): object- and event-wise cutflows
 - [issue #35](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/35): new model for SPA-Net, ttbar l+jets with neutrino regression
 - [issue #37](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/37): more FAQ and documentation for cutflows/sum-of-weights
 
-
 ### 1.4.0 <small>September 17, 2023</small>
-
 - We run on AB 24.2.22
 - [issue #26](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/26): read MC campaign from FileMetaData
 - [issue #27](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/27): allow running on PHYSLITE
@@ -124,7 +146,6 @@
 - [issue #33](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/33): add the new `SelectionNameSvc`
 
 ### 1.3.0 <small>August 28, 2023</small>
-
 - We run on AB 24.2.19
 - [issue #18](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/18): minor update to docs (`noEffSF` option, MET)
 - [issue #19](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/19): added text-based event selection
@@ -135,14 +156,12 @@
 - [issue #25](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/25): add CI tests on data
 
 ### 1.2.0 <small>August 18, 2023</small>
-
 - We run on AB 24.2.18
 - [issue #5](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/5): refactor `EventInfo` variables, now relying on `addOutputVar`
 - [issue #7](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/7): introduced continuous integration tests covering compilation and running of the code, as well as simple output validation
 - [issue #17](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/17): centralised the event-level f/JVT SFs
 
 ### 1.1.0 <small>August 17, 2023</small>
-
 - [issue #1](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/1): fixed memory leaks in TopPartons and TopParticleLevel
 - [issue #2](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/2): completed the documentation for "Settings"
 - [issue #3](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/3): added a FAQ about Run 3 muon trigger settings
@@ -152,5 +171,4 @@
 - [issue #13](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/13): minor improvement, using `ANA_CHECK` and `ANA_MSG`
 
 ### 1.0.0 <small>August 11, 2023</small>
-
 - First release for early testing

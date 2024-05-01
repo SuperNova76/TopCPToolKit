@@ -10,7 +10,7 @@ and similarly to `makeTruthSequence` and `makeParticleLevelSequence`.
 
 These methods are defined in [commonAlgoConfig.py](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/commonAlgoConfig.py), and you can see that they perform the following actions:
 
-- create `AnaAlgSequence` and `ConfigSequence` objects, a (blank) chain of algorithms to be executed, and the `ConfigFactory` to help populate them;
+- create `AlgSequence` and `ConfigSequence` objects, a (blank) chain of algorithms to be executed, and the `ConfigFactory` to help populate them;
 - initialise the [`CommonServicesConfig`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py), which
     - checks whether we are running on data: if we are, we do not need to consider systematics or truth information!
     - creates an instance of the `CP::SystematicsSvc`, which will record and handle all the systematics that we need, based on the objects that we deal with;
@@ -29,7 +29,6 @@ Schematically, it looks like this:
 ```python
 from AnalysisAlgorithmsConfig.ConfigSequence import ConfigSequence
 from AnalysisAlgorithmsConfig.ConfigAccumulator import ConfigAccumulator
-from TopCPToolkit import metaConfig, commonAlgoConfig
 
 def makeRecoConfiguration(flags, algSeq, configSeq, noFilter=False):
 
@@ -52,8 +51,6 @@ This particular config block is defined in [ElectronAnalyisConfig.py](https://ac
 
 The second import creates an instance of `ConfigAccumulator`, which (as the name suggests) will read the chain of config blocks and accumulate it into a sequence of algorithms.
 It communicates all the relevant metadata between blocks during the configuration, and keeps track of all the input and output containers needed at each stage.
-
-The two imports from TopCPToolkit are generally quite useful: `metaConfig` allows easy access to metadata (such as data type or MC campaign), while `commonAlgoConfig` contains standard calls for event cleaning, PMG MC weights or automatic PRW settings.
 
 ### Creating the output ntuple
 
