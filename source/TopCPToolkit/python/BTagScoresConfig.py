@@ -1,4 +1,5 @@
 from AnalysisAlgorithmsConfig.ConfigBlock import ConfigBlock
+from AthenaConfiguration.Enums import LHCPeriod
 
 class BTagScoresConfig(ConfigBlock):
 
@@ -31,7 +32,7 @@ class BTagScoresConfig(ConfigBlock):
         alg.selectionTool.TaggerName = self.taggerName
         alg.selectionTool.OperatingPoint = 'Continuous' # This is needed to get the jet probabilities
         alg.selectionTool.JetAuthor = jetCollection
-        alg.selectionTool.FlvTagCutDefinitionsFileName = self.bTagCalibFile
+        alg.selectionTool.FlvTagCutDefinitionsFileName = bTagCalibFile
         alg.selectionTool.MinPt = self.minPt
         
         config.addOutputVar('AnaJets', 'btagScore_%SYS%', 'btagScore_'+self.taggerName)
