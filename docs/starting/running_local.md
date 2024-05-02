@@ -105,6 +105,17 @@ For example:
 - `"^(?=.*(?:JER|PRW)|$).*"` will **select only those systematics that contains** "JER" (jet energy resolution) or "PRW" (pileup reweighting) in their name, or the empty string (the `?` at the end) corresponding to nominal.
 - `"(?:(?!JER|PRW).)*"` will **veto any systematic that contains** "JER" or "PRW" in their name, but still accept the empty string.
 
+Since AnalysisBase 25.2.9, a user friendly systematics category option `onlySystematicsCategories` [has been introduced](https://gitlab.cern.ch/atlas/athena/-/merge_requests/70864) to [`CommonServicesConfig`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py) that allows enabling groups of systematics using a list of keywords. Recognized keywords are: `jets`, `electrons`, `muons`, `photons`, `taus`, `met`, `ftag`, `event`. For example, the following config should set only JER, JES, JVT, FTag and MET, plus nominal/NOSYS:
+```
+CommonServices:
+  runSystematics: True
+  systematicsHistogram: 'listOfSystematics'
+  onlySystematicsCategories:
+    - jets
+    - ftag
+    - met
+```
+
 !!! warning
     The CP algorithms always require the nominal variation (empty string, turned into "NOSYS" internally) to be available within the list of systematics.
 

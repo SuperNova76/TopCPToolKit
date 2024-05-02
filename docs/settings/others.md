@@ -112,6 +112,10 @@ See [Registering new blocks](../starting/analysis.md#registering-new-blocks-dire
 `filterSystematics`
 :   a regexp string against which the systematics names will be matched. Only positive matches are retained and used in the evaluation of the various algorithms.
 
+`onlySystematicsCategories`
+:   a list of strings defining categories of systematics to enable (only recommended for studies / partial ntuple productions). Choose amongst: `jets`, `electrons`, `muons`, `photons`, `taus`, `met`, `ftag`, `event`.
+This option is overridden by `filterSystematics`.
+
     !!! tip
         See the [guide](../starting/running_local.md#filtering-systematics) on how to use the systematics filter.
 
