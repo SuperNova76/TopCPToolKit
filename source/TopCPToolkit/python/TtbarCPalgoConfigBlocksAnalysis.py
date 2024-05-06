@@ -232,15 +232,15 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics=False
     # TODO: give it a factory when moving to Athena
     from TopCPToolkit.ExtraParticleDecorationConfig import ExtraParticleDecorationConfig
     if use_electrons:
-        cfg = ExtraParticleDecorationConfig('El')
+        cfg = ExtraParticleDecorationConfig()
         cfg.setOptionValue('particles', 'AnaElectrons')
         configSeq.append(cfg)
     if use_muons:
-        cfg = ExtraParticleDecorationConfig('Mu')
+        cfg = ExtraParticleDecorationConfig()
         cfg.setOptionValue('particles', 'AnaMuons')
         configSeq.append(cfg)
     if use_jets:
-        cfg = ExtraParticleDecorationConfig('Jet')
+        cfg = ExtraParticleDecorationConfig()
         cfg.setOptionValue('particles', 'AnaJets')
         configSeq.append(cfg)
 
