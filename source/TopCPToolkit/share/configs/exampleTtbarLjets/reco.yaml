@@ -167,12 +167,9 @@ LeptonSF:
     lepton_postfix: 'tight'
 
 ExtraParticleDecoration:
-   - name: 'El'
-     particles: 'AnaElectrons'
-   - name: 'Mu'
-     particles: 'AnaMuons'
-   - name: 'Jets'
-     particles: 'AnaJets'
+   - particles: 'AnaElectrons'
+   - particles: 'AnaMuons'
+   - particles: 'AnaJets'
 
 Trigger:
     triggerChainsPerYear:
