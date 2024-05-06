@@ -87,11 +87,6 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics=False
 
         configSeq += makeConfig ('Jets.JVT', containerName='AnaJets')
 
-        configSeq += makeConfig ('Jets.PtEtaSelection', containerName='AnaJets')
-        configSeq.setOptionValue ('.selectionDecoration', 'selectPtEta')
-        configSeq.setOptionValue ('.minPt', 25e3)
-        configSeq.setOptionValue ('.maxEta', 2.5)
-
         # b-tagging
         for WP in WPs:
             configSeq += makeConfig ('Jets.FlavourTagging', containerName='AnaJets')
@@ -102,6 +97,11 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics=False
             configSeq.setOptionValue ('.btagWP', WP)
 
         outputContainers['jet_'] = 'OutJets'
+
+        configSeq += makeConfig ('Jets.PtEtaSelection', containerName='AnaJets')
+        configSeq.setOptionValue ('.selectionDecoration', 'selectPtEta')
+        configSeq.setOptionValue ('.minPt', 25e3)
+        configSeq.setOptionValue ('.maxEta', 2.5)
 
     # TODO VR track jets b-tagging -- not yet in CDI ?
     if use_track_jets:
