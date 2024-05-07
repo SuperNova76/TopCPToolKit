@@ -153,7 +153,7 @@ def compareEvents(key, branches, ref_file, new_file):
     for event_idx in range(ref_events):
         ref_tree.GetEntry(event_idx)
         # check that the event number is in both trees, otherwise we will print many warnings below...
-        new_tree.GetEntryWithIndex(getattr(ref_tree, "eventNumber"))
+        new_tree.GetEntry( new_tree.GetEntryNumberWithIndex(getattr(ref_tree, "eventNumber")) )
         if getattr(ref_tree, "eventNumber") != getattr(new_tree, "eventNumber"):
             logger.warning(f"{orange_code}  Entry with eventNumber {getattr(ref_tree,'eventNumber')} doesn't exist in the new file. Skipping.{reset_code}")
             continue

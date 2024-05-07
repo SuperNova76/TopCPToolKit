@@ -1,7 +1,12 @@
 ## Config blocks
 
-### [TriggerAnalysisBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TriggerAnalysisAlgorithms/python/TriggerAnalysisConfig.py)
+### [TriggerAnalysisBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TriggerAnalysisAlgorithms/python/TriggerAnalysisConfig.py) / [TriggerAnalysisSFBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TriggerAnalysisAlgorithms/python/TriggerAnalysisSFConfig.py)
 Name in YAML: **Trigger**
+
+!!! note
+    The `ConfigFactory` name **Trigger** will actually schedule both the [TriggerAnalysisBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TriggerAnalysisAlgorithms/python/TriggerAnalysisConfig.py) and the [TriggerAnalysisSFBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TriggerAnalysisAlgorithms/python/TriggerAnalysisSFConfig.py) in the backend.
+    This is what is needed for most users, and there are ways of turning off the SF part as described below.
+    If you really need to access only one config block, you'll need to set them up yourself.
 
 `configName`
 :   name of the block config, e.g. `Trigger`.
