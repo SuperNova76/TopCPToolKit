@@ -63,11 +63,24 @@ Name in YAML: **TauJets**
 `rerunTruthMatching`
 :   whether to rerun truth matching (sets up an instance of [`CP::TauTruthMatchingAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TauAnalysisAlgorithms/Root/TauTruthMatchingAlg.cxx)). The default is `True`.
 
+`decorateTruth`
+:   whether to add tau truth information (pdgId, visible 4-momentum, hadronic origin, decay mode). The default is `False`. These decorations are also saved as output branches.
+
 !!! success "Registers the following variables:"
     - `pt`: tau-jet $p_\mathrm{T}$
     - `eta`: tau-jet $\eta$ (no systematics)
     - `phi`: tau-jet $\phi$ (no systematics)
     - `charge`: tau-jet charge (no systematics)
+    - `NNDecayMode`: decay mode classification (no systematics)
+
+!!! success "Additional variables toggled by `decorateTruth`"
+    - `truth_pt_vis`: visible $p_\mathrm{T}$ of the linked truth-tau (no systematics)
+    - `truth_eta_vis`: visible $\eta$ of the linked truth-tau (no systematics)
+    - `truth_phi_vis`: visible $\phi$ of the linked truth-tau (no systematics)
+    - `truth_m_vis`: visible mass of the linked truth-tau (no systematics)
+    - `truth_pdgId`: pdgId of the linked truth-tau (no systematics)
+    - `truth_IsHadronicTau`: whether the linked truth-tau decays hadronically (no systematics)
+    - `truth_DecayMode`: decay mode classification of the linked truth-tau  (no systematics)
 
 ### [TauWorkingPointConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TauAnalysisAlgorithms/python/TauAnalysisConfig.py)
 Name in YAML: **TauJets.WorkingPoint**
