@@ -52,6 +52,15 @@ def move_with_symlink_handling(inputfile, outputfile):
         print(f"Error moving file: {e}")
     return
 
+def check_output(file_path):
+    """
+    check if the given file exists
+    """
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"The file '{file_path}' was not successfully created, aborting.")
+    else:
+        return
+
 def run_job(sample_handler, output_stream_name, level_name, args, flags):
     job = ROOT.EL.Job()
     job.sampleHandler(sample_handler)
@@ -135,6 +144,8 @@ if __name__ == '__main__':
             pid = os.fork()
             if pid:
                 os.wait()
+                check_output(outfile)
+                check_output(histofile)
                 move_with_symlink_handling(outfile, recofile)
                 move_with_symlink_handling(histofile, 'only_histograms.root')
             else:
@@ -143,8 +154,10 @@ if __name__ == '__main__':
             pid = os.fork()
             if pid:
                 os.wait()
+                check_output(outfile)
                 move_with_symlink_handling(outfile, particlefile)
                 if args.no_reco:
+                    check_output(histofile)
                     move_with_symlink_handling(histofile, 'only_histograms.root')
             else:
                 run_job(sh, outputStreamName, 'particle', args, flags)
@@ -152,25 +165,33 @@ if __name__ == '__main__':
             pid = os.fork()
             if pid:
                 os.wait()
+                check_output(outfile)
                 move_with_symlink_handling(outfile, partonfile)
                 if args.no_reco and not args.particle:
+                    check_output(histofile)
                     move_with_symlink_handling(histofile, 'only_histograms.root')
             else:
                 run_job(sh, outputStreamName, 'parton', args, flags)
     else:
         if not args.no_reco:
             run_job(sh, outputStreamName, 'reco', args, flags)
+            check_output(outfile)
+            check_output(histofile)
             move_with_symlink_handling(outfile, recofile)
             move_with_symlink_handling(histofile, 'only_histograms.root')
         if args.particle:
             run_job(sh, outputStreamName, 'particle', args, flags)
+            check_output(outfile)
             move_with_symlink_handling(outfile, particlefile)
             if args.no_reco:
+                check_output(histofile)
                 move_with_symlink_handling(histofile, 'only_histograms.root')
         if args.parton:
             run_job(sh, outputStreamName, 'parton', args, flags)
+            check_output(outfile)
             move_with_symlink_handling(outfile, partonfile)
             if args.no_reco and not args.particle:
+                check_output(histofile)
                 move_with_symlink_handling(histofile, 'only_histograms.root')
 
     files_to_merge = ['only_histograms.root']
