@@ -5,6 +5,19 @@
 ### Upcoming release
 - [issue #94](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/94): add algorithm for NuFlows reconstruction
 - [issue #125](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/125): Add a tutorial on deploying trained ML models for inference
+- [issue #140](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/140): New algorithm for ttbar spin density matrix calculations
+
+### 2.9.0 <small>May 10, 2024</small>
+- We run on AB 25.2.10
+- [issue #121](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/121): Make a HowToExtendAnalysisTop-like skeleton for TopCPToolkit
+- [issue #129](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/129): Expose the option btagIgnoreOutOfValidityRange of BTaggingEfficiencyTool to KLFitterConfig
+- [issue #130](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/130): Creating the ExtraPhotonDecorationAlg
+- [issue #131](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/131): Document the new friendly systematics categories options
+- [issue #133](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/133): Silence harmless warnings from hadd
+- [issue #134](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/134): Fix BTagScoresConfig bugs
+- [issue #137](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/137): Bugfix for new release 25.2.9
+- [issue #138](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/138): Minor improvements to the docs and CI
+- [issue #139](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/139): Better failure discovery on the Grid
 
 ### 2.8.0 <small>April 22, 2024</small>
 - We run on AB 25.2.7
