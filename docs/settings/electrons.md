@@ -95,9 +95,6 @@ Name in YAML: **Electrons**
 `isolationCorrection`
 :   whether or not to perform isolation corrections (leakage corrections), i.e. set up an instance of [`CP::EgammaIsolationCorrectionAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/Root/EgammaIsolationCorrectionAlg.cxx).
 
-`trackSelection`
-:   whether or not to set up an instance of [`CP::AsgLeptonTrackSelectionAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/Root/AsgLeptonTrackSelectionAlg.cxx), with the recommended $d_0$ and $z_0\sin\theta$ cuts. The default is `True`.
-
 `recalibratePhyslite`
 :   whether to run the [`CP::EgammaCalibrationAndSmearingAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/Root/EgammaCalibrationAndSmearingAlg.cxx) on PHYSLITE derivations. The default is `True`.
 
@@ -121,6 +118,15 @@ Name in YAML: **Electrons.WorkingPoint**
 
 `postfix`
 :   a postfix to apply to decorations and algorithm names. Typically not needed here as `selectionName` is used internally.
+
+`trackSelection`
+:   whether or not to set up an instance of [`CP::AsgLeptonTrackSelectionAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/Root/AsgLeptonTrackSelectionAlg.cxx), with the recommended $d_0$ and $z_0\sin\theta$ cuts. The default is `True`.
+
+`maxD0Significance`
+:   maximum d0 significance used for the trackSelection. The default is 5.
+
+`maxDeltaZ0SinTheta`
+:   maximum z0sinTheta in mm used for the trackSelection. The default is 0.5 mm.
 
 `likelihoodWP`
 :   the ID WP (string) to use. Supported ID WPs: `TightLH`, `MediumLH`, `LooseBLayerLH`. 
