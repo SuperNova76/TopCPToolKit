@@ -72,8 +72,8 @@ Name in YAML: **Muons**
 `ptSelectionOutput`
 :   $p_\mathrm{T}$ cut to apply to calibrated muons, in MeV. The default is 3.0 GeV.
 
-`trackSelection`
-:   whether or not to set up an instance of [`CP::AsgLeptonTrackSelectionAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/Root/AsgLeptonTrackSelectionAlg.cxx), with the recommended $d_0$ and $z_0\sin\theta$ cuts. The default is `True`.
+`minPt`
+:   pT cut to apply to calibrated muons, in MeV. The default is 3.0 GeV.
 
 `recalibratePhyslite`
 :   whether to run the [`CP::EgammaCalibrationAndSmearingAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/Root/EgammaCalibrationAndSmearingAlg.cxx) on PHYSLITE derivations. The default is `True`.
@@ -83,6 +83,9 @@ Name in YAML: **Muons**
 
 `excludeNSWFromPrecisionLayers`
 :   whether to ignore NSW hits. Expert option, for testing purposes or to fix a crash with older derivations (p-tag < p5834). The default is `False`.
+
+`calibMode`
+:   calibration mode of the MuonCalibTool needed to turn on the sagitta bias corrections and to select the muon track calibration type (CB or ID+MS). The default is `correctData_CB`.
 
 !!! success "Registers the following variables:"
     - `pt`: muon $p_\mathrm{T}$
@@ -101,6 +104,15 @@ Name in YAML: **Muons.WorkingPoint**
 
 `postfix`
 :   a postfix to apply to decorations and algorithm names. Typically not needed here as `selectionName` is used internally.
+
+`trackSelection`
+:   whether or not to set up an instance of [`CP::AsgLeptonTrackSelectionAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/Root/AsgLeptonTrackSelectionAlg.cxx), with the recommended $d_0$ and $z_0\sin\theta$ cuts. The default is `True`.
+
+`maxD0Significance`
+:   maximum d0 significance used for the trackSelection. The default is 3.
+
+`maxDeltaZ0SinTheta`
+:   maximum Delta z0sinTheta in mm used for the trackSelection. The default is 0.5 mm.
 
 `quality`
 :   the ID WP (string) to use. Supported ID WPs: `Tight`, `Medium`, `Loose`, `LowPt`, `HighPt`.
