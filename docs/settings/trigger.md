@@ -14,6 +14,37 @@ Name in YAML: **Trigger**
 `triggerChainsPerYear`
 :   a dictionary with key (string) the year and value (list of strings) the trigger chains. You can also use `||` within a string to enforce an OR of triggers without looking up the individual triggers. Used for both trigger selection and SFs. The default is `{}` (empty dictionary).
 
+`multiTriggerChainsPerYear`
+:   a dictionary with key (string) a trigger set name and value a triggerChainsPerYear dictionary, following the previous convention. Relevant for analyses using different triggers in different categories, where the trigger global scale factors shouldn't be combined. The default is {} (empty dictionary).
+    Introduced since AnalysisBase 25.2.11
+
+    ??? success "Example"
+        If leading lepton pT>XX, check single lepton trigger / else check di-lepton trigger.
+        ```
+        multiTriggerChainsPerYear:
+            'SLT':
+                '2015':
+                    - 'HLT_mu26_ivarmedium'
+                '2016':
+                    - 'HLT_mu26_ivarmedium'
+                '2017':
+                    - 'HLT_mu26_ivarmedium'
+                '2018':
+                    - 'HLT_mu26_ivarmedium'
+            'DLT':
+                '2015':
+                    - 'HLT_2mu14'
+                '2016':
+                    - 'HLT_2mu14'
+                '2017':
+                    - 'HLT_2mu14'
+                '2018':
+                    - 'HLT_2mu14'
+        ```
+
+!!! warning
+    The option `triggerChainsPerYear` and `multiTriggerChainsPerYear` are mutually exclusive.
+
 `triggerChainsForSelection`
 :   a list of trigger chains (list of strings) to be used for trigger selection. Only set it if you need a different setup than for trigger SFs.
 The default is `[]` (empty list).
