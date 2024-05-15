@@ -19,7 +19,8 @@ namespace top {
     : EL::AnaAlgorithm(name, pSvcLocator)
     , m_transferFunctionsPath{"dev/AnalysisTop/KLFitterTFs/mc12a/akt4_LCtopo_PP6/"}
     , m_useBtagPriority{false}
-    , m_njetsRequirement{0} {
+    , m_njetsRequirement{0}
+    , m_btagging_eff_tool("",this) {
     // this we need for output container name hashes -- this should be replaced by CPAlgo functionality
     // use the postfix feature ? 
     declareProperty("LeptonType", m_leptonType = "kUndefined", "Define the lepton type");

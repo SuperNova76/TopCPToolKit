@@ -27,6 +27,9 @@ def makeRecoSequence(analysisName, flags, noSystematics=False, noFilter=False):
     except ModuleNotFoundError:
         raise Exception(f'The package and module for your --analysis could not be found: {analysisName}')
     try:
+        from AnaAlgorithm.DualUseConfig import isAthena, useComponentAccumulator
+        if isAthena and useComponentAccumulator:
+            return analysisModule.makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics, noFilter)
         analysisModule.makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics, noFilter)
     except AttributeError:
         raise Exception('The analysis you specified via --analysis does not have makeRecoConfiguration method implemented.'
@@ -38,17 +41,13 @@ def makeRecoSequence(analysisName, flags, noSystematics=False, noFilter=False):
 def makeTruthSequence(analysisName, flags, noSystematics=False):
     algSeq = AlgSequence()
 
-    if flags.Input.DataType is DataType.Data:
-        return algSeq
-    sysService = createService('CP::SystematicsSvc', 'SystematicsSvc', sequence=algSeq)
-    # we always want systematics!
-    sysService.sigmaRecommended = 1
+    configSeq = ConfigSequence()
+    factory = ConfigFactory()
 
-    # filter-out events without primary vertex
-    algSeq += createAlgorithm('CP::VertexSelectionAlg',
-                              'TruthPrimaryVertexSelectorAlg')
-    algSeq.TruthPrimaryVertexSelectorAlg.VertexContainer = 'PrimaryVertices'
-    algSeq.TruthPrimaryVertexSelectorAlg.MinVertices = 1
+    configSeq += factory.makeConfig('CommonServices')
+    # we always want systematics
+    configSeq.setOptionValue('.runSystematics', True)
+    configSeq.setOptionValue('.systematicsHistogram', 'listOfSystematicsPartonLevel')
 
     import importlib
     try:
@@ -56,22 +55,18 @@ def makeTruthSequence(analysisName, flags, noSystematics=False):
     except ModuleNotFoundError:
         raise Exception(f'The package and module for your --analysis could not be found: {analysisName}')
     try:
-        analysisModule.makeTruthConfiguration(flags, algSeq, noSystematics)
+        from AnaAlgorithm.DualUseConfig import isAthena, useComponentAccumulator
+        if isAthena and useComponentAccumulator:
+            return analysisModule.makeTruthConfiguration(flags, algSeq, configSeq, factory, noSystematics)
+        analysisModule.makeTruthConfiguration(flags, algSeq, configSeq, factory, noSystematics)
     except AttributeError:
         raise Exception('The analysis you specified via --analysis does not have makeTruthConfiguration method implemented.'
                         'This is needed to configure the CP algorithms')
-
-    # Add an histogram to keep track of all the systematic names
-    algSeq += createAlgorithm('CP::SysListDumperAlg', 'SystematicsPrinter')
-    algSeq.SystematicsPrinter.histogramName = 'listOfSystematicsPartonLevel'
 
     return algSeq
 
 def makeParticleLevelSequence(analysisName, flags, noSystematics=False, noFilter=False):
     algSeq = AlgSequence()
-
-    if flags.Input.DataType is DataType.Data:
-        return algSeq
 
     configSeq = ConfigSequence()
     factory = ConfigFactory()
@@ -81,18 +76,15 @@ def makeParticleLevelSequence(analysisName, flags, noSystematics=False, noFilter
     configSeq.setOptionValue('.runSystematics', True)
     configSeq.setOptionValue('.systematicsHistogram', 'listOfSystematicsParticleLevel')
 
-    # filter-out events without primary vertex
-    algSeq += createAlgorithm('CP::VertexSelectionAlg',
-                              'ParticleLevelPrimaryVertexSelectorAlg')
-    algSeq.ParticleLevelPrimaryVertexSelectorAlg.VertexContainer = 'PrimaryVertices'
-    algSeq.ParticleLevelPrimaryVertexSelectorAlg.MinVertices = 1
-
     import importlib
     try:
         analysisModule = importlib.import_module(analysisName)
     except ModuleNotFoundError:
         raise Exception(f'The package and module for your --analysis could not be found: {analysisName}')
     try:
+        from AnaAlgorithm.DualUseConfig import isAthena, useComponentAccumulator
+        if isAthena and useComponentAccumulator:
+            return analysisModule.makeParticleLevelConfiguration(flags, algSeq, configSeq, factory, noSystematics, noFilter)
         analysisModule.makeParticleLevelConfiguration(flags, algSeq, configSeq, factory, noSystematics, noFilter)
     except AttributeError:
         raise Exception('The analysis you specified via --analysis does not have makeParticleLevelConfiguration method implemented.'
@@ -102,9 +94,6 @@ def makeParticleLevelSequence(analysisName, flags, noSystematics=False, noFilter
 
 def makeTextBasedSequence(analysisName, filename, flags, noSystematics=False):
     algSeq = AlgSequence()
-
-    if flags.Input.DataType is DataType.Data and filename in ['particle','parton']:
-        return algSeq
 
     yamlconfig = PathResolver.find_file(f'{analysisName}/{filename}.yaml', "CALIBPATH", PathResolver.RecursiveSearch)
     if not yamlconfig:
@@ -138,5 +127,9 @@ def makeTextBasedSequence(analysisName, filename, flags, noSystematics=False):
                                           algSeq=algSeq,
                                           noSystematics=noSystematics)
     configSeq.fullConfigure(configAccumulator)
+
+    from AnaAlgorithm.DualUseConfig import isAthena, useComponentAccumulator
+    if isAthena and useComponentAccumulator:
+        return configAccumulator.CA
 
     return algSeq

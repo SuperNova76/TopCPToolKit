@@ -23,4 +23,18 @@
 #include "TopCPToolkit/FakeBkgCalculatorAlg.h"
 #include "TopCPToolkit/VGammaORAlg.h"
 
+
+// EDM include(s).
+#include "xAODCore/tools/DictHelpers.h"
+// Instantiate all necessary types for the dictionary.
+namespace {
+    struct GCCXML_DUMMY_INSTANTIATION_TOPCPTOOLKIT {
+        // Local type(s).
+        XAOD_INSTANTIATE_NS_CONTAINER_TYPES( xAOD, KLFitterResultContainer );
+        XAOD_INSTANTIATE_NS_OBJECT_TYPES( xAOD, KLFitterResult );
+        XAOD_INSTANTIATE_NS_CONTAINER_TYPES( xAOD, PartonHistoryContainer );
+        XAOD_INSTANTIATE_NS_OBJECT_TYPES( xAOD, PartonHistory );
+    };
+}
+
 #endif

@@ -400,14 +400,20 @@ SAVE
                                           noSystematics=noSystematics)
     configSeq.fullConfigure(configAccumulator)
 
+    from AnaAlgorithm.DualUseConfig import isAthena, useComponentAccumulator
+    if isAthena and useComponentAccumulator:
+        return configAccumulator.CA
 
-def makeTruthConfiguration(flags, algSeq, noSystematics=False):
-    configSeq = ConfigSequence()
-    factory = ConfigFactory()
+
+def makeTruthConfiguration(flags, algSeq, configSeq, factory, noSystematics=False):
+
     makeConfig = factory.makeConfig
 
     truth_branches = []
     outputContainers = {'': 'EventInfo'}
+
+    # primary vertex
+    configSeq += makeConfig ('EventCleaning')
 
     # PMG TruthWeightTool
     configSeq += makeConfig ('GeneratorLevelAnalysis')
@@ -448,6 +454,10 @@ def makeTruthConfiguration(flags, algSeq, noSystematics=False):
                                           noSystematics=noSystematics)
     configSeq.fullConfigure(configAccumulator)
 
+    from AnaAlgorithm.DualUseConfig import isAthena, useComponentAccumulator
+    if isAthena and useComponentAccumulator:
+        return configAccumulator.CA
+
 
 def makeParticleLevelConfiguration(flags, algSeq, configSeq, factory, noSystematics=False, noFilter=False):
 
@@ -455,6 +465,9 @@ def makeParticleLevelConfiguration(flags, algSeq, configSeq, factory, noSystemat
 
     particleLevel_branches = []
     outputContainers = {'': 'EventInfo'}
+
+    # primary vertex
+    configSeq += makeConfig ('EventCleaning')
 
     # PMG TruthWeightTool
     configSeq += makeConfig ('GeneratorLevelAnalysis')
@@ -515,3 +528,7 @@ SAVE
                                           autoconfigFromFlags=flags,
                                           noSystematics=noSystematics)
     configSeq.fullConfigure(configAccumulator)
+
+    from AnaAlgorithm.DualUseConfig import isAthena, useComponentAccumulator
+    if isAthena and useComponentAccumulator:
+        return configAccumulator.CA
