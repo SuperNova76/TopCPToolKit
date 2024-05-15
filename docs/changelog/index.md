@@ -7,6 +7,10 @@
 - [issue #125](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/125): Add a tutorial on deploying trained ML models for inference
 - [issue #140](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/140): New algorithm for ttbar spin density matrix calculations
 
+### 2.9.1 <small>May 15, 2024</small>
+- We run on AB 25.2.10
+- [issue #141](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/141): Add support for AthAnalysis
+
 ### 2.9.0 <small>May 10, 2024</small>
 - We run on AB 25.2.10
 - [issue #121](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/121): Make a HowToExtendAnalysisTop-like skeleton for TopCPToolkit
