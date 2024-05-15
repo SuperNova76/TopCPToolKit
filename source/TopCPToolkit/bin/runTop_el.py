@@ -127,6 +127,11 @@ if __name__ == '__main__':
     flags.lock()
     metaConfig.pretty_print(flags)
 
+    # don't run particle/parton-level analysis on data
+    if flags.Input.DataType == DataType.Data:
+        args.parton = False
+        args.particle = False
+
     #output stream name in EventLoop
     outputStreamName = 'ANALYSIS'
     # outfile is the standard output file from EventLoop

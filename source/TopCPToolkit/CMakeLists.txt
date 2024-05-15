@@ -45,10 +45,16 @@ else () # Add a component library for AthAnalysis only:
     TopCPToolkit src/components/*.cxx LINK_LIBRARIES
     TopCPToolkitLib
     )
+  # still need a minimal dictionary for objects written to storegate
+  atlas_add_dictionary(
+          TopCPToolkitDict TopCPToolkit/TopCPToolkitDict.h
+          TopCPToolkit/selection_ath.xml LINK_LIBRARIES TopCPToolkitLib
+          EXTRA_FILES Root/dict/*.cxx
+  )
 endif ()
 
 # Install files from the package:
 atlas_install_python_modules(python/*.py)
 atlas_install_joboptions(bin/*.py)
-atlas_install_scripts(bin/runTop_el.py)
+atlas_install_scripts(bin/*.py)
 atlas_install_data(share/*)

@@ -22,8 +22,11 @@ namespace xAOD {
   public:
     /// Default constructor
     PartonHistory();
+
+#ifdef XAOD_STANDALONE
     /// Default desturctor
-    virtual ~PartonHistory() {}
+    virtual ~PartonHistory() {} // avoid virtual methods until NtupleMaker no longer using reinterpret_cast (see https://gitlab.cern.ch/atlas/athena/-/merge_requests/71369)
+#endif
 
     void IniVarTtbar();
     void IniVarTzq();
@@ -40,11 +43,19 @@ namespace xAOD {
   class PartonHistoryAux: public AuxInfoBase {
   public:
     PartonHistoryAux();
+
+#ifdef XAOD_STANDALONE
     virtual ~PartonHistoryAux() {}
+#endif
   };
 
   typedef DataVector < xAOD::PartonHistory > PartonHistoryContainer;
 }
+
+#include "xAODCore/BaseInfo.h"
+SG_BASE( xAOD::PartonHistory, SG::AuxElement );
+SG_BASE( xAOD::PartonHistoryAux, xAOD::AuxInfoBase );
+SG_BASE( xAOD::PartonHistoryAuxContainer, xAOD::AuxContainerBase );
 
 // Dictonaries
 CLASS_DEF(xAOD::PartonHistory, 135846343, 1)

@@ -47,7 +47,8 @@ def getHistograms(inputfile):
     for key in keys:
         obj = key.ReadObj()
         if isinstance(obj, TH1):
-            histos.append(obj.GetName())
+            if "EventLoop" not in obj.GetName():
+                histos.append(obj.GetName())
 
     return histos
 

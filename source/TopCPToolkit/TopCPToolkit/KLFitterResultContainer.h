@@ -11,7 +11,7 @@
 namespace xAOD {
 
    /// Definition of the @c KLFitterResultContainer type
-   typedef DataVector< KLFitterResult > KLFitterResultContainer;
+   typedef DataVector< xAOD::KLFitterResult > KLFitterResultContainer;
 
 } // namespace xAOD
 
