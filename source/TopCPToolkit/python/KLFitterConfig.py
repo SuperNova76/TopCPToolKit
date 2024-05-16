@@ -56,7 +56,7 @@ class KLFitterConfig(ConfigBlock):
             alg.SaveAllPermutations = self.saveAllPermutations
 
             # these settings can be defined per-region, but if not, we fallback to global setting
-            alg.selectionDecorationName = selectionName + '_%SYS%'
+            alg.selectionDecorationName = selectionName + '_%SYS%,as_char'
             alg.LHType = self.likelihoodType
             alg.LeptonType = perRegionConfig.get('leptonType', self.leptonType)
             alg.JetSelectionMode = perRegionConfig.get('jetSelectionMode', self.jetSelectionMode)
