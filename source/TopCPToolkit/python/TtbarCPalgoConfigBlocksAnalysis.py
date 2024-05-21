@@ -357,7 +357,7 @@ SAVE
         cfg.setOptionValue ('muons', 'AnaMuons.tight')
         cfg.setOptionValue ('jets', 'AnaJets.baselineJvt')
         cfg.setOptionValue ('met', 'AnaMET')
-        cfg.setOptionValue ('eventSelection', 'pass_ejets_%SYS%||pass_mujets_%SYS%')
+        cfg.setOptionValue ('eventSelection', 'pass_ejets_%SYS%,as_char||pass_mujets_%SYS%,as_char')
         cfg.setOptionValue ('topology', topology)
         configSeq.append(cfg)
 
