@@ -1,4 +1,5 @@
 from AnalysisAlgorithmsConfig.ConfigBlock import ConfigBlock
+from AnalysisAlgorithmsConfig.ConfigAccumulator import DataType
 
 class VGammaORConfig(ConfigBlock):
 
@@ -8,6 +9,7 @@ class VGammaORConfig(ConfigBlock):
         self.addOption('photon_pT_cuts', None, type=list)
     
     def makeAlgs(self, config):
+        if config.dataType() is DataType.Data: return
         alg = config.createAlgorithm('top::VGammaORAlg', 'VGammaORAlg')
 
         config.addPrivateTool('VGammaORTool', 'VGammaORTool')
