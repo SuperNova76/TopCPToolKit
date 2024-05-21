@@ -32,12 +32,21 @@ class LeptonSFCalculatorConfig(ConfigBlock):
 
         alg.electronRecoSF = f'el_reco_effSF_{self.lepton_postfix}_%SYS%'
         alg.electronIDSF   = f'el_id_effSF_{self.lepton_postfix}_%SYS%'
-        alg.electronIsolSF = f'el_isol_effSF_{self.lepton_postfix}_%SYS%'
+        if self.electrons and 'isolated' in alg.electronSelection:
+            alg.electronIsolSF = f'el_isol_effSF_{self.lepton_postfix}_%SYS%'
+        else:
+            alg.electronIsolSF = ''
         alg.muonRecoSF     = f'muon_reco_effSF_{self.lepton_postfix}_%SYS%'
-        alg.muonIsolSF     = f'muon_isol_effSF_{self.lepton_postfix}_%SYS%'
+        if self.muons and 'isolated' in alg.muonSelection:
+            alg.muonIsolSF = f'muon_isol_effSF_{self.lepton_postfix}_%SYS%'
+        else:
+            alg.muonIsolSF = ''
         alg.muonTTVASF     = f'muon_TTVA_effSF_{self.lepton_postfix}_%SYS%'
         alg.photonIDSF     = f'ph_id_effSF_{self.lepton_postfix}_%SYS%'
-        alg.photonIsolSF   = f'ph_isol_effSF_{self.lepton_postfix}_%SYS%'
+        if self.photons and 'isolated' in alg.photonSelection:
+            alg.photonIsolSF = f'ph_isol_effSF_{self.lepton_postfix}_%SYS%'
+        else:
+            alg.photonIsolSF = ''
         alg.event_leptonSF = f'leptonSF_{self.lepton_postfix}_%SYS%'
 
         config.addOutputVar('EventInfo', alg.event_leptonSF, f'weight_leptonSF_{self.lepton_postfix}')

@@ -18,12 +18,12 @@ namespace top {
 
     ANA_CHECK(m_electronRecoSF.initialize(m_systematicsList, m_electronsHandle));
     ANA_CHECK(m_electronIDSF.initialize(m_systematicsList, m_electronsHandle));
-    ANA_CHECK(m_electronIsolSF.initialize(m_systematicsList, m_electronsHandle));
+    ANA_CHECK(m_electronIsolSF.initialize(m_systematicsList, m_electronsHandle, SG::AllowEmpty));
     ANA_CHECK(m_muonRecoSF.initialize(m_systematicsList, m_muonsHandle));
-    ANA_CHECK(m_muonIsolSF.initialize(m_systematicsList, m_muonsHandle));
+    ANA_CHECK(m_muonIsolSF.initialize(m_systematicsList, m_muonsHandle, SG::AllowEmpty));
     ANA_CHECK(m_muonTTVASF.initialize(m_systematicsList, m_muonsHandle));
     ANA_CHECK(m_photonIDSF.initialize(m_systematicsList, m_photonsHandle));
-    ANA_CHECK(m_photonIsolSF.initialize(m_systematicsList, m_photonsHandle));
+    ANA_CHECK(m_photonIsolSF.initialize(m_systematicsList, m_photonsHandle, SG::AllowEmpty));
 
     ANA_CHECK(m_event_leptonSF.initialize(m_systematicsList, m_eventInfoHandle));
 
@@ -52,7 +52,8 @@ namespace top {
 	  if (m_electronSelection.getBool(*el, syst)) {
 	    leptonSF *= m_electronRecoSF.get(*el, syst);
 	    leptonSF *= m_electronIDSF.get(*el, syst);
-	    leptonSF *= m_electronIsolSF.get(*el, syst);
+	    if (m_electronIsolSF)
+	      leptonSF *= m_electronIsolSF.get(*el, syst);
 	  }
 	}
       }
@@ -60,8 +61,9 @@ namespace top {
 	for (const xAOD::Muon *mu : *muons) {
 	  if (m_muonSelection.getBool(*mu, syst)) {
 	    leptonSF *= m_muonRecoSF.get(*mu, syst);
-	    leptonSF *= m_muonIsolSF.get(*mu, syst);
-          leptonSF *= m_muonTTVASF.get(*mu, syst);
+	    leptonSF *= m_muonTTVASF.get(*mu, syst);
+	    if (m_muonIsolSF)
+	      leptonSF *= m_muonIsolSF.get(*mu, syst);
 	  }
 	}
       }
@@ -69,7 +71,8 @@ namespace top {
 	for (const xAOD::Photon *ph : *photons) {
 	  if (m_photonSelection.getBool(*ph, syst)) {
 	    leptonSF *= m_photonIDSF.get(*ph, syst);
-	    leptonSF *= m_photonIsolSF.get(*ph, syst);
+	    if (m_photonIsolSF)
+	      leptonSF *= m_photonIsolSF.get(*ph, syst);
 	  }
 	}
       }
