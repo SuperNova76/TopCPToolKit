@@ -39,33 +39,7 @@ variables:
         exit 1
       fi
 
-.run_top_ath: &run_top_ath
-  - set -e
-  - cd ${CI_PROJECT_DIR}/${JOBNAME}
-  - mkdir ${RUN_DIR}
-  - cd ${RUN_DIR}
-  - |
-    if [[ "${INPUTFILE}" == *"input_data"* ]]; then
-      runTop_ath.py --filesInput ${INPUTFILE} -o output_${JOBNAME} --particle --parton 1> log_TopCPToolkit.txt
-    else
-      runTop_ath.py --filesInput ${INPUTFILE} -o output_${JOBNAME} --particle --parton --evtMax 100 1> log_TopCPToolkit.txt
-    fi
-  - set +e
-  - cd ../
 
-.run_top_ath_yaml: &run_top_ath_yaml
-  - set -e
-  - cd ${CI_PROJECT_DIR}/${JOBNAME}
-  - mkdir ${RUN_DIR}
-  - cd ${RUN_DIR}
-  - |
-    if [[ "${INPUTFILE}" == *"input_data"* ]]; then
-      runTop_ath.py --filesInput ${INPUTFILE} -o output_${JOBNAME} --particle --parton -t exampleTtbarLjets 1> log_TopCPToolkit.txt
-    else
-      runTop_ath.py --filesInput ${INPUTFILE} -o output_${JOBNAME} --particle --parton --evtMax 100 -t exampleTtbarLjets 1> log_TopCPToolkit.txt
-    fi
-  - set +e
-  - cd ../
 
 .run_top_el: &run_top_el
   - set -e
@@ -110,7 +84,7 @@ variables:
   script:
     - *prepare_dirs
     - *restore_environment
-    - *run_top_ath
+    - *run_top_el
 
 .latest_ab_job_template:
   extends: .base_job_template
@@ -124,7 +98,7 @@ variables:
   script:
     - *prepare_dirs
     - *restore_environment
-    - *run_top_ath_yaml
+    - *run_top_el_yaml
 
 .latest_ab_yaml_template:
   extends: .base_job_template
@@ -139,7 +113,7 @@ variables:
     - *switch_tags
     - *prepare_dirs
     - *restore_environment
-    - *run_top_ath
+    - *run_top_el
 
 .reference_ab_template:
   extends: .base_job_template

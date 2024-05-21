@@ -1,4 +1,4 @@
-After a successful compilation, you now have access to `runTop_el.py` on the command line: it's [this script](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/bin/runTop_el.py).
+After a successful compilation, you now have access to `runTop_el.py` on the command line: it's [this script in AthAnalysis](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/bin/aa/runTop_el.py) or [this script in AnalysisBase](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/bin/ab/runTop_el.py).
 It's recommended to run the code in a dedicated directory, such as the top-level `run` folder we created earlier.
 
 ## Running locally
@@ -12,9 +12,11 @@ Everything else is configured from arguments to the command line, and we'll go o
     For that, you always have to write your own script.
 
 The minimal working command you can issue, using all default settings, is:
+
 ```sh
 runTop_el.py -i inputs.txt -o output
 ```
+
 
 which will **process the entire sample** with the **default analysis** setup, at **detector-level only**, and **including all systematics and event filters**.
 This may not be what you want to do, so read on below to see what you can change.
@@ -133,9 +135,11 @@ For example:
 
 Any sequence of algorithmic config blocks, that we have so far implicitly assumed to be written as a pythonic **analysis module** (we'll define those [later on](analysis.md#analysis-modules)) and loaded up with the `-a` flag of `runTop_el.py`, can be translated into a text-based format, specifically using the YAML language. One can then run
 
+
 ```sh
 runTop_el.py -i inputs.txt -o output -t exampleTtbarLjets
 ```
+
 
 Here the `-t` flag points the driver to the folder [`share/configs/exampleTtbarLjets`](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/tree/main/source/TopCPToolkit/share/configs/exampleTtbarLjets). Up to three config files can be present in that folder and will be automatically looked up: `reco.yaml`, `particle.yaml` and `parton.yaml`. These correspond to detector-level, particle-level and parton-level analysis configurations respectively. You can either pass an absolute or relative path to that folder, or, as in the example above, point to config folder registered in TopCPToolkit.
 
@@ -147,6 +151,7 @@ All other flags are optional and listed in the table below. You can also run
 runTop_el.py -h
 ```
 
+
 | **Option** | **Default** | **Usage** |
 | ---------- | ----------- | --------- |
 | `--max-events`<br>`-e`  | -1                                             | Specify the number of events to run over. |
@@ -157,6 +162,16 @@ runTop_el.py -h
 | `--no-reco`             | False                                          | Toggles off the detector-level analysis. |
 | `--no-systematics`      | False                                          | Toggles off the computation of systematics. |
 | `--no-filter`           | False                                          | Save all events regardless of analysis filters (still saves the decision). |
+
+In AthAnalysis you also get some additional useful options (you can use these in most athena jobs):
+
+| **Option** | **Default** | **Usage**                                                                                                                                                                                                                                                                                                                                      |
+| ---------- | ----------- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|`--skipEvents` | 0 | Skip over the first N events                                                                                                                                                                                                                                                                                                                   |
+| `--interactive` | None | Drops you into an interactive prompt that you can use to modify the job configuration in before the job launches. For example, you could type:<br>`>>> self.getEventAlgo("NTupleMaker").OutputLevel=2`<br> to turn on debugging output for the `NTupleMaker` algorithm.<br>When ready, type `exit()` (or hit Ctrl+D) to start the job running. |
+|`--debug`<br>`-d` | None | Attach gdb debugger at initialization of job                                                                                                                                                                                                                                                                                                   |
+|`--perfmon fullmonmt` | - | Enables performance monitoring statistics (memory usage, CPU usage etc) |
+
 
 Here are a few use cases:
 === "Typical analysis"

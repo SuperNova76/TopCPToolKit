@@ -1,31 +1,47 @@
 #!/usr/bin/env python
 
 from AthenaConfiguration.AllConfigFlags import initConfigFlags
-from AthenaConfiguration.AutoConfigFlags import GetFileMD
 from AnalysisAlgorithmsConfig.ConfigAccumulator import DataType
 from TopCPToolkit import metaConfig
 import ROOT
-import os, shutil, sys
+import os, shutil, sys, argparse
 
 flags = initConfigFlags()
 p = flags.getArgumentParser(description="Run Athena with CP algorithms in local input")
-p.add_argument('-o', '--output-name', required=True,
+
+# modify some of the default arguments
+for a in p._actions:
+    if '--evtMax' in a.option_strings:
+        a.option_strings = ['-e','--evtMax','--max-events'] # adds the "-e" and "--max-events" options
+        p._option_string_actions['-e'] = a
+        p._option_string_actions['--max-events'] = a
+    if '--interactive' in a.option_strings:
+        a.option_strings = ['--interactive']    # remove the "-i" option
+    if '--filesInput' in a.option_strings:
+        a.option_strings = ['-i','--filesInput','--input-list'] # adds the "-i" option and '--input-list' option
+        p._option_string_actions['-i'] = a
+        p._option_string_actions['--input-list'] = a
+    if any([x in a.option_strings for x in ['--mtes','--mtes-channel','--nprocs','--threads','--concurrent-events','--CA','--debugWorker']]):
+        a.help = argparse.SUPPRESS # hide all these options, b/c not yet supported
+
+g = p._action_groups[2] # should be the main options group, adding to that so that appear in same block in help msg
+g.add_argument('-o', '--output-name', required=True,
                help='Name of the output file (without .root)')
-p.add_argument('-a', '--analysis', type=str,
+g.add_argument('-a', '--analysis', type=str,
                default='TopCPToolkit.TtbarCPalgoConfigBlocksAnalysis',
                help='Name of reco analysis to run. Should be package.moduleName,'
                     'where module implements makeRecoConfiguration method')
-p.add_argument('--parton', action='store_true',
+g.add_argument('--parton', action='store_true',
                help='Wheter to run parton level')
-p.add_argument('--particle', action='store_true',
+g.add_argument('--particle', action='store_true',
                help='Whether to run particle level')
-p.add_argument('--no-systematics', action='store_true',
+g.add_argument('--no-systematics', action='store_true',
                help='Configure the job to run with no systematics.')
-p.add_argument('--no-filter', action='store_true',
+g.add_argument('--no-filter', action='store_true',
                help='Skip filtering of events due to event selection (selection flags are still stored.)')
-p.add_argument('--no-reco', action='store_true',
+g.add_argument('--no-reco', action='store_true',
                help='Skip running the detector-level analysis. Useful for running on TRUTH derivations.')
-p.add_argument('-t', '--text-config', type=str,
+g.add_argument('-t', '--text-config', type=str,
                default=None,
                help='Name of the analysis to run. Should be a directory containing reco.yaml,'
                     'and optionally particle.yaml and parton.yaml.')
