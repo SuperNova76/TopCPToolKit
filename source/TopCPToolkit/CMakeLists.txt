@@ -55,6 +55,13 @@ endif ()
 
 # Install files from the package:
 atlas_install_python_modules(python/*.py)
-atlas_install_joboptions(bin/*.py)
-atlas_install_scripts(bin/*.py)
+
+if (XAOD_STANDALONE)
+  atlas_install_joboptions(bin/ab/*.py)
+  atlas_install_scripts(bin/ab/*.py)
+else()
+  atlas_install_joboptions(bin/aa/*.py)
+  atlas_install_scripts(bin/aa/*.py)
+endif()
+
 atlas_install_data(share/*)
