@@ -90,4 +90,4 @@ Name in YAML: **IOStats**
 Print a list of branches that are read when processing input files using the [ReadStats](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/Event/xAOD/xAODCore/xAODCore/tools/ReadStats.h) tool. The implementation follows the twiki page [here](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/DerivationFramework#Checking_What_Branches_an_Analys).
 
 `autoIncludeLinks`
-:   whether or not include all ElementLink variables. Default is false.
+:   whether or not to include all `ElementLink` variables. The default is `False`.

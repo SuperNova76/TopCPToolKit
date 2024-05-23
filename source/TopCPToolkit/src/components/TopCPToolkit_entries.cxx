@@ -22,6 +22,7 @@
 #include <TopCPToolkit/IOStatsAlg.h>
 
 DECLARE_COMPONENT (SVMassAlg)
+DECLARE_COMPONENT (top::IOStatsAlg)
 DECLARE_COMPONENT (top::RunTtbarNNLORecursiveRewAlg)
 DECLARE_COMPONENT (top::RunSpaNetAlg)
 DECLARE_COMPONENT (top::RunPartonHistoryAlg)

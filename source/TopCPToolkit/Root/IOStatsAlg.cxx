@@ -5,11 +5,6 @@
 
 namespace top {
 
-  IOStatsAlg::IOStatsAlg(const std::string& name, ISvcLocator *pSvcLocator)
-    : EL::AnaAlgorithm(name, pSvcLocator)
-    {
-      declareProperty("autoIncludeLinks", m_autoIncludeLinks, "If or not add all ElementLink variables");
-    }
 
   StatusCode IOStatsAlg::finalize() {
 
