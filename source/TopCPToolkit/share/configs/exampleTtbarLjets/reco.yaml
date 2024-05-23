@@ -297,6 +297,9 @@ Output:
       - disable trigPassed_HLT.*
       - enable trigPassed_HLT_e.*
 
+IOStats:
+  - autoIncludeLinks: false
+
 AddConfigBlocks:
     - modulePath: 'TopCPToolkit.LeptonSFCalculatorConfig'
       functionName: 'LeptonSFCalculatorConfig'
@@ -362,3 +365,6 @@ AddConfigBlocks:
       functionName: 'ExtraPhotonDecorationConfig'
       algName: 'ExtraPhotonDecoration'
       pos: 'Output'
+    - modulePath: 'TopCPToolkit.IOStatsConfig'
+      functionName: 'IOStatsConfig'
+      algName: 'IOStats'

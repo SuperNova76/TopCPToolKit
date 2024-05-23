@@ -392,6 +392,12 @@ SAVE
                         'enable trigPassed_HLT_e.*']
                    )
 
+    # IOStats
+    from TopCPToolkit.IOStatsConfig import IOStatsConfig
+    cfg = IOStatsConfig()
+    cfg.setOptionValue('autoIncludeLinks', False)
+    configSeq.append(cfg)
+
     # put everything together
     configAccumulator = ConfigAccumulator(algSeq, flags.Input.DataType,
                                           isPhyslite=flags.Input.isPHYSLITE,
