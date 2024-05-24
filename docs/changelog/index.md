@@ -7,6 +7,12 @@
 - [issue #125](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/125): Add a tutorial on deploying trained ML models for inference
 - [issue #140](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/140): New algorithm for ttbar spin density matrix calculations
 
+### 2.9.2 <small>May 24, 2024</small>
+- We run on AB 25.2.12
+- [issue #142](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/142): Fix compatibility with 25.2.11
+- [issue #143](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/143): Print a list of branches that are read from input files
+- [issue #144](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/144): Allow per-event lepton SF to be calculated in the absence of isolation
+
 !!! warning
     AnalysisBase version 25.2.11 is not compatible. See [here](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/142) for more information.
 
