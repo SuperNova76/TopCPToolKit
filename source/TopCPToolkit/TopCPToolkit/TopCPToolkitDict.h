@@ -21,7 +21,6 @@
 #include "TopCPToolkit/SVMassAlg.h"
 #include "TopCPToolkit/FakeBkgCalculatorAlg.h"
 #include "TopCPToolkit/VGammaORAlg.h"
-#include "TopCPToolkit/IOStatsAlg.h"
 
 
 // EDM include(s).

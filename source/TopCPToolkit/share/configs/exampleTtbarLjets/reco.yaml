@@ -353,6 +353,3 @@ AddConfigBlocks:
       functionName: 'ExtraPhotonDecorationConfig'
       algName: 'ExtraPhotonDecoration'
       pos: 'Output'
-    - modulePath: 'TopCPToolkit.IOStatsConfig'
-      functionName: 'IOStatsConfig'
-      algName: 'IOStats'
