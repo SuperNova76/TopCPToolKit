@@ -148,11 +148,11 @@ Name in YAML: **Photons.WorkingPoint**
 ### [PhotonExtraVariablesBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/python/PhotonExtraVariablesConfig.py)
 Name in YAML: **Photons.ExtraPhotonDecoration**
 
-Decorates the output photons with the conversion type and calo eta.
+Decorates the output photons with the conversion type and calorimeter $\eta$.
 
 `containerName`
 :   the input photon container.
 
 !!! success "Registers the following variables:"
     - `conversionType`: photon conversion type (no systematics)
-    - `caloEta`: calorimeter eta (no systematics)
+    - `caloEta2`: calorimeter $\eta$ from 2nd sampling layer (no systematics)
