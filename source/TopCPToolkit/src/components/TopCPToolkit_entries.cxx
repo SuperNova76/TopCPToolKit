@@ -2,7 +2,6 @@
   Copyright (C) 2002-2023 CERN for the benefit of the ATLAS collaboration
 */
 
-#include <TopCPToolkit/ExtraParticleDecorationAlg.h>
 #include <TopCPToolkit/ExtraPhotonDecorationAlg.h>
 #include <TopCPToolkit/LeptonSFCalculatorAlg.h>
 #include <TopCPToolkit/KLFitterAlg.h>
@@ -33,7 +32,6 @@ DECLARE_COMPONENT (top::KLFitterFinalizeOutputAlg)
 DECLARE_COMPONENT (top::KLFitterAlg)
 DECLARE_COMPONENT (top::JetMatchingAlg)
 DECLARE_COMPONENT (top::JetReclusteringAlg)
-DECLARE_COMPONENT (top::ExtraParticleDecorationAlg)
 DECLARE_COMPONENT (top::ExtraPhotonDecorationAlg)
 DECLARE_COMPONENT (DiTauMassCalculatorAlg)
 DECLARE_COMPONENT (BTaggingScoresAlg)
