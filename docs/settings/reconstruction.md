@@ -7,7 +7,7 @@
 
 ## Config blocks
 
-### [DiTauMassConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/DiTauMassConfig.py)
+### [DiTauMassBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TauAnalysisAlgorithms/python/DiTauMassConfig.py)
 Name in YAML: **DiTauMMC**
 
 `electrons`
@@ -41,40 +41,43 @@ Name in YAML: **DiTauMMC**
 :   the number (int) of sigmas for the MET resolution scan. The default is `-1` (no scan).
 
 `useTailCleanup`
-:   whether to activate the tail cleanup feature. The default is ``.
+:   whether to activate the tail cleanup feature. The default is `-1`.
 
 `niterFit2`
-:   the number of iterations for each MET scan loop. The default is ``.
+:   the number of iterations for each MET scan loop. The default is `-1`.
 
 `niterFit3`
-:   the number of iterations for each Mnu loop. The default is ``.
+:   the number of iterations for each Mnu loop. The default is `-1`.
 
 `useTauProbability`
-:   whether to apply tau probability (additional PDF term corresponding to the ratio of the neutrino momentum to the reconstructed tau momentum). The default is ``.
+:   whether to apply tau probability (additional PDF term corresponding to the ratio of the neutrino momentum to the reconstructed tau momentum). The default is `1`.
 
 `useMnuProbability`
-:   whether to apply $m_\nu$ probability (additional PDF term corresponding to the mass of the neutrino system per tau decay, only applied to leptonic tau decays). The default is ``.
+:   whether to apply $m_\nu$ probability (additional PDF term corresponding to the mass of the neutrino system per tau decay, only applied to leptonic tau decays). The default is `False`.
 
 `useDefaultSettings`
-:   whether to take all default options from the tool itself. The default is ``.
+:   whether to take all default options from the tool itself. The default is `-1`.
 
 `useEfficiencyRecovery`
-:   whether to enable refitting for failed events, to improve efficiency. The default is ``.
+:   whether to enable refitting for failed events, to improve efficiency. The default is `-1`.
 
 `useMETdphiLL`
-:   whether to parameterise the MET resolution using sumET and dphiLL (only for the lep-lep case). The default is ``.
+:   whether to parameterise the MET resolution using sumET and dphiLL (only for the lep-lep case). The default is `False`.
 
 `paramFilePath`
 :   path (string) to the ROOT file used with `calibSet` ≥ 2019, containing the PDFs for the likelihood. The default is `'MMC_params_v1_fixed.root'` (recommended).
 
-`nJetsMinPt`
-:   minimum jet $p_\mathrm{T}$, in MeV. The default is 30 GeV.
+`doMLNU3P`
+:   save information about the reconstruction with the best-fit neutrino kinematics. The default is `False`.
+
+`doMAXW`
+:   save information about the reconstruction with the maximum-weight estimator. The default is `False`.
 
 !!! success "Registers the following variables:"
     - `mmc_fit_status`: the returned status of the MMC fit
-    - `mmc_maxw_mass`: the mass of the di-tau resonance using the maximum-weight estimator
     - `mmc_mlm_mass`: the mass of the di-tau resonance using the maximum-likelihood estimator
-    - `mmc_mlnu3p_mass`: the mass of the di-tau resonance using the best-fit neutrino kinematics
+    - `mmc_maxw_mass`: the mass of the di-tau resonance using the maximum-weight estimator (if `doMAXW`)
+    - `mmc_mlnu3p_mass`: the mass of the di-tau resonance using the best-fit neutrino kinematics (if `doMLNU3P`)
 
 !!! success "Additional variables toggled by `saveExtraVariables`"
     - `mmc_mlnu3p_res_4vect`: four-vector of the di-tau resonance using the best-fit neutrino kinematics
