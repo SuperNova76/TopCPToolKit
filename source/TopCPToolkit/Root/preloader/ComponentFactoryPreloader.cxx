@@ -116,7 +116,6 @@
 #include <EventSelectionAlgorithms/ChargeSelectorAlg.h>
 #include <EventSelectionAlgorithms/DileptonInvariantMassWindowSelectorAlg.h>
 #include <TopCPToolkit/LeptonSFCalculatorAlg.h>
-#include <TopCPToolkit/ExtraParticleDecorationAlg.h>
 #include <TopCPToolkit/RunSpaNetAlg.h>
 #include <AsgAnalysisAlgorithms/SysListDumperAlg.h>
 
@@ -192,7 +191,6 @@ namespace top
     ANA_CHECK (asg::registerAlgorithmFactory<CP::ChargeSelectorAlg> ("CP::ChargeSelectorAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::DileptonInvariantMassWindowSelectorAlg> ("CP::DileptonInvariantMassWindowSelectorAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::LeptonSFCalculatorAlg> ("top::LeptonSFCalculatorAlg"));
-    ANA_CHECK (asg::registerAlgorithmFactory<top::ExtraParticleDecorationAlg> ("top::ExtraParticleDecorationAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::RunSpaNetAlg> ("top::RunSpaNetAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::SysListDumperAlg> ("CP::SysListDumperAlg"));
 

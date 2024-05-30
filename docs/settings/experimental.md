@@ -7,17 +7,6 @@
 
 ## Config blocks
 
-### [ExtraParticleDecorationConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/ExtraParticleDecorationConfig.py)
-Name in YAML: **ExtraParticleDecoration**
-
-Allows to add generic particle decorations and save them as output variables.
-
-`particles`
-:   the input particle container.
-
-!!! success "Registers the following variables:"
-    - `e`: object $E$
-
 ### [BTagScoresConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/BTagScoresConfig.py)
 Name in YAML: **BTaggingScores**
 

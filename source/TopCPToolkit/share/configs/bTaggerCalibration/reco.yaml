@@ -168,14 +168,6 @@ Thinning:
 #    muons: 'AnaMuons.tight'
 #    lepton_postfix: 'tight'
 
-ExtraParticleDecoration:
-   - name: 'El'
-     particles: 'AnaElectrons'
-   - name: 'Mu'
-     particles: 'AnaMuons'
-   - name: 'Jets'
-     particles: 'AnaJets'
-
 Trigger:
     triggerChainsPerYear:
         '2015':
@@ -297,10 +289,6 @@ Output:
       '': 'EventInfo'
 
 AddConfigBlocks:
-    - modulePath: 'TopCPToolkit.ExtraParticleDecorationConfig'
-      functionName: 'ExtraParticleDecorationConfig'
-      algName: 'ExtraParticleDecoration'
-      pos: 'Output'
     - modulePath: 'TopCPToolkit.KLFitterConfig'
       functionName: 'KLFitterConfig'
       algName: 'KLFitter'

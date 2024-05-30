@@ -23,9 +23,10 @@ Name in YAML: **Jets**
 
 !!! success "Registers the following variables:"
     - `pt`: jet $p_\mathrm{T}$
-    - `m`: jet mass
+    - `m`: jet mass (for large-R jets)
     - `eta`: jet $\eta$ (no systematics)
     - `phi`: jet $\phi$ (no systematics)
+    - `e`: jet $E$
 
 #### Additional options for small-R jets
 

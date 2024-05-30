@@ -74,12 +74,6 @@ Thinning:
     outputName: 'OutElectrons'
     selectionName: 'tight||loose'
 
-ExtraParticleDecoration:
-   - name: 'El'
-     particles: 'AnaElectrons'
-   - name: 'Jets'
-     particles: 'AnaJets'
-
 Trigger:
     triggerChainsPerYear:
         '2018':
@@ -135,8 +129,4 @@ AddConfigBlocks:
     - modulePath: 'TopCPToolkit.LeptonSFCalculatorConfig'
       functionName: 'LeptonSFCalculatorConfig'
       algName: 'LeptonSF'
-      pos: 'Output'
-    - modulePath: 'TopCPToolkit.ExtraParticleDecorationConfig'
-      functionName: 'ExtraParticleDecorationConfig'
-      algName: 'ExtraParticleDecoration'
       pos: 'Output'
