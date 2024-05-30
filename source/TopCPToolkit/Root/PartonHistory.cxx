@@ -868,5 +868,55 @@ namespace xAOD {
     this->auxdecor< int >("MC_Hdecay2_decay2_pdgId") = 0;
   }
 
+  void PartonHistory::IniVarHWW() {
+    // Higgs
+    this->auxdecor< float >("MC_H_m") = -1;
+    this->auxdecor< float >("MC_H_pt") = -1;
+    this->auxdecor< float >("MC_H_eta") = -1000;
+    this->auxdecor< float >("MC_H_phi") = -1000;
+    
+    // W-
+    this->auxdecor< float >("MC_Wm_from_H_m") = -1;
+    this->auxdecor< float >("MC_Wm_from_H_pt") = -1;
+    this->auxdecor< float >("MC_Wm_from_H_eta") = -1000;
+    this->auxdecor< float >("MC_Wm_from_H_phi") = -1000;
+    this->auxdecor< float >("MC_Wm_from_H_pdgId") = 0;
+
+    // W+
+    this->auxdecor< float >("MC_Wp_from_H_m") = -1;
+    this->auxdecor< float >("MC_Wp_from_H_pt") = -1;
+    this->auxdecor< float >("MC_Wp_from_H_eta") = -1000;
+    this->auxdecor< float >("MC_Wp_from_H_phi") = -1000;
+    this->auxdecor< float >("MC_Wp_from_H_pdgId") = 0;
+
+    // W- decay 1
+    this->auxdecor< float >("MC_Wmdecay1_from_H_m") = -1;
+    this->auxdecor< float >("MC_Wmdecay1_from_H_pt") = -1;
+    this->auxdecor< float >("MC_Wmdecay1_from_H_eta") = -1000;
+    this->auxdecor< float >("MC_Wmdecay1_from_H_phi") = -1000;
+    this->auxdecor< float >("MC_Wmdecay1_from_H_pdgId") = 0;
+
+    // W- decay 2
+    this->auxdecor< float >("MC_Wmdecay2_from_H_m") = -1;
+    this->auxdecor< float >("MC_Wmdecay2_from_H_pt") = -1;
+    this->auxdecor< float >("MC_Wmdecay2_from_H_eta") = -1000;
+    this->auxdecor< float >("MC_Wmdecay2_from_H_phi") = -1000;
+    this->auxdecor< float >("MC_Wmdecay2_from_H_pdgId") = 0;
+
+    // W+ decay 1
+    this->auxdecor< float >("MC_Wpdecay1_from_H_m") = -1;
+    this->auxdecor< float >("MC_Wpdecay1_from_H_pt") = -1;
+    this->auxdecor< float >("MC_Wpdecay1_from_H_eta") = -1000;
+    this->auxdecor< float >("MC_Wpdecay1_from_H_phi") = -1000;
+    this->auxdecor< float >("MC_Wpdecay1_from_H_pdgId") = 0;
+
+    // W+ decay 2
+    this->auxdecor< float >("MC_Wpdecay2_from_H_m") = -1;
+    this->auxdecor< float >("MC_Wpdecay2_from_H_pt") = -1;
+    this->auxdecor< float >("MC_Wpdecay2_from_H_eta") = -1000;
+    this->auxdecor< float >("MC_Wpdecay2_from_H_phi") = -1000;
+    this->auxdecor< float >("MC_Wpdecay2_from_H_pdgId") = 0;
+  }
+
 }
 //ADD_NS_DV_PROXY(xAOD, PartonHistoryContainer);
