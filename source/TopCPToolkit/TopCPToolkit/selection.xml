@@ -25,5 +25,6 @@
   <class name="FakeBkgCalculatorAlg" />
   <class name="VGammaORAlg" />
   <class name="top::IOStatsAlg" />
+  <class name="top::SoftMuonSelectorAlg" />
 
 </lcgdict>

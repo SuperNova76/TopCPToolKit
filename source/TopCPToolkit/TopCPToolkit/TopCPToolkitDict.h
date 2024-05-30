@@ -23,6 +23,7 @@
 #include "TopCPToolkit/FakeBkgCalculatorAlg.h"
 #include "TopCPToolkit/VGammaORAlg.h"
 #include "TopCPToolkit/IOStatsAlg.h"
+#include "TopCPToolkit/SoftMuonSelectorAlg.h"
 
 
 // EDM include(s).
