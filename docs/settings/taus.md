@@ -19,6 +19,7 @@
     - `pt`: tau-jet $p_\mathrm{T}$
     - `eta`: tau-jet $\eta$ (no systematics)
     - `phi`: tau-jet $\phi$ (no systematics)
+    - `e`: tau-jet $E$
     - `charge`: tau-jet charge (no systematics)
 
 ### [makeTauWorkingPointConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TauAnalysisAlgorithms/python/TauAnalysisConfig.py)

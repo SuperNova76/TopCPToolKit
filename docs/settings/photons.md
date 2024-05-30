@@ -34,6 +34,7 @@
     - `pt`: photon $p_\mathrm{T}$
     - `eta`: photon $\eta$ (no systematics)
     - `phi`: photon $\phi$ (no systematics)
+    - `e`: photon $E$
 
 
 ### [makePhotonWorkingPointConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/python/PhotonAnalysisConfig.py)
