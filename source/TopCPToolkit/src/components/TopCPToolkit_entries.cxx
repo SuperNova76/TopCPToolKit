@@ -14,7 +14,6 @@
 #include <TopCPToolkit/RunTtbarNNLORecursiveRewAlg.h>
 #include <TopCPToolkit/JetMatchingAlg.h>
 #include <TopCPToolkit/JetReclusteringAlg.h>
-#include <TopCPToolkit/DiTauMassCalculatorAlg.h>
 #include <TopCPToolkit/BTaggingScoresAlg.h>
 #include <TopCPToolkit/SVMassAlg.h>
 #include <TopCPToolkit/FakeBkgCalculatorAlg.h>
@@ -35,5 +34,4 @@ DECLARE_COMPONENT (top::JetMatchingAlg)
 DECLARE_COMPONENT (top::JetReclusteringAlg)
 DECLARE_COMPONENT (top::ExtraParticleDecorationAlg)
 DECLARE_COMPONENT (top::ExtraPhotonDecorationAlg)
-DECLARE_COMPONENT (DiTauMassCalculatorAlg)
 DECLARE_COMPONENT (BTaggingScoresAlg)

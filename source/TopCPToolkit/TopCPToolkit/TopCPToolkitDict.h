@@ -15,7 +15,6 @@
 #include "TopCPToolkit/PartonToJetsMatchAlg.h"
 #include "TopCPToolkit/RunSpaNetAlg.h"
 #include "TopCPToolkit/RunTtbarNNLORecursiveRewAlg.h"
-#include "TopCPToolkit/DiTauMassCalculatorAlg.h"
 #include "TopCPToolkit/JetMatchingAlg.h"
 #include "TopCPToolkit/JetReclusteringAlg.h"
 #include "TopCPToolkit/BTaggingScoresAlg.h"
