@@ -146,7 +146,7 @@ Name in YAML: **Photons.WorkingPoint**
     - `isol_effSF`: the per-photon isolation SF
 
 ### [PhotonExtraVariablesBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/python/PhotonExtraVariablesConfig.py)
-Name in YAML: **Photons.ExtraPhotonDecoration**
+Name in YAML: **Photons.ExtraVariables**
 
 Decorates the output photons with the conversion type and calorimeter $\eta$.
 
