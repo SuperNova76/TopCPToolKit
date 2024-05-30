@@ -22,6 +22,5 @@
   <function name="top::preloadComponentFactories" />
   <class name="FakeBkgCalculatorAlg" />
   <class name="VGammaORAlg" />
-  <class name="top::IOStatsAlg" />
 
 </lcgdict>
