@@ -2,7 +2,6 @@
 #define TOPCPTOOLKIT_DICT_H
 
 #include "TopCPToolkit/ComponentFactoryPreloader.h"
-#include "TopCPToolkit/ExtraPhotonDecorationAlg.h"
 #include "TopCPToolkit/LeptonSFCalculatorAlg.h"
 #include "TopCPToolkit/KLFitterAlg.h"
 #include "TopCPToolkit/KLFitterResult.h"
