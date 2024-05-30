@@ -47,18 +47,6 @@ Decorates the output jets with the secondary vertex mass (SVMass).
 !!! success "Registers the following variables:"
     - `SVMass`: the secondary vertex mass of every jet.
 
-### [ExtraPhotonDecorationConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/ExtraPhotonDecorationConfig.py)
-Name in YAML: **ExtraPhotonDecoration**
-
-Decorates the output photons with the conversion type and calo eta.
-
-`photons`
-:   the input photon container.
-
-!!! success "Registers the following variables:"
-    - `conversionType`: photon conversion type.
-    - `caloEta`: calorimeter eta.
-
 ### [VGammaORConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/VGammaORConfig.py)
 Name in YAML: **VGammaOR**
 

@@ -349,7 +349,3 @@ AddConfigBlocks:
       functionName: 'VGammaORConfig'
       algName: 'VGammaOR'
       pos: 'Output'
-    - modulePath: 'TopCPToolkit.ExtraPhotonDecorationConfig'
-      functionName: 'ExtraPhotonDecorationConfig'
-      algName: 'ExtraPhotonDecoration'
-      pos: 'Output'
