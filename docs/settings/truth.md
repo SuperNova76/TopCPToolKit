@@ -145,7 +145,7 @@ The matching algorithm looks for the closest jets in $\Delta R$. For multiple ma
 :   jet collection name (string) for matching, can be reco jets or truth jets. The default is `AntiKt4TruthDressedWZJets`.
 
 `eventSelection`
-:   event selection (string) for matching. The default is `pass_ejets_%SYS%||pass_mujets_%SYS%`.
+:   event selection (string) for matching. The default is `pass_ejets_%SYS%,as_char||pass_mujets_%SYS%,as_char`.
 
 `criticalDR`
 :   maximum $\Delta R$ (float) used for matching. The default is `0.3`.
