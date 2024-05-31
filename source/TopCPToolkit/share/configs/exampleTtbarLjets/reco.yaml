@@ -265,6 +265,8 @@ SpaNet:
 #     met: 'AnaMET'
 #     eventSelection: ''
 #     saveExtraVariables: True
+#     doMLNU3P: True
+#     doMAXW: True
 
 Bootstraps:
   nReplicas: 2000
@@ -316,10 +318,6 @@ AddConfigBlocks:
     - modulePath: 'TopCPToolkit.TtbarNNLORecursiveRewConfig'
       functionName: 'TtbarNNLORecursiveRewConfig'
       algName: 'TtbarNNLO'
-      pos: 'Output'
-    - modulePath: 'TopCPToolkit.DiTauMassConfig'
-      functionName: 'DiTauMassConfig'
-      algName: 'DiTauMMC'
       pos: 'Output'
     - modulePath: 'TopCPToolkit.JetMatchingConfig'
       functionName: 'JetMatchingConfig'

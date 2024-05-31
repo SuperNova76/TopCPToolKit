@@ -16,7 +16,6 @@
   <class name="top::RunTtbarNNLORecursiveRewAlg" />
   <class name="top::JetMatchingAlg" />
   <class name="top::JetReclusteringAlg" />
-  <class name="DiTauMassCalculatorAlg" />
   <class name="BTaggingScoresAlg" />
   <class name="SVMassAlg" />
   <function name="top::preloadComponentFactories" />
