@@ -166,11 +166,6 @@ LeptonSF:
   # photons: 'AnaPhotons.tight'
     lepton_postfix: 'tight'
 
-ExtraParticleDecoration:
-   - particles: 'AnaElectrons'
-   - particles: 'AnaMuons'
-   - particles: 'AnaJets'
-
 Trigger:
     triggerChainsPerYear:
         '2015':
@@ -304,10 +299,6 @@ AddConfigBlocks:
       functionName: 'LeptonSFCalculatorConfig'
       algName: 'LeptonSF'
       pos: 'Output'
-    - modulePath: 'TopCPToolkit.ExtraParticleDecorationConfig'
-      functionName: 'ExtraParticleDecorationConfig'
-      algName: 'ExtraParticleDecoration'
-      pos: 'Output'
     - modulePath: 'TopCPToolkit.KLFitterConfig'
       functionName: 'KLFitterConfig'
       algName: 'KLFitter'
@@ -356,10 +347,3 @@ AddConfigBlocks:
       functionName: 'VGammaORConfig'
       algName: 'VGammaOR'
       pos: 'Output'
-    - modulePath: 'TopCPToolkit.ExtraPhotonDecorationConfig'
-      functionName: 'ExtraPhotonDecorationConfig'
-      algName: 'ExtraPhotonDecoration'
-      pos: 'Output'
-    - modulePath: 'TopCPToolkit.IOStatsConfig'
-      functionName: 'IOStatsConfig'
-      algName: 'IOStats'

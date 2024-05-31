@@ -2,8 +2,6 @@
 #define TOPCPTOOLKIT_DICT_H
 
 #include "TopCPToolkit/ComponentFactoryPreloader.h"
-#include "TopCPToolkit/ExtraParticleDecorationAlg.h"
-#include "TopCPToolkit/ExtraPhotonDecorationAlg.h"
 #include "TopCPToolkit/LeptonSFCalculatorAlg.h"
 #include "TopCPToolkit/KLFitterAlg.h"
 #include "TopCPToolkit/KLFitterResult.h"
@@ -21,7 +19,6 @@
 #include "TopCPToolkit/SVMassAlg.h"
 #include "TopCPToolkit/FakeBkgCalculatorAlg.h"
 #include "TopCPToolkit/VGammaORAlg.h"
-#include "TopCPToolkit/IOStatsAlg.h"
 
 
 // EDM include(s).

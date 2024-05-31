@@ -7,17 +7,6 @@
 
 ## Config blocks
 
-### [ExtraParticleDecorationConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/ExtraParticleDecorationConfig.py)
-Name in YAML: **ExtraParticleDecoration**
-
-Allows to add generic particle decorations and save them as output variables.
-
-`particles`
-:   the input particle container.
-
-!!! success "Registers the following variables:"
-    - `e`: object $E$
-
 ### [BTagScoresConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/BTagScoresConfig.py)
 Name in YAML: **BTaggingScores**
 
@@ -58,18 +47,6 @@ Decorates the output jets with the secondary vertex mass (SVMass).
 !!! success "Registers the following variables:"
     - `SVMass`: the secondary vertex mass of every jet.
 
-### [ExtraPhotonDecorationConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/ExtraPhotonDecorationConfig.py)
-Name in YAML: **ExtraPhotonDecoration**
-
-Decorates the output photons with the conversion type and calo eta.
-
-`photons`
-:   the input photon container.
-
-!!! success "Registers the following variables:"
-    - `conversionType`: photon conversion type.
-    - `caloEta`: calorimeter eta.
-
 ### [VGammaORConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/VGammaORConfig.py)
 Name in YAML: **VGammaOR**
 
@@ -84,10 +61,10 @@ Adds a new event-level variable `in_vgamma_overlap` using the [VGammaORTool](htt
 !!! success "Registers the following variables:"
     - `in_vgamma_overlap`: can either be 0 or 1 for an event. An event should be kept if it is 0 for V+jets samples or if it is 1 for V$\gamma$+jets samples.
 
-### [IOStatsConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/IOStatsConfig.py)
+### [IOStatsConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
 Name in YAML: **IOStats**
 
 Print a list of branches that are read when processing input files using the [ReadStats](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/Event/xAOD/xAODCore/xAODCore/tools/ReadStats.h) tool. The implementation follows the twiki page [here](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/DerivationFramework#Checking_What_Branches_an_Analys).
 
-`autoIncludeLinks`
-:   whether or not to include all `ElementLink` variables. The default is `False`.
+`printOption`
+:   option to pass the standard ROOT printing function. Can be "Summary", "ByEntries" or "ByBytes". The default is "Summary".

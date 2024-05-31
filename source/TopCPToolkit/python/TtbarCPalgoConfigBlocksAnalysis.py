@@ -228,22 +228,6 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics=False
     cfg.setOptionValue ('lepton_postfix', 'tight')
     configSeq.append(cfg)
 
-    # energy decorations
-    # TODO: give it a factory when moving to Athena
-    from TopCPToolkit.ExtraParticleDecorationConfig import ExtraParticleDecorationConfig
-    if use_electrons:
-        cfg = ExtraParticleDecorationConfig()
-        cfg.setOptionValue('particles', 'AnaElectrons')
-        configSeq.append(cfg)
-    if use_muons:
-        cfg = ExtraParticleDecorationConfig()
-        cfg.setOptionValue('particles', 'AnaMuons')
-        configSeq.append(cfg)
-    if use_jets:
-        cfg = ExtraParticleDecorationConfig()
-        cfg.setOptionValue('particles', 'AnaJets')
-        configSeq.append(cfg)
-
     # the IFF lepton classification
     if use_electrons:
         configSeq += makeConfig ('Electrons.IFFClassification', containerName='AnaElectrons')
