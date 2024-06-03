@@ -106,14 +106,15 @@ Name in YAML: **Electrons.TriggerSF**
 `muonID`
 :   the muon quality WP (string) to use.
 
-`saveSF`
-:   defines whether we decorate the trigger scale factor or the efficiency. The default is `True` (save SF).
+`saveEff`
+:   defines whether we decorate also the trigger scale efficiency. The default is `False` (save only SF).
 
 `containerName`
 :   the input electron container, with a possible selection, in the format `container` or `container.selection`.
 
 !!! success "Registers the following variables:|
-    - `trigEffSF`: the per-electron trigger efficiency or efficiency SF (depending on `saveSF`)
+    - `trigEffSF`: the per-electron trigger efficiency or efficiency SF
+    - `trigEff`: the per-electron trigger efficiecny (if `saveEff`)
 
 ### [TauTriggerAnalysisSFBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TauAnalysisAlgorithms/python/TauAnalysisConfig.py)
 This config block allows you to retrieve the per-tau-jet trigger SFs.
