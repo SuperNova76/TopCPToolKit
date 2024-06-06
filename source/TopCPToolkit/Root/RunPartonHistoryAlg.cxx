@@ -29,7 +29,6 @@ namespace top {
 
   StatusCode RunPartonHistoryAlg::execute() {
     ANA_CHECK(m_PartonHistory->execute());
-
     return StatusCode::SUCCESS;
   }
 

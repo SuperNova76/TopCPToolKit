@@ -880,42 +880,42 @@ namespace xAOD {
     this->auxdecor< float >("MC_Wm_from_H_pt") = -1;
     this->auxdecor< float >("MC_Wm_from_H_eta") = -1000;
     this->auxdecor< float >("MC_Wm_from_H_phi") = -1000;
-    this->auxdecor< float >("MC_Wm_from_H_pdgId") = 0;
+    this->auxdecor< int >("MC_Wm_from_H_pdgId") = 0;
 
     // W+
     this->auxdecor< float >("MC_Wp_from_H_m") = -1;
     this->auxdecor< float >("MC_Wp_from_H_pt") = -1;
     this->auxdecor< float >("MC_Wp_from_H_eta") = -1000;
     this->auxdecor< float >("MC_Wp_from_H_phi") = -1000;
-    this->auxdecor< float >("MC_Wp_from_H_pdgId") = 0;
+    this->auxdecor< int >("MC_Wp_from_H_pdgId") = 0;
 
     // W- decay 1
     this->auxdecor< float >("MC_Wmdecay1_from_H_m") = -1;
     this->auxdecor< float >("MC_Wmdecay1_from_H_pt") = -1;
     this->auxdecor< float >("MC_Wmdecay1_from_H_eta") = -1000;
     this->auxdecor< float >("MC_Wmdecay1_from_H_phi") = -1000;
-    this->auxdecor< float >("MC_Wmdecay1_from_H_pdgId") = 0;
+    this->auxdecor< int >("MC_Wmdecay1_from_H_pdgId") = 0;
 
     // W- decay 2
     this->auxdecor< float >("MC_Wmdecay2_from_H_m") = -1;
     this->auxdecor< float >("MC_Wmdecay2_from_H_pt") = -1;
     this->auxdecor< float >("MC_Wmdecay2_from_H_eta") = -1000;
     this->auxdecor< float >("MC_Wmdecay2_from_H_phi") = -1000;
-    this->auxdecor< float >("MC_Wmdecay2_from_H_pdgId") = 0;
+    this->auxdecor< int >("MC_Wmdecay2_from_H_pdgId") = 0;
 
     // W+ decay 1
     this->auxdecor< float >("MC_Wpdecay1_from_H_m") = -1;
     this->auxdecor< float >("MC_Wpdecay1_from_H_pt") = -1;
     this->auxdecor< float >("MC_Wpdecay1_from_H_eta") = -1000;
     this->auxdecor< float >("MC_Wpdecay1_from_H_phi") = -1000;
-    this->auxdecor< float >("MC_Wpdecay1_from_H_pdgId") = 0;
+    this->auxdecor< int >("MC_Wpdecay1_from_H_pdgId") = 0;
 
     // W+ decay 2
     this->auxdecor< float >("MC_Wpdecay2_from_H_m") = -1;
     this->auxdecor< float >("MC_Wpdecay2_from_H_pt") = -1;
     this->auxdecor< float >("MC_Wpdecay2_from_H_eta") = -1000;
     this->auxdecor< float >("MC_Wpdecay2_from_H_phi") = -1000;
-    this->auxdecor< float >("MC_Wpdecay2_from_H_pdgId") = 0;
+    this->auxdecor< int >("MC_Wpdecay2_from_H_pdgId") = 0;
   }
 
 }
