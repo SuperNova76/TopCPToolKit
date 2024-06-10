@@ -17,6 +17,8 @@
 
 #include <TVector2.h>
 
+#include "xAODTracking/TrackParticlexAODHelpers.h" //To get the impact parameters
+
 namespace top {
 
   class SoftMuonSelectorAlg final : public EL::AnaAlgorithm {
@@ -44,7 +46,7 @@ namespace top {
         this, "eventInfo", "EventInfo", "the input EventInfo container"
       };
 
-      //Trying to add soft muons
+      //Soft Muons
       CP::SysReadHandle<xAOD::MuonContainer> m_softmuonsHandle {
         this, "softmuons", "", "the input soft muon container"
       };
@@ -52,14 +54,10 @@ namespace top {
         this, "softmuonSelection", "", "the selection on the input soft muons"
       };
 
-//      CP::SysReadDecorHandle<float> m_softmuonDRJetcut {
-//        this, "SoftMuonDRJet", "", "Soft Muon maximum dR wrt nearest selected jet. Can be set to 999. to keep all soft muons. Default 0.4"
-//      };
-
-//      float m_softmuonDRJetcut {
-//        this, "SoftMuonDRJet", 0.4, "Soft Muon maximum dR wrt nearest selected jet. Can be set to 999. to keep all soft muons. Default 0.4"
-//      };
-       float m_softmuonDRJetcut;// = 0.4;
+      // Input information from the yaml file
+      float m_softmuonDRJetcut;
+      bool m_saveSoftMuonAdditionalInfo;
+      bool m_saveSoftMuonNearestJetInfo;
 
       CP::SysReadSelectionHandle m_selection {
         this, "selection", "", "Name of the selection on which the SoftMuonSelectors instance is allowed to run"
@@ -84,8 +82,8 @@ namespace top {
 
     //Functions to add additional variables with additional information about the soft muons, and/or the nearest jet to the soft muon
     private:
-      virtual bool SaveAdditionalSoftMuonVariables(const xAOD::Muon* softmuon, const CP::SystematicSet sys);
-      virtual bool SaveAdditionalInformationFromNearestJet(const xAOD::Muon* softmuon, ConstDataVector<xAOD::JetContainer> selected_jets, const CP::SystematicSet sys);
+      virtual void SaveAdditionalSoftMuonVariables(const xAOD::Muon* softmuon, const xAOD::EventInfo *evtInfo /*to calculate impact parameters*/, const CP::SystematicSet sys);
+      virtual void SaveAdditionalInformationFromNearestJet(const xAOD::Muon* softmuon, ConstDataVector<xAOD::JetContainer> selected_jets, const CP::SystematicSet sys);
 
       // Complementary functionalities to calculate and save additional variables related with the soft muon properties
       // or with the properties of the closest jet to the soft muon

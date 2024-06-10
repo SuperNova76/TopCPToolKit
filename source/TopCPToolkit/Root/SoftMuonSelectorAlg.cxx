@@ -6,9 +6,11 @@ namespace top {
                            ISvcLocator *pSvcLocator)
     : EL::AnaAlgorithm(name, pSvcLocator)
     , m_softmuonDRJetcut(0.4)
-  {
-  declareProperty("SoftMuonDRJet", m_softmuonDRJetcut = 0.4, "Soft Muon maximum dR wrt nearest selected jet. Can be set to 999. to keep all soft muons. Default 0.4");
-  }
+    {
+    declareProperty("SoftMuonDRJet", m_softmuonDRJetcut = 0.4, "Soft Muon maximum dR wrt nearest selected jet. Can be set to 999. to keep all soft muons. Default 0.4");
+    declareProperty("SaveSoftMuonAdditionalInfo", m_saveSoftMuonAdditionalInfo = false, "Whether to store additional information associated with the soft muon."); 
+    declareProperty("SaveSoftMuonNearestJetInfo", m_saveSoftMuonNearestJetInfo = false, "Whether to store additional information associated with the nearest jet associated to the soft muon.");
+    }
   
   StatusCode SoftMuonSelectorAlg::initialize() {
     ANA_MSG_INFO("Initialising the SoftMuonSelector algorithm for TopCPToolkit");
@@ -157,98 +159,103 @@ namespace top {
       m_pass_SoftMuonPassDRJetcut.setBool(*evtInfo, 0, sys);
 
       // --------------------------------------------------------
+
       for (const xAOD::Muon *softmuon : *softmuons) {
 
-//        m_softmu_nearestJet_ChargedPFOWidthPt1000_Handle.set(*softmuon, -99, sys);
-
-        m_softmu_pass_tight_Handle.set(*softmuon, -99, sys);
-        m_softmu_resolutionCategory_Handle.set(*softmuon, -99, sys);
+        if(m_saveSoftMuonAdditionalInfo){
+          m_softmu_pass_tight_Handle.set(*softmuon, -99, sys);
+          m_softmu_resolutionCategory_Handle.set(*softmuon, -99, sys);
 
 	m_softmu_pt_id_Handle.set(*softmuon, -99, sys);
-        m_softmu_eta_id_Handle.set(*softmuon, -99, sys);
-        m_softmu_phi_id_Handle.set(*softmuon, -99, sys);
-        m_softmu_e_id_Handle.set(*softmuon, -99, sys);
-        m_softmu_pt_me_Handle.set(*softmuon, -99, sys);
-        m_softmu_eta_me_Handle.set(*softmuon, -99, sys);
-        m_softmu_phi_me_Handle.set(*softmuon, -99, sys);
-        m_softmu_e_me_Handle.set(*softmuon, -99, sys);
+          m_softmu_eta_id_Handle.set(*softmuon, -99, sys);
+          m_softmu_phi_id_Handle.set(*softmuon, -99, sys);
+          m_softmu_e_id_Handle.set(*softmuon, -99, sys);
+          m_softmu_pt_me_Handle.set(*softmuon, -99, sys);
+          m_softmu_eta_me_Handle.set(*softmuon, -99, sys);
+          m_softmu_phi_me_Handle.set(*softmuon, -99, sys);
+          m_softmu_e_me_Handle.set(*softmuon, -99, sys);
 
-        m_softmu_qOverP_Handle.set(*softmuon, -99, sys);
-        m_softmu_qOverP_ID_Handle.set(*softmuon, -99, sys);
-        m_softmu_qOverP_ME_Handle.set(*softmuon, -99, sys);
-        m_softmu_qOverPerr_Handle.set(*softmuon, -99, sys);
-        m_softmu_qOverPerr_ID_Handle.set(*softmuon, -99, sys);
-        m_softmu_qOverPerr_ME_Handle.set(*softmuon, -99, sys);
-        m_softmu_z0_sintheta_Handle.set(*softmuon, -99, sys);
-        m_softmu_d0_Handle.set(*softmuon, -99, sys);
-        m_softmu_d0sig_Handle.set(*softmuon, -99, sys);
-        m_softmu_reducedChi2_Handle.set(*softmuon, -99, sys);
-        m_softmu_reducedChi2_ID_Handle.set(*softmuon, -99, sys);
-        m_softmu_reducedChi2_ME_Handle.set(*softmuon, -99, sys);
-        m_softmu_reducedSegmentChi2_Handle.set(*softmuon, -99, sys);
-        m_softmu_momentumBalanceSignificance_Handle.set(*softmuon, -99, sys);
-        m_softmu_scatteringCurvatureSignificance_Handle.set(*softmuon, -99, sys);
-        m_softmu_scatteringNeighbourSignificance_Handle.set(*softmuon, -99, sys);
-        m_softmu_qOverPSignificance_Handle.set(*softmuon, -99, sys);
-        m_softmu_rhoPrime_Handle.set(*softmuon, -99, sys);
-        m_softmu_spectrometerFieldIntegral_Handle.set(*softmuon, -99, sys);
+          m_softmu_qOverP_Handle.set(*softmuon, -99, sys);
+          m_softmu_qOverP_ID_Handle.set(*softmuon, -99, sys);
+          m_softmu_qOverP_ME_Handle.set(*softmuon, -99, sys);
+          m_softmu_qOverPerr_Handle.set(*softmuon, -99, sys);
+          m_softmu_qOverPerr_ID_Handle.set(*softmuon, -99, sys);
+          m_softmu_qOverPerr_ME_Handle.set(*softmuon, -99, sys);
+          m_softmu_z0_sintheta_Handle.set(*softmuon, -99, sys);
+          m_softmu_d0_Handle.set(*softmuon, -99, sys);
+          m_softmu_d0sig_Handle.set(*softmuon, -99, sys);
+          m_softmu_reducedChi2_Handle.set(*softmuon, -99, sys);
+          m_softmu_reducedChi2_ID_Handle.set(*softmuon, -99, sys);
+          m_softmu_reducedChi2_ME_Handle.set(*softmuon, -99, sys);
+          m_softmu_reducedSegmentChi2_Handle.set(*softmuon, -99, sys);
+          m_softmu_momentumBalanceSignificance_Handle.set(*softmuon, -99, sys);
+          m_softmu_scatteringCurvatureSignificance_Handle.set(*softmuon, -99, sys);
+          m_softmu_scatteringNeighbourSignificance_Handle.set(*softmuon, -99, sys);
+          m_softmu_qOverPSignificance_Handle.set(*softmuon, -99, sys);
+          m_softmu_rhoPrime_Handle.set(*softmuon, -99, sys);
+          m_softmu_spectrometerFieldIntegral_Handle.set(*softmuon, -99, sys);
 
-        m_softmu_nprecisionLayers_Handle.set(*softmuon, -99, sys);
-        m_softmu_nprecisionHoleLayers_Handle.set(*softmuon, -99, sys);
-        m_softmu_nGoodPrecLayers_Handle.set(*softmuon, -99, sys);
-        m_softmu_innerSmallHits_Handle.set(*softmuon, -99, sys);
-        m_softmu_innerLargeHits_Handle.set(*softmuon, -99, sys);
-        m_softmu_middleSmallHits_Handle.set(*softmuon, -99, sys);
-        m_softmu_middleLargeHits_Handle.set(*softmuon, -99, sys);
-        m_softmu_outerSmallHits_Handle.set(*softmuon, -99, sys);
-        m_softmu_outerLargeHits_Handle.set(*softmuon, -99, sys);
-        m_softmu_extendedSmallHits_Handle.set(*softmuon, -99, sys);
-        m_softmu_extendedLargeHits_Handle.set(*softmuon, -99, sys);
-        m_softmu_extendedSmallHoles_Handle.set(*softmuon, -99, sys);
-        m_softmu_isSmallGoodSectors_Handle.set(*softmuon, -99, sys);
-        m_softmu_cscUnspoiledEtaHits_Handle.set(*softmuon, -99, sys);
-        m_softmu_numberOfPixelHits_Handle.set(*softmuon, -99, sys);
-        m_softmu_numberOfPixelDeadSensors_Handle.set(*softmuon, -99, sys);
-        m_softmu_numberOfPixelHoles_Handle.set(*softmuon, -99, sys);
-        m_softmu_numberOfSCTHits_Handle.set(*softmuon, -99, sys);
-        m_softmu_numberOfSCTDeadSensors_Handle.set(*softmuon, -99, sys);
-        m_softmu_numberOfSCTHoles_Handle.set(*softmuon, -99, sys);
-        m_softmu_numberOfTRTHits_Handle.set(*softmuon, -99, sys);
-        m_softmu_numberOfTRTOutliers_Handle.set(*softmuon, -99, sys);
+          m_softmu_nprecisionLayers_Handle.set(*softmuon, -99, sys);
+          m_softmu_nprecisionHoleLayers_Handle.set(*softmuon, -99, sys);
+          m_softmu_nGoodPrecLayers_Handle.set(*softmuon, -99, sys);
+          m_softmu_innerSmallHits_Handle.set(*softmuon, -99, sys);
+          m_softmu_innerLargeHits_Handle.set(*softmuon, -99, sys);
+          m_softmu_middleSmallHits_Handle.set(*softmuon, -99, sys);
+          m_softmu_middleLargeHits_Handle.set(*softmuon, -99, sys);
+          m_softmu_outerSmallHits_Handle.set(*softmuon, -99, sys);
+          m_softmu_outerLargeHits_Handle.set(*softmuon, -99, sys);
+          m_softmu_extendedSmallHits_Handle.set(*softmuon, -99, sys);
+          m_softmu_extendedLargeHits_Handle.set(*softmuon, -99, sys);
+          m_softmu_extendedSmallHoles_Handle.set(*softmuon, -99, sys);
+          m_softmu_isSmallGoodSectors_Handle.set(*softmuon, -99, sys);
+          m_softmu_cscUnspoiledEtaHits_Handle.set(*softmuon, -99, sys);
+          m_softmu_numberOfPixelHits_Handle.set(*softmuon, -99, sys);
+          m_softmu_numberOfPixelDeadSensors_Handle.set(*softmuon, -99, sys);
+          m_softmu_numberOfPixelHoles_Handle.set(*softmuon, -99, sys);
+          m_softmu_numberOfSCTHits_Handle.set(*softmuon, -99, sys);
+          m_softmu_numberOfSCTDeadSensors_Handle.set(*softmuon, -99, sys);
+          m_softmu_numberOfSCTHoles_Handle.set(*softmuon, -99, sys);
+          m_softmu_numberOfTRTHits_Handle.set(*softmuon, -99, sys);
+          m_softmu_numberOfTRTOutliers_Handle.set(*softmuon, -99, sys);
 
-        m_softmu_ptcone20_Nonprompt_All_MaxWeightTTVA_pt500_Handle.set(*softmuon, -99, sys);
-        m_softmu_ptvarcone30_Nonprompt_All_MaxWeightTTVA_pt500_Handle.set(*softmuon, -99, sys);
-        m_softmu_ptcone20_Nonprompt_All_MaxWeightTTVA_pt1000_Handle.set(*softmuon, -99, sys);
-        m_softmu_ptvarcone30_Nonprompt_All_MaxWeightTTVA_pt1000_Handle.set(*softmuon, -99, sys);
-        m_softmu_neflowisol20_Handle.set(*softmuon, -99, sys);
-        m_softmu_EnergyLoss_Handle.set(*softmuon, -99, sys);
-        m_softmu_EnergyLossSigma_Handle.set(*softmuon, -99, sys);
-        m_softmu_EnergyLossType_Handle.set(*softmuon, -99, sys);
-        m_softmu_ParamEnergyLoss_Handle.set(*softmuon, -99, sys);
-        m_softmu_MeasEnergyLoss_Handle.set(*softmuon, -99, sys);
-        m_softmu_ParamEnergyLossSigmaPlus_Handle.set(*softmuon, -99, sys);
-        m_softmu_ParamEnergyLossSigmaMinus_Handle.set(*softmuon, -99, sys);
-        m_softmu_MeasEnergyLossSigma_Handle.set(*softmuon, -99, sys);
+          m_softmu_ptcone20_Nonprompt_All_MaxWeightTTVA_pt500_Handle.set(*softmuon, -99, sys);
+          m_softmu_ptvarcone30_Nonprompt_All_MaxWeightTTVA_pt500_Handle.set(*softmuon, -99, sys);
+          m_softmu_ptcone20_Nonprompt_All_MaxWeightTTVA_pt1000_Handle.set(*softmuon, -99, sys);
+          m_softmu_ptvarcone30_Nonprompt_All_MaxWeightTTVA_pt1000_Handle.set(*softmuon, -99, sys);
+          m_softmu_neflowisol20_Handle.set(*softmuon, -99, sys);
+          m_softmu_EnergyLoss_Handle.set(*softmuon, -99, sys);
+          m_softmu_EnergyLossSigma_Handle.set(*softmuon, -99, sys);
+          m_softmu_EnergyLossType_Handle.set(*softmuon, -99, sys);
+          m_softmu_ParamEnergyLoss_Handle.set(*softmuon, -99, sys);
+          m_softmu_MeasEnergyLoss_Handle.set(*softmuon, -99, sys);
+          m_softmu_ParamEnergyLossSigmaPlus_Handle.set(*softmuon, -99, sys);
+          m_softmu_ParamEnergyLossSigmaMinus_Handle.set(*softmuon, -99, sys);
+          m_softmu_MeasEnergyLossSigma_Handle.set(*softmuon, -99, sys);
 
-        m_IdMsPt_Handle.set(*softmuon, -99, sys);
-        m_qOverPsignificance_Handle.set(*softmuon, -99, sys);
-        m_rhoPrime_Handle.set(*softmuon, -99, sys);
+          m_IdMsPt_Handle.set(*softmuon, -99, sys);
+          m_qOverPsignificance_Handle.set(*softmuon, -99, sys);
+          m_rhoPrime_Handle.set(*softmuon, -99, sys);
+        }
 
-        m_softmu_nearestJet_Index_Handle.set(*softmuon, -99, sys);
-        m_softmu_nearestJet_dR_Handle.set(*softmuon, -99, sys);
-        m_softmu_nearestJet_EMFrac_Handle.set(*softmuon, -99, sys);
-        m_softmu_nearestJet_NumTrkPt500_Handle.set(*softmuon, -99, sys);
-        m_softmu_nearestJet_SumPtTrkPt500_Handle.set(*softmuon, -99, sys);
-        m_softmu_nearestJet_NumTrkPt1000_Handle.set(*softmuon, -99, sys);
-        m_softmu_nearestJet_SumPtTrkPt1000_Handle.set(*softmuon, -99, sys);
-        m_softmu_nearestJet_N90Constituents_Handle.set(*softmuon, -99, sys);
-        m_softmu_nearestJet_TrackWidthPt500_Handle.set(*softmuon, -99, sys);
-        m_softmu_nearestJet_TrackWidthPt1000_Handle.set(*softmuon, -99, sys);
-        m_softmu_nearestJet_Width_Handle.set(*softmuon, -99, sys);
-        m_softmu_nearestJet_Charge_Handle.set(*softmuon, -99, sys);
-        m_softmu_nearestJet_ChargedPFOWidthPt500_Handle.set(*softmuon, -99, sys);
-        m_softmu_nearestJet_ChargedPFOWidthPt1000_Handle.set(*softmuon, -99, sys);
+        if(m_saveSoftMuonNearestJetInfo){
+
+          m_softmu_nearestJet_Index_Handle.set(*softmuon, -99, sys);
+          m_softmu_nearestJet_dR_Handle.set(*softmuon, -99, sys);
+          m_softmu_nearestJet_EMFrac_Handle.set(*softmuon, -99, sys);
+          m_softmu_nearestJet_NumTrkPt500_Handle.set(*softmuon, -99, sys);
+          m_softmu_nearestJet_SumPtTrkPt500_Handle.set(*softmuon, -99, sys);
+          m_softmu_nearestJet_NumTrkPt1000_Handle.set(*softmuon, -99, sys);
+          m_softmu_nearestJet_SumPtTrkPt1000_Handle.set(*softmuon, -99, sys);
+          m_softmu_nearestJet_N90Constituents_Handle.set(*softmuon, -99, sys);
+          m_softmu_nearestJet_TrackWidthPt500_Handle.set(*softmuon, -99, sys);
+          m_softmu_nearestJet_TrackWidthPt1000_Handle.set(*softmuon, -99, sys);
+          m_softmu_nearestJet_Width_Handle.set(*softmuon, -99, sys);
+          m_softmu_nearestJet_Charge_Handle.set(*softmuon, -99, sys);
+          m_softmu_nearestJet_ChargedPFOWidthPt500_Handle.set(*softmuon, -99, sys);
+          m_softmu_nearestJet_ChargedPFOWidthPt1000_Handle.set(*softmuon, -99, sys);
+        }
       }
+
       // --------------------------------------------------------
 
       // first figure out if this event even passes the selection in which we are to run this KLFitter instance
@@ -335,17 +342,25 @@ namespace top {
         else{ m_pass_SoftMuonPassDRJetcut.setBool(*evtInfo, 0, sys);}
 
 
+        //If the event has any soft muons, let's fill additional variables
+        if(PassSoftMuonDRJetCut){
+          // If the option is set, save additional variables related to the soft muon
 
-	// If the option is set, save additional variables related to the soft muon
-        for (const xAOD::Muon* softmuon : selected_softmuons){
-	  SoftMuonSelectorAlg::SaveAdditionalSoftMuonVariables(softmuon, sys);
+          for (const xAOD::Muon* softmuon : selected_softmuons){
 
+            //Does this muon pass the DRmin cut?
+            if(softmuon->auxdataConst<bool>(m_SoftMuonPassDRJetcut.getName(sys))){
 
-//          m_muonsHandle.retrieve(muons, sys)
+              if(m_saveSoftMuonAdditionalInfo){
+                SoftMuonSelectorAlg::SaveAdditionalSoftMuonVariables(softmuon, evtInfo, sys);
+              }
 
-
+              if(m_saveSoftMuonNearestJetInfo){
+                SoftMuonSelectorAlg::SaveAdditionalInformationFromNearestJet(softmuon, selected_jets, sys);
+              }
+            }
+          }
         }
-
 
 
 
@@ -400,7 +415,7 @@ namespace top {
 // Safe addigional information closes jet
 
 //Save additional soft muon related variables.
-  bool SoftMuonSelectorAlg::SaveAdditionalSoftMuonVariables(const xAOD::Muon* softmuon, const CP::SystematicSet sys){
+  void SoftMuonSelectorAlg::SaveAdditionalSoftMuonVariables(const xAOD::Muon* softmuon, const xAOD::EventInfo *evtInfo, const CP::SystematicSet sys){
 
     float idPt = -999.;
     float mePt = -999.;
@@ -441,19 +456,73 @@ namespace top {
     m_softmu_qOverPerr_ID_Handle.set(*softmuon, qOverPerr_ID, sys);
     m_softmu_qOverPerr_ME_Handle.set(*softmuon, qOverPerr_ME, sys);
 
-      // MAYBE THIS IS NOT SAVED BY DEFAULT IN TOPCPTOOLKIT. CHECK IT
-      /*
-       * //these are actually already stored by default
-      float delta_z0 = sm->primaryTrackParticle()->z0() + sm->primaryTrackParticle()->vz() - vtx->z();
-      float delta_z0_sintheta= delta_z0 * std::sin(sm->primaryTrackParticle()->theta());
+    // Impact patameter variables. (they may be saved by default in some versions, if so, comment these lines)
 
-      m_outtree_softmu_z0_sintheta.push_back(delta_z0_sintheta);
+//----------------
+/*
+SG::ReadHandleKey<xAOD::VertexContainer> m_primaryVerticesKey {this, "primaryVertices", "PrimaryVertices", "the name of the PrimaryVertex container to retrieve"};
+ ANA_CHECK (m_primaryVerticesKey.initialize());
+   SG::ReadHandle<xAOD::VertexContainer> vertices(m_primaryVerticesKey);
+  const xAOD::Vertex *primaryVertex {nullptr};
 
-      float d0=sm->primaryTrackParticle()->d0();
-      float d0sig=xAOD::TrackingHelpers::d0significance( sm->primaryTrackParticle(), evtInfo->beamPosSigmaX(), evtInfo->beamPosSigmaY(), evtInfo->beamPosSigmaXY() );
-      m_outtree_softmu_d0.push_back(d0);
-      m_outtree_softmu_d0sig.push_back(d0sig);
-      * */
+
+     for (const xAOD::Vertex *vertex : *vertices)
+     {
+       if (vertex->vertexType() == xAOD::VxType::PriVtx)
+      {
+        // The default "PrimaryVertex" container is ordered in
+         // sum-pt, and the tracking group recommends to pick the one
+        // with the maximum sum-pt, so this will do the right thing.
+         // If the user needs a different primary vertex, they need to
+        // provide a reordered primary vertex container and point
+         // this algorithm to it.  Currently there is no central
+         // algorithm to do that, so users will have to write their
+        // own (15 Aug 18).
+       if (primaryVertex == nullptr)
+        {
+          primaryVertex = vertex;
+           break;
+       }
+       }
+     }
+
+
+   const double vertex_z = primaryVertex ? primaryVertex->z() : 0;
+
+
+
+
+
+ATH_CHECK( evtStore()->retrieve( evtInfo, "EventInfo" ) );
+  const xAOD::Vertex* pv = this->GetPrimVtx();
+
+
+
+evtInfo->GetPrimVtx();
+
+
+const xAOD::Vertex        *priVtx
+
+  if(priVtx) {
+    const double deltaZ0  = track.z0() + track.vz() - priVtx->z();
+    Z0Sin                 = deltaZ0*std::sin(track.theta());
+  }
+
+*/
+//----------------
+
+
+//    float vtx_z = evtInfo->auxdata<float>("AnalysisTop_PRIVTX_z_position");
+//    float delta_z0 = softmuon->primaryTrackParticle()->z0() + softmuon->primaryTrackParticle()->vz() - vtx_z;
+//    float delta_z0_sintheta= delta_z0 * std::sin(softmuon->primaryTrackParticle()->theta());
+
+//    m_softmu_z0_sintheta_Handle.set(*softmuon, delta_z0_sintheta, sys);
+
+    float d0=softmuon->primaryTrackParticle()->d0();
+    float d0sig=xAOD::TrackingHelpers::d0significance( softmuon->primaryTrackParticle(), evtInfo->beamPosSigmaX(), evtInfo->beamPosSigmaY(), evtInfo->beamPosSigmaXY() );
+    m_softmu_d0_Handle.set(*softmuon, d0, sys);
+    m_softmu_d0sig_Handle.set(*softmuon, d0sig, sys);
+      
 
     m_softmu_reducedChi2_Handle.set(*softmuon, ( cbtrack && cbtrack->isAvailable<float>("numberDoF") && cbtrack->numberDoF()>0 ? cbtrack->chiSquared() / cbtrack->numberDoF() : -999), sys);
     m_softmu_reducedChi2_ID_Handle.set(*softmuon, ( idtrack && idtrack->isAvailable<float>("numberDoF") && idtrack->numberDoF()>0 ? idtrack->chiSquared() / idtrack->numberDoF() : -999), sys);
@@ -535,14 +604,20 @@ namespace top {
       m_softmu_ParamEnergyLossSigmaPlus_Handle.set(*softmuon, ( softmuon->isAvailable<float>("ParamEnergyLossSigmaMinus") ? softmuon->auxdata<float>("ParamEnergyLossSigmaMinus") : -999), sys);
       m_softmu_MeasEnergyLossSigma_Handle.set(*softmuon, ( softmuon->isAvailable<float>("MeasEnergyLossSigma") ? softmuon->auxdata<float>("MeasEnergyLossSigma") : -999), sys);
 
-    return true;
+    return;
   }
 
 
-  bool SoftMuonSelectorAlg::SaveAdditionalInformationFromNearestJet(const xAOD::Muon* softmuon, ConstDataVector<xAOD::JetContainer> selected_jets, const CP::SystematicSet sys){
+  void SoftMuonSelectorAlg::SaveAdditionalInformationFromNearestJet(const xAOD::Muon* softmuon, ConstDataVector<xAOD::JetContainer> selected_jets, const CP::SystematicSet sys){
 
     // Get the index of the nearest jet
-    int nearestJetIndex = -1;//m_softmu_nearestJet_Index_Handle.retrieve(*softmuon, sys);
+    int nearestJetIndex = -1;
+
+    const std::string& decorName = m_softmu_nearestJet_Index_Handle.getName(sys);
+
+    if (softmuon->isAvailable<int>(decorName)) {
+      nearestJetIndex = softmuon->auxdataConst<int>(decorName);
+    }
 
     int ijet =0;
     for (const xAOD::Jet *jet : selected_jets) {
@@ -552,39 +627,22 @@ namespace top {
         continue;
       }
 
-//      m_softmu_nearestJet_EMFrac_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMoment(event.m_jets.at(nearest_jet_index),"EMFrac") : -999), sys);
-
-/*
-      int nearest_jet_index=sm->isAvailable<int>("AT_SMTJetIndex") ? sm->auxdata<int>("AT_SMTJetIndex") : -999;
-      double minDR=sm->isAvailable<float>("AT_SMTJetDR") ? sm->auxdata<float>("AT_SMTJetDR") : -999;
-
-      m_outtree_softmu_nearestJet_Index.push_back(nearest_jet_index);
-      m_outtree_softmu_nearestJet_dR.push_back(minDR);
-      m_outtree_softmu_nearestJet_EMFrac.push_back(nearest_jet_index>=0 ? retrieveFloatJetMoment(event.m_jets.at(nearest_jet_index),"EMFrac") : -999);
-      m_outtree_softmu_nearestJet_NumTrkPt500.push_back(nearest_jet_index>=0 ? retrieveIntJetMomentFromVector(event.m_jets.at(nearest_jet_index),"NumTrkPt500",0) : -999);
-      m_outtree_softmu_nearestJet_SumPtTrkPt500.push_back(nearest_jet_index>=0 ? retrieveFloatJetMomentFromVector(event.m_jets.at(nearest_jet_index),"SumPtTrkPt500",0) : -999);
-      m_outtree_softmu_nearestJet_NumTrkPt1000.push_back(nearest_jet_index>=0 ? retrieveIntJetMomentFromVector(event.m_jets.at(nearest_jet_index),"NumTrkPt1000",0) : -999);
-      m_outtree_softmu_nearestJet_SumPtTrkPt1000.push_back(nearest_jet_index>=0 ? retrieveFloatJetMomentFromVector(event.m_jets.at(nearest_jet_index),"SumPtTrkPt1000",0) : -999);
-      m_outtree_softmu_nearestJet_N90Constituents.push_back(nearest_jet_index>=0 ? retrieveFloatJetMoment(event.m_jets.at(nearest_jet_index),"N90Constituents") : -999);
-      m_outtree_softmu_nearestJet_TrackWidthPt500.push_back(nearest_jet_index>=0 ? retrieveFloatJetMomentFromVector(event.m_jets.at(nearest_jet_index),"TrackWidthPt500",0) : -999);
-      m_outtree_softmu_nearestJet_TrackWidthPt1000.push_back(nearest_jet_index>=0 ? retrieveFloatJetMomentFromVector(event.m_jets.at(nearest_jet_index),"TrackWidthPt1000",0) : -999);
-      m_outtree_softmu_nearestJet_Width.push_back(nearest_jet_index>=0 ? retrieveFloatJetMoment(event.m_jets.at(nearest_jet_index),"Width") : -999);
-      m_outtree_softmu_nearestJet_Charge.push_back(nearest_jet_index>=0 ? retrieveFloatJetMoment(event.m_jets.at(nearest_jet_index),"Charge") : -999);
-      m_outtree_softmu_nearestJet_ChargedPFOWidthPt1000.push_back(nearest_jet_index>=0 ? retrieveFloatJetMomentFromVector(event.m_jets.at(nearest_jet_index),"ChargedPFOWidthPt1000",0) : -999);
-      m_outtree_softmu_nearestJet_ChargedPFOWidthPt500.push_back(nearest_jet_index>=0 ? retrieveFloatJetMomentFromVector(event.m_jets.at(nearest_jet_index),"ChargedPFOWidthPt500",0) : -999);
-
-
-*/
-
+      m_softmu_nearestJet_EMFrac_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMoment(jet, "EMFrac") : -999), sys);
+      m_softmu_nearestJet_NumTrkPt500_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveIntJetMomentFromVector(jet, "NumTrkPt500",0) : -999), sys);
+      m_softmu_nearestJet_SumPtTrkPt500_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMomentFromVector(jet, "SumPtTrkPt500",0) : -999), sys);
+      m_softmu_nearestJet_NumTrkPt1000_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveIntJetMomentFromVector(jet, "NumTrkPt1000",0) : -999), sys);
+      m_softmu_nearestJet_SumPtTrkPt1000_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMomentFromVector(jet, "SumPtTrkPt1000",0) : -999), sys);
+      m_softmu_nearestJet_N90Constituents_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMoment(jet, "N90Constituents") : -999), sys);
+      m_softmu_nearestJet_TrackWidthPt500_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMomentFromVector(jet, "TrackWidthPt500",0) : -999), sys);
+      m_softmu_nearestJet_TrackWidthPt1000_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMomentFromVector(jet, "TrackWidthPt1000",0) : -999), sys);
+      m_softmu_nearestJet_Width_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMoment(jet, "Width") : -999), sys);
+      m_softmu_nearestJet_Charge_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMoment(jet, "Charge") : -999), sys);
+      m_softmu_nearestJet_ChargedPFOWidthPt1000_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMomentFromVector(jet, "ChargedPFOWidthPt1000",0) : -999), sys);
+      m_softmu_nearestJet_ChargedPFOWidthPt500_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMomentFromVector(jet, "ChargedPFOWidthPt500",0) : -999), sys);
     }
 
 
-
-
-
-
-
-    return true;
+    return;
   }
 
    // -----------------------------------------------------------------------------------------------------
@@ -621,12 +679,12 @@ namespace top {
         retrieveSummaryValue(*track, summary.numberOfTRTHits, xAOD::SummaryType::numberOfTRTHits);
         retrieveSummaryValue(*track, summary.numberOfTRTOutliers, xAOD::SummaryType::numberOfTRTOutliers);
   }
-/*
+
   float SoftMuonSelectorAlg::retrieveFloatJetMomentFromVector(const xAOD::Jet* jet, std::string name, unsigned int pos)
   {
     if(!jet) return -999;
     if(!jet->isAvailable<std::vector<float> >(name)) return -999;
-    vector<float> v =  jet->auxdata<std::vector<float> >(name);
+    std::vector<float> v =  jet->auxdata<std::vector<float> >(name);
     if(pos>=v.size()) return -999;
     return v[pos];
   }
@@ -635,7 +693,7 @@ namespace top {
   {
     if(!jet) return -999;
     if(!jet->isAvailable<std::vector<int> >(name)) return -999;
-    vector<int> v =  jet->auxdata<std::vector<int> >(name);
+    std::vector<int> v =  jet->auxdata<std::vector<int> >(name);
     if(pos>=v.size()) return -999;
     return v[pos];
   }
@@ -651,7 +709,7 @@ namespace top {
     if(!jet->isAvailable<int>(name)) return -999;
     return jet->auxdata<int>(name);
   }
-*/
+
   // ---------------------------------------------------
 
   void SoftMuonSelectorAlg::IdMsPt(const xAOD::Muon& mu, float& idPt, float& mePt) const {

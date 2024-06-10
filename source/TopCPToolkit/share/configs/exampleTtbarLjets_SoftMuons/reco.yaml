@@ -338,15 +338,15 @@ EventSelection:
 #    eventSelection: 'pass_ejets_%SYS%,as_char||pass_mujets_%SYS%,as_char'
 
 SoftMuonSelector:
-#- UseSoftMuons: True
-#   SoftMuonsContainer: 'AnaMuons.soft'
   - softmuons: 'AnaMuons.soft'
 #   SoftMuonQuality: 'Medium'
 #   SoftMuonIsolation: 'NonIso'
 #   SoftMuonPt: 4000.0
 #   SoftMuonEta: 2.5
     jets: 'AnaJets'
-    SoftMuonDRJet: 0.4
+    softMuonDRJet: 0.4
+    saveSoftMuonAdditionalInfo: True
+    saveSoftMuonNearestJetInfo: True
 #   SoftMuonDRJetUseRapidity: True
 #   SoftMuonAdditionalTruthInfo: True
 #   SoftMuonAdditionalTruthInfoCheckPartonOrigin: False
