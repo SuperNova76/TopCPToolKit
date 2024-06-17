@@ -109,6 +109,7 @@ Name in YAML: **Photons**
     - `pt`: photon $p_\mathrm{T}$
     - `eta`: photon $\eta$ (no systematics)
     - `phi`: photon $\phi$ (no systematics)
+    - `e`: photon $E$: (*since AnalysisBase 25.2.13*)
 
 ### [PhotonWorkingPointConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/python/PhotonAnalysisConfig.py)
 Name in YAML: **Photons.WorkingPoint**

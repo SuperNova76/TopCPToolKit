@@ -26,7 +26,7 @@ Name in YAML: **Jets**
     - `m`: jet mass (for large-R jets)
     - `eta`: jet $\eta$ (no systematics)
     - `phi`: jet $\phi$ (no systematics)
-    - `e`: jet $E$
+    - `e`: jet $E$ (*since AnalysisBase 25.2.13*)
 
 #### Additional options for small-R jets
 

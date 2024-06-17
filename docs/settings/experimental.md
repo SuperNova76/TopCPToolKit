@@ -68,3 +68,28 @@ Print a list of branches that are read when processing input files using the [Re
 
 `printOption`
 :   option to pass the standard ROOT printing function. Can be "Summary", "ByEntries" or "ByBytes". The default is "Summary".
+
+### [ExtraParticleDecorationConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/v2.9.2/source/TopCPToolkit/python/ExtraParticleDecorationConfig.py) :no_entry:
+
+**Deprecated since v2.10.0** ([issue #145](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/145))
+
+!!! warning "User actions required for updating to version 2.10.0 or higher"
+
+    Drop the following lines from YAML configs if applicable:
+    ```
+    ExtraParticleDecoration:
+        - particles: 'AnaElectrons'
+        - particles: 'AnaMuons'
+        - particles: 'AnaJets
+    ```
+    The declaration of `ExtraParticleDecoration` under `AddConfigBlocks` also need to be removed.
+
+Name in YAML: **ExtraParticleDecoration**
+
+Allows to add generic particle decorations and save them as output variables.
+
+`particles`
+:   the input particle container.
+
+!!! success "Registers the following variables:"
+    - `e`: object $E$
