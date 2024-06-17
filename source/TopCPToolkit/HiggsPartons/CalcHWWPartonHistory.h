@@ -16,20 +16,23 @@ namespace top {
     struct HWW_values {
       //Higgs boson
       TLorentzVector H_p4;
-      //W+
+      bool hasH;
       TLorentzVector Wp_p4;
-      //W-
+      bool hasWp;
       TLorentzVector Wm_p4;
-      //W+ Decays
+      bool hasWm;
       TLorentzVector WpDecay1_p4;
-      int WpDecay1_pdgId;
       TLorentzVector WpDecay2_p4;
+      int WpDecay1_pdgId;
       int WpDecay2_pdgId;
-      //W- Decays
+      bool hasWpDecay1;
+      bool hasWpDecay2;
       TLorentzVector WmDecay1_p4;
-      int WmDecay1_pdgId;
       TLorentzVector WmDecay2_p4;
+      int WmDecay1_pdgId;
       int WmDecay2_pdgId;
+      bool hasWmDecay1;
+      bool hasWmDecay2;
 
       void reset(){
         H_p4.SetPtEtaPhiE(0,0,0,0);
@@ -41,16 +44,22 @@ namespace top {
         WpDecay2_pdgId = -9999;
 	WmDecay1_pdgId = -9999;
         WmDecay2_pdgId = -9999;
+	hasH = false;
+	hasWm = false;
+	hasWp = false;
+	hasWpDecay1 = false;
+	hasWpDecay2 = false;
+	hasWmDecay1 = false;
+	hasWmDecay2 = false;
       }
-    } hww;
-
+    } PartonLevelHWW;
 
     //Storing parton history for HWW analysis
     CalcHWWPartonHistory(const CalcHWWPartonHistory& rhs) = delete;
     CalcHWWPartonHistory(CalcHWWPartonHistory&& rhs) = delete;
     CalcHWWPartonHistory& operator = (const CalcHWWPartonHistory& rhs) = delete;
 
-    bool HWW(const xAOD::TruthParticleContainer* truthParticles, int start);
+    bool Fill(const xAOD::TruthParticleContainer* truthParticles, int start);
 
   protected:
     virtual StatusCode runHistorySaver(const xAOD::TruthParticleContainer* truthParticles,
