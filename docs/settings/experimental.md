@@ -93,3 +93,30 @@ Allows to add generic particle decorations and save them as output variables.
 
 !!! success "Registers the following variables:"
     - `e`: object $E$
+
+### [ExtraPhotonDecorationConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/v2.9.2/TopCPToolkit/python/ExtraPhotonDecorationConfig.py) :no_entry:
+**Deprecated since v2.10.0** ([issue #146](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/146))
+
+!!! warning "User actions required for updating to version 2.10.0 or higher"
+
+    Calls to a distinct `ExtraPhotonDecoration:` block can be replaced by a one-liner within the `Photons:` block:
+    ```
+    Photons:
+      - containerName: 'AnaPhotons'
+        recomputeIsEM: False
+        ExtraVariables: {} # <-- no extra settings needed!
+        WorkingPoint:
+          - ...
+    ```
+    The declaration of `ExtraPhotonDecoration` under `AddConfigBlocks` should also be removed if applicable.
+
+Name in YAML: **ExtraPhotonDecoration**
+
+Decorates the output photons with the conversion type and calo eta.
+
+`photons`
+:   the input photon container.
+
+!!! success "Registers the following variables:"
+    - `conversionType`: photon conversion type.
+    - `caloEta`: calorimeter eta.
