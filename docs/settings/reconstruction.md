@@ -109,6 +109,10 @@ Name in YAML: **DiTauMMC**
 !!! warning
     The MMC method assumes that the MET in a given event originates mostly from the neutrinos associated to the decay of the di-tau system. If your topology has additional sources of MET (e.g. $t\bar{t}H(\to\tau\tau)$, $W(\to\ell\nu)H(\to\tau\tau)$), the MMC method is not recommended and will give nonsensical answers. See e.g. the ATLAS Run 2 search for BSM $VH(\to\tau\tau)$ in [ATL-COM-PHYS-2022-022](https://cds.cern.ch/record/2799543) where the MMC method is combined with alternatives. Additional neutrinos from the decay of B-hadrons typically do not lead to significant enough MET to be a problem, i.e. $t\bar{t}(\to\text{jets})H(\to\tau\tau)$ should be safe.
 
+!!! warning "User actions required for updating to version 2.10.0 or higher"
+
+    This algorithm has been migrated to Athena since v2.10.0 ([issue #150](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/150)). Its declaration under `AddConfigBlocks` should be removed if applicable. Using this block in YAML configs is unchanged.
+
 ### [KLFitterConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/KLFitterConfig.py)
 Name in YAML: **KLFitter**
 
