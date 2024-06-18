@@ -139,7 +139,7 @@ Name in YAML: **TtbarNNLO**
 Name in YAML: **PartonToJetsMatch**
 
 The algorithm matches jets with partons from ttbar lepton+jets topology. The output of the algorithm are four variables representing the indices (for the jets) of the b-jets from hadronically and semileptonically decaying tops, jets matched to the up-type and down-type quarks from the hadronic W decay. Finally, a flag is added for dilepton events.
-The matching algorithm looks for the closest jets in $\Delta R$. For multiple matches (or for dilepton events) the multi-matched objects have index set to -1.
+The matching algorithm looks jets that are within the selected delta R. If more than one jet passed the criterium, the index is set to -1. For multiple objects matching the same index (or for dilepton events) the multi-matched objects have index set to -1.
 
 `jets`
 :   jet collection name (string) for matching, can be reco jets or truth jets. The default is `AntiKt4TruthDressedWZJets`.

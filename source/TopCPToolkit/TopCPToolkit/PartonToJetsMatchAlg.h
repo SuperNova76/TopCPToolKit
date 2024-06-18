@@ -25,6 +25,8 @@ namespace top {
     private:
       StatusCode execute_syst(const CP::SystematicSet &sys);
 
+      int FindIndex(const std::vector<double>& dr) const;
+
       // systematics
       CP::SysListHandle m_systematicsList {this};
 
