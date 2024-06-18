@@ -56,7 +56,6 @@ namespace top {
 
     for(const xAOD::TruthParticle *p : *cont1)
     {
-
       const xAOD::TruthParticle* link =0;
       for(const xAOD::TruthParticle *p2 : *cont2)
       {

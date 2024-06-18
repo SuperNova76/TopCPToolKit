@@ -10,7 +10,7 @@
 #include "AthContainers/DataVector.h"
 #include "AthContainers/AuxElement.h"
 #include "xAODTruth/TruthParticleContainer.h"
-#include "TopPartons/PartonHistory.h"
+#include "PartonHistory/PartonHistory.h"
 
 namespace top {
 
