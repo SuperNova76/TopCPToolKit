@@ -6,7 +6,24 @@ GeneratorLevelAnalysis: {}
 PartonHistory:
   - histories: 'Ttbar.TtbarLight'
 
-TtbarNNLO: {}
+#TtbarNNLO: {}
+
+SpinInputs:
+  - history: 'Ttbar'
+
+SpinMatrix:
+  - setup: 'custom1'
+    top: 'truth_top_4vect_%SYS%'
+    tbar: 'truth_tbar_4vect_%SYS%'
+    top_decay: 'truth_top_decay_4vect_%SYS%'
+    tbar_decay: 'truth_tbar_decay_4vect_%SYS%'
+    doHelicityBasis: True
+  - setup: 'custom2'
+    top: 'truth_top_4vect_%SYS%'
+    tbar: 'truth_tbar_4vect_%SYS%'
+    top_decay: 'truth_top_decay_4vect_%SYS%'
+    tbar_decay: 'truth_tbar_decay_4vect_%SYS%'
+    doEntanglement: True
 
 # After configuring each container, many variables will be saved automatically.
 Output:
@@ -29,4 +46,12 @@ AddConfigBlocks:
     - modulePath: 'TopCPToolkit.TtbarNNLORecursiveRewConfig'
       functionName: 'TtbarNNLORecursiveRewConfig'
       algName: 'TtbarNNLO'
+      pos: 'Output'
+    - modulePath: 'TopCPToolkit.PartonHistoryToSpinInputConfig'
+      functionName: 'PartonHistoryToSpinInputConfig'
+      algName: 'SpinInputs'
+      pos: 'Output'
+    - modulePath: 'TopCPToolkit.TopSpinDensityMatrixConfig'
+      functionName: 'TopSpinDensityMatrixConfig'
+      algName: 'SpinMatrix'
       pos: 'Output'

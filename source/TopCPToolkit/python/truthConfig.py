@@ -429,8 +429,7 @@ class truthConfig(ConfigBlock):
             alg.topPartonScheme = history
 
             container = "TopPartonHistory" + history
-            config.setSourceName(container, container)
-            config.addOutputContainer(container, container)
+            _ = config.writeName(container)
 
             for branch in truth_branches[history]:
                 config.addOutputVar(container, branch, branch, noSys=True)

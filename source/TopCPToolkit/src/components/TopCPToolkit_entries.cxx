@@ -16,6 +16,8 @@
 #include <TopCPToolkit/SVMassAlg.h>
 #include <TopCPToolkit/FakeBkgCalculatorAlg.h>
 #include <TopCPToolkit/VGammaORAlg.h>
+#include <TopCPToolkit/PartonHistoryToSpinInputAlg.h>
+#include <TopCPToolkit/TopSpinDensityMatrixAlg.h>
 
 DECLARE_COMPONENT (SVMassAlg)
 DECLARE_COMPONENT (top::RunTtbarNNLORecursiveRewAlg)
@@ -29,3 +31,5 @@ DECLARE_COMPONENT (top::KLFitterAlg)
 DECLARE_COMPONENT (top::JetMatchingAlg)
 DECLARE_COMPONENT (top::JetReclusteringAlg)
 DECLARE_COMPONENT (BTaggingScoresAlg)
+DECLARE_COMPONENT (top::PartonHistoryToSpinInputAlg)
+DECLARE_COMPONENT (top::TopSpinDensityMatrixAlg)
