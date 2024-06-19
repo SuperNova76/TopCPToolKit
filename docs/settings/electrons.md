@@ -107,6 +107,7 @@ Name in YAML: **Electrons**
     - `eta`: electron $\eta$ (no systematics)
     - `phi`: electron $\phi$ (no systematics)
     - `charge`: electron charge (no systematics)
+    - `e`: electron $E$ (*since AnalysisBase 25.2.13*)
 
 ### [ElectronWorkingPointConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/python/ElectronAnalysisConfig.py)
 Name in YAML: **Electrons.WorkingPoint**

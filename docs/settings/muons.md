@@ -92,6 +92,7 @@ Name in YAML: **Muons**
     - `eta`: muon $\eta$ (no systematics)
     - `phi`: muon $\phi$ (no systematics)
     - `charge`: muon charge (no systematics)
+    - `e`: muon $E$ (*since AnalysisBase 25.2.13*)
 
 ### [MuonWorkingPointConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/MuonAnalysisAlgorithms/python/MuonAnalysisConfig.py)
 Name in YAML: **Muons.WorkingPoint**

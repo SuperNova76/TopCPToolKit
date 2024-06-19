@@ -17,8 +17,8 @@ Name in YAML: **Trigger**
 :   a dictionary with key (string) the year and value (list of strings) the trigger chains. You can also use `||` within a string to enforce an OR of triggers without looking up the individual triggers. Used for both trigger selection and SFs. The default is `{}` (empty dictionary).
 
 `multiTriggerChainsPerYear`
-:   a dictionary with key (string) a trigger set name and value a triggerChainsPerYear dictionary, following the previous convention. Relevant for analyses using different triggers in different categories, where the trigger global scale factors shouldn't be combined. The default is {} (empty dictionary).
-    Introduced since AnalysisBase 25.2.11
+:   (*since AnalysisBase 25.2.11*)
+    a dictionary with key (string) a trigger set name and value a triggerChainsPerYear dictionary, following the previous convention. Relevant for analyses using different triggers in different categories, where the trigger global scale factors shouldn't be combined. The default is {} (empty dictionary).
 
     ??? success "Example"
         If leading lepton pT>XX, check single lepton trigger / else check di-lepton trigger.
@@ -91,6 +91,7 @@ The default is `[]` (empty list).
 
 ### [ElectronTriggerAnalysisSFBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/python/ElectronAnalysisConfig.py)
 This config block allows you to retrieve the per-electron trigger SFs.
+(*since AnalysisBase 25.2.14*)
 
 Name in YAML: **Electrons.TriggerSF**
 
@@ -112,12 +113,13 @@ Name in YAML: **Electrons.TriggerSF**
 `containerName`
 :   the input electron container, with a possible selection, in the format `container` or `container.selection`.
 
-!!! success "Registers the following variables:|
+!!! success "Registers the following variables:
     - `trigEffSF`: the per-electron trigger efficiency or efficiency SF
     - `trigEff`: the per-electron trigger efficiecny (if `saveEff`)
 
 ### [TauTriggerAnalysisSFBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TauAnalysisAlgorithms/python/TauAnalysisConfig.py)
 This config block allows you to retrieve the per-tau-jet trigger SFs.
+(*since AnalysisBase 25.2.13*)
 
 Name in YAML: **TauJets.TriggerSF**
 

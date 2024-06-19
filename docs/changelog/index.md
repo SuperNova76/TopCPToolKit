@@ -5,7 +5,18 @@
 ### Upcoming release
 - [issue #94](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/94): add algorithm for NuFlows reconstruction
 - [issue #125](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/125): Add a tutorial on deploying trained ML models for inference
+
+### 2.10.0 <small>Jun 19, 2024</small>
+- We run on AB 25.2.15
 - [issue #140](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/140): New algorithm for ttbar spin density matrix calculations
+- [issue #143](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/143): Print a list of branches that are read from input files
+- [issue #145](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/145): Migrate ExtraParticleDecorationAlg to Athena :warning:[***interface change***](../settings/experimental.md#extraparticledecorationconfig-no_entry):warning:
+- [issue #146](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/146): Migrate ExtraPhotonDecorationAlg to Athena :warning:[***interface change***](../settings/experimental.md#extraphotondecorationconfig-no_entry):warning:
+- [issue #149](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/149): Migrate IOStatsAlg to Athena
+- [issue #150](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/150): Migrate DiTauMassCalculatorAlg to Athena :warning:[***interface change***](../settings/reconstruction.md#ditaumassblock):warning:
+- [issue #151](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/151): Document new config blocks for per-tau and per-electron trigger efficiencies and SFs
+- [issue #152](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/152): Lepton scale factor calculator cannot handle multiple instances
+- [issue #153](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/153): Fix issues with parton to jet matching
 
 ### 2.9.2 <small>May 24, 2024</small>
 - We run on AB 25.2.12
