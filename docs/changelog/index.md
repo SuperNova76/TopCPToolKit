@@ -5,10 +5,10 @@
 ### Upcoming release
 - [issue #94](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/94): add algorithm for NuFlows reconstruction
 - [issue #125](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/125): Add a tutorial on deploying trained ML models for inference
-- [issue #140](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/140): New algorithm for ttbar spin density matrix calculations
 
-### 2.10.0 <small>Jun 14, 2024</small>
+### 2.10.0 <small>Jun 19, 2024</small>
 - We run on AB 25.2.15
+- [issue #140](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/140): New algorithm for ttbar spin density matrix calculations
 - [issue #143](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/143): Print a list of branches that are read from input files
 - [issue #145](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/145): Migrate ExtraParticleDecorationAlg to Athena :warning:[***interface change***](../settings/experimental.md#extraparticledecorationconfig-no_entry):warning:
 - [issue #146](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/146): Migrate ExtraPhotonDecorationAlg to Athena :warning:[***interface change***](../settings/experimental.md#extraphotondecorationconfig-no_entry):warning:
