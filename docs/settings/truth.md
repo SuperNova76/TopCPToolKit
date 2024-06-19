@@ -207,3 +207,23 @@ Name in YAML: **X.IFFClassification**, with X amongst: Electrons, Muons
 
 !!! success "Registers the following variables:"
     - `IFFClass`: the decision of the [IFF `TruthClassificationTool`](https://gitlab.cern.ch/atlas/athena/-/tree/21.2/PhysicsAnalysis/AnalysisCommon/TruthClassification)  (no systematics)
+
+### [PartonHistoryToSpinInputConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/PartonHistoryToSpinInputConfig.py)
+Name in YAML: **SpinInputs**
+
+Takes a parton history as input and prepares the 4-vectors of the top/anti-top and their respective spin analysers.
+
+`history`
+:   the top parton history (string) to read. The default is `None`.
+
+`top`
+:   the name (string) to give the 4-vector for the top quark. The default is `'truth_top_4vect_%SYS%'`.
+
+`tbar`
+:   the name (string) to give the 4-vector for the anti-top quark. The default is `'truth_tbar_4vect_%SYS%'`.
+
+`top_decay`
+:   the name (string) to give the 4-vector for the decay product of the top quark. The default is `'truth_top_decay_4vect_%SYS%'`.
+
+`tbar_decay`
+:   the name (string) to give the 4-vector for the decay product of the anti-top quark. The default is `'truth_tbar_decay_4vect_%SYS%'`.

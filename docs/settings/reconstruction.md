@@ -232,3 +232,46 @@ Name in YAML: **FakeBkgCalculator**
 
 !!! abstract "Documentation"
     The source code and documentation for FakeBkgTools are available from [athena](https://gitlab.cern.ch/atlas/athena/-/tree/main/PhysicsAnalysis/AnalysisCommon/FakeBkgTools).
+
+### [TopSpinDensityMatrixConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/TopSpinDensityMatrixConfig.py)
+Name in YAML: **SpinMatrix**
+
+Constructs a series of observables used to measure spin correlations, polarisations, and entanglement in top-anti-top quark pairs.
+
+`setup`
+:   a name (string) for this particular instance (useful to distinguish between different scenarios). The default is `''` (empty string).
+
+`eventSelection`
+:   optional event filter to run on. The default is `''` (empty string), i.e. all events.
+
+`top`
+:   the name (string) of the 4-vector for the top quark. The default is `''` (empty string).
+
+`tbar`
+:   the name (string) of the 4-vector for the anti-top quark. The default is `''` (empty string).
+
+`top_decay`
+:   the name (string) of the 4-vector for the decay product of the top quark. The default is `''` (empty string).
+
+`tbar_decay`
+:   the name (string) of the 4-vector for the decay product of the anti-top quark. The default is `''` (empty string).
+
+`doHelicityBasis`
+:   whether to compute the observables in the helicity basis. The default is `False`.
+
+`doEntanglement`
+:   whether to compute observables related to spin entanglement. The default is `False`.
+
+!!! note
+    No variable is saved by default, one must use the boolean switches!
+
+!!! success "Additional variables toggled by `doHelicityBasis`"
+    - `cos_theta_helicity_p`: cosine of the $\theta$ angle for the spin analyser of the top quark along the helicity axis
+    - `cos_theta_helicity_m`: cosine of the $\theta$ angle for the spin analyser of the anti-top quark along the helicity axis
+    - `cos_theta_transverse_p`: cosine of the $\theta$ angle for the spin analyser of the top quark along the transverse axis
+    - `cos_theta_transverse_m`: cosine of the $\theta$ angle for the spin analyser of the anti-top quark along the transverse axis
+    - `cos_theta_raxis_p`: cosine of the $\theta$ angle for the spin analyser of the top quark along the third axis
+    - `cos_theta_raxis_m`: cosine of the $\theta$ angle for the spin analyser of the anti-top quark along the third axis
+
+!!! success "Additional variables toggled by `doEntanglement`"
+    - `cos_phi`: cosine of the opening angle between the spin analysers of top and the anti-top quarks in their respective rest frames (related to the quantum entanglement marker $D$)
