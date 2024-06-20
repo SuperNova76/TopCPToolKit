@@ -94,6 +94,15 @@ Name in YAML: **ParticleLevel**
 `ljetCollection`
 :   the large-R jet collection to run on. The default is `AntiKt10TruthTrimmedPtFrac5SmallR20Jets` for `DAOD_PHYS`, and `AntiKt10TruthSoftDropBeta100Zcut10Jets` for `DAOD_PHYSLITE`.
 
+`useTruthNeutrinos`
+:   whether to use neutrinos. The default is `False`.
+
+`nuPtMin`
+:   minimum neutrino $p_\mathrm{T}$, in MeV. The default is 0 GeV.
+
+`nuEtaMax`
+:   maximum neutrino $\vert\eta\vert$. The default is 10.
+
 `useTruthMET`
 :   whether to use MET. The default is `True`.
 

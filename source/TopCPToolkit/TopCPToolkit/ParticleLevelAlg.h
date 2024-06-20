@@ -39,8 +39,8 @@ namespace top {
     StatusCode save;
     StatusCode saveAux;
 
-    bool m_useTruthElectrons, m_useTruthMuons, m_useTruthPhotons,
-      m_useTruthTaus, m_useTruthJets, m_useTruthLargeRJets, m_useTruthMET,
+    bool m_useTruthElectrons, m_useTruthMuons, m_useTruthPhotons, m_useTruthTaus,
+      m_useTruthJets, m_useTruthLargeRJets, m_useTruthNeutrinos, m_useTruthMET,
       m_doOverlapRemoval;
     float m_el_ptMin, m_el_etaMax;
     bool m_el_notFromHadron, m_el_tauIsHadron;
@@ -52,13 +52,14 @@ namespace top {
     float m_jet_ptMin, m_jet_etaMax;
     float m_ljet_ptMin, m_ljet_etaMax;
     std::string m_ljet_collection;
+    float m_nu_ptMin, m_nu_etaMax;
 
     const xAOD::TruthParticleContainer *inputElectrons, *inputMuons,
-      *inputPhotons, *inputTaus;
+      *inputPhotons, *inputTaus, *inputNeutrinos;
     xAOD::TruthParticleContainer *outputElectrons, *outputMuons, *outputPhotons,
-      *outputTaus;
+      *outputTaus, *outputNeutrinos;
     xAOD::TruthParticleAuxContainer *outputElectronsAux, *outputMuonsAux,
-      *outputPhotonsAux, *outputTausAux;
+      *outputPhotonsAux, *outputTausAux, *outputNeutrinosAux;
 
     const xAOD::JetContainer *inputJets, *inputLargeRJets;
     xAOD::JetContainer *outputJets, *outputLargeRJets;
