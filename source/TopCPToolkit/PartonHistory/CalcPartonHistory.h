@@ -26,6 +26,7 @@ namespace top {
     CalcPartonHistory& operator = (const CalcPartonHistory& rhs) = delete;
 
     std::map<std::string, const xAOD::TruthParticle* > particleMap;
+    std::vector<const xAOD::TruthParticle*> tracedParticles;
 
     void AddToParticleMap(const xAOD::TruthParticle* particle, std::string key);
     bool ExistsInMap(const std::string& key);
@@ -63,7 +64,6 @@ namespace top {
 		       std::vector<const xAOD::TruthParticle*>& currentPath,
 		       std::vector<std::vector<const xAOD::TruthParticle*>>& allPaths);
     void TraceParticles(const xAOD::TruthParticleContainer* truthParticles);
-
     bool handleBeforeFSR(const xAOD::TruthParticle* particle, const std::string& newKey, std::string& key);
     bool handleAfterFSR(const xAOD::TruthParticle* particle, const std::string& newKey, const std::string& oldKey, std::string& key);
     bool handleDecay(const xAOD::TruthParticle* particle, std::string& key, int decayID);
