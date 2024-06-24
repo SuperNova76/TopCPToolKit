@@ -22,10 +22,6 @@
 #include "PartonHistory/CalcHWWPartonHistory.h"
 #include "PartonHistory/CalcHZZPartonHistory.h"
 
-// HiggsParton histories
-#include "PartonHistory/CalcHiggsPartonHistory.h"
-#include "PartonHistory/CalcHWWPartonHistory.h"
-
 namespace top {
 
   class RunPartonHistoryAlg final : public EL::AnaAlgorithm {
