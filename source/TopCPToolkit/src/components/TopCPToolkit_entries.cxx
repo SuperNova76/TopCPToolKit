@@ -32,9 +32,8 @@ DECLARE_COMPONENT (top::KLFitterAlg)
 DECLARE_COMPONENT (top::JetMatchingAlg)
 DECLARE_COMPONENT (top::JetReclusteringAlg)
 DECLARE_COMPONENT (BTaggingScoresAlg)
-<<<<<<< HEAD
 DECLARE_COMPONENT (top::SoftMuonSelectorAlg)
-=======
 DECLARE_COMPONENT (top::PartonHistoryToSpinInputAlg)
 DECLARE_COMPONENT (top::TopSpinDensityMatrixAlg)
->>>>>>> 5ab23980e9d42b31f06d98b83a50a7c6432e0a5d
+DECLARE_COMPONENT (top::PartonHistoryToSpinInputAlg)
+DECLARE_COMPONENT (top::TopSpinDensityMatrixAlg)
