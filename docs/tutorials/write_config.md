@@ -444,7 +444,6 @@ Let's do it step by step... and of course you can use the documentation and sear
       - make a cutflow for them
       - add them to the MET definition, removing the `setMuonJetEMScale: False` setting
       - add them to the overlap removal
-      - add them to the `ExtraParticleDecoration:` block
       - thin the output in a similar way as for electrons
       - add them to the output with the prefix "mu_"
     
@@ -493,11 +492,6 @@ Let's do it step by step... and of course you can use the documentation and sear
     In the `MissingET:` and `OverlapRemoval:` blocks, add the property
     ```yaml
     muons: 'AnaMuons.tight'
-    ```
-    In the `ExtraParticleDecoration:` block, add a list element
-    ```yaml
-    - name: 'Mu'
-      particles: 'AnaMuons'
     ```
     Finally, in the `Output:` block, under `containers:`, add the line
     ```yaml

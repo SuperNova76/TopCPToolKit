@@ -228,22 +228,6 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics=False
     cfg.setOptionValue ('lepton_postfix', 'tight')
     configSeq.append(cfg)
 
-    # energy decorations
-    # TODO: give it a factory when moving to Athena
-    from TopCPToolkit.ExtraParticleDecorationConfig import ExtraParticleDecorationConfig
-    if use_electrons:
-        cfg = ExtraParticleDecorationConfig()
-        cfg.setOptionValue('particles', 'AnaElectrons')
-        configSeq.append(cfg)
-    if use_muons:
-        cfg = ExtraParticleDecorationConfig()
-        cfg.setOptionValue('particles', 'AnaMuons')
-        configSeq.append(cfg)
-    if use_jets:
-        cfg = ExtraParticleDecorationConfig()
-        cfg.setOptionValue('particles', 'AnaJets')
-        configSeq.append(cfg)
-
     # the IFF lepton classification
     if use_electrons:
         configSeq += makeConfig ('Electrons.IFFClassification', containerName='AnaElectrons')
@@ -361,18 +345,17 @@ SAVE
         cfg.setOptionValue ('topology', topology)
         configSeq.append(cfg)
 
-    # TODO: give it a factory when moving to Athena
     if use_taus:
-        from TopCPToolkit.DiTauMassConfig import DiTauMassConfig
-        cfg += DiTauMassConfig()
-        cfg.setOptionValue ('electrons', 'AnaElectrons.tight')
-        cfg.setOptionValue ('muons', 'AnaMuons.tight')
-        cfg.setOptionValue ('taus', 'AnaTauJets.tight')
-        cfg.setOptionValue ('jets', 'AnaJets.baselineJvt')
-        cfg.setOptionValue ('met', 'AnaMET')
-        cfg.setOptionValue ('eventSelection', '')
-        cfg.setOptionValue ('saveExtraVariables', True)
-        configSeq.append(cfg)
+        configSeq += makeConfig ('DiTauMMC')
+        configSeq.setOptionValue ('.electrons', 'AnaElectrons.tight')
+        configSeq.setOptionValue ('.muons', 'AnaMuons.tight')
+        configSeq.setOptionValue ('.taus', 'AnaTauJets.tight')
+        configSeq.setOptionValue ('.jets', 'AnaJets.baselineJvt')
+        configSeq.setOptionValue ('.met', 'AnaMET')
+        configSeq.setOptionValue ('.eventSelection', '')
+        configSeq.setOptionValue ('.saveExtraVariables', True)
+        configSeq.setOptionValue ('.doMLNU3P', True)
+        configSeq.setOptionValue (',doMAXW', True)
 
     # bootstraps
     configSeq += makeConfig ('Bootstraps')

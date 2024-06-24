@@ -15,7 +15,8 @@ class LeptonSFCalculatorConfig(ConfigBlock):
     def makeAlgs(self, config):
         if config.dataType() is DataType.Data: return
 
-        alg = config.createAlgorithm('top::LeptonSFCalculatorAlg', 'leptonSFCalculator')
+        alg = config.createAlgorithm('top::LeptonSFCalculatorAlg',
+                                     f'leptonSFCalculator_{self.lepton_postfix}')
 
         if self.electrons:
             electrons, electronSelection = config.readNameAndSelection(self.electrons)

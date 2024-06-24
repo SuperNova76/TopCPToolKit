@@ -166,11 +166,6 @@ LeptonSF:
   # photons: 'AnaPhotons.tight'
     lepton_postfix: 'tight'
 
-ExtraParticleDecoration:
-   - particles: 'AnaElectrons'
-   - particles: 'AnaMuons'
-   - particles: 'AnaJets'
-
 Trigger:
     triggerChainsPerYear:
         '2015':
@@ -270,6 +265,8 @@ SpaNet:
 #     met: 'AnaMET'
 #     eventSelection: ''
 #     saveExtraVariables: True
+#     doMLNU3P: True
+#     doMAXW: True
 
 Bootstraps:
   nReplicas: 2000
@@ -302,10 +299,6 @@ AddConfigBlocks:
       functionName: 'LeptonSFCalculatorConfig'
       algName: 'LeptonSF'
       pos: 'Output'
-    - modulePath: 'TopCPToolkit.ExtraParticleDecorationConfig'
-      functionName: 'ExtraParticleDecorationConfig'
-      algName: 'ExtraParticleDecoration'
-      pos: 'Output'
     - modulePath: 'TopCPToolkit.KLFitterConfig'
       functionName: 'KLFitterConfig'
       algName: 'KLFitter'
@@ -325,10 +318,6 @@ AddConfigBlocks:
     - modulePath: 'TopCPToolkit.TtbarNNLORecursiveRewConfig'
       functionName: 'TtbarNNLORecursiveRewConfig'
       algName: 'TtbarNNLO'
-      pos: 'Output'
-    - modulePath: 'TopCPToolkit.DiTauMassConfig'
-      functionName: 'DiTauMassConfig'
-      algName: 'DiTauMMC'
       pos: 'Output'
     - modulePath: 'TopCPToolkit.JetMatchingConfig'
       functionName: 'JetMatchingConfig'
@@ -358,10 +347,3 @@ AddConfigBlocks:
       functionName: 'VGammaORConfig'
       algName: 'VGammaOR'
       pos: 'Output'
-    - modulePath: 'TopCPToolkit.ExtraPhotonDecorationConfig'
-      functionName: 'ExtraPhotonDecorationConfig'
-      algName: 'ExtraPhotonDecoration'
-      pos: 'Output'
-    - modulePath: 'TopCPToolkit.IOStatsConfig'
-      functionName: 'IOStatsConfig'
-      algName: 'IOStats'

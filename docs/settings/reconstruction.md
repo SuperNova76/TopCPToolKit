@@ -7,7 +7,7 @@
 
 ## Config blocks
 
-### [DiTauMassConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/DiTauMassConfig.py)
+### [DiTauMassBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TauAnalysisAlgorithms/python/DiTauMassConfig.py)
 Name in YAML: **DiTauMMC**
 
 `electrons`
@@ -41,40 +41,43 @@ Name in YAML: **DiTauMMC**
 :   the number (int) of sigmas for the MET resolution scan. The default is `-1` (no scan).
 
 `useTailCleanup`
-:   whether to activate the tail cleanup feature. The default is ``.
+:   whether to activate the tail cleanup feature. The default is `-1`.
 
 `niterFit2`
-:   the number of iterations for each MET scan loop. The default is ``.
+:   the number of iterations for each MET scan loop. The default is `-1`.
 
 `niterFit3`
-:   the number of iterations for each Mnu loop. The default is ``.
+:   the number of iterations for each Mnu loop. The default is `-1`.
 
 `useTauProbability`
-:   whether to apply tau probability (additional PDF term corresponding to the ratio of the neutrino momentum to the reconstructed tau momentum). The default is ``.
+:   whether to apply tau probability (additional PDF term corresponding to the ratio of the neutrino momentum to the reconstructed tau momentum). The default is `1`.
 
 `useMnuProbability`
-:   whether to apply $m_\nu$ probability (additional PDF term corresponding to the mass of the neutrino system per tau decay, only applied to leptonic tau decays). The default is ``.
+:   whether to apply $m_\nu$ probability (additional PDF term corresponding to the mass of the neutrino system per tau decay, only applied to leptonic tau decays). The default is `False`.
 
 `useDefaultSettings`
-:   whether to take all default options from the tool itself. The default is ``.
+:   whether to take all default options from the tool itself. The default is `-1`.
 
 `useEfficiencyRecovery`
-:   whether to enable refitting for failed events, to improve efficiency. The default is ``.
+:   whether to enable refitting for failed events, to improve efficiency. The default is `-1`.
 
 `useMETdphiLL`
-:   whether to parameterise the MET resolution using sumET and dphiLL (only for the lep-lep case). The default is ``.
+:   whether to parameterise the MET resolution using sumET and dphiLL (only for the lep-lep case). The default is `False`.
 
 `paramFilePath`
 :   path (string) to the ROOT file used with `calibSet` ≥ 2019, containing the PDFs for the likelihood. The default is `'MMC_params_v1_fixed.root'` (recommended).
 
-`nJetsMinPt`
-:   minimum jet $p_\mathrm{T}$, in MeV. The default is 30 GeV.
+`doMLNU3P`
+:   save information about the reconstruction with the best-fit neutrino kinematics. The default is `False`.
+
+`doMAXW`
+:   save information about the reconstruction with the maximum-weight estimator. The default is `False`.
 
 !!! success "Registers the following variables:"
     - `mmc_fit_status`: the returned status of the MMC fit
-    - `mmc_maxw_mass`: the mass of the di-tau resonance using the maximum-weight estimator
     - `mmc_mlm_mass`: the mass of the di-tau resonance using the maximum-likelihood estimator
-    - `mmc_mlnu3p_mass`: the mass of the di-tau resonance using the best-fit neutrino kinematics
+    - `mmc_maxw_mass`: the mass of the di-tau resonance using the maximum-weight estimator (if `doMAXW`)
+    - `mmc_mlnu3p_mass`: the mass of the di-tau resonance using the best-fit neutrino kinematics (if `doMLNU3P`)
 
 !!! success "Additional variables toggled by `saveExtraVariables`"
     - `mmc_mlnu3p_res_4vect`: four-vector of the di-tau resonance using the best-fit neutrino kinematics
@@ -105,6 +108,10 @@ Name in YAML: **DiTauMMC**
 
 !!! warning
     The MMC method assumes that the MET in a given event originates mostly from the neutrinos associated to the decay of the di-tau system. If your topology has additional sources of MET (e.g. $t\bar{t}H(\to\tau\tau)$, $W(\to\ell\nu)H(\to\tau\tau)$), the MMC method is not recommended and will give nonsensical answers. See e.g. the ATLAS Run 2 search for BSM $VH(\to\tau\tau)$ in [ATL-COM-PHYS-2022-022](https://cds.cern.ch/record/2799543) where the MMC method is combined with alternatives. Additional neutrinos from the decay of B-hadrons typically do not lead to significant enough MET to be a problem, i.e. $t\bar{t}(\to\text{jets})H(\to\tau\tau)$ should be safe.
+
+!!! warning "User actions required for updating to version 2.10.0 or higher"
+
+    This algorithm has been migrated to Athena since v2.10.0 ([issue #150](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/150)). Its declaration under `AddConfigBlocks` should be removed if applicable. Using this block in YAML configs is unchanged.
 
 ### [KLFitterConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/KLFitterConfig.py)
 Name in YAML: **KLFitter**
@@ -229,3 +236,46 @@ Name in YAML: **FakeBkgCalculator**
 
 !!! abstract "Documentation"
     The source code and documentation for FakeBkgTools are available from [athena](https://gitlab.cern.ch/atlas/athena/-/tree/main/PhysicsAnalysis/AnalysisCommon/FakeBkgTools).
+
+### [TopSpinDensityMatrixConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/TopSpinDensityMatrixConfig.py)
+Name in YAML: **SpinMatrix**
+
+Constructs a series of observables used to measure spin correlations, polarisations, and entanglement in top-anti-top quark pairs.
+
+`setup`
+:   a name (string) for this particular instance (useful to distinguish between different scenarios). The default is `''` (empty string).
+
+`eventSelection`
+:   optional event filter to run on. The default is `''` (empty string), i.e. all events.
+
+`top`
+:   the name (string) of the 4-vector for the top quark. The default is `''` (empty string).
+
+`tbar`
+:   the name (string) of the 4-vector for the anti-top quark. The default is `''` (empty string).
+
+`top_decay`
+:   the name (string) of the 4-vector for the decay product of the top quark. The default is `''` (empty string).
+
+`tbar_decay`
+:   the name (string) of the 4-vector for the decay product of the anti-top quark. The default is `''` (empty string).
+
+`doHelicityBasis`
+:   whether to compute the observables in the helicity basis. The default is `False`.
+
+`doEntanglement`
+:   whether to compute observables related to spin entanglement. The default is `False`.
+
+!!! note
+    No variable is saved by default, one must use the boolean switches!
+
+!!! success "Additional variables toggled by `doHelicityBasis`"
+    - `cos_theta_helicity_p`: cosine of the $\theta$ angle for the spin analyser of the top quark along the helicity axis
+    - `cos_theta_helicity_m`: cosine of the $\theta$ angle for the spin analyser of the anti-top quark along the helicity axis
+    - `cos_theta_transverse_p`: cosine of the $\theta$ angle for the spin analyser of the top quark along the transverse axis
+    - `cos_theta_transverse_m`: cosine of the $\theta$ angle for the spin analyser of the anti-top quark along the transverse axis
+    - `cos_theta_raxis_p`: cosine of the $\theta$ angle for the spin analyser of the top quark along the third axis
+    - `cos_theta_raxis_m`: cosine of the $\theta$ angle for the spin analyser of the anti-top quark along the third axis
+
+!!! success "Additional variables toggled by `doEntanglement`"
+    - `cos_phi`: cosine of the opening angle between the spin analysers of top and the anti-top quarks in their respective rest frames (related to the quantum entanglement marker $D$)

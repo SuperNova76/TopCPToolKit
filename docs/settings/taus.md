@@ -19,6 +19,7 @@
     - `pt`: tau-jet $p_\mathrm{T}$
     - `eta`: tau-jet $\eta$ (no systematics)
     - `phi`: tau-jet $\phi$ (no systematics)
+    - `e`: tau-jet $E$
     - `charge`: tau-jet charge (no systematics)
 
 ### [makeTauWorkingPointConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TauAnalysisAlgorithms/python/TauAnalysisConfig.py)
@@ -72,6 +73,7 @@ Name in YAML: **TauJets**
     - `phi`: tau-jet $\phi$ (no systematics)
     - `charge`: tau-jet charge (no systematics)
     - `NNDecayMode`: decay mode classification (no systematics)
+    - `e`: tau-jet $E$ (*since AnalysisBase 25.2.13*)
 
 !!! success "Additional variables toggled by `decorateTruth`"
     - `truth_pt_vis`: visible $p_\mathrm{T}$ of the linked truth-tau (no systematics)

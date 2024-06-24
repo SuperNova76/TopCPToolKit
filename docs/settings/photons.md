@@ -34,6 +34,7 @@
     - `pt`: photon $p_\mathrm{T}$
     - `eta`: photon $\eta$ (no systematics)
     - `phi`: photon $\phi$ (no systematics)
+    - `e`: photon $E$
 
 
 ### [makePhotonWorkingPointConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/python/PhotonAnalysisConfig.py)
@@ -108,6 +109,7 @@ Name in YAML: **Photons**
     - `pt`: photon $p_\mathrm{T}$
     - `eta`: photon $\eta$ (no systematics)
     - `phi`: photon $\phi$ (no systematics)
+    - `e`: photon $E$: (*since AnalysisBase 25.2.13*)
 
 ### [PhotonWorkingPointConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/python/PhotonAnalysisConfig.py)
 Name in YAML: **Photons.WorkingPoint**
@@ -143,3 +145,15 @@ Name in YAML: **Photons.WorkingPoint**
     - `select`: whether the photon passes the ID and isolation cuts
     - `id_effSF`: the per-photon ID SF
     - `isol_effSF`: the per-photon isolation SF
+
+### [PhotonExtraVariablesBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/python/PhotonExtraVariablesConfig.py)
+Name in YAML: **Photons.ExtraVariables** (*since AnalysisBase 25.2.13*)
+
+Decorates the output photons with the conversion type and calorimeter $\eta$.
+
+`containerName`
+:   the input photon container.
+
+!!! success "Registers the following variables:"
+    - `conversionType`: photon conversion type (no systematics)
+    - `caloEta2`: calorimeter $\eta$ from 2nd sampling layer (no systematics)
