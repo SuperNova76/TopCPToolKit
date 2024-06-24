@@ -15,6 +15,8 @@ class SoftMuonSelectorConfig(ConfigBlock):
         self.addOption('saveSoftMuonAdditionalInfo', False, type=bool)
         self.addOption('saveSoftMuonNearestJetInfo', False, type=bool)
 
+        self.addOption('softMuonDRJetUseRapidity', False, type=bool)
+
     def makeAlgs(self, config):
 ##        electrons = config.readName(self.electrons)
 ##        muons = config.readName(self.muons)
@@ -38,7 +40,8 @@ class SoftMuonSelectorConfig(ConfigBlock):
         # give appropriate names for the handles to decorate
         alg.SoftMuonDRJet              = self.softMuonDRJet
         alg.SaveSoftMuonAdditionalInfo = self.saveSoftMuonAdditionalInfo
-        alg.SaveSoftMuonNearestJetInfo     = self.saveSoftMuonNearestJetInfo
+        alg.SaveSoftMuonNearestJetInfo = self.saveSoftMuonNearestJetInfo
+        alg.SoftMuonDRJetUseRapidity   = self.softMuonDRJetUseRapidity
 #        alg.SoftMuonJetDRmin     = 'SoftMuonJetDRmin_%SYS%'
 #        alg.SoftMuonPassDRJetcut = 'SoftMuonPassDRJetcut_%SYS%'
 
@@ -127,6 +130,10 @@ class SoftMuonSelectorConfig(ConfigBlock):
 
         if self.saveSoftMuonNearestJetInfo:
           config.addOutputVar(self.softmuons.split('.')[0], "softmu_nearestJet_Index_%SYS%", "softmu_nearestJet_Index");
+          config.addOutputVar(self.softmuons.split('.')[0], "softmu_nearestJet_pt_%SYS%", "softmu_nearestJet_pt");
+          config.addOutputVar(self.softmuons.split('.')[0], "softmu_nearestJet_eta_%SYS%", "softmu_nearestJet_eta");
+          config.addOutputVar(self.softmuons.split('.')[0], "softmu_nearestJet_phi_%SYS%", "softmu_nearestJet_phi");
+          config.addOutputVar(self.softmuons.split('.')[0], "softmu_nearestJet_e_%SYS%", "softmu_nearestJet_e");
           config.addOutputVar(self.softmuons.split('.')[0], "softmu_nearestJet_dR_%SYS%", "softmu_nearestJet_dR");
           config.addOutputVar(self.softmuons.split('.')[0], "softmu_nearestJet_EMFrac_%SYS%", "softmu_nearestJet_EMFrac");
           config.addOutputVar(self.softmuons.split('.')[0], "softmu_nearestJet_NumTrkPt500_%SYS%", "softmu_nearestJet_NumTrkPt500");

@@ -10,6 +10,7 @@ namespace top {
     declareProperty("SoftMuonDRJet", m_softmuonDRJetcut = 0.4, "Soft Muon maximum dR wrt nearest selected jet. Can be set to 999. to keep all soft muons. Default 0.4");
     declareProperty("SaveSoftMuonAdditionalInfo", m_saveSoftMuonAdditionalInfo = false, "Whether to store additional information associated with the soft muon."); 
     declareProperty("SaveSoftMuonNearestJetInfo", m_saveSoftMuonNearestJetInfo = false, "Whether to store additional information associated with the nearest jet associated to the soft muon.");
+    declareProperty("SoftMuonDRJetUseRapidity", m_softMuonDRJetUseRapidity = false, "Whether to use the rapidity instead of the pseudo-rapidity when calculating the Delta R between the soft muon and the closest jet.");
     }
   
   StatusCode SoftMuonSelectorAlg::initialize() {
@@ -109,6 +110,10 @@ namespace top {
     ANA_CHECK(m_rhoPrime_Handle.initialize(m_systematicsList, m_softmuonsHandle, SG::AllowEmpty));
 
     ANA_CHECK(m_softmu_nearestJet_Index_Handle.initialize(m_systematicsList, m_softmuonsHandle, SG::AllowEmpty));
+    ANA_CHECK(m_softmu_nearestJet_pt_Handle.initialize(m_systematicsList, m_softmuonsHandle, SG::AllowEmpty));
+    ANA_CHECK(m_softmu_nearestJet_eta_Handle.initialize(m_systematicsList, m_softmuonsHandle, SG::AllowEmpty));
+    ANA_CHECK(m_softmu_nearestJet_phi_Handle.initialize(m_systematicsList, m_softmuonsHandle, SG::AllowEmpty));
+    ANA_CHECK(m_softmu_nearestJet_e_Handle.initialize(m_systematicsList, m_softmuonsHandle, SG::AllowEmpty));
     ANA_CHECK(m_softmu_nearestJet_dR_Handle.initialize(m_systematicsList, m_softmuonsHandle, SG::AllowEmpty));
     ANA_CHECK(m_softmu_nearestJet_EMFrac_Handle.initialize(m_systematicsList, m_softmuonsHandle, SG::AllowEmpty));
     ANA_CHECK(m_softmu_nearestJet_NumTrkPt500_Handle.initialize(m_systematicsList, m_softmuonsHandle, SG::AllowEmpty));
@@ -240,7 +245,11 @@ namespace top {
         if(m_saveSoftMuonNearestJetInfo){
 
           m_softmu_nearestJet_Index_Handle.set(*softmuon, -99, sys);
-          m_softmu_nearestJet_dR_Handle.set(*softmuon, -99, sys);
+          m_softmu_nearestJet_pt_Handle.set(*softmuon, -99, sys);
+          m_softmu_nearestJet_eta_Handle.set(*softmuon, -99, sys);
+          m_softmu_nearestJet_phi_Handle.set(*softmuon, -99, sys);
+          m_softmu_nearestJet_e_Handle.set(*softmuon, -99, sys);
+	  m_softmu_nearestJet_dR_Handle.set(*softmuon, -99, sys);
           m_softmu_nearestJet_EMFrac_Handle.set(*softmuon, -99, sys);
           m_softmu_nearestJet_NumTrkPt500_Handle.set(*softmuon, -99, sys);
           m_softmu_nearestJet_SumPtTrkPt500_Handle.set(*softmuon, -99, sys);
@@ -300,13 +309,12 @@ namespace top {
 //      float phi_miss = (*met)["Final"]->phi();
 
 
-      TLorentzVector softmuon_vector;
       if ( selected_softmuons.size() > 0) {
-        softmuon_vector = selected_softmuons.at(0)->p4();
 
-
-        // Accessing pt, eta, phi, and energy
-        //Double_t pt = softmuon_vector.Pt();
+      	      // Accessing pt, eta, phi, and energy
+        //TLorentzVector softmuon_vector;
+	//softmuon_vector = selected_softmuons.at(0)->p4();
+	//Double_t pt = softmuon_vector.Pt();
         //Double_t eta = softmuon_vector.Eta();
         //Double_t phi = softmuon_vector.Phi();
         //Double_t energy = softmuon_vector.E();
@@ -316,7 +324,7 @@ namespace top {
         //std::cout << "Softmuon pseudorapidity (eta) = " << eta << std::endl;
         //std::cout << "Softmuon azimuthal angle (phi) = " << phi << std::endl;
         //std::cout << "Softmuon energy = " << energy << std::endl;
-        //ANA_MSG_INFO("  Softmuon pt = " << pt);
+        //ANA_MSG_INFO("Softmuon pt = " << pt);
 
         // Calculate SoftMuonJetDRmin for each soft muon
         bool PassSoftMuonDRJetCut = false;
@@ -328,10 +336,11 @@ namespace top {
 
           SoftMuonSelectorAlg::calculateMinDRSoftMuonJet(softmuon, selected_jets, nearestJetIndex, dRMin);
 
-          m_softmu_nearestJet_Index_Handle.set(*softmuon, nearestJetIndex, sys);
-          m_SoftMuonJetDRminHandle.set(*softmuon, dRMin, sys);
+	  if(dRMin<m_softmuonDRJetcut){
 
-          if(dRMin<m_softmuonDRJetcut){
+            m_softmu_nearestJet_Index_Handle.set(*softmuon, nearestJetIndex, sys);
+	    m_SoftMuonJetDRminHandle.set(*softmuon, dRMin, sys);
+      
             m_SoftMuonPassDRJetcut.set(*softmuon, true, sys);
 
             PassSoftMuonDRJetCut = true;
@@ -393,7 +402,9 @@ namespace top {
     int ijet =0;
     for (const xAOD::Jet *jet : selected_jets) {
 
-      float dr = jet->p4().DeltaR(softmuon->p4());//softmuon has to be one
+      //float dr = softmuon->p4().DeltaR(jet->p4());//softmuon has to be one
+      //float dr = xAOD::P4Helpers::deltaR(softmuon, jet, m_softMuonDRJetUseRapidity);
+      float dr = softmuon->p4().DeltaR(jet->p4(), m_softMuonDRJetUseRapidity);
 
       if(dr < dRMin){
         dRMin = dr;
@@ -622,23 +633,29 @@ const xAOD::Vertex        *priVtx
     int ijet =0;
     for (const xAOD::Jet *jet : selected_jets) {
 
-      if(ijet!=nearestJetIndex){
-        ijet++;
-        continue;
-      }
+      if (ijet == nearestJetIndex) {
 
-      m_softmu_nearestJet_EMFrac_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMoment(jet, "EMFrac") : -999), sys);
-      m_softmu_nearestJet_NumTrkPt500_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveIntJetMomentFromVector(jet, "NumTrkPt500",0) : -999), sys);
-      m_softmu_nearestJet_SumPtTrkPt500_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMomentFromVector(jet, "SumPtTrkPt500",0) : -999), sys);
-      m_softmu_nearestJet_NumTrkPt1000_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveIntJetMomentFromVector(jet, "NumTrkPt1000",0) : -999), sys);
-      m_softmu_nearestJet_SumPtTrkPt1000_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMomentFromVector(jet, "SumPtTrkPt1000",0) : -999), sys);
-      m_softmu_nearestJet_N90Constituents_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMoment(jet, "N90Constituents") : -999), sys);
-      m_softmu_nearestJet_TrackWidthPt500_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMomentFromVector(jet, "TrackWidthPt500",0) : -999), sys);
-      m_softmu_nearestJet_TrackWidthPt1000_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMomentFromVector(jet, "TrackWidthPt1000",0) : -999), sys);
-      m_softmu_nearestJet_Width_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMoment(jet, "Width") : -999), sys);
-      m_softmu_nearestJet_Charge_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMoment(jet, "Charge") : -999), sys);
-      m_softmu_nearestJet_ChargedPFOWidthPt1000_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMomentFromVector(jet, "ChargedPFOWidthPt1000",0) : -999), sys);
-      m_softmu_nearestJet_ChargedPFOWidthPt500_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMomentFromVector(jet, "ChargedPFOWidthPt500",0) : -999), sys);
+        m_softmu_nearestJet_pt_Handle.set(*softmuon, (nearestJetIndex>=0 ? jet->pt() : -999), sys);
+        m_softmu_nearestJet_eta_Handle.set(*softmuon, (nearestJetIndex>=0 ? jet->eta() : -999), sys);
+        m_softmu_nearestJet_phi_Handle.set(*softmuon, (nearestJetIndex>=0 ? jet->phi() : -999), sys);
+        m_softmu_nearestJet_e_Handle.set(*softmuon, (nearestJetIndex>=0 ? jet->e() : -999), sys);
+        m_softmu_nearestJet_EMFrac_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMoment(jet, "EMFrac") : -999), sys);
+        m_softmu_nearestJet_NumTrkPt500_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveIntJetMomentFromVector(jet, "NumTrkPt500",0) : -999), sys);
+        m_softmu_nearestJet_SumPtTrkPt500_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMomentFromVector(jet, "SumPtTrkPt500",0) : -999), sys);
+        m_softmu_nearestJet_NumTrkPt1000_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveIntJetMomentFromVector(jet, "NumTrkPt1000",0) : -999), sys);
+        m_softmu_nearestJet_SumPtTrkPt1000_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMomentFromVector(jet, "SumPtTrkPt1000",0) : -999), sys);
+        m_softmu_nearestJet_N90Constituents_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMoment(jet, "N90Constituents") : -999), sys);
+        m_softmu_nearestJet_TrackWidthPt500_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMomentFromVector(jet, "TrackWidthPt500",0) : -999), sys);
+        m_softmu_nearestJet_TrackWidthPt1000_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMomentFromVector(jet, "TrackWidthPt1000",0) : -999), sys);
+        m_softmu_nearestJet_Width_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMoment(jet, "Width") : -999), sys);
+        m_softmu_nearestJet_Charge_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMoment(jet, "Charge") : -999), sys);
+        m_softmu_nearestJet_ChargedPFOWidthPt1000_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMomentFromVector(jet, "ChargedPFOWidthPt1000",0) : -999), sys);
+        m_softmu_nearestJet_ChargedPFOWidthPt500_Handle.set(*softmuon, (nearestJetIndex>=0 ? retrieveFloatJetMomentFromVector(jet, "ChargedPFOWidthPt500",0) : -999), sys);
+
+        break;  // Exit the loop once the nearest jet is found
+      }
+      ijet++;
+  
     }
 
 

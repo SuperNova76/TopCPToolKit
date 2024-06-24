@@ -100,10 +100,24 @@ Electrons:
 #        maxEta: 2.5
 
 Muons:
+  - containerName: 'SoftMuons'
+    postfix: 'soft'
+    IFFClassification: {}
+    WorkingPoint:
+      - selectionName: 'soft'
+        quality: 'Medium'
+        isolation: 'NonIso'
+        systematicBreakdown: True
+        maxD0Significance: 999
+        maxDeltaZ0SinTheta: 999
+    PtEtaSelection:
+      - selectionName: 'soft'
+        postfix: 'soft'
+        selectionDecoration: 'selectPtEta_soft'
+        minPt: 4000.0
+        maxEta: 2.50
   - containerName: 'AnaMuons'
     IFFClassification: {}
-#    ptSelectionOutput: 4000.0
-    maxEta: 2.50
     WorkingPoint:
       - selectionName: 'loose'
         quality: 'Medium'
@@ -111,10 +125,6 @@ Muons:
       - selectionName: 'tight'
         quality: 'Medium'
         isolation: 'Tight_VarRad'
-        systematicBreakdown: True
-      - selectionName: 'soft'
-        quality: 'Medium'
-        isolation: 'NonIso'
         systematicBreakdown: True
     PtEtaSelection:
       - selectionName: 'tight'
@@ -126,11 +136,6 @@ Muons:
         postfix: 'loose'
         selectionDecoration: 'selectPtEta_loose'
         minPt: 25000.0
-        maxEta: 2.50
-      - selectionName: 'soft'
-        postfix: 'soft'
-        selectionDecoration: 'selectPtEta_soft'
-        minPt: 4000.0
         maxEta: 2.50
 
 # TauJets:
@@ -164,8 +169,7 @@ OverlapRemoval:
   electrons: 'AnaElectrons.tight'
   #photons: 'AnaPhotons.tight'
   #muons: 'AnaMuons.tight'
-  muons: 'AnaMuons.tight' #I think that the tight/loose here does nothing. It uses all the possible selections in the container. It does not seem to work, this only includes the overlap removal for the tight collection, not the loose.
-  muonsSelectionName: 'tight'
+  muons: 'AnaMuons.tight'
 
 ObjectCutFlow:
   - containerName: 'AnaElectrons'
@@ -191,10 +195,13 @@ Thinning:
   #   selectionName: 'tight||loose'
   - containerName: 'AnaMuons'
     outputName: 'OutMuons'
-    selectionName: 'tight||loose||soft'
+    selectionName: 'tight||loose'
   # - containerName: 'AnaTauJets'
   #   outputName: 'OutTauJets'
   #   selectionName: 'tight'
+  - containerName: 'SoftMuons'
+    outputName: 'OutSoftMuons'
+    selectionName: 'soft'
 
 LeptonSF:
   - electrons: 'AnaElectrons.tight'
@@ -205,6 +212,7 @@ LeptonSF:
 ExtraParticleDecoration:
    - particles: 'AnaElectrons'
    - particles: 'AnaMuons'
+   - particles: 'SoftMuons'
    - particles: 'AnaJets'
 
 Trigger:
@@ -232,21 +240,21 @@ Trigger:
     muonID: 'Medium'
 
 EventSelection:
-  - electrons: 'AnaElectrons.loose'
+  - electrons: 'AnaElectrons.tight'
     #muons: 'AnaMuons.tight'
-    muons: 'AnaMuons'
+    muons: 'AnaMuons.tight'
     jets: 'AnaJets.baselineJvt'
     met: 'AnaMET'
-    btagDecoration: 'ftag_select_DL1dv01_FixedCutBEff_85'
+    btagDecoration: 'ftag_select_DL1dv01_FixedCutBEff_77'
     noFilter: False
     cutFlowHistograms: True
     selectionCutsDict:
-      'SUBcommon': |
-        JET_N_BTAG >= 2
-        JET_N_BTAG DL1dv01:FixedCutBEff_70 >= 1
-        JET_N 25000 >= 4
-        MET >= 20000
-        SAVE
+#      'SUBcommon': |
+#        JET_N_BTAG >= 2
+#        JET_N_BTAG DL1dv01:FixedCutBEff_77 >= 1
+#        JET_N 25000 >= 4
+#        MET >= 20000
+#        SAVE
 #      'ejets': |
 #        IMPORT SUBcommon
 #        EL_N 25000 >= 1
@@ -289,27 +297,25 @@ EventSelection:
         EVENTFLAG pass_SoftMuonPassDRJetcut_%SYS%
         SAVE
       'ejets_SMT': |
-        IMPORT SUBcommon_SoftMuonPassDRJetcut
+        EL_N tight 27000 == 1
+        MU_N tight 25000 == 0
         JET_N_BTAG >= 0
         JET_N 25000 >= 4
-        MET >= 20000
-        EL_N 25000 >= 1
-        EL_N tight 25000 == 1
-        MU_N tight 25000 == 0
-        MU_N soft 4000 >= 1
+        MET > 30000
+        MWT > 30000
+        IMPORT SUBcommon_SoftMuonPassDRJetcut
         #EVENTFLAG pass_SoftMuonPassDRJetcut_%SYS%
         SAVE
       'mujets_SMT': |
-        IMPORT SUBcommon_SoftMuonPassDRJetcut
+        MU_N tight 27000 == 1
+        EL_N tight 25000 == 0
         JET_N_BTAG >= 0
         JET_N 25000 >= 4
-        MET >= 20000
-        MU_N tight 25000 == 1
-        EL_N tight 25000 == 0
-        MU_N soft 4000 >= 1
+        MET > 30000
+        MWT > 30000
+        IMPORT SUBcommon_SoftMuonPassDRJetcut
         #EVENTFLAG pass_SoftMuonPassDRJetcut_%SYS%
         SAVE
-
 #KLFitter:
 #  - containerName: 'KLFitterResult'
 #    electrons: 'AnaElectrons.tight'
@@ -338,7 +344,7 @@ EventSelection:
 #    eventSelection: 'pass_ejets_%SYS%,as_char||pass_mujets_%SYS%,as_char'
 
 SoftMuonSelector:
-  - softmuons: 'AnaMuons.soft'
+  - softmuons: 'SoftMuons.soft'
 #   SoftMuonQuality: 'Medium'
 #   SoftMuonIsolation: 'NonIso'
 #   SoftMuonPt: 4000.0
@@ -347,7 +353,7 @@ SoftMuonSelector:
     softMuonDRJet: 0.4
     saveSoftMuonAdditionalInfo: True
     saveSoftMuonNearestJetInfo: True
-#   SoftMuonDRJetUseRapidity: True
+    softMuonDRJetUseRapidity: True
 #   SoftMuonAdditionalTruthInfo: True
 #   SoftMuonAdditionalTruthInfoCheckPartonOrigin: False
 #   SoftMuonAdditionalTruthInfoDoVerbose: False
@@ -374,6 +380,7 @@ Output:
   containers:
       # Format should follow: '<suffix>:<output container>'
       mu_: 'OutMuons'
+      softmu_: 'OutSoftMuons'
       el_: 'OutElectrons'
       # ph_: 'OutPhotons'
       # tau_: 'OutTauJets'
