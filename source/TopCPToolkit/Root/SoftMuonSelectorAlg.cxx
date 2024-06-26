@@ -706,7 +706,7 @@ const xAOD::Vertex        *priVtx
     return v[pos];
   }
 
-  int SoftMuonSelectorAlg::retrieveIntJetMomentFromVector(const xAOD::Jet* jet, std::string name, unsigned int pos)
+  int SoftMuonSelectorAlg::retrieveIntJetMomentFromVector(const xAOD::Jet* jet, const std::string& name, unsigned int pos)
   {
     if(!jet) return -999;
     if(!jet->isAvailable<std::vector<int> >(name)) return -999;
