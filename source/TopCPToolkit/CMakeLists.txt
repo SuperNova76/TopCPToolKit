@@ -13,10 +13,10 @@ find_package( FastJet COMPONENTS fastjetplugins fastjettools )
 if( XAOD_STANDALONE )
   atlas_add_library(
     TopCPToolkitLib
-    TopCPToolkit/*.h TopPartons/*.h TopParticleLevel/*.h TopSpaNet/*.h TopNNLOReweighter/*.h
+    TopCPToolkit/*.h TopPartons/*.h TopParticleLevel/*.h TopSpaNet/*.h TopNuFlows/*.h TopNNLOReweighter/*.h
     Root/*.cxx Root/preloader/*.cxx
     INCLUDE_DIRS ${KLFITTER_INCLUDE_DIRS} ${ONNXRUNTIME_INCLUDE_DIRS}
-    PUBLIC_HEADERS TopCPToolkit TopPartons TopParticleLevel TopSpaNet TopNNLOReweighter
+    PUBLIC_HEADERS TopCPToolkit TopPartons TopParticleLevel TopSpaNet TopNuFlows TopNNLOReweighter
     LINK_LIBRARIES ${KLFITTER_LIBRARIES} ${ONNXRUNTIME_LIBRARIES}
     AnaAlgorithmLib AsgAnalysisAlgorithmsLib xAODMissingET xAODJet xAODBTagging xAODEgamma xAODMuon xAODTau xAODTruth xAODCore PathResolver FourMomUtils DiTauMassToolsLib FTagAnalysisInterfacesLib SystematicsHandlesLib SelectionHelpersLib MCTruthClassifierLib FakeBkgToolsLib GammaORToolsLib
     # THE FOLLOWING ARE NEEDED FOR THE COMPONENT PRELOADER:
@@ -26,10 +26,10 @@ if( XAOD_STANDALONE )
 else ()
   atlas_add_library(
     TopCPToolkitLib
-    TopCPToolkit/*.h TopPartons/*.h TopParticleLevel/*.h TopSpaNet/*.h TopNNLOReweighter/*.h
+    TopCPToolkit/*.h TopPartons/*.h TopParticleLevel/*.h TopSpaNet/*.h TopNuFlows/*.h TopNNLOReweighter/*.h
     Root/*.cxx
     INCLUDE_DIRS ${KLFITTER_INCLUDE_DIRS} ${ONNXRUNTIME_INCLUDE_DIRS} ${FASTJET_INCLUDE_DIRS}
-    PUBLIC_HEADERS TopCPToolkit TopPartons TopParticleLevel TopSpaNet TopNNLOReweighter
+    PUBLIC_HEADERS TopCPToolkit TopPartons TopParticleLevel TopSpaNet TopNuFlows TopNNLOReweighter
     LINK_LIBRARIES ${KLFITTER_LIBRARIES} ${ONNXRUNTIME_LIBRARIES} ${FASTJET_LIBRARIES}
     AnaAlgorithmLib AsgAnalysisAlgorithmsLib xAODMissingET xAODJet xAODBTagging xAODEgamma xAODMuon xAODTau xAODTruth xAODCore PathResolver FourMomUtils DiTauMassToolsLib FTagAnalysisInterfacesLib SystematicsHandlesLib SelectionHelpersLib MCTruthClassifierLib GammaORToolsLib
     )
@@ -50,5 +50,5 @@ endif ()
 # Install files from the package:
 atlas_install_python_modules(python/*.py)
 atlas_install_joboptions(bin/*.py)
-atlas_install_scripts(bin/runTop_el.py)
+atlas_install_scripts(bin/*.py)
 atlas_install_data(share/*)
