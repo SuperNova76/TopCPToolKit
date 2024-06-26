@@ -99,7 +99,7 @@ namespace top {
       float retrieveFloatJetMomentFromVector(const xAOD::Jet* jet, std::string name, unsigned int pos);
       int retrieveIntJetMomentFromVector(const xAOD::Jet* jet, std::string name, unsigned int pos);
       float retrieveFloatJetMoment(const xAOD::Jet* jet, std::string name);
-      int retrieveIntJetMoment(const xAOD::Jet* jet, std::string name);
+      int retrieveIntJetMoment(const xAOD::Jet* jet, const std::string& name);
 
       // Get all the hits of the muons in the detectors
       struct hitSummary {
