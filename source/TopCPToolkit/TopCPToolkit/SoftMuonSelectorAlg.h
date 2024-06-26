@@ -66,7 +66,7 @@ namespace top {
 
     private:
 //      float calculateMinDRMuonJet(const xAOD::Muon& mu, const xAOD::JetContainer* xaod_jet, std::vector<unsigned int>& goodJets);
-      virtual void calculateMinDRSoftMuonJet(const xAOD::Muon* softmuon, ConstDataVector<xAOD::JetContainer> selected_jets, int& nearestJetIndex, float& dRmin);
+      virtual void calculateMinDRSoftMuonJet(const xAOD::Muon* softmuon, const ConstDataVector<xAOD::JetContainer>& selected_jets, int& nearestJetIndex, float& dRmin);
 
       CP::SysWriteDecorHandle<float> m_SoftMuonJetDRminHandle {
         this, "SoftMuonJetDRmin", "SoftMuonJetDRmin_%SYS%", "decoration name for the dR of the closest jet to the soft muon"
