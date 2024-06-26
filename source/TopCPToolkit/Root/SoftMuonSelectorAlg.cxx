@@ -396,7 +396,7 @@ namespace top {
   }
 
 
-  void SoftMuonSelectorAlg::calculateMinDRSoftMuonJet(const xAOD::Muon* softmuon, ConstDataVector<xAOD::JetContainer> selected_jets, int& nearestJetIndex, float& dRMin){
+  void SoftMuonSelectorAlg::calculateMinDRSoftMuonJet(const xAOD::Muon* softmuon, const ConstDataVector<xAOD::JetContainer>& selected_jets, int& nearestJetIndex, float& dRMin){
 
     // Loop over jets, calculate dR and record smallest value
     int ijet =0;
