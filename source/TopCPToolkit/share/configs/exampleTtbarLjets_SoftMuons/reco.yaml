@@ -286,9 +286,6 @@ EventSelection:
 #      'supertight': |
 #        JET_N 1000000 >= 1
 #        SAVE
-      'SUBcommon_SoftMuonPassDRJetcut': |
-        EVENTFLAG pass_SoftMuonPassDRJetcut_%SYS%
-        SAVE
       'ejets_SMT': |
         EL_N tight 27000 == 1
         MU_N tight 25000 == 0
@@ -296,8 +293,7 @@ EventSelection:
         JET_N 25000 >= 4
         MET > 30000
         MWT > 30000
-        IMPORT SUBcommon_SoftMuonPassDRJetcut
-        #EVENTFLAG pass_SoftMuonPassDRJetcut_%SYS%
+        EVENTFLAG pass_SoftMuonPassDRJetcut_%SYS%
         SAVE
       'mujets_SMT': |
         MU_N tight 27000 == 1
@@ -306,8 +302,7 @@ EventSelection:
         JET_N 25000 >= 4
         MET > 30000
         MWT > 30000
-        IMPORT SUBcommon_SoftMuonPassDRJetcut
-        #EVENTFLAG pass_SoftMuonPassDRJetcut_%SYS%
+        EVENTFLAG pass_SoftMuonPassDRJetcut_%SYS%
         SAVE
 #KLFitter:
 #  - containerName: 'KLFitterResult'

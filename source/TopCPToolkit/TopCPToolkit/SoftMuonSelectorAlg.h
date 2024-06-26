@@ -136,7 +136,7 @@ namespace top {
       // ------------------------------------------------------------------------------
       //list of variables.
 
-//      #---------- Now a series of variables about the soft muon properties
+      //---------- Now a series of variables about the soft muon properties
       CP::SysWriteDecorHandle<int> m_softmu_pass_tight_Handle {
         this, "softmu_pass_tight", "softmu_pass_tight_%SYS%", "decoration name for the soft muon pass tight"
       };
@@ -144,7 +144,7 @@ namespace top {
         this, "softmu_resolutionCategory", "softmu_resolutionCategory_%SYS%", "decoration name for the soft muon resolution category"
       };
 
-//      #---------- Four momenta from only the inner detector and the muon spectrometer. Necessary for calculation of other important variables.
+      //---------- Four momenta from only the inner detector and the muon spectrometer. Necessary for calculation of other important variables.
       CP::SysWriteDecorHandle<float> m_softmu_pt_id_Handle {
         this, "softmu_pt_id", "softmu_pt_id_%SYS%", "decoration name for the soft muon pt in the Inner Detector"
       };
@@ -171,7 +171,7 @@ namespace top {
         this, "softmu_e_me", "softmu_e_me_%SYS%", "decoration name for the soft muon energy in the Muon Spectrometer"
       };
 
-//      #---------- Second series of variables about the soft muon properties
+      //---------- Second series of variables about the soft muon properties
       CP::SysWriteDecorHandle<float> m_softmu_qOverP_Handle {
         this, "softmu_qOverP", "softmu_qOverP_%SYS%", "decoration name for the soft muon qOverP"
       };
@@ -230,7 +230,7 @@ namespace top {
         this, "softmu_spectrometerFieldIntegral", "softmu_spectrometerFieldIntegral_%SYS%", "decoration name for the soft muon spectrometer field integral"
       };
 
-//      #---------- Now a series of variables about the hits and holes of the muon tracks
+      //---------- Now a series of variables about the hits and holes of the muon tracks
       CP::SysWriteDecorHandle<int> m_softmu_nprecisionLayers_Handle {
         this, "softmu_nprecisionLayers", "softmu_nprecisionLayers_%SYS%", "decoration name for the soft muon number of precision layers"
       };
@@ -298,7 +298,7 @@ namespace top {
         this, "softmu_numberOfTRTOutliers", "softmu_numberOfTRTOutliers_%SYS%", "decoration name for the soft muon number of TRT outliers"
       };
 
-//      #---------- Now a series of variables about the soft muon properties
+      //---------- Now a series of variables about the soft muon properties
       CP::SysWriteDecorHandle<float> m_softmu_ptcone20_Nonprompt_All_MaxWeightTTVA_pt500_Handle {
         this, "softmu_ptcone20_Nonprompt_All_MaxWeightTTVA_pt500", "softmu_ptcone20_Nonprompt_All_MaxWeightTTVA_pt500_%SYS%", "decoration name for the soft muon ptcone20 Nonprompt All MaxWeightTTVA pt500"
       };
@@ -339,7 +339,7 @@ namespace top {
         this, "softmu_MeasEnergyLossSigma", "softmu_MeasEnergyLossSigma_%SYS%", "decoration name for the soft muon measured energy loss sigma"
       };
 
-//      #---------- Now a series of variables about the soft muon properties
+      //---------- Now a series of variables about the soft muon properties
       CP::SysWriteDecorHandle<float> m_IdMsPt_Handle {
         this, "IdMsPt", "IdMsPt_%SYS%", "decoration name for the ID-MS Pt"
       };
@@ -350,7 +350,7 @@ namespace top {
         this, "rhoPrime", "rhoPrime_%SYS%", "decoration name for the rho prime"
       };
 
-//      #---------- Now a series of variables about the jet that is closer to the soft muon
+      //---------- Now a series of variables about the jet that is closer to the soft muon
       CP::SysWriteDecorHandle<int> m_softmu_nearestJet_Index_Handle {
         this, "softmu_nearestJet_Index", "softmu_nearestJet_Index_%SYS%", "decoration name for the soft muon nearest jet index"
       };
