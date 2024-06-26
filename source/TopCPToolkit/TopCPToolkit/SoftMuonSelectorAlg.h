@@ -96,7 +96,7 @@ namespace top {
       virtual float rhoPrime(const xAOD::Muon& muon) const;
 
       // Get nearest jet information
-      float retrieveFloatJetMomentFromVector(const xAOD::Jet* jet, std::string name, unsigned int pos);
+      float retrieveFloatJetMomentFromVector(const xAOD::Jet* jet, const std::string& name, unsigned int pos);
       int retrieveIntJetMomentFromVector(const xAOD::Jet* jet, const std::string& name, unsigned int pos);
       float retrieveFloatJetMoment(const xAOD::Jet* jet, const std::string& name);
       int retrieveIntJetMoment(const xAOD::Jet* jet, const std::string& name);
