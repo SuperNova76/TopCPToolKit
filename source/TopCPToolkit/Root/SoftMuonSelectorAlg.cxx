@@ -720,7 +720,7 @@ const xAOD::Vertex        *priVtx
     if(!jet->isAvailable<float>(name)) return -999;
     return jet->auxdata<float>(name);
   }
-  int SoftMuonSelectorAlg::retrieveIntJetMoment(const xAOD::Jet* jet, std::string name)
+  int SoftMuonSelectorAlg::retrieveIntJetMoment(const xAOD::Jet* jet, const std::string& name)
   {
     if(!jet) return -999;
     if(!jet->isAvailable<int>(name)) return -999;
