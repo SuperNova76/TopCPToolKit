@@ -84,7 +84,7 @@ namespace top {
     //Functions to add additional variables with additional information about the soft muons, and/or the nearest jet to the soft muon
     private:
       virtual void SaveAdditionalSoftMuonVariables(const xAOD::Muon* softmuon, const xAOD::EventInfo *evtInfo /*to calculate impact parameters*/, const CP::SystematicSet& sys);
-      virtual void SaveAdditionalInformationFromNearestJet(const xAOD::Muon* softmuon, ConstDataVector<xAOD::JetContainer> selected_jets, const CP::SystematicSet sys);
+      virtual void SaveAdditionalInformationFromNearestJet(const xAOD::Muon* softmuon, const ConstDataVector<xAOD::JetContainer>& selected_jets, const CP::SystematicSet& sys);
 
       // Complementary functionalities to calculate and save additional variables related with the soft muon properties
       // or with the properties of the closest jet to the soft muon
