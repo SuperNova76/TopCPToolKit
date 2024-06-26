@@ -426,7 +426,7 @@ namespace top {
 // Safe addigional information closes jet
 
 //Save additional soft muon related variables.
-  void SoftMuonSelectorAlg::SaveAdditionalSoftMuonVariables(const xAOD::Muon* softmuon, const xAOD::EventInfo *evtInfo, const CP::SystematicSet sys){
+  void SoftMuonSelectorAlg::SaveAdditionalSoftMuonVariables(const xAOD::Muon* softmuon, const xAOD::EventInfo *evtInfo, const CP::SystematicSet& sys){
 
     float idPt = -999.;
     float mePt = -999.;
