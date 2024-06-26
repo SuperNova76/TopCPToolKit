@@ -619,7 +619,7 @@ const xAOD::Vertex        *priVtx
   }
 
 
-  void SoftMuonSelectorAlg::SaveAdditionalInformationFromNearestJet(const xAOD::Muon* softmuon, ConstDataVector<xAOD::JetContainer> selected_jets, const CP::SystematicSet sys){
+  void SoftMuonSelectorAlg::SaveAdditionalInformationFromNearestJet(const xAOD::Muon* softmuon, const ConstDataVector<xAOD::JetContainer>& selected_jets, const CP::SystematicSet& sys){
 
     // Get the index of the nearest jet
     int nearestJetIndex = -1;
