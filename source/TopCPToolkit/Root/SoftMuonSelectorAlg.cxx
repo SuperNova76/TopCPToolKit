@@ -697,7 +697,7 @@ const xAOD::Vertex        *priVtx
         retrieveSummaryValue(*track, summary.numberOfTRTOutliers, xAOD::SummaryType::numberOfTRTOutliers);
   }
 
-  float SoftMuonSelectorAlg::retrieveFloatJetMomentFromVector(const xAOD::Jet* jet, std::string name, unsigned int pos)
+  float SoftMuonSelectorAlg::retrieveFloatJetMomentFromVector(const xAOD::Jet* jet, const std::string& name, unsigned int pos)
   {
     if(!jet) return -999;
     if(!jet->isAvailable<std::vector<float> >(name)) return -999;
