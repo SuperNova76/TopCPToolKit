@@ -300,10 +300,7 @@ namespace top {
 
         for (const xAOD::Muon* softmuon : selected_softmuons){
 
-          int nearestJetIndex = -1;
-          float dRMin = 100.0;
-
-          SoftMuonSelectorAlg::calculateMinDRSoftMuonJet(softmuon, selected_jets, nearestJetIndex, dRMin);
+          auto [nearestJetIndex, dRMin] = SoftMuonSelectorAlg::calculateMinDRSoftMuonJet(softmuon, selected_jets);
 
 	  if(dRMin<m_softmuonDRJetcut){
 
@@ -346,10 +343,13 @@ namespace top {
   }
 
 
-  void SoftMuonSelectorAlg::calculateMinDRSoftMuonJet(const xAOD::Muon* softmuon, const ConstDataVector<xAOD::JetContainer>& selected_jets, int& nearestJetIndex, float& dRMin){
+  std::pair<int, float>  SoftMuonSelectorAlg::calculateMinDRSoftMuonJet(const xAOD::Muon* softmuon, const ConstDataVector<xAOD::JetContainer>& selected_jets){
+
+    int nearestJetIndex = -1;
+    float dRMin = 100.0;
 
     // Loop over jets, calculate dR and record smallest value
-    int ijet =0;
+    int ijet=0;
     for (const xAOD::Jet *jet : selected_jets) {
 
       float dr = softmuon->p4().DeltaR(jet->p4(), m_softMuonDRJetUseRapidity);
@@ -363,7 +363,7 @@ namespace top {
 
 //    ANA_MSG_INFO("  DR min " << dRMin);
 
-    return;
+    return std::make_pair(nearestJetIndex, dRMin);
   }
 
 

@@ -62,8 +62,7 @@ namespace top {
       };
 
     private:
-//      float calculateMinDRMuonJet(const xAOD::Muon& mu, const xAOD::JetContainer* xaod_jet, std::vector<unsigned int>& goodJets);
-      virtual void calculateMinDRSoftMuonJet(const xAOD::Muon* softmuon, const ConstDataVector<xAOD::JetContainer>& selected_jets, int& nearestJetIndex, float& dRmin);
+      virtual std::pair<int, float> calculateMinDRSoftMuonJet(const xAOD::Muon* softmuon, const ConstDataVector<xAOD::JetContainer>& selected_jets);
 
       CP::SysWriteDecorHandle<float> m_SoftMuonJetDRminHandle {
         this, "SoftMuonJetDRmin", "SoftMuonJetDRmin_%SYS%", "decoration name for the dR of the closest jet to the soft muon"
@@ -72,7 +71,6 @@ namespace top {
       CP::SysWriteDecorHandle<bool> m_SoftMuonPassDRJetcut {
         this, "SoftMuonPassDRJetcut", "SoftMuonPassDRJetcut_%SYS%", "decoration name for tagging soft muons that pass the dR condition with its closest jet in the event"
       };
-
 
       CP::SysWriteSelectionHandle m_pass_SoftMuonPassDRJetcut {
 	 this, "pass_SoftMuonPassDRJetcut", "pass_SoftMuonPassDRJetcut_%SYS%,as_char", "decoration name for tagging the events that have at least one soft muon passing the dR condition with its closest jet in the event"
