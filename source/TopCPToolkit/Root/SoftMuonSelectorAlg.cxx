@@ -373,9 +373,7 @@ namespace top {
 //Save additional soft muon related variables.
   void SoftMuonSelectorAlg::SaveAdditionalSoftMuonVariables(const xAOD::Muon* softmuon, const xAOD::EventInfo *evtInfo, const CP::SystematicSet& sys){
 
-    float idPt = -999.;
-    float mePt = -999.;
-    SoftMuonSelectorAlg::IdMsPt(*softmuon, idPt, mePt);
+    auto [idPt, mePt] = SoftMuonSelectorAlg::IdMsPt(*softmuon);
 
     m_softmu_pt_id_Handle.set(*softmuon, idPt, sys);
     m_softmu_pt_me_Handle.set(*softmuon, mePt, sys);
@@ -674,7 +672,11 @@ const xAOD::Vertex        *priVtx
 
   // ---------------------------------------------------
 
-  void SoftMuonSelectorAlg::IdMsPt(const xAOD::Muon& mu, float& idPt, float& mePt) const {
+  std::pair<float, float> SoftMuonSelectorAlg::IdMsPt(const xAOD::Muon& mu) const {
+
+    float idPt = -1;
+    float mePt = -1;
+    
     static const SG::AuxElement::Accessor<float> mePt_acc("MuonSpectrometerPt");
     static const SG::AuxElement::Accessor<float> idPt_acc("InnerDetectorPt");
       
@@ -687,8 +689,10 @@ const xAOD::Vertex        *priVtx
                                         << " is not decorated with calibrated momenta. Please fix");
       throw std::runtime_error("MiddleSaver() - qOverP significance calculation failed");
     }
-    mePt = mePt_acc(mu);
+
     idPt = idPt_acc(mu);
+    mePt = mePt_acc(mu);
+    return std::make_pair(idPt, mePt);
   }
 
   float SoftMuonSelectorAlg::qOverPsignificance(const xAOD::Muon& muon) const {
@@ -698,8 +702,7 @@ const xAOD::Vertex        *priVtx
       ATH_MSG_VERBOSE("No ID / MS track. Return dummy large value of 1 mio");
       return 1.e6;
     }
-    float mePt{-1.}, idPt{-1.};
-    IdMsPt(muon, idPt, mePt);
+    auto [idPt, mePt] = SoftMuonSelectorAlg::IdMsPt(muon);
 
     const float meP = mePt / std::sin(metrack->theta());
     const float idP = idPt / std::sin(idtrack->theta());
@@ -709,8 +712,7 @@ const xAOD::Vertex        *priVtx
   }
 
   float SoftMuonSelectorAlg::rhoPrime(const xAOD::Muon& muon) const {
-    float mePt{-1.}, idPt{-1.};
-    IdMsPt(muon, idPt, mePt);
+    auto [idPt, mePt] = SoftMuonSelectorAlg::IdMsPt(muon);
     return std::abs(idPt - mePt) / muon.pt();
   }
 

@@ -88,7 +88,7 @@ namespace top {
 
       // ------------------------------------------------------------------------------
       // Some function to calculate some of these variables
-      virtual void IdMsPt(const xAOD::Muon& muon, float& idPt, float& msPt) const;
+      virtual std::pair<float, float> IdMsPt(const xAOD::Muon& muon) const;
       virtual float qOverPsignificance(const xAOD::Muon& muon) const;
       virtual float rhoPrime(const xAOD::Muon& muon) const;
 
