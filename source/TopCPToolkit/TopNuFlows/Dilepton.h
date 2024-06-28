@@ -6,8 +6,8 @@
 #include <math.h>
 
 #include <iostream>
-#include <vector>
 #include <numeric>
+#include <vector>
 
 // Framework includes
 #include <xAODEgamma/ElectronContainer.h>
@@ -17,13 +17,24 @@
 // Parent class
 #include "TopCPToolkit/ONNXWrapper.h"
 
+using std::string;
+using std::vector;
+
 namespace top {
+
 class TopNuFlowsDilepton : public ONNXWrapper {
     using ONNXWrapper::ONNXWrapper;
 
    public:
-    TopNuFlowsDilepton(const std::string &name, std::string model_even,
-                       std::string model_odd);
+    // Vectors for the input and outputs to the model
+    vector<float> m_nu_out;
+    vector<vector<float>> m_input_lep;
+    vector<vector<float>> m_input_jet;
+    vector<float> m_met_input;
+    vector<float> m_misc_input;
+
+    TopNuFlowsDilepton(const string &name, string model_even,
+                       string model_odd);
 
     // Placeholder, simpler to use custon Sample method
     virtual StatusCode execute() { return StatusCode::SUCCESS; };
@@ -35,30 +46,14 @@ class TopNuFlowsDilepton : public ONNXWrapper {
                         float met_mpy, float met_sumet, unsigned long long eventNumber);
 
     // The methods to set/return the values from the internal state
-    virtual std::vector<float> GetSample();
-    void setBtagger(std::string algorithm) { m_btagger = algorithm; };
+    virtual vector<float> GetSample() { return m_nu_out; };
+    void setBtagger(string algorithm) { m_btagger = algorithm; };
 
     // Variable to work out which model to use
     unsigned m_model_idx;
 
-    // Values to set during inference
-    float m_nu_px;
-    float m_nu_py;
-    float m_nu_pz;
-    float m_anti_nu_px;
-    float m_anti_nu_py;
-    float m_anti_nu_pz;
-    float m_loglik;
-
-    // Simple inline function for calculating the product of a vector
-    template <typename T>
-    T product(const std::vector<T> &v) {
-        return std::accumulate(v.begin(), v.end(), 1, std::multiplies<T>());
-    }
-
-
    protected:
-    std::string m_btagger;
+    string m_btagger;
 };
 
 }  // namespace top
