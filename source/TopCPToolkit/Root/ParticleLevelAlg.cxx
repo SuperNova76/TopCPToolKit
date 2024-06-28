@@ -385,12 +385,8 @@ namespace top {
     // user-friendly MET decorations
     if (m_useTruthMET) {
       for (const xAOD::MissingET* etmiss : *inputMissingET) {
-	float metx = etmiss->auxdataConst<float>("mpx");
-	float mety = etmiss->auxdataConst<float>("mpy");
-	float met_met = std::sqrt(metx * metx + mety * mety);
-	float met_phi = std::acos(metx / met_met);
-	etmiss->auxdecor<float>("met_met") = met_met;
-	etmiss->auxdecor<float>("met_phi") = met_phi;
+	etmiss->auxdecor<float>("met_met") = etmiss->met();
+	etmiss->auxdecor<float>("met_phi") = etmiss->phi();
       }
     }
 
