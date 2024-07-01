@@ -142,3 +142,33 @@ Name in YAML: **Muons.WorkingPoint**
     - `BadMuonVeto_effSF`: the dedicated "bad muon veto" SF, only with quality `HighPt`
     - `isol_effSF`: the per-muon isolation SF
     - `TTVA_effSF`: the per-muon track-to-vertex-association SF
+
+### [SoftMuonSelectorConfig](https://gitlab.cern.ch/alprades/TopCPToolkit/-/blob/SoftMuonDevelopment/source/TopCPToolkit/python/SoftMuonSelectorConfig.py)
+Name in YAML: **SoftMuonSelector**
+
+This package is designed to select muons that are within a specific distance ($\Delta R$) from a jet. It is intended for selecting soft muons contained within jets, which is useful for identifying events with muons originating from the decay of heavy flavor hadrons.
+
+`softmuons`
+:   The input muon container, with an optional selection, in the format container or container.selection. The default is an empty string (''). Do not include this muon collection in the Overlap Removal algorithm.
+
+`jets`
+:   The input jet container, with an optional selection, in the format container or container.selection. The default is an empty string ('').
+
+`softMuonDRJet`
+:   The maximum $\Delta R$ between the soft muon and the nearest selected jet. Can be set to 999. to keep all soft muons. Default is 0.4.
+
+`softMuonDRJetUseRapidity`
+:   Determines the method for calculating the $\Delta R$(soft muon, jet) for the softMuonDRJet cut. Setting this parameter to True will use rapidity, while setting it to False will use pseudorapidity. The default value is False.
+
+`saveSoftMuonAdditionalInfo`
+:   Specifies whether to save additional information associated with the soft muon, such as track hits, track quality chi2, among others. The default is False (do not save additional information about the soft muon track).
+
+`saveSoftMuonNearestJetInfo`
+:   Specifies whether to save additional information associated with the nearest jet to the soft muon, such as the jet charge, EM fraction, or number of constituents. The default is False (do not save additional information about the nearest jet).
+
+Events containing at least one soft muon selected by this algorithm can be identified by requiring the event to pass the `EVENTFLAG pass_SoftMuonPassDRJetcut_%SYS%` in the `Event Selection` block.
+
+!!! success "Registers the following variables for each event:"
+    - `pass_SoftMuonPassDRJetcut`: whether the muon event contains a muon that passes the selection criteria in the SoftMuonSelector tool
+    - `SoftMuonJetDRmin`: per-muon angular distance between the muon and its closest jet
+    - `SoftMuonPassDRJetcut`: whether the muon passes the $\Delta R$ (per-muon)
