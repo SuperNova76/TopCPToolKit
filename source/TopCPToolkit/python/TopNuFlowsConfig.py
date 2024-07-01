@@ -21,6 +21,7 @@ class TopNuFlowsConfig(ConfigBlock):
         # All the inputs to initialize the algorithm
         alg.btagger = self.btagger
         alg.onnxfilepath = self.onnxfilepath
+        alg.write_inputs = self.write_inputs
         alg.electrons, alg.electronSelection = config.readNameAndSelection(self.electrons)
         alg.muons, alg.muonSelection = config.readNameAndSelection(self.muons)
         alg.jets, alg.jetSelection = config.readNameAndSelection(self.jets)
@@ -39,9 +40,9 @@ class TopNuFlowsConfig(ConfigBlock):
         if self.write_inputs:
             alg.input_lep = "nuflows_input_lep_%SYS%"
             alg.input_jet = "nuflows_input_jet_%SYS%"
-            alg.met_input = "nuflows_met_input_%SYS%"
-            alg.misc_input = "nuflows_misc_input_%SYS%"
+            alg.input_met = "nuflows_input_met_%SYS%"
+            alg.input_misc = "nuflows_input_misc_%SYS%"
             config.addOutputVar("EventInfo", alg.input_lep, "nuflows_input_lep")
             config.addOutputVar("EventInfo", alg.input_jet, "nuflows_input_jet")
-            config.addOutputVar("EventInfo", alg.met_input, "nuflows_met_input")
-            config.addOutputVar("EventInfo", alg.misc_input, "nuflows_misc_input")
+            config.addOutputVar("EventInfo", alg.input_met, "nuflows_input_met")
+            config.addOutputVar("EventInfo", alg.input_misc, "nuflows_input_misc")

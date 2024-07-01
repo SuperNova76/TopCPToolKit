@@ -15,8 +15,8 @@ void TopNuFlowsDilepton::Sample(ConstDataVector<xAOD::ElectronContainer> &electr
     // Clear all inputs to the model
     m_input_lep.clear();
     m_input_jet.clear();
-    m_met_input.clear();
-    m_misc_input.clear();
+    m_input_met.clear();
+    m_input_misc.clear();
 
     // Fill in the leptons
     for (const auto &l : electrons) {
@@ -50,21 +50,21 @@ void TopNuFlowsDilepton::Sample(ConstDataVector<xAOD::ElectronContainer> &electr
     }
 
     // MET information
-    m_met_input.push_back(met_mpx);
-    m_met_input.push_back(met_mpy);
-    m_met_input.push_back(met_sumet);
+    m_input_met.push_back(met_mpx);
+    m_input_met.push_back(met_mpy);
+    m_input_met.push_back(met_sumet);
 
     // Misc information (particle multiplicities)
-    m_misc_input.push_back(static_cast<float>(electrons.size()));
-    m_misc_input.push_back(static_cast<float>(muons.size()));
-    m_misc_input.push_back(static_cast<float>(jets.size()));
+    m_input_misc.push_back(static_cast<float>(electrons.size()));
+    m_input_misc.push_back(static_cast<float>(muons.size()));
+    m_input_misc.push_back(static_cast<float>(jets.size()));
 
     // Create the Ort::Value objects for each of the inputs
     this->clearInputs();
     this->addInputs(m_input_lep);
     this->addInputs(m_input_jet);
-    this->addInputs(m_met_input);
-    this->addInputs(m_misc_input);
+    this->addInputs(m_input_met);
+    this->addInputs(m_input_misc);
 
     // Select the appropriate network and run using ONNX
     m_model_idx = this->getSessionIndex(eventNumber);

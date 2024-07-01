@@ -27,11 +27,12 @@ class TopNuFlowsDilepton : public ONNXWrapper {
 
    public:
     // Vectors for the input and outputs to the model
+    float m_loglik;
     vector<float> m_nu_out;
     vector<vector<float>> m_input_lep;
     vector<vector<float>> m_input_jet;
-    vector<float> m_met_input;
-    vector<float> m_misc_input;
+    vector<float> m_input_met;
+    vector<float> m_input_misc;
 
     TopNuFlowsDilepton(const string &name, string model_even,
                        string model_odd);

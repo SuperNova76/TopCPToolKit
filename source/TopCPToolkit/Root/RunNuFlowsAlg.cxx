@@ -32,10 +32,11 @@ StatusCode RunNuFlowsAlg::initialize() {
 
     // Initialise all output decorations
     ANA_CHECK(m_nu_out_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
+    ANA_CHECK(m_loglik_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
     ANA_CHECK(m_input_lep_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
     ANA_CHECK(m_input_jet_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
-    ANA_CHECK(m_met_input_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
-    ANA_CHECK(m_misc_input_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
+    ANA_CHECK(m_input_met_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
+    ANA_CHECK(m_input_misc_decor.initialize(m_systematicsList, m_eventInfoHandle, SG::AllowEmpty));
 
     // Initialise the systematics list
     ANA_CHECK(m_systematicsList.initialize());
@@ -66,8 +67,8 @@ StatusCode RunNuFlowsAlg::execute_syst(const CP::SystematicSet &sys) {
     m_loglik_decor.set(*evtInfo, -999, sys);
     m_input_lep_decor.set(*evtInfo, {}, sys);
     m_input_jet_decor.set(*evtInfo, {}, sys);
-    m_met_input_decor.set(*evtInfo, {}, sys);
-    m_misc_input_decor.set(*evtInfo, {}, sys);
+    m_input_met_decor.set(*evtInfo, {}, sys);
+    m_input_misc_decor.set(*evtInfo, {}, sys);
 
     // Skip the event if it does not pass the selection
     if (m_eventselection && !m_eventselection.getBool(*evtInfo, sys))
@@ -121,14 +122,16 @@ StatusCode RunNuFlowsAlg::execute_syst(const CP::SystematicSet &sys) {
         met_sumet,
         eventNumber);
 
+    // Decorate the event with the outputs of the network
     m_nu_out_decor.set(*evtInfo, m_nuflows->m_nu_out, sys);
+    m_loglik_decor.set(*evtInfo, m_nuflows->m_loglik, sys);
 
     // Decorate with the inputs of the network if requested
     if (m_write_inputs) {
         m_input_lep_decor.set(*evtInfo, m_nuflows->m_input_lep, sys);
         m_input_jet_decor.set(*evtInfo, m_nuflows->m_input_jet, sys);
-        m_met_input_decor.set(*evtInfo, m_nuflows->m_met_input, sys);
-        m_misc_input_decor.set(*evtInfo, m_nuflows->m_misc_input, sys);
+        m_input_met_decor.set(*evtInfo, m_nuflows->m_input_met, sys);
+        m_input_misc_decor.set(*evtInfo, m_nuflows->m_input_misc, sys);
     }
 
     return StatusCode::SUCCESS;
