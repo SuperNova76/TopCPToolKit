@@ -14,7 +14,6 @@ namespace top {
     ttbarPartonHistory->IniVarTtbar();
     // Tracing truth particles
     CalcPartonHistory::TraceParticles(truthParticles);
-    
     CalcPartonHistory::EnsureKeyExists("MC_t_Wp_afterFSR", "MC_t_Wp");
     CalcPartonHistory::EnsureKeyExists("MC_tbar_Wm_afterFSR", "MC_tbar_Wm");
     CalcPartonHistory::EnsureKeyExists("MC_t_Wp_beforeFSR", "MC_t_Wp_afterFSR");
