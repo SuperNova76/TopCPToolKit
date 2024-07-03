@@ -2,12 +2,20 @@
 #include "PartonHistory/PartonHistoryUtils.h"
 
 namespace top {
+  using PartonHistoryUtils::decorateWithMPtPhi;
+  using ROOT::Math::PtEtaPhiMVector;
+
   void CalcPartonHistory::FillWpPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent) {
     std::string parentstring = "";
     if (parent != "") parentstring = "_from_"+parent;
-
-    TLorentzVector Wp, WpDecay1, WpDecay2;
-    int WpDecay1pdgId = -1, WpDecay2pdgId = -1;
+    PtEtaPhiMVector Wp;
+    PtEtaPhiMVector WpDecay1;
+    PtEtaPhiMVector WpDecay2;
+    int WpDecay1pdgId = -1;
+    int WpDecay2pdgId = -1;
+    std::string prefix = "MC_";
+    if (parent != "") prefix += parent + "_Wp";
+    else prefix += "Wp";
 
     static const SG::AuxElement::Decorator<float> dec_MC_Wp_m("MC_W" + parentstring + "_m");
     static const SG::AuxElement::Decorator<float> dec_MC_Wp_pt("MC_W" + parentstring + "_pt");
@@ -48,9 +56,14 @@ namespace top {
   void CalcPartonHistory::FillWmPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent) {
     std::string parentstring = "";
     if (parent != "") parentstring = "_from_"+parent;
-
-    TLorentzVector Wm, WmDecay1, WmDecay2;
-    int WmDecay1pdgId = -1, WmDecay2pdgId = -1;
+    PtEtaPhiMVector Wm;
+    PtEtaPhiMVector WmDecay1;
+    PtEtaPhiMVector WmDecay2;
+    int WmDecay1pdgId = -1;
+    int WmDecay2pdgId = -1;
+    std::string prefix = "MC_";
+    if (parent != "") prefix += parent + "_Wm";
+    else prefix += "Wm";
 
     static const SG::AuxElement::Decorator<float> dec_MC_Wm_m("MC_W" + parentstring + "_m");
     static const SG::AuxElement::Decorator<float> dec_MC_Wm_pt("MC_W" + parentstring + "_pt");

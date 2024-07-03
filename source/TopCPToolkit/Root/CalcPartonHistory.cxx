@@ -1,6 +1,7 @@
 #include "PartonHistory/PartonHistory.h"
 #include "PartonHistory/PartonHistoryUtils.h"
 #include "PartonHistory/CalcPartonHistory.h"
+#include "PartonHistory/LorentzHelper.h"
 #include "xAODTruth/TruthVertex.h"
 #include "xAODTruth/TruthParticleContainer.h"
 #include "AthContainers/ConstDataVector.h"
@@ -14,6 +15,7 @@
 #endif
 
 namespace top {
+  using ROOT::Math::PtEtaPhiMVector;
 
   CalcPartonHistory::CalcPartonHistory(const std::string& name,
 				       const std::vector<std::string>& truthCollection) :
@@ -86,11 +88,9 @@ namespace top {
     return (!(particleMap.find(key) == particleMap.end()));
   }
 
-  bool CalcPartonHistory::Retrievep4(const std::string& key, TLorentzVector& p4) {
-    // Retrieves the TLorentzVector associated with a given key from the particleMap.
-    // Returns true if the key exists and assigns the TLorentzVector to p4, otherwise returns false.
+  bool CalcPartonHistory::Retrievep4(const std::string key, PtEtaPhiMVector& p4) {
     if (ExistsInMap(key)) {
-      p4 = particleMap[key]->p4();
+      p4 = GetPtEtaPhiMfromTruth(particleMap[key]);
       return true;
     }
     return false;
@@ -440,5 +440,4 @@ namespace top {
 
     return StatusCode::SUCCESS;
   }
-
 } // namespace top

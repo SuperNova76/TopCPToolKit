@@ -3,6 +3,8 @@
 #include <array>
 
 namespace top {
+  using ROOT::Math::PtEtaPhiMVector;
+  
   namespace PartonHistoryUtils {
 
     bool isBrokenTop(const xAOD::TruthParticle* particle) {
@@ -50,7 +52,7 @@ namespace top {
       return skipit;
     }
 
-    void decorateWithMPtPhi(xAOD::PartonHistory* pHistory, const std::string & prefix, const TLorentzVector & vec ){
+    void decorateWithMPtPhi(xAOD::PartonHistory* pHistory, const std::string & prefix, const PtEtaPhiMVector & vec ){
       constexpr size_t nItems=3;
       const std::array<std::string, nItems> suffix{"_m", "_pt", "_phi"};
       const std::array<double, nItems> values{vec.M(), vec.Pt(), vec.Phi()};

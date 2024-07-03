@@ -2,6 +2,9 @@
 #include "PartonHistory/PartonHistoryUtils.h"
 
 namespace top {
+  using PartonHistoryUtils::decorateWithMPtPhi;
+  using ROOT::Math::PtEtaPhiMVector;
+  
   void CalcPartonHistory::FillTopPartonHistory(xAOD::PartonHistory* PartonHistory) {
     // Filling the parton history for a top quark.
     // Fill the W+ parton history and assign the "t" as parent
@@ -9,7 +12,8 @@ namespace top {
     // Fill the b parton history and assign the "t" as parent
     FillBottomPartonHistory(PartonHistory, "t");
 
-    TLorentzVector t_beforeFSR, t_afterFSR;
+    PtEtaPhiMVector t_beforeFSR;
+    PtEtaPhiMVector t_afterFSR;
 
     static const SG::AuxElement::Decorator<float> dec_MC_t_beforeFSR_m("MC_t_beforeFSR_m");
     static const SG::AuxElement::Decorator<float> dec_MC_t_beforeFSR_pt("MC_t_beforeFSR_pt");
@@ -41,8 +45,8 @@ namespace top {
     FillWmPartonHistory(PartonHistory, "tbar");
     // Fill the bbar parton history and assign the "tbar" as parent
     FillAntiBottomPartonHistory(PartonHistory, "tbar");
-
-    TLorentzVector tbar_beforeFSR, tbar_afterFSR;
+    PtEtaPhiMVector tbar_beforeFSR;
+    PtEtaPhiMVector tbar_afterFSR;
 
     static const SG::AuxElement::Decorator<float> dec_MC_tbar_beforeFSR_m("MC_tbar_beforeFSR_m");
     static const SG::AuxElement::Decorator<float> dec_MC_tbar_beforeFSR_pt("MC_tbar_beforeFSR_pt");
@@ -69,20 +73,22 @@ namespace top {
   }
 
   void CalcPartonHistory::FillTtbarPartonHistory(xAOD::PartonHistory* PartonHistory) {
-    // Filling the ttbar parton history
-    TLorentzVector ttbar;
+    // assuming t and tbar partonhistory ran already
+    PtEtaPhiMVector temp;
 
-    TLorentzVector t_beforeFSR, tbar_beforeFSR;
-    TLorentzVector t_afterFSR, tbar_afterFSR;
+    PtEtaPhiMVector t_beforeFSR;
+    PtEtaPhiMVector tbar_beforeFSR;
+    PtEtaPhiMVector t_afterFSR;
+    PtEtaPhiMVector tbar_afterFSR;
 
-    TLorentzVector WpDecay1, WpDecay2;
-    TLorentzVector WmDecay1, WmDecay2;
+    PtEtaPhiMVector WpDecay1;
+    PtEtaPhiMVector WpDecay2;
+    PtEtaPhiMVector WmDecay1;
+    PtEtaPhiMVector WmDecay2;
 
-    int WpDecay1_pdgId, WpDecay2_pdgId;
-    int WmDecay1_pdgId, WmDecay2_pdgId;
-
-    TLorentzVector b, bbar;
-
+    PtEtaPhiMVector bbar;
+    PtEtaPhiMVector b;
+    
     static const SG::AuxElement::Decorator<float> dec_MC_ttbar_beforeFSR_m("MC_ttbar_beforeFSR_m");
     static const SG::AuxElement::Decorator<float> dec_MC_ttbar_beforeFSR_pt("MC_ttbar_beforeFSR_pt");
     static const SG::AuxElement::Decorator<float> dec_MC_ttbar_beforeFSR_eta("MC_ttbar_beforeFSR_eta");

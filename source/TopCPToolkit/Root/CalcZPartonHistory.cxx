@@ -2,15 +2,16 @@
 #include "PartonHistory/PartonHistoryUtils.h"
 
 namespace top {
-  void CalcPartonHistory::FillZPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent, const int bosonID) {
-    // Filling Z parton history. To indicate where the Z originates from we use a parent string.
-    // Construct parent string
+  using PartonHistoryUtils::decorateWithMPtPhi;
+  using ROOT::Math::PtEtaPhiMVector;
+
+  void CalcPartonHistory::FillZPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string parent) {
     std::string parentstring = "";
     if (parent != "") parentstring = "_from_"+parent;
-
-    TLorentzVector Z;
-    TLorentzVector ZDecay1;
-    TLorentzVector ZDecay2;
+    
+    PtEtaPhiMVector Z;
+    PtEtaPhiMVector ZDecay1;
+    PtEtaPhiMVector ZDecay2;
     int ZDecay1pdgId = -1;
     int ZDecay2pdgId = -1;
 
