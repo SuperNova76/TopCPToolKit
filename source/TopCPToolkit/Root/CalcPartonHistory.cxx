@@ -395,7 +395,6 @@ namespace top {
   void CalcPartonHistory::TraceParticles(const xAOD::TruthParticleContainer* truthParticles) {
     // Traces the paths of all particles in the truthParticles container and fills the particle map.
     std::vector<std::vector<const xAOD::TruthParticle*>> allPaths;
-    tracedParticles.clear();
     for (const xAOD::TruthParticle* particle : *truthParticles) {
       std::vector<const xAOD::TruthParticle*> currentPath;
       if (PartonHistoryUtils::hasParticleIdenticalParent(particle)) continue;
