@@ -521,7 +521,6 @@ namespace xAOD {
     this->auxdecor< float >("MC_Hdecay2_decay2_phi") = -1000;
     this->auxdecor< float >("MC_Hdecay2_decay2_eta") = -1000;
     this->auxdecor< int >("MC_Hdecay2_decay2_pdgId") = 0;
-
   }
 
   // Initialize variables for tZq events
