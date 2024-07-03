@@ -347,3 +347,7 @@ AddConfigBlocks:
       functionName: 'VGammaORConfig'
       algName: 'VGammaOR'
       pos: 'Output'
+    - modulePath: 'TopCPToolkit.SoftMuonSelectorConfig'
+      functionName: 'SoftMuonSelectorConfig'
+      algName: 'SoftMuonSelector'
+      pos: 'EventSelection'

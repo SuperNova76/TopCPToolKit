@@ -19,6 +19,7 @@
 #include "TopCPToolkit/SVMassAlg.h"
 #include "TopCPToolkit/FakeBkgCalculatorAlg.h"
 #include "TopCPToolkit/VGammaORAlg.h"
+#include "TopCPToolkit/SoftMuonSelectorAlg.h"
 #include "TopCPToolkit/PartonHistoryToSpinInputAlg.h"
 #include "TopCPToolkit/TopSpinDensityMatrixAlg.h"
 
