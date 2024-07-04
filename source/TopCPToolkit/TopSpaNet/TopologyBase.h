@@ -2,7 +2,6 @@
 #define TOPSPANET_TOPOLOGY_BASE_H
 
 // useful
-#include <TLorentzVector.h>
 #include <vector>
 #include <iostream>
 #include <math.h>
