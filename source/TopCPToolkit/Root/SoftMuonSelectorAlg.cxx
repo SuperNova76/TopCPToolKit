@@ -280,21 +280,6 @@ namespace top {
 
       if ( selected_softmuons.size() > 0) {
 
-      	      // Accessing pt, eta, phi, and energy
-        //TLorentzVector softmuon_vector;
-	//softmuon_vector = selected_softmuons.at(0)->p4();
-	//Double_t pt = softmuon_vector.Pt();
-        //Double_t eta = softmuon_vector.Eta();
-        //Double_t phi = softmuon_vector.Phi();
-        //Double_t energy = softmuon_vector.E();
-
-        // Printing pt, eta, phi, and energy
-        //std::cout << "Softmuon pt = " << pt << std::endl;
-        //std::cout << "Softmuon pseudorapidity (eta) = " << eta << std::endl;
-        //std::cout << "Softmuon azimuthal angle (phi) = " << phi << std::endl;
-        //std::cout << "Softmuon energy = " << energy << std::endl;
-        //ANA_MSG_INFO("Softmuon pt = " << pt);
-
         // Calculate SoftMuonJetDRmin for each soft muon
         bool PassSoftMuonDRJetCut = false;
 
