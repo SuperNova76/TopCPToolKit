@@ -1,6 +1,7 @@
 #include "TopCPToolkit/TutorialAlg.h"
 
 namespace top {
+  using ROOT::Math::PtEtaPhiMVector;
 
   TutorialAlg::TutorialAlg(const std::string &name,
                            ISvcLocator *pSvcLocator)
@@ -48,7 +49,7 @@ namespace top {
       
       if ( m_preselection && !m_preselection.getBool(*evtInfo, sys)) continue;
       
-      TLorentzVector lepton;
+      PtEtaPhiMVector lepton;
       if ( electrons->size() > 0 ) {
 	lepton = electrons->at(0)->p4();
       }

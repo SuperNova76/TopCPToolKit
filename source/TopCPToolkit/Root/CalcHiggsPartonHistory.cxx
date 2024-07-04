@@ -1,6 +1,5 @@
 #include "PartonHistory/CalcPartonHistory.h"
 #include "PartonHistory/PartonHistoryUtils.h"
-#include "PartonHistory/LorentzHelper.h"
 
 namespace top {
   using PartonHistoryUtils::decorateWithMPtPhi;

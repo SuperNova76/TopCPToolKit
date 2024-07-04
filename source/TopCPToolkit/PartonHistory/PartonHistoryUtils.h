@@ -3,7 +3,6 @@
 
 #include "xAODTruth/TruthParticleContainer.h"
 
-#include "TLorentzVector.h"
 #include <string>
 
 namespace top {

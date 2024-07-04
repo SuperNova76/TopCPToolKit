@@ -8,9 +8,9 @@
 
 #include <PartonHistory/CalcPartonHistory.h>
 #include <xAODEventInfo/EventInfo.h>
-#include <TLorentzVector.h>
 
 namespace top {
+  using ROOT::Math::PtEtaPhiMVector;
 
   class PartonHistoryToSpinInputAlg final : public EL::AnaAlgorithm {
 
@@ -27,16 +27,16 @@ namespace top {
       CP::SysReadHandle<xAOD::PartonHistory> m_partonHistoryHandle {
         this, "partonHistory", "", "the parton history to read from"
       };
-      CP::SysWriteDecorHandle<TLorentzVector> m_top {
+      CP::SysWriteDecorHandle<PtEtaPhiMVector> m_top {
         this, "truth_top", "truth_top_4vect_%SYS%", "the 4-vector of the top"
       };
-      CP::SysWriteDecorHandle<TLorentzVector> m_tbar {
+      CP::SysWriteDecorHandle<PtEtaPhiMVector> m_tbar {
         this, "truth_tbar", "truth_tbar_4vect_%SYS%", "the 4-vector of the anti-top"
       };
-      CP::SysWriteDecorHandle<TLorentzVector> m_top_decay {
+      CP::SysWriteDecorHandle<PtEtaPhiMVector> m_top_decay {
         this, "truth_top_decay", "truth_top_decay_4vect_%SYS%", "the 4-vector of the decay product (spin analyser) from the top"
       };
-      CP::SysWriteDecorHandle<TLorentzVector> m_tbar_decay {
+      CP::SysWriteDecorHandle<PtEtaPhiMVector> m_tbar_decay {
         this, "truth_tbar_decay", "truth_tbar_decay_4vect_%SYS%", "the 4-vector of the decay product (spin analyser) from the anti-top"
       };
   };

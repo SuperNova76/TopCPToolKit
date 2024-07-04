@@ -1,7 +1,7 @@
 #include "PartonHistory/PartonHistory.h"
 #include "PartonHistory/PartonHistoryUtils.h"
 #include "PartonHistory/CalcPartonHistory.h"
-#include "PartonHistory/LorentzHelper.h"
+#include "VectorHelpers/LorentzHelper.h"
 #include "xAODTruth/TruthVertex.h"
 #include "xAODTruth/TruthParticleContainer.h"
 #include "AthContainers/ConstDataVector.h"
