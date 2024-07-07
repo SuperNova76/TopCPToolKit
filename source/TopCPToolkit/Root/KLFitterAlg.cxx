@@ -18,9 +18,14 @@ namespace top {
   KLFitterAlg::KLFitterAlg(const std::string &name, ISvcLocator *pSvcLocator)
     : EL::AnaAlgorithm(name, pSvcLocator)
     , m_transferFunctionsPath{"dev/AnalysisTop/KLFitterTFs/mc12a/akt4_LCtopo_PP6/"}
+    , m_leptonTypeEnum{KLFEnums::LeptonType::kElectron}
+    , m_LHTypeEnum{KLFEnums::Likelihood::ttbar}
+    , m_jetSelectionModeEnum{KLFEnums::JetSelectionMode::kLeadingThree}
     , m_useBtagPriority{false}
     , m_njetsRequirement{0}
-    , m_btagging_eff_tool("",this) {
+    , m_jetSelectionModeKLFitterEnum{KLFEnums::JetSelectionMode::kLeadingThree}
+    , m_btagging_eff_tool("",this)
+  {
     // this we need for output container name hashes -- this should be replaced by CPAlgo functionality
     // use the postfix feature ? 
     declareProperty("LeptonType", m_leptonType = "kUndefined", "Define the lepton type");

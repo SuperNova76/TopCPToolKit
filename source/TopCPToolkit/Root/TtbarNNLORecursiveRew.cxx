@@ -3,6 +3,7 @@
 // Constructor
 TtbarNNLORecursiveRew::TtbarNNLORecursiveRew(const std::string& name)
     : asg::AsgTool(name)
+    , m_systVar{NNLORewEnums::SystVar::NoSyst}
 {
     declareProperty("SampleID", m_sampleId = 0, "Sample ID");
     declareProperty("Type", m_type = 1, "Type");
@@ -43,7 +44,7 @@ StatusCode TtbarNNLORecursiveRew::initialize()
         m_dir += "/data_3d/";
     }
 
-    m_dir = PathResolverFindCalibDirectory(m_dir.c_str());
+    m_dir = PathResolverFindCalibDirectory(m_dir);
 
     // set up our cache of systematics, to be filled in buildCachedSystematics()
     CP::SystematicSet affSysts = CP::SystematicSet();
@@ -152,8 +153,8 @@ StatusCode TtbarNNLORecursiveRew::initialize()
 
         // open the relevant file
         std::unique_ptr<TFile> f ( TFile::Open((m_dir+"/RecursiveReweighting__"+smpStr+sysStr+suffix+".root").c_str()) );
-        ANA_MSG_INFO("Opening NNLO reweighting file " << f->GetName());
         if ( !f ) ANA_MSG_ERROR("Cannot open the file! Aborting.");
+	else ANA_MSG_INFO("Opening NNLO reweighting file " << f->GetName());
 
         // put the necessary histograms in our vectors
         std::string histname;

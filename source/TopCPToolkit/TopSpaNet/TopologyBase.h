@@ -17,7 +17,7 @@
 namespace top {
   class TopSpaNetTopology: public ONNXWrapper {
   public:
-    TopSpaNetTopology(const std::string& name, std::string model_even, std::string model_odd);
+    TopSpaNetTopology(const std::string& name, const std::string& model_even, const std::string& model_odd);
 
     virtual StatusCode execute() { return StatusCode::SUCCESS; }; // we would need to refactor things a bit in order to let the tool know about the selected objects, then we could use execute() instead of Predict()
 
@@ -31,7 +31,7 @@ namespace top {
     virtual std::vector<float> GetOutputScores() = 0;
     virtual std::vector<float> GetRegressedValues() = 0;
 
-    void setBtagger(std::string algorithm) { m_btagger = algorithm; };
+    void setBtagger(const std::string& algorithm) { m_btagger = algorithm; };
 
     unsigned getSessionIndex(unsigned long long eventNumber) override;
 

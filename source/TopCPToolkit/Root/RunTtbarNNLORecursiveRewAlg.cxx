@@ -4,6 +4,8 @@ namespace top {
 
     RunTtbarNNLORecursiveRewAlg::RunTtbarNNLORecursiveRewAlg(const std::string &name, ISvcLocator *pSvcLocator)
         : EL::AnaAlgorithm(name, pSvcLocator)
+	, m_sampleID(-1)
+	, m_reweightType(-1)
         , m_user_sampleID("SetMe")
         , m_user_reweightType("SetMe")
         , m_reweightPath("SetMe")
