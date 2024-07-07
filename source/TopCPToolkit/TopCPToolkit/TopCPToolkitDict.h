@@ -15,7 +15,6 @@
 #include "TopCPToolkit/RunTtbarNNLORecursiveRewAlg.h"
 #include "TopCPToolkit/JetMatchingAlg.h"
 #include "TopCPToolkit/JetReclusteringAlg.h"
-#include "TopCPToolkit/BTaggingScoresAlg.h"
 #include "TopCPToolkit/SVMassAlg.h"
 #include "TopCPToolkit/FakeBkgCalculatorAlg.h"
 #include "TopCPToolkit/VGammaORAlg.h"

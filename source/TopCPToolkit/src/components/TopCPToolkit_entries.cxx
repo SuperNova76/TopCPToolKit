@@ -12,7 +12,6 @@
 #include <TopCPToolkit/RunTtbarNNLORecursiveRewAlg.h>
 #include <TopCPToolkit/JetMatchingAlg.h>
 #include <TopCPToolkit/JetReclusteringAlg.h>
-#include <TopCPToolkit/BTaggingScoresAlg.h>
 #include <TopCPToolkit/SVMassAlg.h>
 #include <TopCPToolkit/FakeBkgCalculatorAlg.h>
 #include <TopCPToolkit/VGammaORAlg.h>
@@ -31,7 +30,6 @@ DECLARE_COMPONENT (top::KLFitterFinalizeOutputAlg)
 DECLARE_COMPONENT (top::KLFitterAlg)
 DECLARE_COMPONENT (top::JetMatchingAlg)
 DECLARE_COMPONENT (top::JetReclusteringAlg)
-DECLARE_COMPONENT (BTaggingScoresAlg)
 DECLARE_COMPONENT (top::SoftMuonSelectorAlg)
 DECLARE_COMPONENT (top::PartonHistoryToSpinInputAlg)
 DECLARE_COMPONENT (top::TopSpinDensityMatrixAlg)
