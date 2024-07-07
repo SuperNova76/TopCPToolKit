@@ -23,35 +23,25 @@ Jets:
       - btagger: 'GN2v01'
         btagWP: 'FixedCutBEff_85'
         generator: 'autoconfig'
-        minPt: 20000.0
         bTagCalibFile : /cvmfs/atlas.cern.ch/repo/sw/database/GroupData/xAODBTaggingEfficiency/13p6TeV/2021-22-13TeV-MC21-CDI_GN2v01_Test_smooth.root
         noEffSF : True
+        # Add tag scores to the output
+        saveScores: 'All'
       - btagger: 'GN2v01'
         btagWP: 'FixedCutBEff_77'
         generator: 'autoconfig'
-        minPt: 20000.0
         bTagCalibFile : /cvmfs/atlas.cern.ch/repo/sw/database/GroupData/xAODBTaggingEfficiency/13p6TeV/2021-22-13TeV-MC21-CDI_GN2v01_Test_smooth.root
         noEffSF : True
       - btagger: 'GN2v01'
         btagWP: 'FixedCutBEff_70'
         generator: 'autoconfig'
-        minPt: 20000.0
         bTagCalibFile : /cvmfs/atlas.cern.ch/repo/sw/database/GroupData/xAODBTaggingEfficiency/13p6TeV/2021-22-13TeV-MC21-CDI_GN2v01_Test_smooth.root
         noEffSF : True
       - btagger: 'GN2v01'
         btagWP: 'FixedCutBEff_65'
         generator: 'autoconfig'
-        minPt: 20000.0
         bTagCalibFile : /cvmfs/atlas.cern.ch/repo/sw/database/GroupData/xAODBTaggingEfficiency/13p6TeV/2021-22-13TeV-MC21-CDI_GN2v01_Test_smooth.root
         noEffSF : True
-
-    # Add tag scores to the output
-    BTaggingScores:
-      - bTagCalibFile : /cvmfs/atlas.cern.ch/repo/sw/database/GroupData/xAODBTaggingEfficiency/13p6TeV/2021-22-13TeV-MC21-CDI_GN2v01_Test_smooth.root
-        taggerName: 'GN2v01'
-        minPt: 20000.0
-        saveAllProbabilities: True
-        eventSelection : ''
     # Add SV Mass to the output
     SVMass: {}
       
@@ -246,7 +236,7 @@ KLFitter:
     met: 'AnaMET'
     likelihoodType: 'ttbar'
     jetSelectionMode: 'kLeadingFour'
-    btaggingMethod: 'kNoTag'
+    btaggingMethod: 'kNotag'
     bTagCDIFile: /cvmfs/atlas.cern.ch/repo/sw/database/GroupData/xAODBTaggingEfficiency/13p6TeV/2021-22-13TeV-MC21-CDI_GN2v01_Test_smooth.root
     btagger: 'GN2v01'
     btagWP: 'FixedCutBEff_85'
@@ -258,13 +248,13 @@ SpaNet:
     muons: 'AnaMuons.tight'
     jets: 'AnaJets.baselineJvt'
     met: 'AnaMET'
-    eventSelection: 'pass_ejets_%SYS%||pass_mujets_%SYS%'
+    eventSelection: 'pass_ejets_%SYS%,as_char||pass_mujets_%SYS%,as_char'
   - topology: 'TtbarLjetsNu'
     electrons: 'AnaElectrons.tight'
     muons: 'AnaMuons.tight'
     jets: 'AnaJets.baselineJvt'
     met: 'AnaMET'
-    eventSelection: 'pass_ejets_%SYS%||pass_mujets_%SYS%'
+    eventSelection: 'pass_ejets_%SYS%,as_char||pass_mujets_%SYS%,as_char'
 
 Bootstraps:
   nReplicas: 2000
@@ -309,10 +299,6 @@ AddConfigBlocks:
       functionName: 'TtbarNNLORecursiveRewConfig'
       algName: 'TtbarNNLO'
       pos: 'Output'
-    - modulePath: 'TopCPToolkit.BTagScoresConfig'
-      functionName: 'BTagScoresConfig'
-      algName: 'BTaggingScores'
-      superBlocks: 'Jets'
     - modulePath: 'TopCPToolkit.SVMassConfig'
       functionName: 'SVMassConfig'
       algName: 'SVMass'

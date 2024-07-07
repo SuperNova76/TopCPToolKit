@@ -140,10 +140,23 @@ Name in YAML: **Jets.FlavourTagging**
 `noEffSF`
 :   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. The default is `False`.
 
+`saveScores`
+:   whether or not to save the scores from the tagger. Set to 'True' to save only the overall score, or to 'All' to save also the per-flavour probabilities.
+
+`saveCustomVariables`
+:   [Expert mode] additional variables (list of strings) to save from the b-tagging object associated to each jet. E.g. ['pb','pc','pu', 'ptau'] to replicate `saveScores='All'`.
+
 !!! success "Registers the following variables (all names preceded by the tagger + WP combination):"
     - `select`: the per-jet tagging decision (no systematics)
     - `quantile`: only for pseudo-continuous b-tagging, the per-jet PCBT bin (no systematics)
     - `eff`: the per-jet b-tagging efficiency SF
+
+!!! success "Additional variables toggled by `saveScores`"
+    - `{btagger}`: the per-jet discriminant from tagger `{btagger}` (no systematics)
+    - `{btagger}_pu`: the per-jet light-flavour probability from tagger	`{btagger}` (no systematics)
+    - `{btagger}_pc`: the per-jet charm-flavour probability from tagger	`{btagger}` (no systematics)
+    - `{btagger}_pb`: the per-jet bottom-flavour probability from tagger `{btagger}` (no systematics)
+    - `{btagger}_ptau`: the per-jet tau-jet-flavour probability from tagger `{btagger}` (no systematics)
 
 ### [makeFTagEventSFAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagEventSFnalysisConfig.py)
 Name in YAML: **Jets.FlavourTaggingEventSF**
