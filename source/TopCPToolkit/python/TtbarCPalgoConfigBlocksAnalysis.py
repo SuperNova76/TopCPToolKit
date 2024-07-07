@@ -423,6 +423,22 @@ def makeTruthConfiguration(flags, algSeq, configSeq, factory, noSystematics=Fals
     #cfg.setOptionValue ('sampleID', 'aMCH7')
     configSeq.append(cfg)
 
+    # example spin analysis
+    from TopCPToolkit.PartonHistoryToSpinInputConfig import PartonHistoryToSpinInputConfig
+    cfg = PartonHistoryToSpinInputConfig()
+    cfg.setOptionValue ('history', 'Ttbar')
+    configSeq.append(cfg)
+    from TopCPToolkit.TopSpinDensityMatrixConfig import TopSpinDensityMatrixConfig
+    cfg = TopSpinDensityMatrixConfig()
+    cfg.setOptionValue ('setup', 'QEttbarExample')
+    cfg.setOptionValue ('top', 'truth_top_4vect_%SYS%')
+    cfg.setOptionValue ('tbar', 'truth_tbar_4vect_%SYS%')
+    cfg.setOptionValue ('top_decay', 'truth_top_decay_4vect_%SYS%')
+    cfg.setOptionValue ('tbar_decay', 'truth_tbar_decay_4vect_%SYS%')
+    cfg.setOptionValue ('doHelicityBasis', True)
+    cfg.setOptionValue ('doEntanglement', True)
+    configSeq.append(cfg)
+
     # add NTuple output config
     configSeq += makeConfig ('Output')
     configSeq.setOptionValue ('.treeName', 'truth')
@@ -468,6 +484,7 @@ def makeParticleLevelConfiguration(flags, algSeq, configSeq, factory, noSystemat
     cfg.setOptionValue ('useTruthLargeRJets', True)
     cfg.setOptionValue ('useTruthPhotons', True)
     cfg.setOptionValue ('useTruthTaus', True)
+    cfg.setOptionValue ('useTruthNeutrinos', True)
     configSeq.append(cfg)
     outputContainers.update( cfg.getOutputContainers() )
 

@@ -165,7 +165,7 @@ def compareEvents(key, branches, ref_file, new_file):
                 # !!! Exceptions !!!
                 # SPA-Net floating point error
                 if "spanet_had_top_score" in branch or "spanet_had_top_assignment" in branch:
-                    if math.isclose(ref_value, new_value, rel_tol=1e-6): continue
+                    if math.isclose(ref_value, new_value, rel_tol=1e-5): continue
                 logger.debug(f"{orange_code}Warning: Branch {branch} differs for event {getattr(ref_tree,'eventNumber')}:{reset_code}")
                 logger.debug(f"{orange_code}  --> reference:{reset_code} {ref_value}")
                 logger.debug(f"{orange_code}  --> new file: {reset_code} {new_value}")

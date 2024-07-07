@@ -1,5 +1,6 @@
 CommonServices:
   systematicsHistogram: 'listOfSystematicsParticleLevel'
+  runSystematics: True
 
 GeneratorLevelAnalysis: {}
 

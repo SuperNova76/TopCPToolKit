@@ -1,28 +1,24 @@
 CommonServices:
   systematicsHistogram: 'listOfSystematicsPartonLevel'
+  runSystematics: True
 
 GeneratorLevelAnalysis: {}
 
 PartonHistory:
   - histories: 'Ttbar.TtbarLight'
 
-#TtbarNNLO: {}
+TtbarNNLO: {}
 
 SpinInputs:
   - history: 'Ttbar'
 
 SpinMatrix:
-  - setup: 'custom1'
+  - setup: 'QEttbarExample'
     top: 'truth_top_4vect_%SYS%'
     tbar: 'truth_tbar_4vect_%SYS%'
     top_decay: 'truth_top_decay_4vect_%SYS%'
     tbar_decay: 'truth_tbar_decay_4vect_%SYS%'
     doHelicityBasis: True
-  - setup: 'custom2'
-    top: 'truth_top_4vect_%SYS%'
-    tbar: 'truth_tbar_4vect_%SYS%'
-    top_decay: 'truth_top_decay_4vect_%SYS%'
-    tbar_decay: 'truth_tbar_decay_4vect_%SYS%'
     doEntanglement: True
 
 # After configuring each container, many variables will be saved automatically.
