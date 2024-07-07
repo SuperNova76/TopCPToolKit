@@ -44,7 +44,8 @@ namespace top {
       m_ljet_etaMax(2.5),
       m_ljet_collection("AntiKt10TruthTrimmedPtFrac5SmallR20Jets"),
       m_nu_ptMin(0.),
-      m_nu_etaMax(10.)
+      m_nu_etaMax(10.),
+      photon_isolationCut(0)
   {
     declareProperty("useTruthElectrons", m_useTruthElectrons,
 		    "config: use electrons?");

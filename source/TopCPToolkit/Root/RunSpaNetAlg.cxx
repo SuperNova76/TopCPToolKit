@@ -7,6 +7,7 @@ namespace top {
     : EL::AnaAlgorithm(name, pSvcLocator)
     , m_topology("SetMe")
     , m_btagger("SetMe")
+    , m_topologyEnum(SpaNetEnums::Topology::TtbarLjets)
   {
     declareProperty("topology", m_topology, "SPA-Net topology to use. Choose between: 'TtbarLjets'.");
     declareProperty("btagger", m_btagger, "Btagging algorithm to use. Must support the 'Continuous' WP in order to retrieve the quantile bin.");

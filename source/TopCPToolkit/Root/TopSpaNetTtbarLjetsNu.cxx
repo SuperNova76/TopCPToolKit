@@ -3,8 +3,21 @@
 
 namespace top {
 
-  TopSpaNetTtbarLjetsNu::TopSpaNetTtbarLjetsNu(const std::string& name, std::string model_even, std::string model_odd) :
-    TopSpaNetTopology(name, model_even, model_odd)
+  TopSpaNetTtbarLjetsNu::TopSpaNetTtbarLjetsNu(const std::string& name, const std::string& model_even, const std::string& model_odd) :
+    TopSpaNetTopology(name, model_even, model_odd),
+    m_lep_b(-1),
+    m_had_b(-1),
+    m_down(-1),
+    m_up(-1),
+    m_hadtop_assignment(0.),
+    m_leptop_assignment(0.),
+    m_hadtop_detection(0.),
+    m_leptop_detection(0.),
+    m_regressed_nu_eta(0.),
+    m_regressed_nu_px(0.),
+    m_regressed_nu_py(0.),
+    m_regressed_nu_pz(0.),
+    m_regressed_ttbar_m(0.)
   {
     m_MAX_JETS = 20; 
     m_NUM_JET_FEATURES = m_input_shapes[0][2];

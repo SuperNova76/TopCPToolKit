@@ -373,16 +373,37 @@ namespace top {
     const xAOD::TrackParticle*       metrack = softmuon->trackParticle( xAOD::Muon::ExtrapolatedMuonSpectrometerTrackParticle );
     const xAOD::TrackParticle*       cbtrack = softmuon->trackParticle( xAOD::Muon::CombinedTrackParticle );
 
-    m_softmu_eta_id_Handle.set(*softmuon, idtrack->eta(), sys);
-    m_softmu_phi_id_Handle.set(*softmuon, idtrack->phi(), sys);
-    m_softmu_e_id_Handle.set(*softmuon, idtrack->e(), sys);
-    m_softmu_eta_me_Handle.set(*softmuon, metrack->eta(), sys);
-    m_softmu_phi_me_Handle.set(*softmuon, metrack->phi(), sys);
-    m_softmu_e_me_Handle.set(*softmuon, metrack->e(), sys);
+    if (idtrack) {
+      m_softmu_eta_id_Handle.set(*softmuon, idtrack->eta(), sys);
+      m_softmu_phi_id_Handle.set(*softmuon, idtrack->phi(), sys);
+      m_softmu_e_id_Handle.set(*softmuon, idtrack->e(), sys);
+      m_softmu_qOverP_ID_Handle.set(*softmuon, idtrack->charge()*sin(idtrack->theta()) / idPt, sys);
+    }
+    else {
+      m_softmu_eta_id_Handle.set(*softmuon, -999., sys);
+      m_softmu_phi_id_Handle.set(*softmuon, -999., sys);
+      m_softmu_e_id_Handle.set(*softmuon, -999., sys);
+      m_softmu_qOverP_ID_Handle.set(*softmuon, -999., sys);
+    }
+    if (metrack) {
+      m_softmu_eta_me_Handle.set(*softmuon, metrack->eta(), sys);
+      m_softmu_phi_me_Handle.set(*softmuon, metrack->phi(), sys);
+      m_softmu_e_me_Handle.set(*softmuon, metrack->e(), sys);
+      m_softmu_qOverP_ME_Handle.set(*softmuon, metrack->charge()*sin(metrack->theta()) / mePt, sys);
+    }
+    else {
+      m_softmu_eta_me_Handle.set(*softmuon, -999., sys);
+      m_softmu_phi_me_Handle.set(*softmuon, -999., sys);
+      m_softmu_e_me_Handle.set(*softmuon, -999., sys);
+      m_softmu_qOverP_ME_Handle.set(*softmuon, -999., sys);
+    }
+    if (cbtrack) {
+      m_softmu_qOverP_Handle.set(*softmuon, cbtrack->charge()*sin(cbtrack->theta()) / softmuon->pt(), sys);
+    }
+    else {
+      m_softmu_qOverP_Handle.set(*softmuon, -999., sys);
+    }
 
-    m_softmu_qOverP_Handle.set(*softmuon, (cbtrack ? (cbtrack->charge()*sin(cbtrack->theta()) / softmuon->pt()) : -999), sys);
-    m_softmu_qOverP_ID_Handle.set(*softmuon, (idtrack ? (idtrack->charge()*sin(idtrack->theta()) / idPt) : -999), sys);
-    m_softmu_qOverP_ME_Handle.set(*softmuon, (metrack ? (metrack->charge()*sin(metrack->theta()) / mePt) : -999), sys);
 
     float qOverPerr=-999;
     float qOverPerr_ID=-999;
