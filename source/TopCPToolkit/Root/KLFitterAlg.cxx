@@ -17,9 +17,9 @@ namespace top {
 
   KLFitterAlg::KLFitterAlg(const std::string &name, ISvcLocator *pSvcLocator)
     : EL::AnaAlgorithm(name, pSvcLocator)
-    , m_transferFunctionsPath{"dev/AnalysisTop/KLFitterTFs/mc12a/akt4_LCtopo_PP6/"}
     , m_leptonTypeEnum{KLFEnums::LeptonType::kElectron}
     , m_LHTypeEnum{KLFEnums::Likelihood::ttbar}
+    , m_transferFunctionsPath{"dev/AnalysisTop/KLFitterTFs/mc12a/akt4_LCtopo_PP6/"}
     , m_jetSelectionModeEnum{KLFEnums::JetSelectionMode::kLeadingThree}
     , m_useBtagPriority{false}
     , m_njetsRequirement{0}

@@ -9,9 +9,9 @@ namespace top {
     const std::string& name, 
     const std::vector<std::string>& filepaths_model_cv) :
     asg::AsgTool(name),
-    m_memory_info(Ort::MemoryInfo::CreateCpu(OrtArenaAllocator, OrtMemTypeDefault)),
     m_env(std::make_shared<Ort::Env>(ORT_LOGGING_LEVEL_WARNING, "")),
-    m_session_options(std::make_shared<Ort::SessionOptions>())
+    m_session_options(std::make_shared<Ort::SessionOptions>()),
+    m_memory_info(Ort::MemoryInfo::CreateCpu(OrtArenaAllocator, OrtMemTypeDefault))
   {
     // TODO check at least one model path is provided
 
