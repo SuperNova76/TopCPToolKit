@@ -4,7 +4,7 @@ class FakeBkgConfig(ConfigBlock):
     """ConfigBlock for the FakeBkgTools Calculator algorithm"""
 
     def __init__(self, algoName=''):
-        super(FakeBkgConfig, self).__init__('FakeBkgConfig' + algoName)
+        super(FakeBkgConfig, self).__init__()
         self.algoName = algoName
         self.addOption('electrons', None, type=str)
         self.addOption('electronsTarget', None, type=str)
