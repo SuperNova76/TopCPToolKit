@@ -50,10 +50,10 @@ Electrons:
     crackVeto: True
     WorkingPoint:
       - selectionName: 'loose'
-        likelihoodWP: 'TightLH'
+        identificationWP: 'TightLH'
         isolationWP: 'Loose_VarRad'
       - selectionName: 'tight'
-        likelihoodWP: 'TightLH'
+        identificationWP: 'TightLH'
         isolationWP: 'Tight_VarRad'
     PtEtaSelection:
         minPt: 25000.0

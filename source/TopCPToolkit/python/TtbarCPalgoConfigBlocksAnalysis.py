@@ -39,10 +39,10 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics=False
         WPLoose = ["TightLH", "NonIso"]  # no isolation
         WPTight = ["TightLH", "Tight_VarRad"]
         configSeq += makeConfig ('Electrons.WorkingPoint', containerName='AnaElectrons', selectionName='loose')
-        configSeq.setOptionValue ('.likelihoodWP', WPLoose[0])
+        configSeq.setOptionValue ('.identificationWP', WPLoose[0])
         configSeq.setOptionValue ('.isolationWP', WPLoose[1])
         configSeq += makeConfig ('Electrons.WorkingPoint', containerName='AnaElectrons', selectionName='tight')
-        configSeq.setOptionValue ('.likelihoodWP', WPTight[0])
+        configSeq.setOptionValue ('.identificationWP', WPTight[0])
         configSeq.setOptionValue ('.isolationWP', WPTight[1])
 
         configSeq += makeConfig ('Electrons.PtEtaSelection', containerName='AnaElectrons')
