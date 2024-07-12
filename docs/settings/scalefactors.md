@@ -1,7 +1,7 @@
 Various scale factors are computed by the respective CP algorithms. The default approach is that the relevant object blocks compute and decorate per-object SFs, and some of them also by default store these per-object SFs as vectors of floats in the output NTuple. Please refer to the documentation of the relevant objects under [Settings](index.md).
 
 !!! tip
-    To disable the per-object SFs, use the branch filtering feature of [`OutputAnalysisConfig``](ntupling.md/#outputanalysisconfig).
+    To disable the per-object SFs, use the branch filtering feature of [`OutputAnalysisConfig`](ntupling.md/#outputanalysisconfig).
 
 <!---
 ## Make-methods

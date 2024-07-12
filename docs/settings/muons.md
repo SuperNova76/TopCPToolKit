@@ -69,9 +69,6 @@ Name in YAML: **Muons**
 `postfix`
 :   a postfix to apply to decorations and algorithm names. Typically not needed here since the calibration is common to all muons.
 
-`ptSelectionOutput`
-:   $p_\mathrm{T}$ cut to apply to calibrated muons, in MeV. The default is 3.0 GeV.
-
 `minPt`
 :   pT cut to apply to calibrated muons, in MeV. The default is 3.0 GeV.
 
@@ -115,6 +112,9 @@ Name in YAML: **Muons.WorkingPoint**
 `maxDeltaZ0SinTheta`
 :   maximum Delta z0sinTheta in mm used for the trackSelection. The default is 0.5 mm.
 
+`writeTrackD0Z0`
+:   save the d0 significance and z0sinTheta variables so they can be written out. The default is `False`.
+
 `quality`
 :   the ID WP (string) to use. Supported ID WPs: `Tight`, `Medium`, `Loose`, `LowPt`, `HighPt`.
 
@@ -123,6 +123,9 @@ Name in YAML: **Muons.WorkingPoint**
 
 `qualitySelectionOutput`
 :   whether to retain only muons satisfying the quality requirements (bad muon veto). The default is `True`.
+
+`closeByCorrection`
+:   whether to use close-by-corrected isolation working points. The default is `False`.
 
 `systematicBreakdown`
 :   enables the full breakdown of efficiency SF systematics (1 NP per uncertainty source, instead of 1 NP in total). The default is `False`.
@@ -143,7 +146,11 @@ Name in YAML: **Muons.WorkingPoint**
     - `isol_effSF`: the per-muon isolation SF
     - `TTVA_effSF`: the per-muon track-to-vertex-association SF
 
-### [SoftMuonSelectorConfig](https://gitlab.cern.ch/alprades/TopCPToolkit/-/blob/SoftMuonDevelopment/source/TopCPToolkit/python/SoftMuonSelectorConfig.py)
+!!! success "Additional variables toggled by `writeTrackD0Z0`"
+    - `d0sig`: the $d_0$ significance (no systematics)
+    - `z0sintheta`: the $z_0\sin\theta$ parameter (no systematics)
+
+### [SoftMuonSelectorConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/SoftMuonSelectorConfig.py?ref_type=heads)
 Name in YAML: **SoftMuonSelector**
 
 This package is designed to select muons that are within a specific distance ($\Delta R$) from a jet. It is intended for selecting soft muons contained within jets, which is useful for identifying events with muons originating from the decay of heavy flavor hadrons.
@@ -158,13 +165,13 @@ This package is designed to select muons that are within a specific distance ($\
 :   The maximum $\Delta R$ between the soft muon and the nearest selected jet. Can be set to 999. to keep all soft muons. Default is 0.4.
 
 `softMuonDRJetUseRapidity`
-:   Determines the method for calculating the $\Delta R$(soft muon, jet) for the softMuonDRJet cut. Setting this parameter to True will use rapidity, while setting it to False will use pseudorapidity. The default value is False.
+:   Determines the method for calculating the $\Delta R$(soft muon, jet) for the softMuonDRJet cut. Setting this parameter to True will use rapidity, while setting it to False will use pseudorapidity. The default value is `False`.
 
 `saveSoftMuonAdditionalInfo`
-:   Specifies whether to save additional information associated with the soft muon, such as track hits, track quality chi2, among others. The default is False (do not save additional information about the soft muon track).
+:   Specifies whether to save additional information associated with the soft muon, such as track hits, track quality chi2, among others. The default is `False` (do not save additional information about the soft muon track).
 
 `saveSoftMuonNearestJetInfo`
-:   Specifies whether to save additional information associated with the nearest jet to the soft muon, such as the jet charge, EM fraction, or number of constituents. The default is False (do not save additional information about the nearest jet).
+:   Specifies whether to save additional information associated with the nearest jet to the soft muon, such as the jet charge, EM fraction, or number of constituents. The default is `False` (do not save additional information about the nearest jet).
 
 Events containing at least one soft muon selected by this algorithm can be identified by requiring the event to pass the `EVENTFLAG pass_SoftMuonPassDRJetcut_%SYS%` in the `Event Selection` block.
 

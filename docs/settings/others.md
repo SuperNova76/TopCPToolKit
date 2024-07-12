@@ -1,3 +1,4 @@
+<!---
 ## Make-methods
 
 ### [makeCommonServicesConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
@@ -8,7 +9,7 @@ Name in YAML: **CommonServices**
 
 _Returns an instance of [`CommonServicesConfig`](#commonservicesconfig), see the available options below._
 
-<!---
+
 ### [makeEventCleaningConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/EventCleaningConfig.py)
 
 `seq`
@@ -22,7 +23,6 @@ _Returns an instance of [`CommonServicesConfig`](#commonservicesconfig), see the
 
 `userGRLFiles`
 :   a list of GRL files (list of strings) to select data from. The default is `[]` (empty list).
---->
 
 ### [makeGeneratorAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
 Name in YAML: **GeneratorLevelAnalysis**
@@ -42,7 +42,6 @@ Name in YAML: **GeneratorLevelAnalysis**
 !!! success "Registers the following variables:"
     - `generatorWeight`: the event-level PMG generator weight
 
-<!---
 ### [makePileupReweightingConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
 
 `seq`
@@ -149,7 +148,14 @@ Name in YAML: **EventCleaning**
     !!! warning
         In AnalysisBase, vectors of bools cannot be handled properly. Instead, use 0/1 values.
 
+`GRLDict`
+:   a custom GRL dictionary with key some name and value a GRL file. The default is `{}` (empty dictionary), i.e. use recommended values.
+
+`noFilter`
+:   whether to toggle off event filtering. The default is `False`, i.e. apply filtering.
+
 ### [GeneratorAnalysisBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
+Name in YAML: **GeneratorLevelAnalysis**
 
 `saveCutBookkeepers`
 :   whether to save the cut bookkeepers information into the output file. The default is `True`.
