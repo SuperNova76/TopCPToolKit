@@ -18,7 +18,6 @@
   <class name="top::JetReclusteringAlg" />
   <class name="SVMassAlg" />
   <function name="top::preloadComponentFactories" />
-  <class name="FakeBkgCalculatorAlg" />
   <class name="VGammaORAlg" />
   <class name="top::SoftMuonSelectorAlg" />
   <class name="top::PartonHistoryToSpinInputAlg" />

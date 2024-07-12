@@ -16,7 +16,6 @@
 #include "TopCPToolkit/JetMatchingAlg.h"
 #include "TopCPToolkit/JetReclusteringAlg.h"
 #include "TopCPToolkit/SVMassAlg.h"
-#include "TopCPToolkit/FakeBkgCalculatorAlg.h"
 #include "TopCPToolkit/VGammaORAlg.h"
 #include "TopCPToolkit/SoftMuonSelectorAlg.h"
 #include "TopCPToolkit/PartonHistoryToSpinInputAlg.h"

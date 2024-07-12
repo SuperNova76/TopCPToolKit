@@ -198,10 +198,10 @@ Name in YAML: **SpaNet**
 !!! note "Documentation"
     See [arXiv:2106.03898](https://arxiv.org/abs/2106.03898) and [arXiv:2309.01886](https://arxiv.org/abs/2309.01886).
 
-### [FakeBkgConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/FakeBkgConfig.py)
+### [FakeBkgConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/FakeBkgConfig.py)
 Name in YAML: **FakeBkgCalculator**
 
-`algoName`
+`setupName`
 :   unique name given to the underlying algorithm estimating the fake background.
 
 `electrons`
