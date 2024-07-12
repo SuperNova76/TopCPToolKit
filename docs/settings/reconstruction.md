@@ -10,6 +10,9 @@
 ### [DiTauMassBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TauAnalysisAlgorithms/python/DiTauMassConfig.py)
 Name in YAML: **DiTauMMC**
 
+`algName`
+:   optional name to distinguish between multiple instances of the algorithm. The default is `''` (empty string).'
+
 `electrons`
 :   the input electron container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
 
@@ -150,7 +153,7 @@ Name in YAML: **KLFitter**
 :   b-tagging efficiency WP to use, if only one is needed. The default is `FixedCutBEff_77`.
 
 `btagIgnoreOutOfValidityRange`
-:   Whether or not the b-tagger should ignore (and not fail) when a jet is outside the calibration range. The default is `False`.
+:   whether or not the b-tagger should ignore (and not fail) when a jet is outside the calibration range. The default is `False`.
 
 `selectionRegionsConfig`
 :   string of the form `selectionName: sel1, optionA: opA, optionB: opB; selectionName: sel2, ...` where options can be `likelihoodType`, `leptonType`, `jetSelectionMode`, `btaggingMethod`, `btagger` or `btagWP`. The default is `''` (empty string).

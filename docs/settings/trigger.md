@@ -10,9 +10,6 @@ Name in YAML: **Trigger**
     This is what is needed for most users, and there are ways of turning off the SF part as described below.
     If you really need to access only one config block, you'll need to set them up yourself.
 
-`configName`
-:   name of the block config, e.g. `Trigger`.
-
 `triggerChainsPerYear`
 :   a dictionary with key (string) the year and value (list of strings) the trigger chains. You can also use `||` within a string to enforce an OR of triggers without looking up the individual triggers. Used for both trigger selection and SFs. The default is `{}` (empty dictionary).
 
@@ -54,6 +51,12 @@ The default is `[]` (empty list).
 `prescaleLumiCalcFiles`
 :   a list of lumical files (list of strings) to calculate trigger prescales. The default is `[]` (empty list).
 
+`prescaleTriggersFormula`
+:   a formula used in (un)prescaling, producing overall prescale factor instead of prescale per trigger. The default is `''` (empty string).
+
+`prescaleMC`
+:   whether to prescale MC instead of unprescaling of data. The default is `False`.
+
 `noFilter`
 :   do not apply an event filter. The default is `False`, i.e. remove events not passing trigger selection and matching.
 
@@ -84,6 +87,9 @@ The default is `[]` (empty list).
 `noGlobalTriggerEff`
 :   disables the global trigger efficiency tool (including matching), which is only suited for electron/muon/photon trigger legs. The default is `False`.
 
+`noL1`
+:   toggle off the L1 trigger decision. This flag is required e.g. for running the algorithm on TLA stream data. The default is `False`.
+
 !!! success "Registers the following variables:"
     - `trigPassed`: whether a specific trigger is passed (no systematics)
     - `globalTriggerMatch`: whether the event passes trigger matching requirements
@@ -104,6 +110,31 @@ Name in YAML: **Electrons.TriggerSF**
 `electronIsol`
 :   the electron isolation WP (string) to use.
 
+`saveEff`
+:   defines whether we decorate also the trigger scale efficiency. The default is `False` (save only SF).
+
+`containerName`
+:   the input electron container, with a possible selection, in the format `container` or `container.selection`.
+
+!!! success "Registers the following variables:
+    - `trigEffSF`: the per-electron trigger efficiency or efficiency SF
+    - `trigEff`: the per-electron trigger efficiency (if `saveEff`)
+
+### [MuonTriggerAnalysisSFBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/MuonAnalysisAlgorithms/python/MuonAnalysisConfig.py)
+This config block allows you to retrieve the per-muon trigger SFs.
+(*since AnalysisBase 25.2.14*)
+
+Name in YAML: **Muons.TriggerSF**
+
+`triggerChainsPerYear`
+:   a dictionary with key (string) the year and value (list of strings) the trigger chains. The default is `{}` (empty dictionary).
+
+`muonID`
+:   the muon ID WP (string) to use.
+
+`electronIsol`
+:   the electron isolation WP (string) to use.
+
 `muonID`
 :   the muon quality WP (string) to use.
 
@@ -114,8 +145,8 @@ Name in YAML: **Electrons.TriggerSF**
 :   the input electron container, with a possible selection, in the format `container` or `container.selection`.
 
 !!! success "Registers the following variables:
-    - `trigEffSF`: the per-electron trigger efficiency or efficiency SF
-    - `trigEff`: the per-electron trigger efficiecny (if `saveEff`)
+    - `trigEffSF`: the per-muon trigger efficiency or efficiency SF
+    - `trigEff`: the per-muon trigger efficiency (if `saveEff`)
 
 ### [TauTriggerAnalysisSFBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TauAnalysisAlgorithms/python/TauAnalysisConfig.py)
 This config block allows you to retrieve the per-tau-jet trigger SFs.

@@ -9,11 +9,11 @@ Name in YAML: **Jets**
 `containerName`
 :   the name of the output container after calibration.
 
-`postfix`
-:   a postfix to apply to decorations and algorithm names. Useful here to distinguish between different jet definitions.
-
 `jetCollection`
 :   the jet container to run on. It is interpreted to determine the correct config blocks to call for small- or large-R jets.
+
+`runOriginalObjectLink`
+:   sets up an instance of [`CP::AsgOriginalObjectLinkAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/Root/AsgOriginalObjectLinkAlg.cxx) to link systematically-varied containers to the base one. The default is `False`.
 
 `runGhostMuonAssociation`
 :   whether to set up the jet-ghost-muon association algorithm [`CP::JetGhostMuonAssociationAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/JetAnalysisAlgorithms/Root/JetGhostMuonAssociationAlg.cxx). The default is `False`.
@@ -44,6 +44,12 @@ Name in YAML: **Jets**
 
 `runFJvtSelection`
 :   whether to run forward JVT selection. The default is `False`.
+
+`jvtWP`
+:   which Jvt WP to apply. The default is `FixedEffPt`.
+
+`fJvtWP`
+:   which fJvt WP to apply. The default is `Loose`.
 
 `runJvtEfficiency`
 :   whether to calculate the JVT efficiency. The default is `True`.
@@ -83,18 +89,21 @@ Name in YAML: **Jets**
 
 !!! success "Registers the following variables:"
     - `jvtEfficiency`: the per-jet JVT efficiency SF (also for fJVT!)
+    - `select_baselineJvt`: the per-jet selection flag for baseline selection and JVT
+    - `select_baselineFJvt`: the per-jet selection flag for baseline selection and forward JVT
 
 #### Additional options for large-R jets
 
 `largeRMass`
 :   which large-R mass definition to use: `Comb`, `Calo`, `TA`. The default is `Comb`.
 
+`configFileOverride`
+:   name (string) of the config file to use for the calibration tool, instead of the recommended one. The default is `''` (empty string).
 
-### [makeJetJvtAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/JetAnalysisAlgorithms/python/JetJvtAnalysisConfig.py)
+## Config blocks
+
+### [JetJvtAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/JetAnalysisAlgorithms/python/JetJvtAnalysisConfig.py)
 Name in YAML: **Jets.JVT**
-
-`seq`
-:   the config sequence.
 
 `containerName`
 :   the name of the input container.
@@ -108,14 +117,9 @@ Name in YAML: **Jets.JVT**
 !!! success "Registers the following variables:"
     - `weight_jvt_effSF`: the event-level JVT efficiency SF
     - `weight_fjvt_effSF`: the event-level forward JVT efficiency SF
-    - `select_baselineJvt`: the per-jet selection flag for baseline selection and JVT
-    - `select_baselineFJvt`: the per-jet selection flag for baseline selection and forward JVT
 
-### [makeFTagAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagAnalysisConfig.py)
+### [FTagConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagAnalysisConfig.py)
 Name in YAML: **Jets.FlavourTagging**
-
-`seq`
-:   the config sequence.
 
 `containerName`
 :   the name of the input container.
@@ -140,11 +144,41 @@ Name in YAML: **Jets.FlavourTagging**
 `noEffSF`
 :   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. The default is `False`.
 
+`bTagCalibFile`
+:   path (string) to a custom b-tagging CDI file. The default is `None`, which uses the latest available recommendations.
+
+`systematicsStrategy`
+:   name of systematics model; presently choose between 'SFEigen' (default) and 'Envelope'.
+
+`eigenvectorReductionB`
+:   b-jet scale factor Eigenvector reduction strategy; choose between `Loose` (default), `Medium`, `Tight`.
+
+`eigenvectorReductionC`
+:   b-jet scale factor Eigenvector reduction strategy; choose between `Loose` (default), `Medium`, `Tight`.
+
+`eigenvectorReductionLight`
+:   b-jet scale factor Eigenvector reduction strategy; choose between `Loose` (default), `Medium`, `Tight`.
+
+`excludeFromEigenVectorTreatment`
+:   (semicolon-separated) names of uncertainties to be excluded from all eigenvector decompositions (if used). The default is `''` (empty string).
+
+`excludeFromEigenVectorBTreatment`
+:   (semicolon-separated) names of uncertainties to be excluded from b-jet eigenvector decompositions (if used). The default is `''` (empty string).
+
+`excludeFromEigenVectorCTreatment`
+:   (semicolon-separated) names of uncertainties to be excluded from c-jet eigenvector decompositions (if used). The default is `''` (empty string).
+
+`excludeFromEigenVectorLightTreatment`
+:   (semicolon-separated) names of uncertainties to be excluded from light-flavour-jet eigenvector decompositions (if used). The default is `''` (empty string).
+
+`excludeRecommendedFromEigenVectorTreatment`
+:   whether or not to add recommended lists to the user specified eigenvector decomposition exclusion lists. The default is `False`.
+
 `saveScores`
-:   whether or not to save the scores from the tagger. Set to 'True' to save only the overall score, or to 'All' to save also the per-flavour probabilities.
+:   whether or not to save the scores from the tagger. Set to `'True'` to save only the overall score, or to `'All'` to save also the per-flavour probabilities. The default is `''` (emptry string), i.e. don't save the scores.
 
 `saveCustomVariables`
-:   [Expert mode] additional variables (list of strings) to save from the b-tagging object associated to each jet. E.g. ['pb','pc','pu', 'ptau'] to replicate `saveScores='All'`.
+:   [Expert mode] additional variables (list of strings) to save from the b-tagging object associated to each jet. E.g. `['pb','pc','pu', 'ptau']` to replicate `saveScores='All'`. The default is `[]` (empty list).
 
 !!! success "Registers the following variables (all names preceded by the tagger + WP combination):"
     - `select`: the per-jet tagging decision (no systematics)
@@ -158,79 +192,25 @@ Name in YAML: **Jets.FlavourTagging**
     - `{btagger}_pb`: the per-jet bottom-flavour probability from tagger `{btagger}` (no systematics)
     - `{btagger}_ptau`: the per-jet tau-jet-flavour probability from tagger `{btagger}` (no systematics)
 
-### [makeFTagEventSFAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagEventSFnalysisConfig.py)
+### [FTagEventSFConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagEventSFnalysisConfig.py)
 Name in YAML: **Jets.FlavourTaggingEventSF**
 
-`seq`
-:   the config sequence.
+Computes the per-event b-tagging SF, i.e. a product of b-tagging efficiency/inefficiency SFs over all jets in the specified jet container, which are within the region of validity of the FTAG calibrations. See the `containerName` argument below for passing jets with specific selection. The per-event scale factor `weight_ftag_effSF_<selectionName>` is decorated to EventInfo object (see `selectionName` below).
 
 `containerName`
-:   the name of the input container.
+:   the input jet container with a possible selection, in the format `container` or `container.selection`. The default recommendation is to pass `container.baselineJvt` selection, e.g. if the calibrated jets container is `AnaJets`, the recommendation is to pass `AnaJet.baselineJvt`.
 
 `selectionName`
 :   a postfix to apply to decorations and algorithm names. Typically not needed here as internally the string `f"{btagger}_{btagWP}"` is used.
 
 `btagger`
-:   the flavour tagging algorithm: `DL1dv01`, `GN2v00`. The default is `DL1r`.
+:   the flavour tagging algorithm: `DL1dv01`, `GN2v00`.
 
 `btagWP`
-:   the flavour tagging WP. The default is `FixedCutBEff_77`.
+:   the flavour tagging WP, e.g. `FixedCutBEff_77`, `Continuous`, etc.
 
 !!! success "Registers the following variables:"
     - `weight_ftag_effSF_{btagger}_{btagWP}`: the per-event b-tagging efficiency SF
-
-## Config blocks
-
-### Jet calibration
-
-!!! warning
-    It is not recommended to use individual config blocks to set up your jet objects! Please instead rely on the he make-methods outlined above.
-    These are the ones employed in both the [`ConfigFactory`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AnalysisAlgorithmsConfig/python/ConfigFactory.py) and [`ConfigText`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AnalysisAlgorithmsConfig/python/ConfigText.py) approaches.
-
-### [JetJvtAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/JetAnalysisAlgorithms/python/JetJvtAnalysisConfig.py)
-
-`containerName`
-:   the name of the input container.
-
-`postfix`
-:   a postfix to apply to decorations and algorithm names. Typically not needed here.
-
-`enableFJvt`
-:   whether to enable forward JVT calculations. The default is `False`.
-
-!!! success "Registers the following variables:"
-    - `weight_jvt_effSF`: the event-level JVT efficiency SF
-    - `weight_fjvt_effSF`: the event-level forward JVT efficiency SF
-    - `select_baselineJvt`: the per-jet selection flag for baseline selection and JVT
-    - `select_baselineFJvt`: the per-jet selection flag for baseline selection and forward JVT
-
-### [FTagConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagAnalysisConfig.py)
-
-`containerName`
-:   the name of the input container.
-
-`selectionName`
-:   a postfix to apply to decorations and algorithm names. Typically not needed here as internally the string `f"{btagger}_{btagWP}"` is used.
-
-`btagger`
-:   the flavour tagging algorithm: `DL1dv01`, `GN2v00`. The default is `DL1r`.
-
-`btagWP`
-:   the flavour tagging WP. The default is `FixedCutBEff_77`.
-
-`generator`
-:   MC generator setup, for MC/MC SFs. The default is `"autoconfig"` (relies on the sample metadata). To override, a DSID string is expected, see [MC/MC Scale Factors using Top Samples](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/PmgTopProcesses#FTAG_MC_MC_Scale_Factors_using_T).
-
-`noEffSF`
-:   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. The default is `False`.
-
-`bTagCalibFile`
-:   path (string) to a custom b-tagging CDI file. The default is `None`, which uses the latest available recommendations.
-
-!!! success "Registers the following variables (all names preceded by the tagger + WP combination):"
-    - `select`: the per-jet tagging decision (no systematics)
-    - `quantile`: only for pseudo-continuous b-tagging, the per-jet PCBT bin (no systematics)
-    - `eff`: the per-jet b-tagging efficiency SF
 
 ### [JetReclusteringConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/JetReclusteringConfig.py)
 Name in YAML: **JetReclustering**
@@ -250,22 +230,3 @@ The default output variables are: pt, eta, phi and e of the reclustered jets as 
 `minPt`
 :   Minimum pT requirement for the reclustered jets. Can be used for thinning/selection, the decoration name is `passed_pt`. Default is 200000 (200 GeV).
 
-### [FTagEventSFConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagEventSFAnalysisConfig.py)
-Name in YAML: **FlavourTaggingEventSF**
-
-Computes the per-event b-tagging SF, i.e. a product of b-tagging efficiency/inefficiency SFs over all jets in the specified jet container, which are within the region of validity of the FTAG calibrations. See the `containerName` argument below for passing jets with specific selection. The per-event scale factor `weight_ftag_effSF_<selectionName>` is decorated to EventInfo object (see `selectionName` below).
-
-`containerName`
-:   the input jet container with a possible selection, in the format `container` or `container.selection`. The default recommendation is to pass `container.baselineJvt` selection, e.g. if the calibrated jets container is `AnaJets`, the recommendation is to pass `AnaJet.baselineJvt`.
-
-`selectionName`
-:   a postfix to apply to decorations and algorithm names. Typically not needed here as internally the string `f"{btagger}_{btagWP}"` is used.
-
-`btagger`
-:   the flavour tagging algorithm: `DL1dv01`, `GN2v00`.
-
-`btagWP`
-:   the flavour tagging WP, e.g. `FixedCutBEff_77`, `Continuous`, etc.
-
-!!! success "Registers the following variables:"
-    - `weight_ftag_effSF_{btagger}_{btagWP}`: the per-event b-tagging efficiency SF

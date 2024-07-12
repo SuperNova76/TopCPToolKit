@@ -55,11 +55,14 @@
 ### [TauCalibrationConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TauAnalysisAlgorithms/python/TauAnalysisConfig.py)
 Name in YAML: **TauJets**
 
+`inputContainer`
+:   the name of the input tau-jet container. The deault is `TauJets`.
+
 `containerName`
 :   the name of the output container after calibration.
 
 `postfix`
-:   a postfix to apply to decorations and algorithm names. Typically not needed here since the calibration is common to all taus.
+:   a postfix to apply to decorations and algorithm names. Typically not needed here since the calibration is common to all tau-jets. The default is `''` (empty string).
 
 `rerunTruthMatching`
 :   whether to rerun truth matching (sets up an instance of [`CP::TauTruthMatchingAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TauAnalysisAlgorithms/Root/TauTruthMatchingAlg.cxx)). The default is `True`.
@@ -99,8 +102,11 @@ Name in YAML: **TauJets.WorkingPoint**
 `quality`
 :   the ID WP (string) to use. Supported ID WPs: `Tight`, `Medium`, `Loose`, `VeryLoose`, `NoID`.
 
-`legacyRecommendations`
-:   whether to use legacy tau-jet BDT and electron veto recommendations. The default is `False`.
+`use_eVeto`
+:   use selection with or without eVeto combined with tauID recommendations: set it to `False` if electron mis-reconstructed as tau is not large background for your analysis. The default is `True`.
+
+`useGNTau`
+:   use GNTau based ID instead of RNNTau ID recommendations: new experimental feature and might become default soon. The default is `False`.
 
 `noEffSF`
 :   disables the calculation of efficiencies and scale factors. Experimental! only useful to test a new WP for which scale factors are not available. The default is `False`.

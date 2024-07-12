@@ -87,20 +87,20 @@ Name in YAML: **Electrons**
 `crackVeto`
 :   whether to perform LAr crack veto based on the cluster $\eta$, i.e. remove electrons within $1.37<\vert\eta\vert<1.52$. The default is `False`.
 
-`ptSelectionOutput`
-:   whether or not to apply a minimum $p_\mathrm{T}$ cut to calibrated electrons. The default is `False`.
-
 `minPt`
 :   the minimum $p_\mathrm{T}$ cut to apply to calibrated electrons. The default is 4.5 GeV.
 
 `isolationCorrection`
-:   whether or not to perform isolation corrections (leakage corrections), i.e. set up an instance of [`CP::EgammaIsolationCorrectionAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/Root/EgammaIsolationCorrectionAlg.cxx).
+:   whether or not to perform isolation corrections (leakage corrections), i.e. set up an instance of [`CP::EgammaIsolationCorrectionAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/Root/EgammaIsolationCorrectionAlg.cxx). The default is `False`.
 
 `recalibratePhyslite`
 :   whether to run the [`CP::EgammaCalibrationAndSmearingAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/Root/EgammaCalibrationAndSmearingAlg.cxx) on PHYSLITE derivations. The default is `True`.
 
 `forceFullSimConfig`
 :   whether to force the tool to use the configuration meant for full simulation samples. Only for testing purposes. The default is `False`.
+
+`splitCalibrationAndSmearing`
+:   EXPERIMENTAL: This splits the EgammaCalibrationAndSmearingTool into two steps. The first step applies a baseline calibration that is not affected by systematics. The second step then applies the systematics dependent corrections.  The net effect is that the slower first step only has to be run once, while the second is run once per systematic. ATLASG-2358. The default is `False`.
 
 !!! success "Registers the following variables:"
     - `pt`: electron $p_\mathrm{T}$
@@ -130,11 +130,17 @@ Name in YAML: **Electrons.WorkingPoint**
 `maxDeltaZ0SinTheta`
 :   maximum z0sinTheta in mm used for the trackSelection. The default is 0.5 mm.
 
-`likelihoodWP`
-:   the ID WP (string) to use. Supported ID WPs: `TightLH`, `MediumLH`, `LooseBLayerLH`. 
+`writeTrackD0Z0`
+:   save the d0 significance and z0sinTheta variables so they can be written out. The default is `False`.
+
+`identificationWP`
+:   the ID WP (string) to use. Supported ID WPs: `TightLH`, `MediumLH`, `LooseBLayerLH`, `TightDNN`, `MediumDNN`, `LooseDNN`, `TightDNNnoCF`, `MediumDNNnoCF`, `LooseDNNnoCF`. 
 
 `isolationWP`
 :   the isolation WP (string) to use. Supported isolation WPs: `HighPtCaloOnly`, `Loose_VarRad`, `Tight_VarRad`, `TightTrackOnly_VarRad`, `TightTrackOnly_FixedRad`, `NonIso`.
+
+`closeByCorrection`
+:  whether to use close-by-corrected isolation working points. The default is `False`. 
 
 `recomputeLikelihood`
 :   whether to rerun the LH. The default is `False`, i.e. to use derivation flags.
@@ -142,8 +148,8 @@ Name in YAML: **Electrons.WorkingPoint**
     !!! warning
         The only way to get the DNN ID at the moment is to recompute the likelihood, as it's not stored in derivations.
 
-`chargeIDSelection`
-:   whether to run the [ECIDS tool](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/ElectronPhotonID/ElectronPhotonSelectorTools/Root/AsgElectronChargeIDSelectorTool.cxx?v=21.2). The default is `False`.
+`chargeIDSelectionRun2`
+:   whether to run the [ECIDS tool](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/ElectronPhotonID/ElectronPhotonSelectorTools/Root/AsgElectronChargeIDSelectorTool.cxx?v=21.2) (only available for Run 2). The default is `False`.
 
     !!! warning
         ECIDS is actually not supported in release 24. It will likely become part of the DNN ID.
@@ -157,8 +163,22 @@ Name in YAML: **Electrons.WorkingPoint**
 `forceFullSimConfig`
 :   whether to force the tool to use the configuration meant for full simulation samples. Only for testing purposes. The default is `False`.
 
+`correlationModelId`
+:   the correlation model (string) to use for ID scale factors. Supported models: `SIMPLIFIED` (default), `FULL`, `TOTAL`, `TOYS`.
+
+`correlationModelIso`
+:   the correlation model (string) to use for isolation scale factors. Supported models: `SIMPLIFIED` (default), `FULL`, `TOTAL`, `TOYS`.
+
+`correlationModelReco`
+:   the correlation model (string) to use for reconstruction scale factors. Supported models: `SIMPLIFIED` (default), `FULL`, `TOTAL`, `TOYS`.
+
+
 !!! success "Registers the following variables:"
     - `select`: whether the electron passes the ID and isolation cuts
     - `reco_effSF`: the per-electron reconstruction SF
     - `id_effSF`: the per-electron ID SF
     - `isol_effSF`: the per-electron isolation SF
+
+!!! success "Additional variables toggled by `writeTrackD0Z0`"
+    - `d0sig`: the $d_0$ significance (no systematics)
+    - `z0sintheta`: the $z_0\sin\theta$ parameter (no systematics)
