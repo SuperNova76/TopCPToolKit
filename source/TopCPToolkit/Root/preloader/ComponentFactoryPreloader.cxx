@@ -38,6 +38,13 @@
 #include <AsgAnalysisAlgorithms/SystObjectLinkerAlg.h>
 #include <AsgAnalysisAlgorithms/TreeFillerAlg.h>
 #include <AsgAnalysisAlgorithms/TreeMakerAlg.h>
+#include <AsgAnalysisAlgorithms/AsgOriginalObjectLinkAlg.h>
+#include <AsgAnalysisAlgorithms/AsgPriorityDecorationAlg.h>
+#include <AsgAnalysisAlgorithms/EventSelectionByObjectFlagAlg.h>
+#include <AsgAnalysisAlgorithms/KinematicHistAlg.h>
+#include <AsgAnalysisAlgorithms/CopyNominalSelectionAlg.h>
+#include <AsgAnalysisAlgorithms/IOStatsAlg.h>
+#include <AsgAnalysisAlgorithms/FakeBkgCalculatorAlg.h>
 #include <EgammaAnalysisAlgorithms/EgammaCalibrationAndSmearingAlg.h>
 #include <EgammaAnalysisAlgorithms/EgammaIsGoodOQSelectionTool.h>
 #include <EgammaAnalysisAlgorithms/EgammaIsolationCorrectionAlg.h>
@@ -125,6 +132,13 @@
 #include <TopCPToolkit/RunTtbarNNLORecursiveRewAlg.h>
 #include <TopCPToolkit/PartonHistoryToSpinInputAlg.h>
 #include <TopCPToolkit/TopSpinDensityMatrixAlg.h>
+#include <TopCPToolkit/PartonToJetsMatchAlg.h>
+#include <TopCPToolkit/JetMatchingAlg.h>
+#include <TopCPToolkit/SVMassAlg.h>
+#include <TopCPToolkit/TutorialAlg.h>
+#include <TopCPToolkit/JetReclusteringAlg.h>
+#include <TopCPToolkit/VGammaORAlg.h>
+#include <TopCPToolkit/SoftMuonSelectorAlg.h>
 #include <AsgAnalysisAlgorithms/SysListDumperAlg.h>
 
 //
@@ -154,6 +168,13 @@ namespace top
     ANA_CHECK (asg::registerAlgorithmFactory<CP::AsgxAODMetNTupleMakerAlg>("CP::AsgxAODMetNTupleMakerAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::AsgxAODNTupleMakerAlg>("CP::AsgxAODNTupleMakerAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::AsgEnergyDecoratorAlg>("CP::AsgEnergyDecoratorAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<CP::AsgOriginalObjectLinkAlg>("CP::AsgOriginalObjectLinkAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<CP::AsgPriorityDecorationAlg>("CP::AsgPriorityDecorationAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<CP::EventSelectionByObjectFlagAlg>("CP::EventSelectionByObjectFlagAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<CP::KinematicHistAlg>("CP::KinematicHistAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<CP::CopyNominalSelectionAlg>("CP::CopyNominalSelectionAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<CP::IOStatsAlg>("CP::IOStatsAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<CP::FakeBkgCalculatorAlg>("CP::FakeBkgCalculatorAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::BootstrapGeneratorAlg>("CP::BootstrapGeneratorAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::EgammaCalibrationAndSmearingAlg>("CP::EgammaCalibrationAndSmearingAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::EgammaIsolationCorrectionAlg>("CP::EgammaIsolationCorrectionAlg"));
@@ -208,6 +229,13 @@ namespace top
     ANA_CHECK (asg::registerAlgorithmFactory<top::RunTtbarNNLORecursiveRewAlg> ("top::RunTtbarNNLORecursiveRewAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::PartonHistoryToSpinInputAlg> ("top::PartonHistoryToSpinInputAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::TopSpinDensityMatrixAlg> ("top::TopSpinDensityMatrixAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<top::PartonToJetsMatchAlg> ("top::PartonToJetsMatchAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<top::JetMatchingAlg> ("top::JetMatchingAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<SVMassAlg> ("SVMassAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<top::TutorialAlg> ("top::TutorialAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<top::JetReclusteringAlg> ("top::JetReclusteringAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<top::VGammaORAlg> ("top::VGammaORAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<top::SoftMuonSelectorAlg> ("top::SoftMuonSelectorAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::SysListDumperAlg> ("CP::SysListDumperAlg"));
 
     ANA_CHECK (asg::registerToolFactory<AsgDeadHVCellRemovalTool> ("AsgDeadHVCellRemovalTool"));
