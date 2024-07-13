@@ -28,6 +28,7 @@
 #include <AsgAnalysisAlgorithms/AsgViewFromSelectionAlg.h>
 #include <AsgAnalysisAlgorithms/AsgxAODMetNTupleMakerAlg.h>
 #include <AsgAnalysisAlgorithms/AsgxAODNTupleMakerAlg.h>
+#include <AsgAnalysisAlgorithms/AsgEnergyDecoratorAlg.h>
 #include <AsgAnalysisAlgorithms/BootstrapGeneratorAlg.h>
 #include <AsgAnalysisAlgorithms/EventFlagSelectionAlg.h>
 #include <AsgAnalysisAlgorithms/EventStatusSelectionAlg.h>
@@ -117,6 +118,13 @@
 #include <EventSelectionAlgorithms/DileptonInvariantMassWindowSelectorAlg.h>
 #include <TopCPToolkit/LeptonSFCalculatorAlg.h>
 #include <TopCPToolkit/RunSpaNetAlg.h>
+#include <TopCPToolkit/KLFitterAlg.h>
+#include <TopCPToolkit/KLFitterFinalizeOutputAlg.h>
+#include <TopCPToolkit/ParticleLevelAlg.h>
+#include <TopCPToolkit/RunPartonHistoryAlg.h>
+#include <TopCPToolkit/RunTtbarNNLORecursiveRewAlg.h>
+#include <TopCPToolkit/PartonHistoryToSpinInputAlg.h>
+#include <TopCPToolkit/TopSpinDensityMatrixAlg.h>
 #include <AsgAnalysisAlgorithms/SysListDumperAlg.h>
 
 //
@@ -145,6 +153,7 @@ namespace top
     ANA_CHECK (asg::registerAlgorithmFactory<CP::AsgViewFromSelectionAlg>("CP::AsgViewFromSelectionAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::AsgxAODMetNTupleMakerAlg>("CP::AsgxAODMetNTupleMakerAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::AsgxAODNTupleMakerAlg>("CP::AsgxAODNTupleMakerAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<CP::AsgEnergyDecoratorAlg>("CP::AsgEnergyDecoratorAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::BootstrapGeneratorAlg>("CP::BootstrapGeneratorAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::EgammaCalibrationAndSmearingAlg>("CP::EgammaCalibrationAndSmearingAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::EgammaIsolationCorrectionAlg>("CP::EgammaIsolationCorrectionAlg"));
@@ -192,6 +201,13 @@ namespace top
     ANA_CHECK (asg::registerAlgorithmFactory<CP::DileptonInvariantMassWindowSelectorAlg> ("CP::DileptonInvariantMassWindowSelectorAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::LeptonSFCalculatorAlg> ("top::LeptonSFCalculatorAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::RunSpaNetAlg> ("top::RunSpaNetAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<top::KLFitterAlg> ("top::KLFitterAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<top::KLFitterFinalizeOutputAlg> ("top::KLFitterFinalizeOutputAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<top::ParticleLevelAlg> ("top::ParticleLevelAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<top::RunPartonHistoryAlg> ("top::RunPartonHistoryAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<top::RunTtbarNNLORecursiveRewAlg> ("top::RunTtbarNNLORecursiveRewAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<top::PartonHistoryToSpinInputAlg> ("top::PartonHistoryToSpinInputAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<top::TopSpinDensityMatrixAlg> ("top::TopSpinDensityMatrixAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::SysListDumperAlg> ("CP::SysListDumperAlg"));
 
     ANA_CHECK (asg::registerToolFactory<AsgDeadHVCellRemovalTool> ("AsgDeadHVCellRemovalTool"));
