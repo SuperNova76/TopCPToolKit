@@ -38,6 +38,7 @@ namespace xAOD {
     void IniVarTtGamma();
     void IniVarThq();
     void IniVarTth();
+    void IniVarHWW();
   };
 
   class PartonHistoryAux: public AuxInfoBase {

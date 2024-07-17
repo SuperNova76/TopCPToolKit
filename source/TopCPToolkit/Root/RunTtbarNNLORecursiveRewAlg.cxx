@@ -62,11 +62,11 @@ namespace top {
 
         // retrieve the parton history
         const xAOD::PartonHistory* ttbarPartonHistory(nullptr);
-        if ( evtStore()->contains<xAOD::PartonHistory>("TopPartonHistoryTtbar_NOSYS") ) {
-            ANA_CHECK(evtStore()->retrieve(ttbarPartonHistory, "TopPartonHistoryTtbar_NOSYS"));
+        if ( evtStore()->contains<xAOD::PartonHistory>("PartonHistoryTtbar_NOSYS") ) {
+            ANA_CHECK(evtStore()->retrieve(ttbarPartonHistory, "PartonHistoryTtbar_NOSYS"));
         }
         else {
-            ANA_MSG_ERROR("Attempting to run the ttbar NNLO reweighter without a valid TopPartonHistoryTtbar!");
+            ANA_MSG_ERROR("Attempting to run the ttbar NNLO reweighter without a valid PartonHistoryTtbar!");
         }
 
         // define accessors

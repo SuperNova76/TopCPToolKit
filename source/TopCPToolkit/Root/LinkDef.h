@@ -1,7 +1,7 @@
-#include "TopPartons/PartonHistory.h"
+#include "PartonHistory/PartonHistory.h"
 
 #ifdef __CINT__
-#pragma extra_include "TopPartons/PartonHistory.h";
+#pragma extra_include "PartonHistory/PartonHistory.h";
 
 #pragma link off all globals;
 #pragma link off all classes;

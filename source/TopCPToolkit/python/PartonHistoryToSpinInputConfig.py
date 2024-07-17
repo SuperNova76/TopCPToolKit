@@ -13,7 +13,7 @@ class PartonHistoryToSpinInputConfig(ConfigBlock):
         self.addOption('tbar_decay', None, type=str)
     
     def makeAlgs(self, config):
-        history = config.readName('TopPartonHistory' + self.history)
+        history = config.readName('PartonHistory' + self.history)
 
         alg = config.createAlgorithm('top::PartonHistoryToSpinInputAlg', self.history+'toSpinInputs')
         alg.partonHistory = history

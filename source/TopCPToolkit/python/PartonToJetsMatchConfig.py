@@ -8,7 +8,7 @@ class PartonToJetsMatchConfig(ConfigBlock):
         self.addOption('jets', 'AntiKt4TruthDressedWZJets', type=str)
         self.addOption('eventSelection', 'pass_ejets_%SYS%,as_char||pass_mujets_%SYS%,as_char', type=str)
         self.addOption('criticalDR', 0.3, type=float)
-        self.addOption('partonContainerName', 'TopPartonHistoryTtbar_NOSYS', type=str)
+        self.addOption('partonContainerName', 'PartonHistoryTtbar_NOSYS', type=str)
 
     def makeAlgs(self, config):
         from AnalysisAlgorithmsConfig.ConfigAccumulator import DataType

@@ -1,7 +1,7 @@
 #include "TopCPToolkit/PartonToJetsMatchAlg.h"
 #include "AthContainers/ConstDataVector.h"
 
-#include "TopPartons/PartonHistory.h"
+#include "PartonHistory/PartonHistory.h"
 
 namespace top {
 
@@ -101,10 +101,10 @@ namespace top {
     float MC_b_from_t_eta = 0;
     float MC_b_from_t_phi = 0;
     float MC_b_from_t_m = 0;
-    float MC_b_from_tbar_pt = 0;
-    float MC_b_from_tbar_eta = 0;
-    float MC_b_from_tbar_phi = 0;
-    float MC_b_from_tbar_m = 0;
+    float MC_bbar_from_tbar_pt = 0;
+    float MC_bbar_from_tbar_eta = 0;
+    float MC_bbar_from_tbar_phi = 0;
+    float MC_bbar_from_tbar_m = 0;
   
     if(topParton->auxdata<float>("MC_Wdecay1_from_t_pt") > 0) {
       MC_Wdecay1_from_t_pt    = topParton->auxdata<float>("MC_Wdecay1_from_t_pt");
@@ -158,11 +158,11 @@ namespace top {
       return StatusCode::SUCCESS;
     }
   
-    if(topParton->auxdata<float>("MC_b_from_tbar_pt") > 0) {
-      MC_b_from_tbar_pt    = topParton->auxdata<float>("MC_b_from_tbar_pt");
-      MC_b_from_tbar_eta   = topParton->auxdata<float>("MC_b_from_tbar_eta");
-      MC_b_from_tbar_phi   = topParton->auxdata<float>("MC_b_from_tbar_phi");
-      MC_b_from_tbar_m     = topParton->auxdata<float>("MC_b_from_tbar_m");
+    if(topParton->auxdata<float>("MC_bbar_from_tbar_pt") > 0) {
+      MC_bbar_from_tbar_pt    = topParton->auxdata<float>("MC_bbar_from_tbar_pt");
+      MC_bbar_from_tbar_eta   = topParton->auxdata<float>("MC_bbar_from_tbar_eta");
+      MC_bbar_from_tbar_phi   = topParton->auxdata<float>("MC_bbar_from_tbar_phi");
+      MC_bbar_from_tbar_m     = topParton->auxdata<float>("MC_bbar_from_tbar_m");
     } else {
       return StatusCode::SUCCESS;
     }
@@ -193,7 +193,7 @@ namespace top {
   
     if (t_isHadronic) {
       b_had.SetPtEtaPhiM(MC_b_from_t_pt, MC_b_from_t_eta, MC_b_from_t_phi, MC_b_from_t_m);
-      b_lep.SetPtEtaPhiM(MC_b_from_tbar_pt, MC_b_from_tbar_eta, MC_b_from_tbar_phi, MC_b_from_tbar_m);
+      b_lep.SetPtEtaPhiM(MC_bbar_from_tbar_pt, MC_bbar_from_tbar_eta, MC_bbar_from_tbar_phi, MC_bbar_from_tbar_m);
       if (std::abs(MC_Wdecay1_from_t_pdgId) == 2 || std::abs(MC_Wdecay1_from_t_pdgId) == 4) {
         W_quark_up  .SetPtEtaPhiM(MC_Wdecay1_from_t_pt, MC_Wdecay1_from_t_eta, MC_Wdecay1_from_t_phi, MC_Wdecay1_from_t_m);
         W_quark_down.SetPtEtaPhiM(MC_Wdecay2_from_t_pt, MC_Wdecay2_from_t_eta, MC_Wdecay2_from_t_phi, MC_Wdecay2_from_t_m);
@@ -204,7 +204,7 @@ namespace top {
   
     } else {
       b_lep.SetPtEtaPhiM(MC_b_from_t_pt, MC_b_from_t_eta, MC_b_from_t_phi, MC_b_from_t_m);
-      b_had.SetPtEtaPhiM(MC_b_from_tbar_pt, MC_b_from_tbar_eta, MC_b_from_tbar_phi, MC_b_from_tbar_m);
+      b_had.SetPtEtaPhiM(MC_bbar_from_tbar_pt, MC_bbar_from_tbar_eta, MC_bbar_from_tbar_phi, MC_bbar_from_tbar_m);
       if (std::abs(MC_Wdecay1_from_tbar_pdgId) == 2 || std::abs(MC_Wdecay1_from_tbar_pdgId) == 4) {
         W_quark_up  .SetPtEtaPhiM(MC_Wdecay1_from_tbar_pt, MC_Wdecay1_from_tbar_eta, MC_Wdecay1_from_tbar_phi, MC_Wdecay1_from_tbar_m);
         W_quark_down.SetPtEtaPhiM(MC_Wdecay2_from_tbar_pt, MC_Wdecay2_from_tbar_eta, MC_Wdecay2_from_tbar_phi, MC_Wdecay2_from_tbar_m);

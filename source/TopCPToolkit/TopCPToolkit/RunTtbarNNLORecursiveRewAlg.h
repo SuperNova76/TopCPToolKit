@@ -14,7 +14,7 @@
 
 // Custom includes
 #include "TopNNLOReweighter/TtbarNNLORecursiveRew.h"
-#include "TopPartons/CalcTtbarPartonHistory.h"
+#include "PartonHistory/CalcTtbarPartonHistory.h"
 
 namespace top {
 

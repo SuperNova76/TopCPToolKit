@@ -6,7 +6,7 @@
 #include <SystematicsHandles/SysReadHandle.h>
 #include <SystematicsHandles/SysWriteDecorHandle.h>
 
-#include <TopPartons/CalcTopPartonHistory.h>
+#include <PartonHistory/CalcPartonHistory.h>
 #include <xAODEventInfo/EventInfo.h>
 #include <TLorentzVector.h>
 

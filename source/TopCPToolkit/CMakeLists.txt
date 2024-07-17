@@ -13,10 +13,10 @@ find_package( FastJet COMPONENTS fastjetplugins fastjettools )
 if( XAOD_STANDALONE )
   atlas_add_library(
     TopCPToolkitLib
-    TopCPToolkit/*.h TopPartons/*.h TopParticleLevel/*.h TopSpaNet/*.h TopNNLOReweighter/*.h
+    TopCPToolkit/*.h PartonHistory/*.h TopParticleLevel/*.h TopSpaNet/*.h TopNNLOReweighter/*.h
     Root/*.cxx Root/preloader/*.cxx
     INCLUDE_DIRS ${KLFITTER_INCLUDE_DIRS} ${ONNXRUNTIME_INCLUDE_DIRS}
-    PUBLIC_HEADERS TopCPToolkit TopPartons TopParticleLevel TopSpaNet TopNNLOReweighter
+    PUBLIC_HEADERS TopCPToolkit PartonHistory TopParticleLevel TopSpaNet TopNNLOReweighter
     LINK_LIBRARIES ${KLFITTER_LIBRARIES} ${ONNXRUNTIME_LIBRARIES}
     AnaAlgorithmLib AsgAnalysisAlgorithmsLib xAODMissingET xAODJet xAODBTagging xAODEgamma xAODMuon xAODTau xAODTruth xAODCore PathResolver FourMomUtils FTagAnalysisInterfacesLib SystematicsHandlesLib SelectionHelpersLib MCTruthClassifierLib GammaORToolsLib
     # THE FOLLOWING ARE NEEDED FOR THE COMPONENT PRELOADER:
@@ -26,10 +26,10 @@ if( XAOD_STANDALONE )
 else ()
   atlas_add_library(
     TopCPToolkitLib
-    TopCPToolkit/*.h TopPartons/*.h TopParticleLevel/*.h TopSpaNet/*.h TopNNLOReweighter/*.h
+    TopCPToolkit/*.h HiggsPartons/*.h TopParticleLevel/*.h TopSpaNet/*.h TopNNLOReweighter/*.h
     Root/*.cxx
     INCLUDE_DIRS ${KLFITTER_INCLUDE_DIRS} ${ONNXRUNTIME_INCLUDE_DIRS} ${FASTJET_INCLUDE_DIRS}
-    PUBLIC_HEADERS TopCPToolkit TopPartons TopParticleLevel TopSpaNet TopNNLOReweighter
+    PUBLIC_HEADERS TopCPToolkit PartonHistory TopParticleLevel TopSpaNet TopNNLOReweighter
     LINK_LIBRARIES ${KLFITTER_LIBRARIES} ${ONNXRUNTIME_LIBRARIES} ${FASTJET_LIBRARIES}
     AnaAlgorithmLib AsgAnalysisAlgorithmsLib xAODMissingET xAODJet xAODBTagging xAODEgamma xAODMuon xAODTau xAODTruth xAODCore PathResolver FourMomUtils FTagAnalysisInterfacesLib SystematicsHandlesLib SelectionHelpersLib MCTruthClassifierLib GammaORToolsLib
     )

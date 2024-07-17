@@ -5,7 +5,7 @@ CommonServices:
 GeneratorLevelAnalysis: {}
 
 PartonHistory:
-  - histories: 'Ttbar.TtbarLight'
+  - histories: 'Ttbar.Ttz'
 
 TtbarNNLO: {}
 
@@ -31,8 +31,9 @@ Output:
   containers:
       # Format should follow: '<suffix>:<output container>'
       '': 'EventInfo'
-      'Ttbar_': 'TopPartonHistoryTtbar'
-      'TtbarLight_': 'TopPartonHistoryTtbarLight'
+      'Ttbar_': 'PartonHistoryTtbar'
+      'TTZ_': 'PartonHistoryTtz'
+      # 'TtbarLight_': 'PartonHistoryTtbarLight'
 
 AddConfigBlocks:
     - modulePath: 'TopCPToolkit.truthConfig'
