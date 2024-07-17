@@ -4,7 +4,7 @@
 
 #include "xAODCore/AddDVProxy.h"
 #include "TopCPToolkit/KLFitterResultContainer.h"
-#include "TopPartons/PartonHistory.h"
+#include "PartonHistory/PartonHistory.h"
 
 ADD_NS_DV_PROXY (xAOD, KLFitterResultContainer);
 ADD_NS_DV_PROXY (xAOD, PartonHistoryContainer);

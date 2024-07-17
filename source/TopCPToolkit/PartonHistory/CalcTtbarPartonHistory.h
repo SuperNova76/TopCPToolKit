@@ -1,16 +1,16 @@
-#ifndef TOPPARTONS_CALCTTBARPARTONHISTORY_H
-#define TOPPARTONS_CALCTTBARPARTONHISTORY_H
+#ifndef PARTONS_CALCTTBARPARTONHISTORY_H
+#define PARTONS_CALCTTBARPARTONHISTORY_H
 
 // Framework include(s):
-#include "TopPartons/CalcTopPartonHistory.h"
+#include "PartonHistory/CalcPartonHistory.h"
 #include "xAODTruth/TruthParticleContainer.h"
-#include "TopPartons/PartonHistory.h"
+#include "PartonHistory/PartonHistory.h"
 
 namespace top {
-  class CalcTtbarPartonHistory: public CalcTopPartonHistory {
+  class CalcTtbarPartonHistory: public CalcPartonHistory {
   public:
     explicit CalcTtbarPartonHistory(const std::string &name,
-                                    std::vector<std::string> truthCollections = {"TruthTop"});
+                                    const std::vector<std::string>& truthCollections = {"TruthTop"});
     virtual ~CalcTtbarPartonHistory() {}
 
     //Storing parton history for ttbar resonance analysis

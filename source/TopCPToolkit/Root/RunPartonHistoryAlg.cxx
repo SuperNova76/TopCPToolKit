@@ -3,42 +3,32 @@
 namespace top {
   RunPartonHistoryAlg::RunPartonHistoryAlg(const std::string &name, ISvcLocator *pSvcLocator)
     : EL::AnaAlgorithm(name, pSvcLocator),
-      m_topPartonScheme("Ttbar")
+      m_PartonScheme("Ttbar")
   {
-    declareProperty("topPartonScheme", m_topPartonScheme, "the TopParton history to run");
+    declareProperty("partonScheme", m_PartonScheme, "the parton history to run");
   }
 
   StatusCode RunPartonHistoryAlg::initialize() {
     ANA_MSG_INFO("Initializing PartonHistory " << name() );
-    ANA_MSG_INFO("  - topPartonScheme: " << m_topPartonScheme);
+    ANA_MSG_INFO("  - partonScheme: " << m_PartonScheme);
 
-    if (m_topPartonScheme == "Ttbar") {
-      m_topPartonHistory = std::make_unique<CalcTtbarPartonHistory>("top::CalcTtbarPartonHistory");
-    }
-    else if (m_topPartonScheme == "TtbarLight") {
-      m_topPartonHistory = std::make_unique<CalcTtbarLightPartonHistory>("top::CalcTtbarLightPartonHistory");
-    }
-    else if (m_topPartonScheme == "TTZ") {
-      m_topPartonHistory = std::make_unique<CalcTTZPartonHistory>("top::CalcTTZPartonHistory");
-    }
-    else if (m_topPartonScheme == "Tth") {
-      m_topPartonHistory = std::make_unique<CalcTthPartonHistory>("top::CalcTthPartonHistory");
-    }
-    else if (m_topPartonScheme == "Tzq") {
-      m_topPartonHistory = std::make_unique<CalcTzqPartonHistory>("top::CalcTzqPartonHistory");
-    }
+    if (m_PartonScheme == "Ttbar") m_PartonHistory = std::make_unique<CalcTtbarPartonHistory>("top::CalcTtbarPartonHistory");
+    // else if (m_PartonScheme == "TtbarLight") m_PartonHistory = std::make_unique<CalcTtbarLightPartonHistory>("top::CalcTtbarLightPartonHistory");
+    else if (m_PartonScheme == "Ttz") m_PartonHistory = std::make_unique<CalcTtzPartonHistory>("top::CalcTtzPartonHistory");
+    else if (m_PartonScheme == "Tth") m_PartonHistory = std::make_unique<CalcTthPartonHistory>("top::CalcTthPartonHistory");
+    else if (m_PartonScheme == "Tzq") m_PartonHistory = std::make_unique<CalcTzqPartonHistory>("top::CalcTzqPartonHistory");
+    else if (m_PartonScheme == "HWW") m_PartonHistory = std::make_unique<CalcHWWPartonHistory>("top::CalcHWWPartonHistory");
     else {
-      ANA_MSG_ERROR("  ==> topPartonScheme " << m_topPartonScheme << " is not recognised! aborting.");
+      ANA_MSG_ERROR("  ==> PartonScheme " << m_PartonScheme << " is not recognised! aborting.");
       return StatusCode::FAILURE;
     }
-    ANA_CHECK(m_topPartonHistory->setProperty("outputSGKey", "TopPartonHistory" + m_topPartonScheme + "_NOSYS"));
-
+    ANA_CHECK(m_PartonHistory->setProperty("outputSGKey", "PartonHistory" + m_PartonScheme + "_NOSYS"));
     return StatusCode::SUCCESS;
   }
 
   StatusCode RunPartonHistoryAlg::execute() {
-
-    ANA_CHECK(m_topPartonHistory->execute());
+    
+    ANA_CHECK(m_PartonHistory->execute());
 
     return StatusCode::SUCCESS;
   }
