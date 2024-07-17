@@ -2,10 +2,9 @@
 #include "PartonHistory/PartonHistoryUtils.h"
 
 namespace top {
-  using PartonHistoryUtils::decorateWithMPtPhi;
   using ROOT::Math::PtEtaPhiMVector;
   
-  void CalcPartonHistory::FillBottomPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string parent) {
+  void CalcPartonHistory::FillBottomPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent) {
     std::string parentstring = "";
     if (parent != "") parentstring = "_from_"+parent;
 
@@ -26,8 +25,6 @@ namespace top {
   }
 
   void CalcPartonHistory::FillAntiBottomPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent) {
-    // Filling bbar parton history. To indicate where the bbar quark originates from we use a parent string.
-    // Construct parent string
     std::string parentstring = "";
     if (parent != "") parentstring = "_from_"+parent;
 

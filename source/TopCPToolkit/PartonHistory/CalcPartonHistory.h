@@ -29,20 +29,19 @@ namespace top {
     std::map<std::string, const xAOD::TruthParticle* > particleMap;
 
     void AddToParticleMap(const xAOD::TruthParticle* particle, std::string key);
-    bool ExistsInMap(const std::string key);
-    bool Retrievep4(const std::string key, PtEtaPhiMVector& p4);
-    bool RetrievepdgId(const std::string key, int& pdgId);
-
-    bool RetrieveParticleInfo(const std::string& prefix, TLorentzVector& particle, int& pdgId);
+    bool ExistsInMap(const std::string& key);
+    bool Retrievep4(const std::string& key, PtEtaPhiMVector& p4);
+    bool RetrievepdgId(const std::string& key, int& pdgId);
+    bool RetrieveParticleInfo(const std::string& prefix, PtEtaPhiMVector& particle, int& pdgId);
 
     void FillParticleInfo(const SG::AuxElement::Decorator<float>& dec_m, const SG::AuxElement::Decorator<float>& dec_pt,
 			  const SG::AuxElement::Decorator<float>& dec_eta, const SG::AuxElement::Decorator<float>& dec_phi,
-			  const TLorentzVector& particle,
+			  const PtEtaPhiMVector& particle,
 			  xAOD::PartonHistory *history);
     void FillParticleInfo(const SG::AuxElement::Decorator<float>& dec_m, const SG::AuxElement::Decorator<float>& dec_pt,
 			  const SG::AuxElement::Decorator<float>& dec_eta, const SG::AuxElement::Decorator<float>& dec_phi,
 			  const SG::AuxElement::Decorator<int>& dec_pdgId,
-			  const TLorentzVector& particle, int pdgId,
+			  const PtEtaPhiMVector& particle, int pdgId,
 			  xAOD::PartonHistory *history);
     void FillDefaultParticleInfo(const SG::AuxElement::Decorator<float>& dec_m, const SG::AuxElement::Decorator<float>& dec_pt,
 				 const SG::AuxElement::Decorator<float>& dec_eta, const SG::AuxElement::Decorator<float>& dec_phi,

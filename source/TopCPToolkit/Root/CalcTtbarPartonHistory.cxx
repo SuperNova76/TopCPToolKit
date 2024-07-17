@@ -2,7 +2,6 @@
 #include "PartonHistory/PartonHistoryUtils.h"
 
 namespace top {
-  using PartonHistoryUtils::decorateWithMPtPhi;
   CalcTtbarPartonHistory::CalcTtbarPartonHistory(const std::string& name,
                                                  const std::vector<std::string>& truthCollections) :
     CalcPartonHistory(name, truthCollections)

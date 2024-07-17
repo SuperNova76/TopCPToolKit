@@ -81,13 +81,12 @@ namespace top {
     PtEtaPhiMVector t_afterFSR;
     PtEtaPhiMVector tbar_afterFSR;
 
-    PtEtaPhiMVector WpDecay1;
-    PtEtaPhiMVector WpDecay2;
-    PtEtaPhiMVector WmDecay1;
-    PtEtaPhiMVector WmDecay2;
+    PtEtaPhiMVector WpDecay1, WpDecay2;
+    PtEtaPhiMVector WmDecay1, WmDecay2;
 
-    PtEtaPhiMVector bbar;
-    PtEtaPhiMVector b;
+    int WpDecay1_pdgId, WpDecay2_pdgId, WmDecay1_pdgId, WmDecay2_pdgId;
+
+    PtEtaPhiMVector b, bbar;
     
     static const SG::AuxElement::Decorator<float> dec_MC_ttbar_beforeFSR_m("MC_ttbar_beforeFSR_m");
     static const SG::AuxElement::Decorator<float> dec_MC_ttbar_beforeFSR_pt("MC_ttbar_beforeFSR_pt");

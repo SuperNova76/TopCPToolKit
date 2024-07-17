@@ -88,14 +88,16 @@ namespace top {
     return (!(particleMap.find(key) == particleMap.end()));
   }
 
-  bool CalcPartonHistory::Retrievep4(const std::string key, PtEtaPhiMVector& p4) {
+  bool CalcPartonHistory::Retrievep4(const std::string& key, PtEtaPhiMVector& p4) {
+    // Retrieves the PtEtaPhiMVector associated with a given key from the particleMap.
+    // Returns true if the key exists and assigns the PtEtaPhiMVector to p4, otherwise returns false.
     if (ExistsInMap(key)) {
       p4 = GetPtEtaPhiMfromTruth(particleMap[key]);
       return true;
     }
     return false;
   }
-
+  
   bool CalcPartonHistory::RetrievepdgId(const std::string& key, int& pdgId) {
     // Retrieves the PDG ID associated with a given key from the particleMap.
     // Returns true if the key exists and assigns the PDG ID to pdgId, otherwise returns false.
@@ -106,14 +108,14 @@ namespace top {
     return false;
   }
 
-  bool CalcPartonHistory::RetrieveParticleInfo(const std::string& prefix, TLorentzVector& particle, int& pdgId) {
+  bool CalcPartonHistory::RetrieveParticleInfo(const std::string& prefix, PtEtaPhiMVector& particle, int& pdgId) {
     return Retrievep4(prefix, particle) && RetrievepdgId(prefix, pdgId);
   }
 
   void CalcPartonHistory::FillParticleInfo(const SG::AuxElement::Decorator<float>& dec_m, const SG::AuxElement::Decorator<float>& dec_pt,
 					   const SG::AuxElement::Decorator<float>& dec_eta, const SG::AuxElement::Decorator<float>& dec_phi,
 					   const SG::AuxElement::Decorator<int>& dec_pdgId,
-					   const TLorentzVector& particle, int pdgId,
+					   const PtEtaPhiMVector& particle, int pdgId,
 					   xAOD::PartonHistory* history) {
     dec_m(*history) = particle.M();
     dec_pt(*history) = particle.Pt();
@@ -124,7 +126,7 @@ namespace top {
 
   void CalcPartonHistory::FillParticleInfo(const SG::AuxElement::Decorator<float>& dec_m, const SG::AuxElement::Decorator<float>& dec_pt,
 					   const SG::AuxElement::Decorator<float>& dec_eta, const SG::AuxElement::Decorator<float>& dec_phi,
-					   const TLorentzVector& particle,
+					   const PtEtaPhiMVector& particle,
 					   xAOD::PartonHistory* history) {
     dec_m(*history) = particle.M();
     dec_pt(*history) = particle.Pt();
@@ -164,7 +166,7 @@ namespace top {
       particleMap[key] = particleMap[fallbackKey];
     }
   }
-
+  
   void CalcPartonHistory::EnsureTtbarKeysExist() {
     // Ensures that all relevant Ttbar key exists in the particleMap.
     // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
@@ -249,7 +251,6 @@ namespace top {
     if (PartonHistoryUtils::isAfterFSR(particle) && abs(particle->pdgId()) == 24) {
       particle = getTruthParticleLinkedFromDecoration(particle, "AT_linkToTruthBosonsWithDecayParticles");
     }
-
     // Add the current particle to the current path we are building
     currentPath.push_back(particle);
 
@@ -260,8 +261,6 @@ namespace top {
     else {
       // We have already pushed the beforeFSR particle, now we proceed to the afterFSR one
       const xAOD::TruthParticle* particle_afterFSR = PartonHistoryUtils::findAfterFSR(particle);
-
-
       // If we have a W boson we have to link the decorations
       if (abs(particle_afterFSR->pdgId()) == 24) {
 	particle_afterFSR = getTruthParticleLinkedFromDecoration(particle_afterFSR, "AT_linkToTruthBosonsWithDecayParticles");

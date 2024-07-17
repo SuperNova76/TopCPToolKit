@@ -2,11 +2,9 @@
 #include "PartonHistory/PartonHistoryUtils.h"
 
 namespace top {
-  using PartonHistoryUtils::decorateWithMPtPhi;
   using ROOT::Math::PtEtaPhiMVector;
 
   void CalcPartonHistory::FillHiggsPartonHistory(xAOD::PartonHistory* PartonHistory) {
-
     PtEtaPhiMVector H;
     PtEtaPhiMVector HDecay1;
     PtEtaPhiMVector HDecay2;

@@ -23,10 +23,6 @@ namespace top {
     ///Return true when particle is a top before FSR
     bool hasParticleIdenticalParent(const xAOD::TruthParticle* particle);
   
-    /// Perform decoration M, Pt, Phi of the history from a PtEtaPhiMVector
-    void decorateWithMPtPhi(xAOD::PartonHistory* pHistory, const std::string & prefix, const PtEtaPhiMVector & vec );
-
-    void fillEtaBranch(xAOD::PartonHistory* partonHistory, std:: string branchName, TLorentzVector& tlv);
   } // namespace PartonHistoryUtils
 } // namespace top
 

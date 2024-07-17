@@ -2,22 +2,21 @@
 #include "PartonHistory/PartonHistoryUtils.h"
 
 namespace top {
-  using PartonHistoryUtils::decorateWithMPtPhi;
   using ROOT::Math::PtEtaPhiMVector;
 
-  void CalcPartonHistory::FillZPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string parent) {
+  void CalcPartonHistory::FillZPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent) {
     std::string parentstring = "";
     if (parent != "") parentstring = "_from_"+parent;
     
     PtEtaPhiMVector Z;
-    PtEtaPhiMVector ZDecay1;
-    PtEtaPhiMVector ZDecay2;
-    int ZDecay1pdgId = -1;
-    int ZDecay2pdgId = -1;
 
     std::string decorator_prefix = "MC_";
     if (bosonID != -1) decorator_prefix += std::to_string(bosonID) + "Z_";
     else decorator_prefix += "Z_";
+    
+    PtEtaPhiMVector ZDecay1, ZDecay2;
+    int ZDecay1pdgId = -1;
+    int ZDecay2pdgId = -1;
 
     static const SG::AuxElement::Decorator<float> dec_MC_Z_m(decorator_prefix + parentstring + "_m");
     static const SG::AuxElement::Decorator<float> dec_MC_Z_pt(decorator_prefix + parentstring + "_pt");

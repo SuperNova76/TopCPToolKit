@@ -2,20 +2,17 @@
 #include "PartonHistory/PartonHistoryUtils.h"
 
 namespace top {
-  using PartonHistoryUtils::decorateWithMPtPhi;
   using ROOT::Math::PtEtaPhiMVector;
 
   void CalcPartonHistory::FillWpPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent) {
     std::string parentstring = "";
     if (parent != "") parentstring = "_from_"+parent;
     PtEtaPhiMVector Wp;
-    PtEtaPhiMVector WpDecay1;
-    PtEtaPhiMVector WpDecay2;
+    PtEtaPhiMVector WpDecay1, WpDecay2;
     int WpDecay1pdgId = -1;
     int WpDecay2pdgId = -1;
-    std::string prefix = "MC_";
-    if (parent != "") prefix += parent + "_Wp";
-    else prefix += "Wp";
+    
+    std::string prefix = "MC_" + ((parent != "") ? parent + "_Wp" : "Wp");
 
     static const SG::AuxElement::Decorator<float> dec_MC_Wp_m("MC_W" + parentstring + "_m");
     static const SG::AuxElement::Decorator<float> dec_MC_Wp_pt("MC_W" + parentstring + "_pt");
@@ -33,8 +30,6 @@ namespace top {
     static const SG::AuxElement::Decorator<float> dec_MC_Wpdecay2_eta("MC_Wdecay2" + parentstring + "_eta");
     static const SG::AuxElement::Decorator<float> dec_MC_Wpdecay2_phi("MC_Wdecay2" + parentstring + "_phi");
     static const SG::AuxElement::Decorator<int> dec_MC_Wpdecay2_pdgId("MC_Wdecay2" + parentstring + "_pdgId");
-
-    std::string prefix = "MC_" + ((parent != "") ? parent + "_Wp" : "Wp");
 
     // Decorating with defaults in case the particle doesn't exist
     FillDefaultParticleInfo(dec_MC_Wp_m, dec_MC_Wp_pt, dec_MC_Wp_eta, dec_MC_Wp_phi, PartonHistory);
@@ -57,13 +52,11 @@ namespace top {
     std::string parentstring = "";
     if (parent != "") parentstring = "_from_"+parent;
     PtEtaPhiMVector Wm;
-    PtEtaPhiMVector WmDecay1;
-    PtEtaPhiMVector WmDecay2;
+    PtEtaPhiMVector WmDecay1, WmDecay2;
     int WmDecay1pdgId = -1;
     int WmDecay2pdgId = -1;
-    std::string prefix = "MC_";
-    if (parent != "") prefix += parent + "_Wm";
-    else prefix += "Wm";
+
+    std::string prefix = "MC_" + ((parent != "") ? parent + "_Wm" : "Wm");
 
     static const SG::AuxElement::Decorator<float> dec_MC_Wm_m("MC_W" + parentstring + "_m");
     static const SG::AuxElement::Decorator<float> dec_MC_Wm_pt("MC_W" + parentstring + "_pt");
@@ -82,7 +75,7 @@ namespace top {
     static const SG::AuxElement::Decorator<float> dec_MC_Wmdecay2_phi("MC_Wdecay2" + parentstring + "_phi");
     static const SG::AuxElement::Decorator<int> dec_MC_Wmdecay2_pdgId("MC_Wdecay2" + parentstring + "_pdgId");
 
-    std::string prefix = "MC_" + ((parent != "") ? parent + "_Wm" : "Wm");
+    
 
     // Decorating with defaults in case the particle doesn't exist
     FillDefaultParticleInfo(dec_MC_Wm_m, dec_MC_Wm_pt, dec_MC_Wm_eta, dec_MC_Wm_phi, PartonHistory);
@@ -91,7 +84,7 @@ namespace top {
 
     if (Retrievep4(prefix + "_beforeFSR", Wm)) {
       // As this is always a W+ we don't set the pdgId
-        FillParticleInfo(dec_MC_Wm_m, dec_MC_Wm_pt, dec_MC_Wm_eta, dec_MC_Wm_phi, Wm, PartonHistory);
+      FillParticleInfo(dec_MC_Wm_m, dec_MC_Wm_pt, dec_MC_Wm_eta, dec_MC_Wm_phi, Wm, PartonHistory);
     }
     if (RetrieveParticleInfo(prefix + "Decay1", WmDecay1, WmDecay1pdgId)) {
       FillParticleInfo(dec_MC_Wmdecay1_m, dec_MC_Wmdecay1_pt, dec_MC_Wmdecay1_eta, dec_MC_Wmdecay1_phi, dec_MC_Wmdecay1_pdgId, WmDecay1, WmDecay1pdgId, PartonHistory);
