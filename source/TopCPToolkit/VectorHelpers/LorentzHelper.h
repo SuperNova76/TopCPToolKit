@@ -25,7 +25,4 @@ double deltaR(const ROOT::Math::PtEtaPhiMVector &v1, const ROOT::Math::PtEtaPhiM
 double deltaR(const ROOT::Math::PtEtaPhiMVector &v1, const ROOT::Math::PtEtaPhiEVector &v2);
 double deltaR(const ROOT::Math::PtEtaPhiEVector &v1, const ROOT::Math::PtEtaPhiMVector &v2);
 
-//ToDo Typedef this to work for all LorentzVectors
-double SliceLorentz(ROOT::Math::PtEtaPhiMVector &m_p, int i);
-
 #endif

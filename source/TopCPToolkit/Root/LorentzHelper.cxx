@@ -99,28 +99,6 @@ ROOT::Math::PtEtaPhiMVector TLorentzToPtEtaPhiM(const TLorentzVector& p){
   return MassSafeVector;
 }
 
-double SliceLorentz(ROOT::Math::PtEtaPhiMVector &m_p, int i){
-  double coord1, coord2, coord3, coord4;
-  m_p.GetCoordinates(coord1, coord2, coord3, coord4);
-  switch(i) {
-  case 0:
-    return coord1;
-    break;
-  case 1:
-    return coord2;
-    break;
-  case 2:
-    return coord3;
-    break;
-  case 3:
-    return coord4;
-    break;
-  default:
-    asg::msgUserCode::ANA_MSG_WARNING ("LorentzHelper WARNING: Bad index, there are only 4 elements of a 4-vector..., returning 0!");
-    return 0.0;
-  }
-}
-
 double deltaR(const ROOT::Math::PtEtaPhiEVector &v1, const ROOT::Math::PtEtaPhiEVector &v2) {
   Double_t deta = v1.Eta()-v2.Eta();
   Double_t dphi = TVector2::Phi_mpi_pi(v1.Phi()-v2.Phi());
