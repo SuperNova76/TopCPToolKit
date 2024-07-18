@@ -4,6 +4,7 @@
 
 namespace top {
   using ROOT::Math::PtEtaPhiMVector;
+  using ROOT::Math::VectorUtil::DeltaR;
 
   JetMatchingAlg::JetMatchingAlg(const std::string &name, ISvcLocator *pSvcLocator)
     : EL::AnaAlgorithm(name, pSvcLocator)
@@ -130,8 +131,8 @@ namespace top {
         continue;
       }
       PtEtaPhiEVector jet2 = GetPtEtaPhiEfromJet(jet);
-      if (deltaR(jet1, jet2) < minDR) {
-        minDR = deltaR(jet1, jet2);
+      if (DeltaR(jet1, jet2) < minDR) {
+        minDR = DeltaR(jet1, jet2);
       }
       ijet2++;
     }
@@ -144,8 +145,8 @@ namespace top {
     int itruth = 0;
     for (const xAOD::Jet *truthjet : truth_jets) {
       PtEtaPhiMVector truth_jet = GetPtEtaPhiMfromJet(truthjet);
-      if (deltaR(reco_jet, truth_jet) < minDR) {
-	minDR = deltaR(reco_jet, truth_jet);
+      if (DeltaR(reco_jet, truth_jet) < minDR) {
+	minDR = DeltaR(reco_jet, truth_jet);
 	truth_jet_index = itruth;
       }
       itruth++;
@@ -157,14 +158,14 @@ namespace top {
   bool JetMatchingAlg::find_close_lepton(PtEtaPhiEVector& reco_jet, const xAOD::TruthParticleContainer &truth_electrons, const xAOD::TruthParticleContainer &truth_muons, double& overlapping_truth_lepton_pt) {
     for (const xAOD::TruthParticle *electron : truth_electrons) {
       const PtEtaPhiMVector& TLVelectron = GetPtEtaPhiMfromTruth(electron);
-      if (deltaR(reco_jet, TLVelectron) < m_criticalDR_leptons) {
+      if (DeltaR(reco_jet, TLVelectron) < m_criticalDR_leptons) {
           overlapping_truth_lepton_pt = TLVelectron.Pt();
           return true;
       }
     }
     for (const xAOD::TruthParticle *muon : truth_muons) {
       const PtEtaPhiMVector& TLVmuon = GetPtEtaPhiMfromTruth(muon);
-      if (deltaR(reco_jet, TLVmuon) < m_criticalDR_leptons) {
+      if (DeltaR(reco_jet, TLVmuon) < m_criticalDR_leptons) {
         overlapping_truth_lepton_pt = TLVmuon.Pt();
         return true;
       }
@@ -186,8 +187,8 @@ namespace top {
               continue;
           }
           PtEtaPhiMVector truth_jet2 = GetPtEtaPhiMfromJet(truthjet2);
-          if (deltaR(truth_jet1, truth_jet2) < minDR) {
-	    minDR = deltaR(truth_jet1, truth_jet2);
+          if (DeltaR(truth_jet1, truth_jet2) < minDR) {
+	    minDR = DeltaR(truth_jet1, truth_jet2);
           }
           itruth2++;
         }

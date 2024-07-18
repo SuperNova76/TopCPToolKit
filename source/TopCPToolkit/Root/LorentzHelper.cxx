@@ -98,27 +98,3 @@ ROOT::Math::PtEtaPhiMVector TLorentzToPtEtaPhiM(const TLorentzVector& p){
 					     p.M());
   return MassSafeVector;
 }
-
-double deltaR(const ROOT::Math::PtEtaPhiEVector &v1, const ROOT::Math::PtEtaPhiEVector &v2) {
-  Double_t deta = v1.Eta()-v2.Eta();
-  Double_t dphi = TVector2::Phi_mpi_pi(v1.Phi()-v2.Phi());
-  return TMath::Sqrt( deta*deta+dphi*dphi );
-}
-
-double deltaR(const ROOT::Math::PtEtaPhiMVector &v1, const ROOT::Math::PtEtaPhiMVector &v2) {
-  Double_t deta = v1.Eta()-v2.Eta();
-  Double_t dphi = TVector2::Phi_mpi_pi(v1.Phi()-v2.Phi());
-  return TMath::Sqrt( deta*deta+dphi*dphi );
-}
-
-double deltaR(const ROOT::Math::PtEtaPhiMVector &v1, const ROOT::Math::PtEtaPhiEVector &v2) {
-  Double_t deta = v1.Eta()-v2.Eta();
-  Double_t dphi = TVector2::Phi_mpi_pi(v1.Phi()-v2.Phi());
-  return TMath::Sqrt( deta*deta+dphi*dphi );
-}
-
-double deltaR(const ROOT::Math::PtEtaPhiEVector &v1, const ROOT::Math::PtEtaPhiMVector &v2) {
-  Double_t deta = v1.Eta()-v2.Eta();
-  Double_t dphi = TVector2::Phi_mpi_pi(v1.Phi()-v2.Phi());
-  return TMath::Sqrt( deta*deta+dphi*dphi );
-}

@@ -7,6 +7,7 @@
 namespace top {
   using ROOT::Math::PtEtaPhiEVector;
   using ROOT::Math::PtEtaPhiMVector;
+  using ROOT::Math::VectorUtil::DeltaR;
 
   PartonToJetsMatchAlg::PartonToJetsMatchAlg(const std::string &name, ISvcLocator *pSvcLocator)
     : EL::AnaAlgorithm(name, pSvcLocator)
@@ -227,10 +228,10 @@ namespace top {
       PtEtaPhiEVector truth_jet;
       truth_jet.SetCoordinates(selected_jets.at(ijet)->pt(), selected_jets.at(ijet)->eta(), selected_jets.at(ijet)->phi(), selected_jets.at(ijet)->e());
 
-      const double dr_up    = deltaR(truth_jet, W_quark_up); 
-      const double dr_down  = deltaR(truth_jet, W_quark_down); 
-      const double dr_b_had = deltaR(truth_jet, b_had); 
-      const double dr_b_lep = deltaR(truth_jet, b_lep); 
+      const double dr_up    = DeltaR(truth_jet, W_quark_up); 
+      const double dr_down  = DeltaR(truth_jet, W_quark_down); 
+      const double dr_b_had = DeltaR(truth_jet, b_had); 
+      const double dr_b_lep = DeltaR(truth_jet, b_lep); 
 
       dr_up_vec.emplace_back(dr_up);
       dr_down_vec.emplace_back(dr_down);
