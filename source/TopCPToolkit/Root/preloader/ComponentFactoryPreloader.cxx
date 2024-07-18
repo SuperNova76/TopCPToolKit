@@ -137,7 +137,6 @@
 #include <TopCPToolkit/SVMassAlg.h>
 #include <TopCPToolkit/TutorialAlg.h>
 #include <TopCPToolkit/JetReclusteringAlg.h>
-#include <TopCPToolkit/VGammaORAlg.h>
 #include <TopCPToolkit/SoftMuonSelectorAlg.h>
 #include <AsgAnalysisAlgorithms/SysListDumperAlg.h>
 
@@ -234,7 +233,6 @@ namespace top
     ANA_CHECK (asg::registerAlgorithmFactory<SVMassAlg> ("SVMassAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::TutorialAlg> ("top::TutorialAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::JetReclusteringAlg> ("top::JetReclusteringAlg"));
-    ANA_CHECK (asg::registerAlgorithmFactory<top::VGammaORAlg> ("top::VGammaORAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::SoftMuonSelectorAlg> ("top::SoftMuonSelectorAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::SysListDumperAlg> ("CP::SysListDumperAlg"));
 

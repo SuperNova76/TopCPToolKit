@@ -17,7 +17,6 @@
   <class name="top::JetReclusteringAlg" />
   <class name="SVMassAlg" />
   <function name="top::preloadComponentFactories" />
-  <class name="VGammaORAlg" />
   <class name="top::SoftMuonSelectorAlg" />
   <class name="top::PartonHistoryToSpinInputAlg" />
   <class name="top::TopSpinDensityMatrixAlg" />
