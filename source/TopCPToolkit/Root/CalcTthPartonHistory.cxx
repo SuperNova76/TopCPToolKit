@@ -14,7 +14,7 @@ namespace top {
     tthPartonHistory->IniVarTth();
     // Tracing truth particles
     CalcPartonHistory::TraceParticles(truthParticles);
-    
+
     // Ensuring the necessary keys exist
     CalcPartonHistory::EnsureTtbarKeysExist();
 

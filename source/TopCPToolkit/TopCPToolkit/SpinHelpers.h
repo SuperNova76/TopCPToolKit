@@ -155,7 +155,7 @@ namespace SpinHelpers
 
     TVector3 boost_to_ttbar = ttbar.BoostVector();
     boost_to_ttbar *= -1;
-    
+
     top.Boost(boost_to_ttbar);
     tbar.Boost(boost_to_ttbar);
     top_analyser.Boost(boost_to_ttbar);

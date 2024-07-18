@@ -219,14 +219,11 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics=False
         configSeq += makeConfig ('ObjectCutFlow', containerName='AnaTrackJets', selectionName='')
 
     # a single lepton SF
-    # TODO: give it a factory when moving to Athena
-    from TopCPToolkit.LeptonSFCalculatorConfig import LeptonSFCalculatorConfig
-    cfg = LeptonSFCalculatorConfig()
-    cfg.setOptionValue ('electrons', 'AnaElectrons.tight')
-    cfg.setOptionValue ('muons', 'AnaMuons.tight')
-    #cfg.setOptionValue ('photons', 'AnaPhotons.tight')
-    cfg.setOptionValue ('lepton_postfix', 'tight')
-    configSeq.append(cfg)
+    configSeq += makeConfig ('LeptonSF')
+    configSeq.setOptionValue ('.electrons', 'AnaElectrons.tight')
+    configSeq.setOptionValue ('.muons', 'AnaMuons.tight')
+    #configSeq.setOptionValue ('.photons', 'AnaPhotons.tight')
+    configSeq.setOptionValue ('.lepton_postfix', 'tight')
 
     # the IFF lepton classification
     if use_electrons:
@@ -411,7 +408,7 @@ def makeTruthConfiguration(flags, algSeq, configSeq, factory, noSystematics=Fals
     # TODO: give it a factory when moving to Athena
     from TopCPToolkit.truthConfig import truthConfig
     cfg = truthConfig()
-    cfg.setOptionValue ('histories', 'Ttbar.TtbarLight')
+    cfg.setOptionValue ('histories', 'Ttbar.Ttz')
     configSeq.append(cfg)
     outputContainers.update( cfg.getOutputContainers() )
 

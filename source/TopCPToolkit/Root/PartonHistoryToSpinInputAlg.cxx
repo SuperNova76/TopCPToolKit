@@ -5,7 +5,7 @@ namespace top {
   PartonHistoryToSpinInputAlg::PartonHistoryToSpinInputAlg(const std::string &name,
                                                            ISvcLocator *pSvcLocator)
     : EL::AnaAlgorithm(name, pSvcLocator) {}
-  
+
   StatusCode PartonHistoryToSpinInputAlg::initialize() {
 
     ANA_CHECK(m_eventInfoHandle.initialize(m_systematicsList));
@@ -22,7 +22,7 @@ namespace top {
   }
 
   StatusCode PartonHistoryToSpinInputAlg::execute() {
-    
+
     for (const auto &sys : m_systematicsList.systematicsVector()) {
 
       // retrieve the EventInfo and parton history

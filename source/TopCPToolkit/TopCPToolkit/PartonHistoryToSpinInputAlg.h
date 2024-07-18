@@ -18,7 +18,7 @@ namespace top {
       PartonHistoryToSpinInputAlg(const std::string &name, ISvcLocator *pSvcLocator);
       virtual StatusCode initialize() override;
       virtual StatusCode execute() override;
-    
+
     private:
       CP::SysListHandle m_systematicsList {this};
       CP::SysReadHandle<xAOD::EventInfo> m_eventInfoHandle {

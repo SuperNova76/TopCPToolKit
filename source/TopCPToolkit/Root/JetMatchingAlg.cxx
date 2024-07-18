@@ -111,7 +111,7 @@ namespace top {
         //is there a truth lepton within dR<0.4 from the reco jet?
         TLorentzVector reco_jet = jet->p4();
         double overlapping_truth_lepton_pt = -1;
-        m_has_truth_lepton.set(*jet, JetMatchingAlg::find_close_lepton(reco_jet, *truth_electrons, *truth_muons, overlapping_truth_lepton_pt), sys); 
+        m_has_truth_lepton.set(*jet, JetMatchingAlg::find_close_lepton(reco_jet, *truth_electrons, *truth_muons, overlapping_truth_lepton_pt), sys);
         m_overlapping_truth_lepton_pt.set(*jet, overlapping_truth_lepton_pt, sys);
         ijet++;
       }
@@ -135,7 +135,7 @@ namespace top {
     }
     return minDR;
   }
-    
+
   int JetMatchingAlg::get_matched_truth(TLorentzVector reco_jet, const xAOD::JetContainer &truth_jets) {
     int truth_jet_index = -1;
     float minDR = 9999;
@@ -169,7 +169,7 @@ namespace top {
     }
     return false;
   }
-   
+
   float JetMatchingAlg::get_minDR_truth(const xAOD::JetContainer &truth_jets, int truth_jet_index) {
     float minDR = 9999;
     int itruth1 = 0;
@@ -193,7 +193,7 @@ namespace top {
       }
       itruth1++;
     }
-    return minDR;    
+    return minDR;
   }
 
 } // namespace top

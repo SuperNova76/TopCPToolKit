@@ -7,10 +7,10 @@ namespace top {
   {
     declareProperty("VGammaORTool", m_vgammaORTool, "The VGammaORTool");
   }
-  
+
   StatusCode VGammaORAlg::initialize() {
     ANA_MSG_INFO("Initialising the VGammaORAlg");
-    
+
     ANA_CHECK(m_eventInfoHandle.initialize(m_systematicsList));
     ANA_CHECK(m_inOverlapHandle.initialize(m_systematicsList, m_eventInfoHandle));
     ANA_CHECK(m_systematicsList.initialize());

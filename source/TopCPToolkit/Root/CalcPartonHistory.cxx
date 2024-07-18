@@ -23,7 +23,7 @@ namespace top {
     declareProperty("outputSGKey", m_PartonsSGKey = "PartonHistoryTtbar",
                     "Store Gate output name for the PartonHistory object");
   }
-  
+
   StatusCode CalcPartonHistory::buildContainerFromMultipleCollections(const std::vector<std::string> &collections, const std::string& out_contName)
   {
     ConstDataVector<DataVector<xAOD::TruthParticle_v1> > *out_cont = new ConstDataVector<DataVector<xAOD::TruthParticle_v1> > (SG::VIEW_ELEMENTS);
@@ -41,8 +41,8 @@ namespace top {
 
     return StatusCode::SUCCESS;
   }
-  
-  StatusCode CalcPartonHistory::linkBosonCollections() 
+
+  StatusCode CalcPartonHistory::linkBosonCollections()
   {
     return decorateCollectionWithLinksToAnotherCollection("TruthBoson","TruthBosonsWithDecayParticles","AT_linkToTruthBosonsWithDecayParticles");
   }
@@ -56,7 +56,7 @@ namespace top {
 
     for(const xAOD::TruthParticle *p : *cont1)
     {
-      
+
       const xAOD::TruthParticle* link =0;
       for(const xAOD::TruthParticle *p2 : *cont2)
       {
@@ -65,20 +65,20 @@ namespace top {
           link=p2;
           break;
         }
-      } 
+      }
       p->auxdecor<const xAOD::TruthParticle*>(nameOfDecoration)=link;
-      
+
     }
     return StatusCode::SUCCESS;
   }
-  
+
   const xAOD::TruthParticle* CalcPartonHistory::getTruthParticleLinkedFromDecoration(const xAOD::TruthParticle* part, const std::string &decorationName)
   {
     if(!part->isAvailable<const xAOD::TruthParticle*>(decorationName)) return part;
-  
+
     const xAOD::TruthParticle* link=part->auxdecor<const xAOD::TruthParticle*>(decorationName);
     if(link) return link;
-    
+
     return part;
   }
 
@@ -110,7 +110,7 @@ namespace top {
   bool CalcPartonHistory::RetrieveParticleInfo(const std::string& prefix, TLorentzVector& particle, int& pdgId) {
     return Retrievep4(prefix, particle) && RetrievepdgId(prefix, pdgId);
   }
-  
+
   void CalcPartonHistory::FillParticleInfo(const SG::AuxElement::Decorator<float>& dec_m, const SG::AuxElement::Decorator<float>& dec_pt,
 					   const SG::AuxElement::Decorator<float>& dec_eta, const SG::AuxElement::Decorator<float>& dec_phi,
 					   const SG::AuxElement::Decorator<int>& dec_pdgId,
@@ -152,7 +152,7 @@ namespace top {
     dec_eta(*history) = -999;
     dec_phi(*history) = -999;
   }
-  
+
   void CalcPartonHistory::EnsureKeyExists(const std::string& key, const std::string& fallbackKey) {
     // Ensures that a given key exists in the particleMap.
     // If the key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
@@ -182,7 +182,7 @@ namespace top {
     EnsureKeyExists("MC_t_b_beforeFSR", "MC_t_b_afterFSR");
     EnsureKeyExists("MC_tbar_bbar_beforeFSR", "MC_tbar_bbar_afterFSR");
   }
-  
+
   std::string CalcPartonHistory::GetParticleType(const xAOD::TruthParticle* particle) {
     // returns a string representing the particle type based on the pdgId of a truth particle
     // At the moment not all of these states are necessary, however, they are usefull for debugging purposes
@@ -209,7 +209,7 @@ namespace top {
       {5203, "_bu"}, {5301, "_bs"}, {5303, "_bs"}, {5401, "_bc"}, {5403, "_bc"}, // diquark states
       {5503, "_bb"} // diquark states
     };
-    
+
     int pdgId = particle->pdgId();
     auto it = pdgMap.find(pdgId);
     if (it != pdgMap.end()) {
@@ -250,10 +250,10 @@ namespace top {
     if (PartonHistoryUtils::isAfterFSR(particle) && abs(particle->pdgId()) == 24) {
       particle = getTruthParticleLinkedFromDecoration(particle, "AT_linkToTruthBosonsWithDecayParticles");
     }
-    
+
     // Add the current particle to the current path we are building
     currentPath.push_back(particle);
-    
+
     // If the particle has 0 children we have reached the end of the decay chain, record the current path as complete
     if (particle->nChildren() == 0) {
       allPaths.push_back(currentPath);
@@ -261,8 +261,8 @@ namespace top {
     else {
       // We have already pushed the beforeFSR particle, now we proceed to the afterFSR one
       const xAOD::TruthParticle* particle_afterFSR = PartonHistoryUtils::findAfterFSR(particle);
-      
-      
+
+
       // If we have a W boson we have to link the decorations
       if (abs(particle_afterFSR->pdgId()) == 24) {
 	particle_afterFSR = getTruthParticleLinkedFromDecoration(particle_afterFSR, "AT_linkToTruthBosonsWithDecayParticles");
@@ -344,7 +344,7 @@ namespace top {
     }
     return false;
   }
-  
+
   bool CalcPartonHistory::handleDecay(const xAOD::TruthParticle* particle, std::string& key, int decayID, bool isLast) {
     // Handles the decay of a particle with specific conditions.
     // We add the particle to the map with a key based on its decay ID if it is the last in the decay chain and meets certain criteria.
@@ -363,7 +363,7 @@ namespace top {
     // We add the particle to the map with the current key.
     AddToParticleMap(particle, key);
   }
-  
+
   void CalcPartonHistory::handleDefault(const xAOD::TruthParticle* particle, const std::string& newKey, std::string& key) {
     // Handles default cases for particles.
     // We add the particle to the map with a key based on newKey and update the key.
@@ -381,21 +381,21 @@ namespace top {
       std::string old_key = "";
       std::string new_key = "";
       std::string postfix = "";
-      
+
       for (auto it = path.begin(); it != path.end(); it++) {
 	const xAOD::TruthParticle* particle = *it;
 	isLast = (it == path.end() - 1);
 	bool isbeforeFSR = (hasIdenticalChild(particle));
 	bool isafterFSR = (hasParentPdgId(particle, particle->pdgId()));
-        
+
 	int decayID = particle->pdgId() < 0 ? 2 : 1;
-	
+
 	old_key = new_key;
 	new_key = GetParticleType(particle);
 	if (isbeforeFSR && isafterFSR) {
 	  continue; // e.g. t-t-t
 	}
-	
+
 	if (handleBeforeFSR(particle, new_key, key)) continue;
 	if (handleAfterFSR(particle, new_key, old_key, key)) continue;
 	if (hasParentPdgId(particle, particle->pdgId())) {

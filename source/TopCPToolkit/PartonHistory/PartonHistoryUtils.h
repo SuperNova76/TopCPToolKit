@@ -18,10 +18,10 @@ namespace top {
 
     ///Determine whether particle is afterFSR
     bool isAfterFSR(const xAOD::TruthParticle* particle);
-  
+
     ///Return true when particle is a top before FSR
     bool hasParticleIdenticalParent(const xAOD::TruthParticle* particle);
-  
+
     /// Perform decoration M, Pt, Phi of the history from a TLorentzVector
     void decorateWithMPtPhi(xAOD::PartonHistory* pHistory, const std::string & prefix, const TLorentzVector & vec );
 

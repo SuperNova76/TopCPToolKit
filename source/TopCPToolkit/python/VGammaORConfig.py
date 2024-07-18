@@ -7,7 +7,7 @@ class VGammaORConfig(ConfigBlock):
         super(VGammaORConfig, self).__init__()
         self.addOption('dR_lepton_photon_cuts', None, type=list)
         self.addOption('photon_pT_cuts', None, type=list)
-    
+
     def makeAlgs(self, config):
         if config.dataType() is DataType.Data: return
         alg = config.createAlgorithm('top::VGammaORAlg', 'VGammaORAlg')

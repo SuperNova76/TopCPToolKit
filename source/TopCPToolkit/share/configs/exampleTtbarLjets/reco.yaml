@@ -295,10 +295,6 @@ Output:
       - enable trigPassed_HLT_e.*
 
 AddConfigBlocks:
-    - modulePath: 'TopCPToolkit.LeptonSFCalculatorConfig'
-      functionName: 'LeptonSFCalculatorConfig'
-      algName: 'LeptonSF'
-      pos: 'Output'
     - modulePath: 'TopCPToolkit.KLFitterConfig'
       functionName: 'KLFitterConfig'
       algName: 'KLFitter'

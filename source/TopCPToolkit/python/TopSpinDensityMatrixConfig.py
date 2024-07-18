@@ -13,7 +13,7 @@ class TopSpinDensityMatrixConfig(ConfigBlock):
         self.addOption('tbar_decay', None, type=str)
         self.addOption('doHelicityBasis', False, type=bool)
         self.addOption('doEntanglement', False, type=bool)
-    
+
     def makeAlgs(self, config):
         if not (self.top and self.tbar and self.top_decay and self.tbar_decay):
            raise ValueError("You must specify the names of the 4-vectors for top/tbar and their spin analysers!")

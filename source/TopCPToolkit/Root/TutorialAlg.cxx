@@ -5,7 +5,7 @@ namespace top {
   TutorialAlg::TutorialAlg(const std::string &name,
                            ISvcLocator *pSvcLocator)
     : EL::AnaAlgorithm(name, pSvcLocator) {}
-  
+
   StatusCode TutorialAlg::initialize() {
     ANA_MSG_INFO("Initialising the algorithm for the TopCPToolkit tutorial");
 

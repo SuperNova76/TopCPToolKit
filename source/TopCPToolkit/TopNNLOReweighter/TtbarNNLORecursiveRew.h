@@ -71,7 +71,7 @@ private:
     // Systematics
     StatusCode buildCachedSystematics();
     CP::SystematicsCache<NNLORewEnums::SystVar> m_calibCache {this};
-    
+
 
 };
 

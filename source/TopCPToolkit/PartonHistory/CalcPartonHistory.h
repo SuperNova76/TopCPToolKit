@@ -20,7 +20,7 @@ namespace top {
     explicit CalcPartonHistory(const std::string& name,
 			       const std::vector<std::string>& truthCollections = {"TruthTop"});
     virtual ~CalcPartonHistory() {};
-    
+
     CalcPartonHistory(const CalcPartonHistory& rhs) = delete;
     CalcPartonHistory(CalcPartonHistory&& rhs) = delete;
     CalcPartonHistory& operator = (const CalcPartonHistory& rhs) = delete;
@@ -56,21 +56,21 @@ namespace top {
     bool hasParentPdgId(const xAOD::TruthParticle* particle, int PdgId);
     bool hasIdenticalChild(const xAOD::TruthParticle* particle);
     bool hasParentAbsPdgId(const xAOD::TruthParticle* particle, int absPdgId);
-    
+
     std::string GetParticleType(const xAOD::TruthParticle* particle);
 
     void TraceParticle(const xAOD::TruthParticle* particle,
 		       std::vector<const xAOD::TruthParticle*>& currentPath,
 		       std::vector<std::vector<const xAOD::TruthParticle*>>& allPaths);
     void TraceParticles(const xAOD::TruthParticleContainer* truthParticles);
-    
+
     bool handleBeforeFSR(const xAOD::TruthParticle* particle, const std::string& newKey, std::string& key);
     bool handleAfterFSR(const xAOD::TruthParticle* particle, const std::string& newKey, const std::string& oldKey, std::string& key);
     bool handleBosonFromH(const xAOD::TruthParticle* particle, std::string& key, int decayID);
     bool handleDecay(const xAOD::TruthParticle* particle, std::string& key, int decayID, bool isLast);
     void handleSameAsParent(const xAOD::TruthParticle* particle, std::string& key);
     void handleDefault(const xAOD::TruthParticle* particle, const std::string& newKey, std::string& key);
-      
+
     void FillParticleMap(std::vector<std::vector<const xAOD::TruthParticle*>>& allPaths);
     void FillTopPartonHistory(xAOD::PartonHistory* PartonHistory);
     void FillAntiTopPartonHistory(xAOD::PartonHistory* PartonHistory);
@@ -101,17 +101,17 @@ namespace top {
      *   this method has to use some tricks, like the helper m_tempParticles ConstDataVector, due to the desing of DataVector, see https://twiki.cern.ch/twiki/bin/view/AtlasComputing/DataVector
      */
     StatusCode buildContainerFromMultipleCollections(const std::vector<std::string> &collections, const std::string& out_contName);
-    
+
     /** currently in DAOD_PHYS TruthTop have links to Ws from the TruthBoson collection, which have no link to their decay products;
      *   we have therefore to associate the W from the TruthBoson collections to those in the TruthBosonsWithDecayParticles collection.
-     *   This method will use the helper method decorateCollectionWithLinksToAnotherCollection to decorate bosons in the TruthBoson collection with 
+     *   This method will use the helper method decorateCollectionWithLinksToAnotherCollection to decorate bosons in the TruthBoson collection with
      *   "AT_linkToTruthBosonsWithDecayParticles", which is a link to the same bosons in the TruthBosonsWithDecayParticles collection
      */
     StatusCode linkBosonCollections();
-    
+
     ///helper method to handle retriveing the truth particle linked in the decoration of another particle
     const xAOD::TruthParticle* getTruthParticleLinkedFromDecoration(const xAOD::TruthParticle* part, const std::string &decorationName);
-    
+
   private:
     /**helper method currently used in DAOD_PHYS to link particles from a given collection to the same particles included in another collection;
      *  needed because particles may be duplicated in different collections, but their navigation links may only be there in some of them...

@@ -19,7 +19,7 @@ namespace top {
     m_regressed_nu_pz(0.),
     m_regressed_ttbar_m(0.)
   {
-    m_MAX_JETS = 20; 
+    m_MAX_JETS = 20;
     m_NUM_JET_FEATURES = m_input_shapes[0][2];
 
     m_MAX_LEPTONS = 1;
@@ -72,7 +72,7 @@ namespace top {
       if (i < jets.size()){
         // TODO: Avoid hard coding these? maybe give the list of inputs in the config, or read the spanet config file, or something?
       	auto jet = jets[i];
-        jet_kin.push_back(std::log(jet->p4().E() + 1));            
+        jet_kin.push_back(std::log(jet->p4().E() + 1));
         jet_kin.push_back(std::log(jet->p4().Pt() + 1));
         jet_kin.push_back(jet->p4().Eta());
         jet_kin.push_back(sin(jet->p4().Phi()));
@@ -94,12 +94,12 @@ namespace top {
                         ", btag = " << jet_values[0][i][5]);
       }
       else {
-        // now fill the dumym values for the rest 
+        // now fill the dumym values for the rest
         for (int j=0; j < m_NUM_JET_FEATURES; ++j) jet_values[0][i][j] = 0.0;
         jet_masks[0][i]=0;
       }
       // add a dummy second event because einsum is dumb with batchsize=1
-      // TODO: fix this :) 
+      // TODO: fix this :)
       jet_masks[1][i] = 0;
       for (int j=0; j < m_NUM_JET_FEATURES; ++j) jet_values[1][i][j] = 0.0;
     }
@@ -129,12 +129,12 @@ namespace top {
                         ", mutag = " << lepton_values[0][i][6]);
       }
       else {
-        // now fill the dumym values for the rest 
+        // now fill the dumym values for the rest
         for (int j=0; j < m_NUM_LEPTON_FEATURES; ++j) lepton_values[0][i][j] = 0.0;
         lepton_masks[0][i]=0;
       }
       // add a dummy second event because einsum is dumb with batchsize=1
-      // TODO: fix this :) 
+      // TODO: fix this :)
       lepton_masks[1][i] = 0;
       for (int j=0; j < m_NUM_LEPTON_FEATURES; ++j) lepton_values[1][i][j] = 0.0;
     }
@@ -153,7 +153,7 @@ namespace top {
                       ", COSPHI = " << global_values[0][i][2] << \
                       ", SINPHI = " << global_values[0][i][1]);
       // add a dummy second event because einsum is dumb with batchsize=1
-      // TODO: fix this :) 
+      // TODO: fix this :)
       global_masks[1][i] = 0;
       for (int j=0; j < m_NUM_GLOBAL_FEATURES; ++j) global_values[1][i][j] = 0.0;
     }
@@ -256,7 +256,7 @@ namespace top {
     float max_lb = -999;
     for (int i=0; i < NUM_JETS; ++i){ // loop only over the jets, we dont want to predict the lep entry
       // For our case, we want to prioritise the hadtop prediction over the leptop; so ignore jets in the hadtop prediction
- 
+
       if (i == bestz || i == bestrow || i == bestcol ) continue;
       if (tlpred[i] > max_lb){
         max_lb = tlpred[i];
@@ -264,7 +264,7 @@ namespace top {
       }
     }
     ANA_MSG_VERBOSE("EventNo: " << eventNumber <<  ", Max = " << max << ", indx = " << bestrow << "," << bestcol << "," << bestz);
-    
+
     ANA_MSG_VERBOSE("SPANET Down jet = " << bestz << ", up jet = " << bestcol << ", bhad = " << bestrow << ", blep = " << bestlb << " (Njets = " << NUM_JETS << ")");
 
     m_lep_b = bestlb;

@@ -15,7 +15,7 @@ namespace top {
     CalcPartonHistory::FillHiggsPartonHistory(hwwPartonHistory);
     CalcPartonHistory::FillWpPartonHistory(hwwPartonHistory, "H");
     CalcPartonHistory::FillWmPartonHistory(hwwPartonHistory, "H");
-    
+
     return StatusCode::SUCCESS;
   }
 
