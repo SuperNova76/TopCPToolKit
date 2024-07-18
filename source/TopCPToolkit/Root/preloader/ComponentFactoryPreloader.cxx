@@ -20,6 +20,8 @@
 #include <AssociationUtils/OverlapRemovalTool.h>
 #include <AsgAnalysisAlgorithms/AsgFlagSelectionTool.h>
 #include <AsgAnalysisAlgorithms/AsgLeptonTrackSelectionAlg.h>
+#include <AsgAnalysisAlgorithms/AsgOriginalObjectLinkAlg.h>
+#include <AsgAnalysisAlgorithms/AsgPriorityDecorationAlg.h>
 #include <AsgAnalysisAlgorithms/AsgPtEtaSelectionTool.h>
 #include <AsgAnalysisAlgorithms/AsgSelectionAlg.h>
 #include <AsgAnalysisAlgorithms/AsgShallowCopyAlg.h>
@@ -30,21 +32,20 @@
 #include <AsgAnalysisAlgorithms/AsgxAODNTupleMakerAlg.h>
 #include <AsgAnalysisAlgorithms/AsgEnergyDecoratorAlg.h>
 #include <AsgAnalysisAlgorithms/BootstrapGeneratorAlg.h>
+#include <AsgAnalysisAlgorithms/CopyNominalSelectionAlg.h>
 #include <AsgAnalysisAlgorithms/EventFlagSelectionAlg.h>
+#include <AsgAnalysisAlgorithms/EventSelectionByObjectFlagAlg.h>
 #include <AsgAnalysisAlgorithms/EventStatusSelectionAlg.h>
+#include <AsgAnalysisAlgorithms/FakeBkgCalculatorAlg.h>
+#include <AsgAnalysisAlgorithms/IOStatsAlg.h>
+#include <AsgAnalysisAlgorithms/KinematicHistAlg.h>
+#include <AsgAnalysisAlgorithms/LeptonSFCalculatorAlg.h>
 #include <AsgAnalysisAlgorithms/ObjectCutFlowHistAlg.h>
 #include <AsgAnalysisAlgorithms/OverlapRemovalAlg.h>
 #include <AsgAnalysisAlgorithms/PileupReweightingAlg.h>
 #include <AsgAnalysisAlgorithms/SystObjectLinkerAlg.h>
 #include <AsgAnalysisAlgorithms/TreeFillerAlg.h>
 #include <AsgAnalysisAlgorithms/TreeMakerAlg.h>
-#include <AsgAnalysisAlgorithms/AsgOriginalObjectLinkAlg.h>
-#include <AsgAnalysisAlgorithms/AsgPriorityDecorationAlg.h>
-#include <AsgAnalysisAlgorithms/EventSelectionByObjectFlagAlg.h>
-#include <AsgAnalysisAlgorithms/KinematicHistAlg.h>
-#include <AsgAnalysisAlgorithms/CopyNominalSelectionAlg.h>
-#include <AsgAnalysisAlgorithms/IOStatsAlg.h>
-#include <AsgAnalysisAlgorithms/FakeBkgCalculatorAlg.h>
 #include <EgammaAnalysisAlgorithms/EgammaCalibrationAndSmearingAlg.h>
 #include <EgammaAnalysisAlgorithms/EgammaIsGoodOQSelectionTool.h>
 #include <EgammaAnalysisAlgorithms/EgammaIsolationCorrectionAlg.h>
@@ -123,7 +124,6 @@
 #include <EventSelectionAlgorithms/DileptonInvariantMassSelectorAlg.h>
 #include <EventSelectionAlgorithms/ChargeSelectorAlg.h>
 #include <EventSelectionAlgorithms/DileptonInvariantMassWindowSelectorAlg.h>
-#include <TopCPToolkit/LeptonSFCalculatorAlg.h>
 #include <TopCPToolkit/RunSpaNetAlg.h>
 #include <TopCPToolkit/KLFitterAlg.h>
 #include <TopCPToolkit/KLFitterFinalizeOutputAlg.h>
@@ -157,7 +157,7 @@ namespace top
     ANA_CHECK (asg::registerServiceFactory<egammaMVASvc> ("egammaMVASvc"));
     ANA_CHECK (asg::registerServiceFactory<CP::SystematicsSvc> ("CP::SystematicsSvc"));
     ANA_CHECK (asg::registerServiceFactory<CP::SelectionNameSvc> ("CP::SelectionNameSvc"));
-    
+
     ANA_CHECK (asg::registerAlgorithmFactory<GRLSelectorAlg>("GRLSelectorAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::AsgLeptonTrackSelectionAlg>("CP::AsgLeptonTrackSelectionAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::AsgSelectionAlg>("CP::AsgSelectionAlg"));
@@ -185,6 +185,7 @@ namespace top
     ANA_CHECK (asg::registerAlgorithmFactory<CP::JetDecoratorAlg>("CP::JetDecoratorAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::JetGhostMuonAssociationAlg>("CP::JetGhostMuonAssociationAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::JetUncertaintiesAlg>("CP::JetUncertaintiesAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<CP::LeptonSFCalculatorAlg> ("CP::LeptonSFCalculatorAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::MetBuilderAlg>("CP::MetBuilderAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::MetMakerAlg>("CP::MetMakerAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::MetSignificanceAlg>("CP::MetSignificanceAlg"));
@@ -220,7 +221,6 @@ namespace top
     ANA_CHECK (asg::registerAlgorithmFactory<CP::DileptonInvariantMassSelectorAlg> ("CP::DileptonInvariantMassSelectorAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::ChargeSelectorAlg> ("CP::ChargeSelectorAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::DileptonInvariantMassWindowSelectorAlg> ("CP::DileptonInvariantMassWindowSelectorAlg"));
-    ANA_CHECK (asg::registerAlgorithmFactory<top::LeptonSFCalculatorAlg> ("top::LeptonSFCalculatorAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::RunSpaNetAlg> ("top::RunSpaNetAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::KLFitterAlg> ("top::KLFitterAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::KLFitterFinalizeOutputAlg> ("top::KLFitterFinalizeOutputAlg"));
@@ -282,7 +282,7 @@ namespace top
     ANA_CHECK (asg::registerToolFactory<CP::MuonEfficiencyScaleFactors> ("CP::MuonEfficiencyScaleFactors"));
     ANA_CHECK (asg::registerToolFactory<PMGTools::PMGTruthWeightTool> ("PMGTools::PMGTruthWeightTool"));
     ANA_CHECK (asg::registerToolFactory<met::METSystematicsTool> ("met::METSystematicsTool"));
-    
+
     return true;
   }
 }

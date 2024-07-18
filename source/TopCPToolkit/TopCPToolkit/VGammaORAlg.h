@@ -8,7 +8,7 @@
 
 #include <xAODEventInfo/EventInfo.h>
 
-#include "GammaORTools/IVGammaORTool.h"  
+#include "GammaORTools/IVGammaORTool.h"
 
 namespace top {
 
@@ -18,11 +18,11 @@ namespace top {
       VGammaORAlg(const std::string &name, ISvcLocator *pSvcLocator);
       virtual StatusCode initialize() override;
       virtual StatusCode execute() override;
-    
+
     private:
       CP::SysListHandle m_systematicsList {this};
       ToolHandle<IVGammaORTool> m_vgammaORTool;
-      
+
       // Handles for the input containers
       CP::SysReadHandle<xAOD::EventInfo> m_eventInfoHandle {
         this, "eventInfo", "EventInfo", "the input EventInfo container"

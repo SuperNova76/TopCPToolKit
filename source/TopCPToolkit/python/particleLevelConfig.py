@@ -98,7 +98,7 @@ class particleLevelConfig(ConfigBlock):
         self.addOption('ljetCollection', None, type=str)
         self.addOption('nuPtMin', None, type=float)
         self.addOption('nuEtaMax', None, type=float)
-    
+
     def makeAlgs(self, config):
 
         if config.dataType() is DataType.Data: return
@@ -164,7 +164,7 @@ class particleLevelConfig(ConfigBlock):
             config = self.createAndFillOutputContainer(config, container, "met", True)
 
         return
-    
+
     def createAndFillOutputContainer(self, config, container, map_key, isMET=False):
         # create the output container for that object collection
         _ = config.writeName(container, isMet=isMET)
@@ -174,9 +174,9 @@ class particleLevelConfig(ConfigBlock):
             inputname  = mapping.split("->")[0].rstrip()
             outputname = mapping.split("->")[1].lstrip()
             config.addOutputVar(container, inputname, outputname, noSys=True)
-        
+
         return config
-    
+
     def getOutputContainers(self):
         # return a dictionary of containers that can be added to the OutputAnalysisConfig
         containerDict = {}

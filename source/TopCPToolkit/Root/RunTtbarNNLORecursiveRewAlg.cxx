@@ -19,7 +19,7 @@ namespace top {
             declareProperty("reweightingPath", m_reweightPath, "Path to the directory containing the histograms for reweighting ");
             declareProperty("reweightingSuffix", m_reweightSuffix, "Suffix to apply to ROOT filenames, in order to access specific variations.");
         }
-    
+
     StatusCode RunTtbarNNLORecursiveRewAlg::initialize() {
         ANA_MSG_INFO("Initializing RunTtbarNNLORecursiveRew " << name() );
 

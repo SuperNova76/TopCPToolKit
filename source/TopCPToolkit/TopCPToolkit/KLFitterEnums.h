@@ -45,7 +45,7 @@ namespace top {
         {"kBtagPrioritySevenJets", kBtagPrioritySevenJets},
         {"kBtagPriorityEightJets", kBtagPriorityEightJets}
       };
-      
+
       using KLFitter::LikelihoodBase;
       static const std::map<std::string, LikelihoodBase::BtaggingMethod> strToBtagMethod {
         {"kNotag", LikelihoodBase::BtaggingMethod::kNotag},

@@ -8,7 +8,7 @@ namespace top {
     FillWpPartonHistory(PartonHistory, "t");
     // Fill the b parton history and assign the "t" as parent
     FillBottomPartonHistory(PartonHistory, "t");
-    
+
     TLorentzVector t_beforeFSR, t_afterFSR;
 
     static const SG::AuxElement::Decorator<float> dec_MC_t_beforeFSR_m("MC_t_beforeFSR_m");
@@ -41,7 +41,7 @@ namespace top {
     FillWmPartonHistory(PartonHistory, "tbar");
     // Fill the bbar parton history and assign the "tbar" as parent
     FillAntiBottomPartonHistory(PartonHistory, "tbar");
-    
+
     TLorentzVector tbar_beforeFSR, tbar_afterFSR;
 
     static const SG::AuxElement::Decorator<float> dec_MC_tbar_beforeFSR_m("MC_tbar_beforeFSR_m");
@@ -80,7 +80,7 @@ namespace top {
 
     int WpDecay1_pdgId, WpDecay2_pdgId;
     int WmDecay1_pdgId, WmDecay2_pdgId;
-    
+
     TLorentzVector b, bbar;
 
     static const SG::AuxElement::Decorator<float> dec_MC_ttbar_beforeFSR_m("MC_ttbar_beforeFSR_m");
@@ -120,7 +120,7 @@ namespace top {
       // Since this is ttbar we don't set a pdgId
       FillParticleInfo(dec_MC_ttbar_afterFSR_beforeDecay_m, dec_MC_ttbar_afterFSR_beforeDecay_pt, dec_MC_ttbar_afterFSR_beforeDecay_eta, dec_MC_ttbar_afterFSR_beforeDecay_phi, ttbar, PartonHistory);
     }
-    
+
     if (Retrievep4("MC_t_afterFSR", t_afterFSR)
 	&& Retrievep4("MC_tbar_afterFSR", tbar_afterFSR)) {
       ttbar = t_afterFSR + tbar_afterFSR;

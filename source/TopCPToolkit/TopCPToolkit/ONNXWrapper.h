@@ -24,7 +24,7 @@ namespace top {
       unsigned index_network = 0
     ) {
       Ort::Session& session ATLAS_THREAD_SAFE = *m_sessions[index_network];
-      
+
       std::vector<const char*> inputNames(m_input_node_names.size());
       std::vector<const char*> outputNames(m_output_node_names.size());
       for (size_t i = 0; i < m_input_node_names.size(); ++i)

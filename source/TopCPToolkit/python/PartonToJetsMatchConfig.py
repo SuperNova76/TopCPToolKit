@@ -16,10 +16,10 @@ class PartonToJetsMatchConfig(ConfigBlock):
 
         alg = config.createAlgorithm('top::PartonToJetsMatchAlg', 'PartonToJetsMatchAlg')
 
-        if 'Truth' in self.jets: 
+        if 'Truth' in self.jets:
             config.setSourceName(self.jets.split(".")[0], self.jets.split(".")[0])
         alg.jets, alg.jetSelection = config.readNameAndSelection(self.jets)
-            
+
         alg.eventSelection = self.eventSelection
         alg.criticalDR = self.criticalDR
         alg.partonContainerName = self.partonContainerName

@@ -27,7 +27,7 @@ namespace top {
     , m_btagging_eff_tool("",this)
   {
     // this we need for output container name hashes -- this should be replaced by CPAlgo functionality
-    // use the postfix feature ? 
+    // use the postfix feature ?
     declareProperty("LeptonType", m_leptonType = "kUndefined", "Define the lepton type");
     declareProperty("LHType", m_LHType = "kUndefined", "Define the Likelihood type");
     declareProperty("TransferFunctionsPath", m_transferFunctionsPath = "dev/AnalysisTop/KLFitterTFs/mc12a/akt4_LCtopo_PP6", "Path to transfer functions");
@@ -172,7 +172,7 @@ namespace top {
       m_myLikelihood->SetLeptonType(m_leptonTypeKLFitterEnum);
       m_myLikelihood_TTH->SetLeptonType(m_leptonTypeKLFitterEnum_TTH);
       m_myLikelihood_JetAngles->SetLeptonType(m_leptonTypeKLFitterEnum_JetAngles);
-      m_myLikelihood_Angular->SetLeptonType(m_leptonTypeKLFitterEnum_Angular); 
+      m_myLikelihood_Angular->SetLeptonType(m_leptonTypeKLFitterEnum_Angular);
       m_myLikelihood_TTZ->SetLeptonType(m_leptonTypeKLFitterEnum_TTZ);
       m_myLikelihood_BoostedLJets->SetLeptonType(m_leptonTypeKLFitterEnum_BoostedLJets);
     }
@@ -263,7 +263,7 @@ namespace top {
     else
       ANA_MSG_INFO("  Saving only the permutation with the highest event probability");
     ANA_MSG_INFO("++++++++++++++++++++++++++++++");
-    
+
     return StatusCode::SUCCESS;
   }
 
@@ -292,7 +292,7 @@ namespace top {
     // - index of the particle in your original collection (for convenience)
     // - for jets:
     //   * bool isBtagged : mandatory only if you want to use b-tagging in the fit
-  
+
     // first figure out if this event even passes the selection in which we are to run this KLFitter instance
     const xAOD::EventInfo *evtInfo = nullptr;
     ANA_CHECK(m_eventInfoHandle.retrieve(evtInfo, sys));
@@ -443,7 +443,7 @@ namespace top {
     }
 
     size_t index(0);
-    
+
     for (const xAOD::Jet *jet : jets) {
       if (index > njets - 1) break;
 
@@ -451,7 +451,7 @@ namespace top {
       jet_p4.SetPtEtaPhiE(jet->pt() / 1.e3, jet->eta(), jet->phi(), jet->e() / 1.e3);
 
       float eff(0), ineff(0);
-  
+
       if (!m_bTagDecoAcc->isAvailable(*jet)) {
         ANA_MSG_ERROR("KLFitterAlg::setJetskLeadingX: jet does not have " << m_bTagDecoration << " aux variable!");
         return StatusCode::FAILURE;

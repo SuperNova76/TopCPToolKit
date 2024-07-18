@@ -44,7 +44,7 @@ Jets:
         noEffSF : True
     # Add SV Mass to the output
     SVMass: {}
-      
+
 Electrons:
   - containerName: 'AnaElectrons'
     crackVeto: True

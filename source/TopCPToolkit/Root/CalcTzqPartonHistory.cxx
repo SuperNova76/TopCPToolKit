@@ -30,7 +30,7 @@ namespace top {
     CalcPartonHistory::FillAntiBottomPartonHistory(tzqPartonHistory, "");
     // Fill Z parton history
     CalcPartonHistory::FillZPartonHistory(tzqPartonHistory, "");
-    
+
     return StatusCode::SUCCESS;
   }
 

@@ -7,7 +7,7 @@ namespace top {
     // Construct parent string
     std::string parentstring = "";
     if (parent != "") parentstring = "_from_"+parent;
-    
+
     TLorentzVector Z;
     TLorentzVector ZDecay1;
     TLorentzVector ZDecay2;
@@ -24,7 +24,7 @@ namespace top {
     static const SG::AuxElement::Decorator<float> dec_MC_Zdecay1_eta("MC_Zdecay1_" + parentstring + "_eta");
     static const SG::AuxElement::Decorator<float> dec_MC_Zdecay1_phi("MC_Zdecay1_" + parentstring + "_phi");
     static const SG::AuxElement::Decorator<int> dec_MC_Zdecay1_pdgId("MC_Zdecay1_" + parentstring + "_pdgId");
-    
+
     static const SG::AuxElement::Decorator<float> dec_MC_Zdecay2_m("MC_Zdecay2_" + parentstring + "_m");
     static const SG::AuxElement::Decorator<float> dec_MC_Zdecay2_pt("MC_Zdecay2_" + parentstring + "_pt");
     static const SG::AuxElement::Decorator<float> dec_MC_Zdecay2_eta("MC_Zdecay2_" + parentstring + "_eta");
@@ -32,9 +32,9 @@ namespace top {
     static const SG::AuxElement::Decorator<int> dec_MC_Zdecay2_pdgId("MC_Zdecay2_" + parentstring + "_pdgId");
 
     static const SG::AuxElement::Decorator<int> dec_MC_Z_IsOnShell("MC_Z_IsOnShell");
-    
+
     std::string prefix = "MC_";
-    
+
     if (parent != "") prefix += parent + "_Z";
     else prefix += "Z";
 
@@ -65,7 +65,7 @@ namespace top {
       }
       FillParticleInfo(dec_MC_Z_m, dec_MC_Z_pt, dec_MC_Z_eta, dec_MC_Z_phi, Z, PartonHistory);
     }
-    
+
     if (!isonshell) {
       FillParticleInfo(dec_MC_Zdecay1_m, dec_MC_Zdecay1_pt, dec_MC_Zdecay1_eta, dec_MC_Zdecay1_phi, dec_MC_Zdecay1_pdgId, ZDecay1, ZDecay1pdgId, PartonHistory);
     }

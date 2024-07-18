@@ -30,7 +30,7 @@ namespace top {
     float a = lepton.E()*lepton.E() - lepton.Pz()*lepton.Pz();
     float b = -2 * k * lepton.Pz();
     float c = lepton.E()*lepton.E()*met_met*met_met - k*k;
-    float disc = b*b - 4*a*c; 
+    float disc = b*b - 4*a*c;
     float nu_pz = 0.0;
 
     if (disc < 0){
@@ -111,7 +111,7 @@ namespace top {
 	if (jet->isAvailable<int>("ftag_quantile_"+m_btagger+"_Continuous")){
 	  input_values[0][i][5] = jet->auxdataConst<int>("ftag_quantile_"+m_btagger+"_Continuous");
 	}
-	else { 
+	else {
 	  input_values[0][i][5] = 0;
 	}
 	input_values[0][i][6]=0; //leptag
@@ -132,7 +132,7 @@ namespace top {
 
 	input_values[0][i][5] = 0;
 	input_values[0][i][6] = 1;
-  
+
 	addlep = true;
 	input_masks[0][i]=1;
 
@@ -147,20 +147,20 @@ namespace top {
 
 	input_values[0][i][5] = 0;
 	input_values[0][i][6] = 1;
-  
+
 	addnu = true;
 	input_masks[0][i]=1;
 	//ANA_MSG_VERBOSE("PT = " << input_values[0][i][0] << ", ETA = " << input_values[0][i][1] << ", PHI = " << input_values[0][i][2] << ", E = " << input_values[0][i][3] << ", btag60 = " << input_values[0][i][4] << ", btag85 = " << input_values[0][i][5] << ", leptag = " << input_values[0][i][6]);
 
       } else{
-	// now fill the dumym values for the rest 
+	// now fill the dumym values for the rest
 	for (int j=0; j < m_NUM_FEATURES; ++j) input_values[0][i][j] = 0.0;
 
 	input_masks[0][i]=0;
 
       }
       // add a dummy second event because einsum is dumb with batchsize=1
-      // TODO: fix this :) 
+      // TODO: fix this :)
       input_masks[1][i] = 0;
       for (int j=0; j < m_NUM_FEATURES; ++j) input_values[1][i][j] = 0.0;
 
@@ -209,13 +209,13 @@ namespace top {
     int bestz = -1;
 
     for (int row=0; row < NUM_JETS; ++row){// third particle in event file from SPANET
-        
+
       for (int col = 0; col < NUM_JETS; ++col) {// second particle
 
 	for (int z = 0; z < NUM_JETS; ++z) {// first particle
 
 	  if (row == col || row == z || z == col){continue;} //ignore overlapping predictions
-        
+
 	  //ANA_MSG_VERBOSE(row << col << z);
 
 	  if (thpred[row+col*m_MAX_JETS+z*m_MAX_JETS*m_MAX_JETS] > max){
@@ -224,7 +224,7 @@ namespace top {
 	    bestcol = col;
 	    bestz = z;
 	  }
-       
+
 	}}}
 
     ANA_MSG_VERBOSE("EventNo: " << eventNumber <<  ", Max = " << max << ", indx = " << bestrow << "," << bestcol << "," << bestz);
@@ -235,7 +235,7 @@ namespace top {
     float max_lb = -999;
     for (int i=0; i < NUM_JETS; ++i){ // loop only over the jets, we dont want to predict the lep or nu entry
       // For our case, we want to prioritise the hadtop prediction over the leptop; so ignore jets in the hadtop prediction
-        
+
       if (i == bestz || i == bestrow || i == bestcol ) continue;
       //ANA_MSG_VERBOSE(i << ", " << tlpred[i]);
       if (tlpred[i] > max_lb){
@@ -245,7 +245,7 @@ namespace top {
     }
 
     //ANA_MSG_VERBOSE("lepton max = " << max_lb << ", indx = " << bestlb);
-    
+
     ANA_MSG_VERBOSE("SPANET Down jet = " << bestz << ", up jet = " << bestcol << ", bhad = " << bestrow << ", blep = " << bestlb << " (Njets = " << NUM_JETS << ")");
 
 

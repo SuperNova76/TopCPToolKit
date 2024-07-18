@@ -8,11 +8,11 @@ namespace top {
     , m_softmuonDRJetcut(0.4)
     {
     declareProperty("SoftMuonDRJet", m_softmuonDRJetcut = 0.4, "Soft Muon maximum dR wrt nearest selected jet. Can be set to 999. to keep all soft muons. Default 0.4");
-    declareProperty("SaveSoftMuonAdditionalInfo", m_saveSoftMuonAdditionalInfo = false, "Whether to store additional information associated with the soft muon."); 
+    declareProperty("SaveSoftMuonAdditionalInfo", m_saveSoftMuonAdditionalInfo = false, "Whether to store additional information associated with the soft muon.");
     declareProperty("SaveSoftMuonNearestJetInfo", m_saveSoftMuonNearestJetInfo = false, "Whether to store additional information associated with the nearest jet associated to the soft muon.");
     declareProperty("SoftMuonDRJetUseRapidity", m_softMuonDRJetUseRapidity = false, "Whether to use the rapidity instead of the pseudo-rapidity when calculating the Delta R between the soft muon and the closest jet.");
     }
-  
+
   StatusCode SoftMuonSelectorAlg::initialize() {
     ANA_MSG_INFO("Initialising the SoftMuonSelector algorithm for TopCPToolkit");
 
@@ -291,7 +291,7 @@ namespace top {
 
             m_softmu_nearestJet_Index_Handle.set(*softmuon, nearestJetIndex, sys);
 	    m_SoftMuonJetDRminHandle.set(*softmuon, dRMin, sys);
-      
+
             m_SoftMuonPassDRJetcut.set(*softmuon, true, sys);
 
             PassSoftMuonDRJetCut = true;
@@ -362,7 +362,7 @@ namespace top {
 
     m_softmu_pt_id_Handle.set(*softmuon, idPt, sys);
     m_softmu_pt_me_Handle.set(*softmuon, mePt, sys);
-	  
+
 /*
     m_outtree_softmu_pass_tight.push_back(m_mseltool_tight->accept(*sm) ? 1 : 0);
     m_outtree_softmu_resolutionCategory.push_back(m_mseltool_tight->getResolutionCategory(*sm));
@@ -482,7 +482,7 @@ const xAOD::Vertex        *priVtx
     float d0sig=xAOD::TrackingHelpers::d0significance( softmuon->primaryTrackParticle(), evtInfo->beamPosSigmaX(), evtInfo->beamPosSigmaY(), evtInfo->beamPosSigmaXY() );
     m_softmu_d0_Handle.set(*softmuon, d0, sys);
     m_softmu_d0sig_Handle.set(*softmuon, d0sig, sys);
-      
+
 
     m_softmu_reducedChi2_Handle.set(*softmuon, ( cbtrack && cbtrack->isAvailable<float>("numberDoF") && cbtrack->numberDoF()>0 ? cbtrack->chiSquared() / cbtrack->numberDoF() : -999), sys);
     m_softmu_reducedChi2_ID_Handle.set(*softmuon, ( idtrack && idtrack->isAvailable<float>("numberDoF") && idtrack->numberDoF()>0 ? idtrack->chiSquared() / idtrack->numberDoF() : -999), sys);
@@ -604,7 +604,7 @@ const xAOD::Vertex        *priVtx
         break;  // Exit the loop once the nearest jet is found
       }
       ijet++;
-  
+
     }
 
 
@@ -682,10 +682,10 @@ const xAOD::Vertex        *priVtx
 
     float idPt = -1;
     float mePt = -1;
-    
+
     static const SG::AuxElement::Accessor<float> mePt_acc("MuonSpectrometerPt");
     static const SG::AuxElement::Accessor<float> idPt_acc("InnerDetectorPt");
-      
+
     const xAOD::TrackParticle* idtrack = mu.trackParticle(xAOD::Muon::InnerDetectorTrackParticle);
     const xAOD::TrackParticle* metrack = mu.trackParticle(xAOD::Muon::ExtrapolatedMuonSpectrometerTrackParticle);
     if (!idtrack || !metrack) idPt = mePt = -1.;

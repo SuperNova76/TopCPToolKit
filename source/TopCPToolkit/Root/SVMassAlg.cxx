@@ -7,7 +7,7 @@
 SVMassAlg::SVMassAlg(const std::string &name, ISvcLocator *pSvcLocator)
     : EL::AnaAlgorithm(name, pSvcLocator)
 {
-  
+
 }
 
 StatusCode SVMassAlg::initialize()
@@ -32,7 +32,7 @@ StatusCode SVMassAlg::initialize()
 StatusCode SVMassAlg::execute()
 {
   for (const auto &sys : m_systematicsList.systematicsVector())
-  { 
+  {
 
     // retrieve the EventInfo
     const xAOD::EventInfo *evtInfo = nullptr;

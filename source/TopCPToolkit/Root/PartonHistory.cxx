@@ -522,7 +522,7 @@ namespace xAOD {
     this->auxdecor< float >("MC_Higgs_decay2_from_decay2_eta") = -1000;
     this->auxdecor< int >("MC_Higgs_decay2_from_decay2_pdgId") = 0;
   }
-  
+
   // Initialize variables for tZq events
   void PartonHistory::IniVarTzq() {
     //t variables
@@ -589,27 +589,27 @@ namespace xAOD {
     this->auxdecor< float >("MC_Wdecay2_from_tbar_eta") = -1000;
     this->auxdecor< float >("MC_Wdecay2_from_tbar_phi") = -1000;
     this->auxdecor< int >("MC_Wdecay2_from_tbar_pdgId") = 0;
-    
+
     //Z variables
     this->auxdecor< float >("MC_Z_m") = -1;
     this->auxdecor< float >("MC_Z_pt") = -1;
     this->auxdecor< float >("MC_Z_eta") = -1000;
     this->auxdecor< float >("MC_Z_phi") = -1000;
-       
+
     this->auxdecor< float >("MC_Zdecay1_m") = -1;
     this->auxdecor< float >("MC_Zdecay1_pt") = -1;
     this->auxdecor< float >("MC_Zdecay1_eta") = -1000;
     this->auxdecor< float >("MC_Zdecay1_phi") = -1000;
     this->auxdecor< int >("MC_Zdecay1_pdgId") = 0;
     this->auxdecor< int >("MC_Zdecay1_status") = -9999;
-    
+
     this->auxdecor< float >("MC_Zdecay2_m") = -1;
     this->auxdecor< float >("MC_Zdecay2_pt") = -1;
     this->auxdecor< float >("MC_Zdecay2_eta") = -1000;
     this->auxdecor< float >("MC_Zdecay2_phi") = -1000;
     this->auxdecor< int >("MC_Zdecay2_pdgId") = 0;
     this->auxdecor< int >("MC_Zdecay2_status") = -9999;
-    
+
     // spectator quarks
     this->auxdecor< float >("MC_b_m") = -1;
     this->auxdecor< float >("MC_b_pt") = -1;
@@ -622,7 +622,7 @@ namespace xAOD {
     this->auxdecor< float >("MC_bbar_eta") = -1000;
     this->auxdecor< float >("MC_bbar_phi") = -1000;
     this->auxdecor< int >("MC_bbar_pdgId") = 0;
-    
+
     this->auxdecor< float >("MC_q_m") = -1;
     this->auxdecor< float >("MC_q_pt") = -1;
     this->auxdecor< float >("MC_q_eta") = -1000;
@@ -729,7 +729,7 @@ namespace xAOD {
     this->auxdecor< float >("MC_W_from_tbar_pt") = -1;
     this->auxdecor< float >("MC_W_from_tbar_eta") = -1000;
     this->auxdecor< float >("MC_W_from_tbar_phi") = -1000;
-    
+
     // decays 1 and 2 from W's from t, all combos
     this->auxdecor< float >("MC_Wdecay1_from_t_m") = -1;
     this->auxdecor< float >("MC_Wdecay1_from_t_pt") = -1;
@@ -774,7 +774,7 @@ namespace xAOD {
     this->auxdecor< float >("MC_H_pt") = -1;
     this->auxdecor< float >("MC_H_eta") = -1000;
     this->auxdecor< float >("MC_H_phi") = -1000;
-    
+
     // W-
     this->auxdecor< float >("MC_Wm_from_H_m") = -1;
     this->auxdecor< float >("MC_Wm_from_H_pt") = -1;

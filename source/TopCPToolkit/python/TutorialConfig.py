@@ -7,7 +7,7 @@ class TutorialConfig(ConfigBlock):
         super(TutorialConfig, self).__init__()
         self.addOption('electrons', None, type=str)
         self.addOption('silliness', False, type=bool)
-    
+
     def makeAlgs(self, config):
         electrons = config.readName(self.electrons)
 

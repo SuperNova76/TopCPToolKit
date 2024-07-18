@@ -11,5 +11,5 @@ class SVMassConfig(ConfigBlock):
         alg = config.createAlgorithm('SVMassAlg', 'SVMassAlg'+self.containerName)
         alg.jets = config.readName (self.containerName)
         alg.eventSelection = self.eventSelection
-        
+
         config.addOutputVar(self.containerName, 'SVMass_%SYS%', 'SVMass')

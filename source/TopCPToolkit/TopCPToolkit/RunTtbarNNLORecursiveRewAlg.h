@@ -51,7 +51,7 @@ namespace top {
         CP::SysWriteDecorHandle<double> m_NNLO_weight_decor {
             this, "NNLO_weight", "NNLO_weight_%SYS%", "Output weight of the Ttbar NNLO reweighter"
         };
-        
+
     }; // class
 } // namespace top
 

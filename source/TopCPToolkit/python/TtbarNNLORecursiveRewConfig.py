@@ -18,11 +18,11 @@ class TtbarNNLORecursiveRewConfig(ConfigBlock):
         # don't run on data!
         if config.dataType() is DataType.Data:
             return
-        
+
         if config.geometry() == LHCPeriod.Run3:
             print("Run 3 NNLO ttbar reweighting is not supported yet! skipping the algorithm.")
             return
-        
+
         # internal mapping for the tool
         map_sampleID = {
            "Nominal" : [410470],

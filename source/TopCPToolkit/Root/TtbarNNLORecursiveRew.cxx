@@ -63,7 +63,7 @@ StatusCode TtbarNNLORecursiveRew::initialize()
 
         // first, the series of reweightings to apply:
         // we only define here the default recipe (based on reference histograms)
-        // --> USERS: if you want a custom recipe, check out the code and modify the 
+        // --> USERS: if you want a custom recipe, check out the code and modify the
         // "SetDefault2D", "SetDefault3D", etc. methods below!
         std::vector<std::string> thisRewList;
         if ( m_type == NNLORewEnums::RewType::Rew2D ) {

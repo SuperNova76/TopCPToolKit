@@ -23,7 +23,7 @@ namespace top {
     public:
       SoftMuonSelectorAlg(const std::string &name, ISvcLocator *pSvcLocator);
       virtual StatusCode initialize() override;
-      virtual StatusCode execute() override;      
+      virtual StatusCode execute() override;
 
     private:
       CP::SysListHandle m_systematicsList {this};

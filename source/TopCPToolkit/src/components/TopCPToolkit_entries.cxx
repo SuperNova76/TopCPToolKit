@@ -2,7 +2,6 @@
   Copyright (C) 2002-2023 CERN for the benefit of the ATLAS collaboration
 */
 
-#include <TopCPToolkit/LeptonSFCalculatorAlg.h>
 #include <TopCPToolkit/KLFitterAlg.h>
 #include <TopCPToolkit/KLFitterFinalizeOutputAlg.h>
 #include <TopCPToolkit/ParticleLevelAlg.h>
@@ -24,7 +23,6 @@ DECLARE_COMPONENT (top::RunSpaNetAlg)
 DECLARE_COMPONENT (top::RunPartonHistoryAlg)
 DECLARE_COMPONENT (top::PartonToJetsMatchAlg)
 DECLARE_COMPONENT (top::ParticleLevelAlg)
-DECLARE_COMPONENT (top::LeptonSFCalculatorAlg)
 DECLARE_COMPONENT (top::KLFitterFinalizeOutputAlg)
 DECLARE_COMPONENT (top::KLFitterAlg)
 DECLARE_COMPONENT (top::JetMatchingAlg)

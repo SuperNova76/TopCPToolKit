@@ -6,7 +6,7 @@
 namespace top {
 
   ONNXWrapper::ONNXWrapper(
-    const std::string& name, 
+    const std::string& name,
     const std::vector<std::string>& filepaths_model_cv) :
     asg::AsgTool(name),
     m_env(std::make_shared<Ort::Env>(ORT_LOGGING_LEVEL_WARNING, "")),
@@ -81,7 +81,7 @@ namespace top {
     size_t output_node_count = session->GetOutputCount();
     m_output_shapes = std::vector<std::vector<int64_t>> (output_node_count);
     for (size_t i = 0; i < output_node_count; i++) m_output_shapes[i] = session->GetOutputTypeInfo(i).GetTensorTypeAndShapeInfo().GetShape();
-    
+
     if (m_verbose) {
       ANA_MSG_VERBOSE("output shapes = ");
       for (long unsigned int i=0; i < m_output_shapes.size(); ++i){
