@@ -161,7 +161,7 @@ The next interesting bit is right after, and takes the form of a tree structure:
 | /*** PythonConfig AsgService/CP::SelectionNameSvc/SelectionNameSvc *************
 | \--- (End of PythonConfig AsgService/CP::SelectionNameSvc/SelectionNameSvc) ----
 | /*** PythonConfig AnaAlgorithm/CP::PileupReweightingAlg/PileupReweightingAlg ***
-| |- pileupReweightingTool:  
+| |- pileupReweightingTool:
 | | /*** Private Tool CP::PileupReweightingTool/pileupReweightingTool **************
 | | |- ConfigFiles: ['GoodRunsLists/data22_13p6TeV/20230207/purw.actualMu.2022.root', 'PileupReweighting/mc21_common/mc21a.410000.physlite.prw.v1.root']
 | | |- LumiCalcFiles: ['GoodRunsLists/data22_13p6TeV/20230207/ilumicalc_histograms_None_431810-440613_OflLumi-Run3-003.root']
@@ -341,7 +341,7 @@ This is where we connect the config blocks (Python wrapper classes) for specific
 Following on our example with electrons:
 ```python
 # electrons
-from EgammaAnalysisAlgorithms.ElectronAnalysisConfig import ElectronCalibrationConfig 
+from EgammaAnalysisAlgorithms.ElectronAnalysisConfig import ElectronCalibrationConfig
 config.addAlgConfigBlock(algName="Electrons", alg=ElectronCalibrationConfig)
 from EgammaAnalysisAlgorithms.ElectronAnalysisConfig import ElectronWorkingPointConfig
 config.addAlgConfigBlock(algName="WorkingPoint", alg=ElectronWorkingPointConfig,
@@ -366,7 +366,7 @@ In this case, avoiding us the trouble of tracking the container names (and other
     Start typing "ElectronWorkingPointConfig" in the search bar at the top right of this page. You should quickly be directed to the relevant section our ["Settings" documentation](../settings/electrons.md#electronworkingpointconfig). There, we document all the available config blocks for the common CP algorithms, as well as those registered by our users in TopCPToolkit.
 
     Use the left-hand side menu to navigate between the different physics objects and analysis features. On the right-hand side, you'll find we've divided the code into "make-methods" and "config blocks" - only the latter are relevant to us in this tutorial.
-    
+
     For each block, we list all the configurable properties, what type of value they expect, and where relevant the allowed choices. Scrolling down, you'll also find a mention of "registered variables", i.e. output branches that are automatically created by the addition of this config block in your YAML config.
 
 Using the documentation, see if you can answer the following questions:
@@ -382,7 +382,7 @@ Using the documentation, see if you can answer the following questions:
 
 ??? success "Solution"
     In the `WorkingPoint` YAML sub-block, we generate two instances of the [`ElectronWorkingPointConfig`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/python/ElectronAnalysisConfig.py). One will bear the name "tight" and the other "loose", meaning that we have created two distinct labels for our electrons: though they both carry the same ID working point, one is non-isolated while the other has a strong isolation selection applied.
-    
+
     This is very useful in analysis, where one might want to use these "tight" electrons for the main measurement, and rely on the "loose" electrons to better model the fake lepton contributions. Note that there is no limitation whatsoever to how many labels you can generate, nor to what you name them. We could very easily add a third "mycustomelectrons" label with yet another choice of ID and isolation working points.
 
 ### Text-based event selections
@@ -438,7 +438,7 @@ Let's do it step by step... and of course you can use the documentation and sear
       - for tight muons, enforce a more detailed breakdown of systematics
       - make sure that all muons have $p_\mathrm{T}>25$ GeV and $\lvert\eta\rvert<2.5$
       - additionally decorate these muons with their IFF class
-    
+
     **Step 2:** make sure that we actually save these muons to file!
 
       - make a cutflow for them
@@ -446,7 +446,7 @@ Let's do it step by step... and of course you can use the documentation and sear
       - add them to the overlap removal
       - thin the output in a similar way as for electrons
       - add them to the output with the prefix "mu_"
-    
+
     **Step 3:** edit the trigger selection to include single-muon trigger legs (see [Muon Trigger Recommendations for 2022](https://twiki.cern.ch/twiki/bin/view/Atlas/MuonTriggerPhysicsRecommendationsRun32022))
 
     **Step 4:** add an instance of the `LeptonSF:` block, which should read in the tight electrons and muons, and produce a single event-wise lepton SF from all the different per-lepton SFs.
@@ -456,7 +456,7 @@ Let's do it step by step... and of course you can use the documentation and sear
       - add the "tight" muons as inputs to the event selection
       - the "ejets" selection should veto any muons in the event
       - the "mujets" selection should select exactly one muon
-    
+
     **Step 6:** add to the output ntuple the information "truthOrigin" about the muons, which is present at DAOD-level and does not depend on systematics
 
 ??? success "Solution"

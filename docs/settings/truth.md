@@ -199,7 +199,7 @@ The algorithm adds three variables for reco jets: index of matched truth jet, $\
     - `truth_jet_paired_index`: the index of the truth-level jets matched to the detector-level jets
     - `reco_to_reco_jet_closest_dR`: the minimum $\Delta R$ with respect to detector-level jets
     - `truth_to_truth_jet_closest_dR`: the minimum $\Delta R$ of the matched truth-level jet with respect to truth-level jets
-    - `has_truth_lepton`: label for reco jets if they have an overlapping truth lepton 
+    - `has_truth_lepton`: label for reco jets if they have an overlapping truth lepton
     - `overlapping_truth_lepton_pt`: $p_\mathrm{T}$ of the truth lepton that overlaps with the reco jet
 
 ### [IFFLeptonDecorationBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
