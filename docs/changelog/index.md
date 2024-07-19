@@ -5,8 +5,26 @@
 ### Upcoming release
 - [issue #94](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/94): add algorithm for NuFlows reconstruction
 - [issue #125](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/125): Add a tutorial on deploying trained ML models for inference
+- [issue #148](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/148): Migrate ParticleLevelAlg to Athena
+- [issue #162](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/162): Add Soft Muon Tagging truth information
+- [issue #163](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/163): (Re)implementation of TtbarLight parton history
+- [issue #164](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/164): Implementation of HZZ parton history
+- [issue #165](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/165): Implementation of "Custom Angle Replacement" algorithm
 
-### 2.10.0 <small>Jun 19, 2024</small>
+### 2.11.0 <small>July 19, 2024</small>
+- We run on AB 25.2.20
+- [issue #147](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/147): Minor updates to the docs
+- [issue #154](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/154): Add truth neutrinos to particle-level and fix a bug with photons
+- [issue #155](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/155): Migrate BTaggingScoresAlg to Athena :warning:[***interface change***](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/155):warning:
+- [issue #156](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/156): Migrate FakeBkgCalculatorAlg to Athena :warning:[***interface change***](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/156):warning:
+- [issue #157](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/157): Fix the issue that particle-level MET phi is always positive
+- [issue #158](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/158): Fix cppchecks
+- [issue #159](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/159): Migrate LeptonSFCalculatorAlg to Athena
+- [issue #160](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/160): Migrate VGammaORAlg to Athena
+- [issue #161](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/161): Rewrite and simplify the parton histories
+- [issue #166]*https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/166): New options to configure the EGamma calibration model
+
+### 2.10.0 <small>June 19, 2024</small>
 - We run on AB 25.2.15
 - [issue #140](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/140): New algorithm for ttbar spin density matrix calculations
 - [issue #143](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/143): Print a list of branches that are read from input files
