@@ -64,7 +64,6 @@ ROOT::Math::PxPyPzMVector GetPxPyPzMfromTruth(const xAOD::TruthParticle *TruthPa
 }
 
 ROOT::Math::PtEtaPhiMVector GetPtEtaPhiMfromTruth(const xAOD::TruthParticle *TruthParticle){
-  asg::msgUserCode::ANA_MSG_WARNING ("LorentzHelper WARNING: We can't guarantee the mass from this 4-vector is correct, consider using GetPtEtaPhiMfromTruth");
   ROOT::Math::PtEtaPhiMVector MassSafeVector(TruthParticle->pt(), //float px and py cast to double to build pT
 					     TruthParticle->eta(), //double
 					     TruthParticle->phi(), //double
