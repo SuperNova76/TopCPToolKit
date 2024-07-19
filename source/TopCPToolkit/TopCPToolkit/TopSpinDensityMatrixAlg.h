@@ -9,7 +9,9 @@
 #include <SelectionHelpers/SysReadSelectionHandle.h>
 
 #include <xAODEventInfo/EventInfo.h>
-#include <TLorentzVector.h>
+#include "Math/Vector4D.h"
+
+using ROOT::Math::PtEtaPhiMVector;
 
 namespace top {
 
@@ -28,16 +30,16 @@ namespace top {
     CP::SysReadSelectionHandle m_selection {
       this, "eventSelection", "SetMe", "the event selection to apply"
     };
-    CP::SysReadDecorHandle<TLorentzVector> m_top {
+    CP::SysReadDecorHandle<PtEtaPhiMVector> m_top {
       this, "top_4vec", "", "the 4-vector of the top"
     };
-    CP::SysReadDecorHandle<TLorentzVector> m_tbar {
+    CP::SysReadDecorHandle<PtEtaPhiMVector> m_tbar {
       this, "tbar_4vec", "", "the 4-vector of the anti-top"
     };
-    CP::SysReadDecorHandle<TLorentzVector> m_top_analyser {
+    CP::SysReadDecorHandle<PtEtaPhiMVector> m_top_analyser {
       this, "top_analyser_4vec", "", "the 4-vector of the spin analyser from the top"
     };
-    CP::SysReadDecorHandle<TLorentzVector> m_tbar_analyser {
+    CP::SysReadDecorHandle<PtEtaPhiMVector> m_tbar_analyser {
       this, "tbar_analyser_4vec", "", "the 4-vector of the spin analyser from the anti-top"
     };
     CP::SysWriteDecorHandle<float> m_cos_theta_helicity_p {
