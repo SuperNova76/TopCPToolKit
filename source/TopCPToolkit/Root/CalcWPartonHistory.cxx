@@ -75,15 +75,13 @@ namespace top {
     static const SG::AuxElement::Decorator<float> dec_MC_Wmdecay2_phi("MC_Wdecay2" + parentstring + "_phi");
     static const SG::AuxElement::Decorator<int> dec_MC_Wmdecay2_pdgId("MC_Wdecay2" + parentstring + "_pdgId");
 
-    
-
     // Decorating with defaults in case the particle doesn't exist
     FillDefaultParticleInfo(dec_MC_Wm_m, dec_MC_Wm_pt, dec_MC_Wm_eta, dec_MC_Wm_phi, PartonHistory);
     FillDefaultParticleInfo(dec_MC_Wmdecay1_m, dec_MC_Wmdecay1_pt, dec_MC_Wmdecay1_eta, dec_MC_Wmdecay1_phi, dec_MC_Wmdecay1_pdgId, PartonHistory);
     FillDefaultParticleInfo(dec_MC_Wmdecay2_m, dec_MC_Wmdecay2_pt, dec_MC_Wmdecay2_eta, dec_MC_Wmdecay2_phi, dec_MC_Wmdecay2_pdgId, PartonHistory);
 
     if (Retrievep4(prefix + "_beforeFSR", Wm)) {
-      // As this is always a W+ we don't set the pdgId
+      // As this is always a W- we don't set the pdgId
       FillParticleInfo(dec_MC_Wm_m, dec_MC_Wm_pt, dec_MC_Wm_eta, dec_MC_Wm_phi, Wm, PartonHistory);
     }
     if (RetrieveParticleInfo(prefix + "Decay1", WmDecay1, WmDecay1pdgId)) {

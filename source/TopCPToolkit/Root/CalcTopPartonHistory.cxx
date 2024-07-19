@@ -120,12 +120,12 @@ namespace top {
       // Since this is ttbar we don't set a pdgId
       FillParticleInfo(dec_MC_ttbar_beforeFSR_m, dec_MC_ttbar_beforeFSR_pt, dec_MC_ttbar_beforeFSR_eta, dec_MC_ttbar_beforeFSR_phi, ttbar, PartonHistory);
     }
-    
+
     if (Retrievep4("MC_t_afterFSR", t_afterFSR)
 	&& Retrievep4("MC_tbar_afterFSR", tbar_afterFSR)) {
       ttbar = t_afterFSR + tbar_afterFSR;
       // Since this is ttbar we don't set a pdgId
-      FillParticleInfo(dec_MC_ttbar_afterFSR_m, dec_MC_ttbar_afterFSR_pt, dec_MC_ttbar_afterFSR_eta, dec_MC_ttbar_afterFSR_phi, ttbar, PartonHistory);
+      FillParticleInfo(dec_MC_ttbar_afterFSR_beforeDecay_m, dec_MC_ttbar_afterFSR_beforeDecay_pt, dec_MC_ttbar_afterFSR_beforeDecay_eta, dec_MC_ttbar_afterFSR_beforeDecay_phi, ttbar, PartonHistory);
     }
 
     if (RetrieveParticleInfo("MC_t_WpDecay1", WpDecay1, WpDecay1_pdgId)
