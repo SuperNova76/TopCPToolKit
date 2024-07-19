@@ -22,7 +22,7 @@
 - [issue #159](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/159): Migrate LeptonSFCalculatorAlg to Athena
 - [issue #160](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/160): Migrate VGammaORAlg to Athena
 - [issue #161](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/161): Rewrite and simplify the parton histories
-- [issue #166]*https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/166): New options to configure the EGamma calibration model
+- [issue #166](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/166): New options to configure the EGamma calibration model
 
 ### 2.10.0 <small>June 19, 2024</small>
 - We run on AB 25.2.15
