@@ -81,6 +81,12 @@ Name in YAML: **Electrons**
 `containerName`
 :   the name of the output container after calibration.
 
+`ESModel`
+:   flag for Egamma calibration. The default is `''` (empty string), which uses the current recommendations.
+
+`decorrelationModel`
+:   decorrelation model for the EGamma energy scale. Supported choices are: `FULL_v1`, `1NP_v1` (default).
+
 `postfix`
 :   a postfix to apply to decorations and algorithm names. Typically not needed here since the calibration is common to all electrons.
 
