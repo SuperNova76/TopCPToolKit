@@ -93,21 +93,21 @@ namespace top {
     static const SG::AuxElement::Decorator<float> dec_MC_ttbar_afterFSR_eta("MC_ttbar_afterFSR_eta");
     static const SG::AuxElement::Decorator<float> dec_MC_ttbar_afterFSR_phi("MC_ttbar_afterFSR_phi");
 
-    static const SG::AuxElement::Decorator<float> dec_MC_ttbar_beforeFSR_fromDecay_m("MC_ttbar_beforeFSR_fromDecay_m");
-    static const SG::AuxElement::Decorator<float> dec_MC_ttbar_beforeFSR_fromDecay_pt("MC_ttbar_beforeFSR_fromDecay_pt");
-    static const SG::AuxElement::Decorator<float> dec_MC_ttbar_beforeFSR_fromDecay_eta("MC_ttbar_beforeFSR_fromDecay_eta");
-    static const SG::AuxElement::Decorator<float> dec_MC_ttbar_beforeFSR_fromDecay_phi("MC_ttbar_beforeFSR_fromDecay_phi");
+    static const SG::AuxElement::Decorator<float> dec_MC_ttbar_fromDecay_beforeFSR_m("MC_ttbar_fromDecay_beforeFSR_m");
+    static const SG::AuxElement::Decorator<float> dec_MC_ttbar_fromDecay_beforeFSR_pt("MC_ttbar_fromDecay_beforeFSR_pt");
+    static const SG::AuxElement::Decorator<float> dec_MC_ttbar_fromDecay_beforeFSR_eta("MC_ttbar_fromDecay_beforeFSR_eta");
+    static const SG::AuxElement::Decorator<float> dec_MC_ttbar_fromDecay_beforeFSR_phi("MC_ttbar_fromDecay_beforeFSR_phi");
 
-    static const SG::AuxElement::Decorator<float> dec_MC_ttbar_afterFSR_fromDecay_m("MC_ttbar_afterFSR_fromDecay_m");
-    static const SG::AuxElement::Decorator<float> dec_MC_ttbar_afterFSR_fromDecay_pt("MC_ttbar_afterFSR_fromDecay_pt");
-    static const SG::AuxElement::Decorator<float> dec_MC_ttbar_afterFSR_fromDecay_eta("MC_ttbar_afterFSR_fromDecay_eta");
-    static const SG::AuxElement::Decorator<float> dec_MC_ttbar_afterFSR_fromDecay_phi("MC_ttbar_afterFSR_fromDecay_phi");
+    static const SG::AuxElement::Decorator<float> dec_MC_ttbar_fromDecay_afterFSR_m("MC_ttbar_fromDecay_afterFSR_m");
+    static const SG::AuxElement::Decorator<float> dec_MC_ttbar_fromDecay_afterFSR_pt("MC_ttbar_fromDecay_afterFSR_pt");
+    static const SG::AuxElement::Decorator<float> dec_MC_ttbar_fromDecay_afterFSR_eta("MC_ttbar_fromDecay_afterFSR_eta");
+    static const SG::AuxElement::Decorator<float> dec_MC_ttbar_fromDecay_afterFSR_phi("MC_ttbar_fromDecay_afterFSR_phi");
 
     // Decorating with defaults in case the particle doesn't exist
     FillDefaultParticleInfo(dec_MC_ttbar_beforeFSR_m, dec_MC_ttbar_beforeFSR_pt, dec_MC_ttbar_beforeFSR_eta, dec_MC_ttbar_beforeFSR_phi, PartonHistory);
     FillDefaultParticleInfo(dec_MC_ttbar_afterFSR_m, dec_MC_ttbar_afterFSR_pt, dec_MC_ttbar_afterFSR_eta, dec_MC_ttbar_afterFSR_phi, PartonHistory);
-    FillDefaultParticleInfo(dec_MC_ttbar_beforeFSR_fromDecay_m, dec_MC_ttbar_beforeFSR_fromDecay_pt, dec_MC_ttbar_beforeFSR_fromDecay_eta, dec_MC_ttbar_beforeFSR_fromDecay_phi, PartonHistory);
-    FillDefaultParticleInfo(dec_MC_ttbar_afterFSR_fromDecay_m, dec_MC_ttbar_afterFSR_fromDecay_pt, dec_MC_ttbar_afterFSR_fromDecay_eta, dec_MC_ttbar_afterFSR_fromDecay_phi, PartonHistory);
+    FillDefaultParticleInfo(dec_MC_ttbar_fromDecay_beforeFSR_m, dec_MC_ttbar_fromDecay_beforeFSR_pt, dec_MC_ttbar_fromDecay_beforeFSR_eta, dec_MC_ttbar_fromDecay_beforeFSR_phi, PartonHistory);
+    FillDefaultParticleInfo(dec_MC_ttbar_fromDecay_afterFSR_m, dec_MC_ttbar_fromDecay_afterFSR_pt, dec_MC_ttbar_fromDecay_afterFSR_eta, dec_MC_ttbar_fromDecay_afterFSR_phi, PartonHistory);
 
     if (Retrievep4("MC_t_beforeFSR", t_beforeFSR)
 	&& Retrievep4("MC_tbar_beforeFSR", tbar_beforeFSR)) {
@@ -131,7 +131,7 @@ namespace top {
 	&& Retrievep4("MC_t_bbar_beforeFSR", bbar)) {
       ttbar = WpDecay1 + WpDecay2 + WmDecay1 + WmDecay2 + b + bbar;
       // Since this is ttbar we don't set a pdgId
-      FillParticleInfo(dec_MC_ttbar_beforeFSR_fromDecay_m, dec_MC_ttbar_beforeFSR_fromDecay_pt, dec_MC_ttbar_beforeFSR_fromDecay_eta, dec_MC_ttbar_beforeFSR_fromDecay_phi, ttbar, PartonHistory);
+      FillParticleInfo(dec_MC_ttbar_fromDecay_beforeFSR_m, dec_MC_ttbar_fromDecay_beforeFSR_pt, dec_MC_ttbar_fromDecay_beforeFSR_eta, dec_MC_ttbar_fromDecay_beforeFSR_phi, ttbar, PartonHistory);
     }
 
     if (RetrieveParticleInfo("MC_t_WpDecay1", WpDecay1, WpDecay1_pdgId)
@@ -142,7 +142,7 @@ namespace top {
 	&& Retrievep4("MC_t_bbar_afterFSR", bbar)) {
       ttbar = WpDecay1 + WpDecay2 + WmDecay1 + WmDecay2 + b + bbar;
       // Since this is ttbar we don't set a pdgId
-      FillParticleInfo(dec_MC_ttbar_afterFSR_fromDecay_m, dec_MC_ttbar_afterFSR_fromDecay_pt, dec_MC_ttbar_afterFSR_fromDecay_eta, dec_MC_ttbar_afterFSR_fromDecay_phi, ttbar, PartonHistory);
+      FillParticleInfo(dec_MC_ttbar_fromDecay_afterFSR_m, dec_MC_ttbar_fromDecay_afterFSR_pt, dec_MC_ttbar_fromDecay_afterFSR_eta, dec_MC_ttbar_fromDecay_afterFSR_phi, ttbar, PartonHistory);
     }
   }
 } // namespace top
