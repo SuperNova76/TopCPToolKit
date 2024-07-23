@@ -68,33 +68,33 @@ namespace top {
     FillDefaultParticleInfo(dec_MC_Hdecay2_decay2_m, dec_MC_Hdecay2_decay2_pt, dec_MC_Hdecay2_decay2_eta, dec_MC_Hdecay2_decay2_phi, dec_MC_Hdecay2_decay2_pdgId, PartonHistory);
 
 
-    if (Retrievep4("MC_H", H)) {
+    if (Retrievep4("MC_H_afterFSR", H)) {
       // As this is always a Higgs we don't set the pdgId
       FillParticleInfo(dec_MC_H_m, dec_MC_H_pt, dec_MC_H_eta, dec_MC_H_phi, H, PartonHistory);
     }
     // Higgs decay:
     if (RetrieveParticleInfo("MC_HDecay1", HDecay1, HDecay1pdgId)) {
-      FillDefaultParticleInfo(dec_MC_Hdecay1_m, dec_MC_Hdecay1_pt, dec_MC_Hdecay1_eta, dec_MC_Hdecay1_phi, dec_MC_Hdecay1_pdgId, PartonHistory);
+      FillParticleInfo(dec_MC_Hdecay1_m, dec_MC_Hdecay1_pt, dec_MC_Hdecay1_eta, dec_MC_Hdecay1_phi, dec_MC_Hdecay1_pdgId, HDecay1, HDecay1pdgId, PartonHistory);
     }
 
     if (RetrieveParticleInfo("MC_HDecay2", HDecay2, HDecay2pdgId)) {
-      FillDefaultParticleInfo(dec_MC_Hdecay2_m, dec_MC_Hdecay2_pt, dec_MC_Hdecay2_eta, dec_MC_Hdecay1_phi, dec_MC_Hdecay1_pdgId, PartonHistory);
+      FillParticleInfo(dec_MC_Hdecay2_m, dec_MC_Hdecay2_pt, dec_MC_Hdecay2_eta, dec_MC_Hdecay2_phi, dec_MC_Hdecay2_pdgId, HDecay2, HDecay2pdgId, PartonHistory);
     }
     // decays of higgs decay products:
     if (RetrieveParticleInfo("MC_HDecay1_Decay1", HDecay1_Decay1, HDecay1_Decay1pdgId)) {
-      FillDefaultParticleInfo(dec_MC_Hdecay1_decay1_m, dec_MC_Hdecay1_decay1_pt, dec_MC_Hdecay1_decay1_eta, dec_MC_Hdecay1_decay1_phi, dec_MC_Hdecay1_decay1_pdgId, PartonHistory);
+      FillParticleInfo(dec_MC_Hdecay1_decay1_m, dec_MC_Hdecay1_decay1_pt, dec_MC_Hdecay1_decay1_eta, dec_MC_Hdecay1_decay1_phi, dec_MC_Hdecay1_decay1_pdgId, HDecay1_Decay1, HDecay1_Decay1pdgId, PartonHistory);
     }
 
     if (RetrieveParticleInfo("MC_HDecay1_Decay2", HDecay1_Decay2, HDecay1_Decay2pdgId)) {
-      FillDefaultParticleInfo(dec_MC_Hdecay1_decay2_m, dec_MC_Hdecay1_decay2_pt, dec_MC_Hdecay1_decay2_eta, dec_MC_Hdecay1_decay2_phi, dec_MC_Hdecay1_decay2_pdgId, PartonHistory);
+      FillParticleInfo(dec_MC_Hdecay1_decay2_m, dec_MC_Hdecay1_decay2_pt, dec_MC_Hdecay1_decay2_eta, dec_MC_Hdecay1_decay2_phi, dec_MC_Hdecay1_decay2_pdgId, HDecay1_Decay2, HDecay1_Decay2pdgId, PartonHistory);
     }
 
-    if (RetrieveParticleInfo("MC_HDecay2_Decay1", HDecay1_Decay1, HDecay2_Decay1pdgId)) {
-      FillDefaultParticleInfo(dec_MC_Hdecay2_decay1_m, dec_MC_Hdecay2_decay1_pt, dec_MC_Hdecay2_decay1_eta, dec_MC_Hdecay2_decay1_phi, dec_MC_Hdecay2_decay1_pdgId, PartonHistory);
+    if (RetrieveParticleInfo("MC_HDecay2_Decay1", HDecay2_Decay1, HDecay2_Decay1pdgId)) {
+      FillParticleInfo(dec_MC_Hdecay2_decay1_m, dec_MC_Hdecay2_decay1_pt, dec_MC_Hdecay2_decay1_eta, dec_MC_Hdecay2_decay1_phi, dec_MC_Hdecay2_decay1_pdgId, HDecay2_Decay1, HDecay2_Decay1pdgId, PartonHistory);
     }
 
     if (RetrieveParticleInfo("MC_HDecay2_Decay2", HDecay2_Decay2, HDecay2_Decay2pdgId)) {
-      FillDefaultParticleInfo(dec_MC_Hdecay2_decay2_m, dec_MC_Hdecay2_decay2_pt, dec_MC_Hdecay2_decay2_eta, dec_MC_Hdecay2_decay2_phi, dec_MC_Hdecay2_decay2_pdgId, PartonHistory);
+      FillParticleInfo(dec_MC_Hdecay2_decay2_m, dec_MC_Hdecay2_decay2_pt, dec_MC_Hdecay2_decay2_eta, dec_MC_Hdecay2_decay2_phi, dec_MC_Hdecay2_decay2_pdgId, HDecay2_Decay2, HDecay2_Decay2pdgId, PartonHistory);
     }
   }
 }

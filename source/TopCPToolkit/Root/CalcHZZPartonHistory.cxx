@@ -11,10 +11,8 @@ namespace top {
   StatusCode CalcHZZPartonHistory::runHistorySaver(const xAOD::TruthParticleContainer* truthParticles,
 						   xAOD::PartonHistory* hzzPartonHistory) {
     hzzPartonHistory->IniVarHZZ();
-    CalcPartonHistory::TraceParticles(truthParticles);
+    CalcPartonHistory::TraceParticles(truthParticles);    
     CalcPartonHistory::FillHiggsPartonHistory(hzzPartonHistory);
-    CalcPartonHistory::FillZPartonHistory(hzzPartonHistory, "H", 1);
-    CalcPartonHistory::FillZPartonHistory(hzzPartonHistory, "H", 2);
     
     return StatusCode::SUCCESS;
   }
