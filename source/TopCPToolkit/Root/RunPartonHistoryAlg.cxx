@@ -18,6 +18,7 @@ namespace top {
     else if (m_PartonScheme == "Tth") m_PartonHistory = std::make_unique<CalcTthPartonHistory>("top::CalcTthPartonHistory");
     else if (m_PartonScheme == "Tzq") m_PartonHistory = std::make_unique<CalcTzqPartonHistory>("top::CalcTzqPartonHistory");
     else if (m_PartonScheme == "HWW") m_PartonHistory = std::make_unique<CalcHWWPartonHistory>("top::CalcHWWPartonHistory");
+    else if (m_PartonScheme == "HZZ") m_PartonHistory = std::make_unique<CalcHZZPartonHistory>("top::CalcHZZPartonHistory");
     else {
       ANA_MSG_ERROR("  ==> PartonScheme " << m_PartonScheme << " is not recognised! aborting.");
       return StatusCode::FAILURE;

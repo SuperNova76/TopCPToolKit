@@ -5,7 +5,7 @@ CommonServices:
 GeneratorLevelAnalysis: {}
 
 PartonHistory:
-  - histories: 'Ttbar.Ttz'
+  - histories: 'HWW'
 
 TtbarNNLO: {}
 
@@ -31,8 +31,7 @@ Output:
   containers:
       # Format should follow: '<suffix>:<output container>'
       '': 'EventInfo'
-      'Ttbar_': 'PartonHistoryTtbar'
-      'TTZ_': 'PartonHistoryTtz'
+      'HWW_': 'PartonHistoryHWW'
       # 'TtbarLight_': 'PartonHistoryTtbarLight'
 
 AddConfigBlocks:
