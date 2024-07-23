@@ -324,35 +324,17 @@ namespace top {
     return false;
   }
 
-  bool CalcPartonHistory::handleBosonFromH(const xAOD::TruthParticle* particle, std::string& key, int decayID) {
-    // Handles the case where a boson originates from a Higgs particle (PDG ID 25).
+  bool CalcPartonHistory::handleDecay(const xAOD::TruthParticle* particle, std::string& key, int decayID) {
+    // Handles the case where a particle originates from a decay.
     // We add the particle to the map with a key based on its decay ID and update the key.
-    if (hasParentPdgId(particle, 25)) {
+    if (particle->nParents() == 0) return false;
+    if ((hasParentAbsPdgId(particle, 25) && !hasParentPdgId(particle, particle->pdgId())) ||
+	(hasParentAbsPdgId(particle, 24) && !hasParentPdgId(particle, particle->pdgId())) ||
+	(hasParentAbsPdgId(particle, 23) && !hasParentPdgId(particle, particle->pdgId()))) {
       std::string postfix;
-      if (std::abs(particle->pdgId()) == 24) {
-	postfix = "Decay" + std::to_string(decayID);
-	AddToParticleMap(particle, key + postfix);
-	key += postfix + "_";
-	return true;
-      }
-      if (particle->pdgId() == 21 || particle->pdgId() == 22 || std::abs(particle->pdgId()) == 23) {
-	postfix = "Decay" + std::to_string(particle->barcode() % 2 + 1);
-	AddToParticleMap(particle, key + postfix);
-	key += postfix;
-	return true;
-      }
-    }
-    return false;
-  }
-
-  bool CalcPartonHistory::handleDecay(const xAOD::TruthParticle* particle, std::string& key, int decayID, bool isLast) {
-    // Handles the decay of a particle with specific conditions.
-    // We add the particle to the map with a key based on its decay ID if it is the last in the decay chain and meets certain criteria.
-    if (isLast && ((hasParentAbsPdgId(particle, 25) && !hasParentPdgId(particle, particle->pdgId())) ||
-                   (hasParentAbsPdgId(particle, 24) && !hasParentPdgId(particle, particle->pdgId())) ||
-                   (hasParentAbsPdgId(particle, 23) && !hasParentPdgId(particle, particle->pdgId())))) {
-      std::string postfix = hasParentAbsPdgId(particle, 24) && particle->pdgId() == 22 ? "gamma_rad" : "Decay" + std::to_string(decayID);
+      postfix = "Decay" + std::to_string(decayID);
       AddToParticleMap(particle, key + postfix);
+      key += postfix + "_";
       return true;
     }
     return false;
@@ -377,33 +359,35 @@ namespace top {
     particleMap.clear();
     for (const auto& path : allPaths) {
       std::string key = "MC";
-      bool isLast = false;
       std::string old_key = "";
       std::string new_key = "";
       std::string postfix = "";
 
       for (auto it = path.begin(); it != path.end(); it++) {
 	const xAOD::TruthParticle* particle = *it;
-	isLast = (it == path.end() - 1);
 	bool isbeforeFSR = (hasIdenticalChild(particle));
 	bool isafterFSR = (hasParentPdgId(particle, particle->pdgId()));
 
 	int decayID = particle->pdgId() < 0 ? 2 : 1;
+	// if we have a Z or a gamma, we have to define the decayID differently
+	if (particle->pdgId() == 23 || particle->pdgId() == 22) {
+	  // We assign 1 for the first child and 2 for the second
+	  if (particle->parent()->child(0) == particle) decayID = 1;
+	  else decayID = 2;
+	}
 
 	old_key = new_key;
 	new_key = GetParticleType(particle);
 	if (isbeforeFSR && isafterFSR) {
 	  continue; // e.g. t-t-t
 	}
-
+	if (handleDecay(particle, key, decayID)) continue;
 	if (handleBeforeFSR(particle, new_key, key)) continue;
 	if (handleAfterFSR(particle, new_key, old_key, key)) continue;
 	if (hasParentPdgId(particle, particle->pdgId())) {
 	  handleSameAsParent(particle, key);
 	  continue;
 	}
-	if (handleDecay(particle, key, decayID, isLast)) continue;
-	if (handleBosonFromH(particle, key, decayID)) continue;
 	if (new_key != "") handleDefault(particle, new_key, key);
       }
     }
