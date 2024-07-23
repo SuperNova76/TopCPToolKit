@@ -58,11 +58,11 @@ namespace top {
     FillDefaultParticleInfo(dec_MC_tbar_beforeFSR_m, dec_MC_tbar_beforeFSR_pt, dec_MC_tbar_beforeFSR_eta, dec_MC_tbar_beforeFSR_phi, PartonHistory);
     FillDefaultParticleInfo(dec_MC_tbar_afterFSR_m, dec_MC_tbar_afterFSR_pt, dec_MC_tbar_afterFSR_eta, dec_MC_tbar_afterFSR_phi, PartonHistory);
 
-    if (Retrievep4("MC_t_beforeFSR", tbar_beforeFSR)) {
+    if (Retrievep4("MC_tbar_beforeFSR", tbar_beforeFSR)) {
       // As this is a always an anti-top we don't set the pdgId
       FillParticleInfo(dec_MC_tbar_beforeFSR_m, dec_MC_tbar_beforeFSR_pt, dec_MC_tbar_beforeFSR_eta, dec_MC_tbar_beforeFSR_phi, tbar_beforeFSR, PartonHistory);
     }
-    if (Retrievep4("MC_t_afterFSR", tbar_afterFSR)) {
+    if (Retrievep4("MC_tbar_afterFSR", tbar_afterFSR)) {
       // As this is a always an anti-top we don't set the pdgId
       FillParticleInfo(dec_MC_tbar_afterFSR_m, dec_MC_tbar_afterFSR_pt, dec_MC_tbar_afterFSR_eta, dec_MC_tbar_afterFSR_phi, tbar_afterFSR, PartonHistory);
     }
