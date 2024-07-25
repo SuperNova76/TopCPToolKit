@@ -61,6 +61,39 @@ def check_output(file_path):
     else:
         return
 
+def remove_empty_trees(file_path):
+    """
+    remove empty TTrees (no events passing selection)
+    to avoid issues later on with offline processing
+    """
+    # Open the ROOT file in update mode
+    file = ROOT.TFile(file_path, "UPDATE")
+
+    # List of keys to remove
+    keys_to_remove = []
+
+    # Loop over all keys in the file
+    for key in file.GetListOfKeys():
+        obj = key.ReadObj()
+
+        # Check if the object is a TTree and if it has entries
+        if isinstance(obj, ROOT.TTree):
+            if obj.GetEntries() == 0:
+                keys_to_remove.append(key.GetName())
+
+    if len(keys_to_remove) > 0 :
+        # Remove empty TTrees
+        for key_name in keys_to_remove:
+            print(f"Removing empty TTree {key_name}")
+            file.Delete(f"{key_name};*")
+
+        # Write changes and close the file
+        file.Write()
+        file.Close()
+    else:
+        file.Close()
+    return
+
 def run_job(sample_handler, output_stream_name, level_name, args, flags):
     job = ROOT.EL.Job()
     job.sampleHandler(sample_handler)
@@ -150,6 +183,7 @@ if __name__ == '__main__':
             if pid:
                 os.wait()
                 check_output(outfile)
+                remove_empty_trees(outfile)
                 check_output(histofile)
                 move_with_symlink_handling(outfile, recofile)
                 move_with_symlink_handling(histofile, 'only_histograms.root')
@@ -160,6 +194,7 @@ if __name__ == '__main__':
             if pid:
                 os.wait()
                 check_output(outfile)
+                remove_empty_trees(outfile)
                 move_with_symlink_handling(outfile, particlefile)
                 if args.no_reco:
                     check_output(histofile)
@@ -171,6 +206,7 @@ if __name__ == '__main__':
             if pid:
                 os.wait()
                 check_output(outfile)
+                remove_empty_trees(outfile)
                 move_with_symlink_handling(outfile, partonfile)
                 if args.no_reco and not args.particle:
                     check_output(histofile)
@@ -181,12 +217,14 @@ if __name__ == '__main__':
         if not args.no_reco:
             run_job(sh, outputStreamName, 'reco', args, flags)
             check_output(outfile)
+            remove_empty_trees(outfile)
             check_output(histofile)
             move_with_symlink_handling(outfile, recofile)
             move_with_symlink_handling(histofile, 'only_histograms.root')
         if args.particle:
             run_job(sh, outputStreamName, 'particle', args, flags)
             check_output(outfile)
+            remove_empty_trees(outfile)
             move_with_symlink_handling(outfile, particlefile)
             if args.no_reco:
                 check_output(histofile)
@@ -194,6 +232,7 @@ if __name__ == '__main__':
         if args.parton:
             run_job(sh, outputStreamName, 'parton', args, flags)
             check_output(outfile)
+            remove_empty_trees(outfile)
             move_with_symlink_handling(outfile, partonfile)
             if args.no_reco and not args.particle:
                 check_output(histofile)

@@ -32,7 +32,7 @@ Output:
       # Format should follow: '<suffix>:<output container>'
       '': 'EventInfo'
       'Ttbar_': 'PartonHistoryTtbar'
-      'TTZ_': 'PartonHistoryTtz'
+      'Ttz_': 'PartonHistoryTtz'
       # 'TtbarLight_': 'PartonHistoryTtbarLight'
 
 AddConfigBlocks:
