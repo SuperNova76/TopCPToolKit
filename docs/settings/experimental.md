@@ -21,7 +21,7 @@ Decorates the output jets with the secondary vertex mass (SVMass).
 !!! success "Registers the following variables:"
     - `SVMass`: the secondary vertex mass of every jet.
 
-### [VGammaORConfig]((https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/VGammaORConfig.py)
+### [VGammaORConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/VGammaORConfig.py)
 Name in YAML: **VGammaOR**
 
 Adds a new event-level variable `in_vgamma_overlap` using the [VGammaORTool](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/VGammaORTool). The new variable can be used to remove to overlap between e.g. V+jets and Vy+jets samples.
