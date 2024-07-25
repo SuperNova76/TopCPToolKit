@@ -134,7 +134,6 @@
 #include <TopCPToolkit/TopSpinDensityMatrixAlg.h>
 #include <TopCPToolkit/PartonToJetsMatchAlg.h>
 #include <TopCPToolkit/JetMatchingAlg.h>
-#include <TopCPToolkit/SVMassAlg.h>
 #include <TopCPToolkit/TutorialAlg.h>
 #include <TopCPToolkit/JetReclusteringAlg.h>
 #include <TopCPToolkit/SoftMuonSelectorAlg.h>
@@ -230,7 +229,6 @@ namespace top
     ANA_CHECK (asg::registerAlgorithmFactory<top::TopSpinDensityMatrixAlg> ("top::TopSpinDensityMatrixAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::PartonToJetsMatchAlg> ("top::PartonToJetsMatchAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::JetMatchingAlg> ("top::JetMatchingAlg"));
-    ANA_CHECK (asg::registerAlgorithmFactory<SVMassAlg> ("SVMassAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::TutorialAlg> ("top::TutorialAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::JetReclusteringAlg> ("top::JetReclusteringAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::SoftMuonSelectorAlg> ("top::SoftMuonSelectorAlg"));
