@@ -6,6 +6,40 @@ from TopCPToolkit import metaConfig
 import ROOT
 import os, shutil, sys, argparse
 
+def remove_empty_trees(file_path):
+    """
+    remove empty TTrees (no events passing selection)
+    to avoid issues later on with offline processing
+    """
+    # Open the ROOT file in update mode
+    file = ROOT.TFile(file_path, "UPDATE")
+
+    # List of keys to remove
+    keys_to_remove = []
+
+    # Loop over all keys in the file
+    for key in file.GetListOfKeys():
+        obj = key.ReadObj()
+
+        # Check if the object is a TTree and if it has entries
+        if isinstance(obj, ROOT.TTree):
+            if obj.GetEntries() == 0:
+                keys_to_remove.append(key.GetName())
+
+    if len(keys_to_remove) > 0 :
+        # Remove empty TTrees
+        for key_name in keys_to_remove:
+            print(f"Removing empty TTree {key_name}")
+            file.Delete(f"{key_name};*")
+
+        # Write changes and close the file
+        file.Write()
+        file.Close()
+    else:
+        file.Close()
+    return
+
+
 flags = initConfigFlags()
 p = flags.getArgumentParser(description="Run Athena with CP algorithms in local input")
 
@@ -127,6 +161,7 @@ for jobLabel,jobSequence in jobs:
         if status.si_status != 0:
             sys.exit(status.si_status)
         files_to_merge.insert(0,treeFile)
+        remove_empty_trees(treeFile)
         if jobLabel == jobs[0][0]: files_to_merge += [histoFile] # takes just histograms from the first subjob
 
 if len(files_to_merge) > 0:
