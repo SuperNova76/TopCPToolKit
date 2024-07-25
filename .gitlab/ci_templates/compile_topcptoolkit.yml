@@ -2,6 +2,7 @@ image: gitlab-registry.cern.ch/atlas-sit/docker/alma9-atlasos-dev:latest
 
 stages:
   - build
+  - checks
 
 variables:
   SOURCE_DIR: source
@@ -225,6 +226,7 @@ latestABnightly:
   script:
     - *prepare_dirs
     - source ${CI_PROJECT_DIR}/.gitlab/ci_scripts/setup_latest_AB_nightly.sh
+    - lsetup cppcheck
     - *setup_kerberos
     - *compile_topcptoolkit
     - echo "BUILD_PATH=${JOBNAME}/${BUILD_DIR}" >> build.env
@@ -237,3 +239,42 @@ latestABnightly:
     expire_in: 2h
     reports:
       dotenv: ./${JOBNAME}/build.env
+
+cppcheck:
+  only:
+    - merge_requests
+  stage: checks
+  tags:
+    - cvmfs
+  variables:
+    JOBNAME: job_cppcheck_latestABnightly
+  needs: [latestABnightly]
+  allow_failure:
+    exit_codes:
+      - 2
+  script:
+    - set +e
+    - cd ${CI_PROJECT_DIR}/${ASETUP_PATH}
+    - source ${CI_PROJECT_DIR}/.gitlab/ci_scripts/setup_latest_AB_nightly.sh
+    - lsetup cppcheck
+    - echo ${BUILD_PATH}
+    - cd ${CI_PROJECT_DIR}/${BUILD_PATH}
+    - set -e
+    - cppcheck -j6  --std=c++17  --quiet --error-exitcode=1 --enable=warning,portability,performance --inline-suppr  -D__CPPCHECK__  -DATOMIC_POINTER_LOCK_FREE=2   --template=gcc  --suppress=*:*Boost* --suppress=*:*Dict.*  --project=compile_commands.json > cppcheck.log 2>&1 || true
+    - set +e
+    - |
+      if grep 'error' cppcheck.log; then
+         echo "Errors found by cppcheck!"
+         exit 1
+      elif grep 'TopCPToolkit.*warning' cppcheck.log | grep -v '\[normalCheckLevelMaxBranches\]' ; then
+         echo "Warnings found by cppcheck, please try to correct them!"
+         exit 2
+      else
+         echo "No issues found by cppcheck"
+         exit 0
+      fi
+  artifacts:
+    paths:
+      - ${CI_PROJECT_DIR}/${BUILD_PATH}/cppcheck.log
+    expire_in: 2h
+    name: ${BUILD_DIR}_${CI_JOB_NAME}

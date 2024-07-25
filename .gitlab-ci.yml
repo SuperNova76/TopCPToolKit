@@ -4,6 +4,7 @@ stages:
     - pages
     - makerelease
     - build
+    - checks
     - run
     - validate
     - ".post"
