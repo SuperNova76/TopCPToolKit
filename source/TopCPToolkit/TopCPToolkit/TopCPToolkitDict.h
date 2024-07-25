@@ -14,7 +14,6 @@
 #include "TopCPToolkit/RunTtbarNNLORecursiveRewAlg.h"
 #include "TopCPToolkit/JetMatchingAlg.h"
 #include "TopCPToolkit/JetReclusteringAlg.h"
-#include "TopCPToolkit/SVMassAlg.h"
 #include "TopCPToolkit/SoftMuonSelectorAlg.h"
 #include "TopCPToolkit/PartonHistoryToSpinInputAlg.h"
 #include "TopCPToolkit/TopSpinDensityMatrixAlg.h"

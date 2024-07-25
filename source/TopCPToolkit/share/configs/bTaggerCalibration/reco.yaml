@@ -42,8 +42,8 @@ Jets:
         generator: 'autoconfig'
         bTagCalibFile : /cvmfs/atlas.cern.ch/repo/sw/database/GroupData/xAODBTaggingEfficiency/13p6TeV/2021-22-13TeV-MC21-CDI_GN2v01_Test_smooth.root
         noEffSF : True
-    # Add SV Mass to the output
-    SVMass: {}
+        # Add SV Mass to the output
+        saveCustomVariables: ['SV1_masssvx']
 
 Electrons:
   - containerName: 'AnaElectrons'
@@ -299,7 +299,3 @@ AddConfigBlocks:
       functionName: 'TtbarNNLORecursiveRewConfig'
       algName: 'TtbarNNLO'
       pos: 'Output'
-    - modulePath: 'TopCPToolkit.SVMassConfig'
-      functionName: 'SVMassConfig'
-      algName: 'SVMass'
-      superBlocks: 'Jets'
