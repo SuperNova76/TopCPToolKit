@@ -283,7 +283,7 @@ namespace top {
     currentPath.pop_back();
   }
 
-  void CalcPartonHistory::AddToParticleMap(const xAOD::TruthParticle* particle, std::string key) {
+  void CalcPartonHistory::AddToParticleMap(const xAOD::TruthParticle* particle, const std::string key) {
     // Add a truth particle to the particle map using a defined key
     particleMap[key] = particle;
   }
