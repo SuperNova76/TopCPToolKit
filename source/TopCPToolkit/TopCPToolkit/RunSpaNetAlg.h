@@ -19,7 +19,6 @@
 // SpaNet topologies
 #include "TopSpaNet/SpaNetEnums.h"
 #include "TopSpaNet/TopologyBase.h"
-#include "TopSpaNet/TopologyTtbarLjets.h"
 #include "TopSpaNet/TopologyTtbarLjetsNu.h"
 
 namespace top {

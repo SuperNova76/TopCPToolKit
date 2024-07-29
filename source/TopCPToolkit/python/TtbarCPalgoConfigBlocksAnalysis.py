@@ -332,7 +332,7 @@ SAVE
 
     # TODO: give it a factory when moving to Athena
     from TopCPToolkit.TopSpaNetConfig import TopSpaNetConfig
-    for topology in ['TtbarLjets', 'TtbarLjetsNu']:
+    for topology in ['TtbarLjetsNu']:
         cfg = TopSpaNetConfig()
         cfg.setOptionValue ('electrons', 'AnaElectrons.tight')
         cfg.setOptionValue ('muons', 'AnaMuons.tight')

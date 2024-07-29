@@ -243,12 +243,6 @@ KLFitter:
     selectionRegionsConfig: 'selectionName:pass_ejets, leptonType: kElectron;selectionName:pass_mujets, leptonType: kMuon'
 
 SpaNet:
-  - topology: 'TtbarLjets'
-    electrons: 'AnaElectrons.tight'
-    muons: 'AnaMuons.tight'
-    jets: 'AnaJets.baselineJvt'
-    met: 'AnaMET'
-    eventSelection: 'pass_ejets_%SYS%,as_char||pass_mujets_%SYS%,as_char'
   - topology: 'TtbarLjetsNu'
     electrons: 'AnaElectrons.tight'
     muons: 'AnaMuons.tight'
