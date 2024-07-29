@@ -8,12 +8,10 @@ namespace top {
   namespace SpaNetEnums {
 
     enum Topology {
-      TtbarLjets,
       TtbarLjetsNu
     };
 
     static const std::map<std::string, Topology> strToTopology {
-      {"TtbarLjets", TtbarLjets },
       {"TtbarLjetsNu", TtbarLjetsNu}
     };
 
