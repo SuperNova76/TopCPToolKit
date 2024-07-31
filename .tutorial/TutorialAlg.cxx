@@ -1,8 +1,9 @@
 #include "TopCPToolkit/TutorialAlg.h"
+#include "VectorHelpers/LorentzHelper.h"
 
 namespace top {
-  using ROOT::Math::PtEtaPhiMVector;
 
+  using ROOT::Math::PtEtaPhiEVector;
   TutorialAlg::TutorialAlg(const std::string &name,
                            ISvcLocator *pSvcLocator)
     : EL::AnaAlgorithm(name, pSvcLocator) {}
@@ -49,12 +50,12 @@ namespace top {
       
       if ( m_preselection && !m_preselection.getBool(*evtInfo, sys)) continue;
       
-      PtEtaPhiMVector lepton;
+      PtEtaPhiEVector lepton;
       if ( electrons->size() > 0 ) {
-	lepton = electrons->at(0)->p4();
+	lepton = GetPtEtaPhiEfromLepton(electrons->at(0));
       }
       else if ( muons->size() > 0) {
-	lepton = muons->at(0)->p4();
+	lepton = GetPtEtaPhiEfromLepton(muons->at(0));
       }
 
       float et_miss  = (*met)["Final"]->met();
