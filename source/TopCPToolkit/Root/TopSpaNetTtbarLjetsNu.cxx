@@ -35,6 +35,7 @@ namespace top {
 				      float met_met, float met_phi,
 				      unsigned long long eventNumber) {
 
+    // Set container for leptons and their properties
     xAOD::IParticleContainer leptons(SG::VIEW_ELEMENTS);
     std::vector<int> lepton_charges;
     lepton_charges.clear();
@@ -42,18 +43,24 @@ namespace top {
     lepton_etags.clear();
     std::vector<int> lepton_mutags;
     lepton_mutags.clear();
+
+    // Process electrons and store their properties
     for (const xAOD::Electron *t : electrons){
       leptons.push_back(const_cast<xAOD::Electron*>(t));
       lepton_charges.push_back(t->charge());
       lepton_etags.push_back(1);
       lepton_mutags.push_back(0);
     }
+
+    // Process muons and store their properties
     for (const xAOD::Muon *t : muons){
       leptons.push_back(const_cast<xAOD::Muon*>(t));
       lepton_charges.push_back(t->charge());
       lepton_etags.push_back(0);
       lepton_mutags.push_back(1);
     }
+
+    // Since this is Ttbar l+jets we expect exactly one lepton
     if (leptons.size() > 1) ANA_MSG_VERBOSE("WARNING: Multiple leptons found, using first one only");
 
     // currently theres a bug with spanet whereby we need to use a batchsize > 1; so for now, we will just add a dummy second event, hence the [2] below
@@ -66,6 +73,7 @@ namespace top {
     float global_values[2][1][3];
     bool global_masks[2][1];
 
+    // Process jets and store their properties
     for (long unsigned int i=0; i < static_cast<long unsigned int>(m_MAX_JETS); ++i){
       std::vector<float> jet_kin;
 
@@ -94,7 +102,7 @@ namespace top {
                         ", btag = " << jet_values[0][i][5]);
       }
       else {
-        // now fill the dumym values for the rest
+        // now fill the dummy values for the rest
         for (int j=0; j < m_NUM_JET_FEATURES; ++j) jet_values[0][i][j] = 0.0;
         jet_masks[0][i]=0;
       }
@@ -129,7 +137,7 @@ namespace top {
                         ", mutag = " << lepton_values[0][i][6]);
       }
       else {
-        // now fill the dumym values for the rest
+        // now fill the dummy values for the rest
         for (int j=0; j < m_NUM_LEPTON_FEATURES; ++j) lepton_values[0][i][j] = 0.0;
         lepton_masks[0][i]=0;
       }

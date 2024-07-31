@@ -9,22 +9,22 @@ namespace top {
     TLorentzVector Wp, WpDecay1, WpDecay2;
     int WpDecay1pdgId = -1, WpDecay2pdgId = -1;
 
-    static const SG::AuxElement::Decorator<float> dec_MC_Wp_m("MC_W_" + parentstring + "_m");
-    static const SG::AuxElement::Decorator<float> dec_MC_Wp_pt("MC_W_" + parentstring + "_pt");
-    static const SG::AuxElement::Decorator<float> dec_MC_Wp_eta("MC_W_" + parentstring + "_eta");
-    static const SG::AuxElement::Decorator<float> dec_MC_Wp_phi("MC_W_" + parentstring + "_phi");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wp_m("MC_W" + parentstring + "_m");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wp_pt("MC_W" + parentstring + "_pt");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wp_eta("MC_W" + parentstring + "_eta");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wp_phi("MC_W" + parentstring + "_phi");
 
-    static const SG::AuxElement::Decorator<float> dec_MC_Wpdecay1_m("MC_Wdecay1_" + parentstring + "_m");
-    static const SG::AuxElement::Decorator<float> dec_MC_Wpdecay1_pt("MC_Wdecay1_" + parentstring + "_pt");
-    static const SG::AuxElement::Decorator<float> dec_MC_Wpdecay1_eta("MC_Wdecay1_" + parentstring + "_eta");
-    static const SG::AuxElement::Decorator<float> dec_MC_Wpdecay1_phi("MC_Wdecay1_" + parentstring + "_phi");
-    static const SG::AuxElement::Decorator<int> dec_MC_Wpdecay1_pdgId("MC_Wdecay1_" + parentstring + "_pdgId");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wpdecay1_m("MC_Wdecay1" + parentstring + "_m");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wpdecay1_pt("MC_Wdecay1" + parentstring + "_pt");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wpdecay1_eta("MC_Wdecay1" + parentstring + "_eta");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wpdecay1_phi("MC_Wdecay1" + parentstring + "_phi");
+    static const SG::AuxElement::Decorator<int> dec_MC_Wpdecay1_pdgId("MC_Wdecay1" + parentstring + "_pdgId");
 
-    static const SG::AuxElement::Decorator<float> dec_MC_Wpdecay2_m("MC_Wdecay2_" + parentstring + "_m");
-    static const SG::AuxElement::Decorator<float> dec_MC_Wpdecay2_pt("MC_Wdecay2_" + parentstring + "_pt");
-    static const SG::AuxElement::Decorator<float> dec_MC_Wpdecay2_eta("MC_Wdecay2_" + parentstring + "_eta");
-    static const SG::AuxElement::Decorator<float> dec_MC_Wpdecay2_phi("MC_Wdecay2_" + parentstring + "_phi");
-    static const SG::AuxElement::Decorator<int> dec_MC_Wpdecay2_pdgId("MC_Wdecay2_" + parentstring + "_pdgId");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wpdecay2_m("MC_Wdecay2" + parentstring + "_m");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wpdecay2_pt("MC_Wdecay2" + parentstring + "_pt");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wpdecay2_eta("MC_Wdecay2" + parentstring + "_eta");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wpdecay2_phi("MC_Wdecay2" + parentstring + "_phi");
+    static const SG::AuxElement::Decorator<int> dec_MC_Wpdecay2_pdgId("MC_Wdecay2" + parentstring + "_pdgId");
 
     std::string prefix = "MC_" + ((parent != "") ? parent + "_Wp" : "Wp");
 
@@ -52,22 +52,22 @@ namespace top {
     TLorentzVector Wm, WmDecay1, WmDecay2;
     int WmDecay1pdgId = -1, WmDecay2pdgId = -1;
 
-    static const SG::AuxElement::Decorator<float> dec_MC_Wm_m("MC_W_" + parentstring + "_m");
-    static const SG::AuxElement::Decorator<float> dec_MC_Wm_pt("MC_W_" + parentstring + "_pt");
-    static const SG::AuxElement::Decorator<float> dec_MC_Wm_eta("MC_W_" + parentstring + "_eta");
-    static const SG::AuxElement::Decorator<float> dec_MC_Wm_phi("MC_W_" + parentstring + "_phi");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wm_m("MC_W" + parentstring + "_m");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wm_pt("MC_W" + parentstring + "_pt");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wm_eta("MC_W" + parentstring + "_eta");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wm_phi("MC_W" + parentstring + "_phi");
 
-    static const SG::AuxElement::Decorator<float> dec_MC_Wmdecay1_m("MC_Wdecay1_" + parentstring + "_m");
-    static const SG::AuxElement::Decorator<float> dec_MC_Wmdecay1_pt("MC_Wdecay1_" + parentstring + "_pt");
-    static const SG::AuxElement::Decorator<float> dec_MC_Wmdecay1_eta("MC_Wdecay1_" + parentstring + "_eta");
-    static const SG::AuxElement::Decorator<float> dec_MC_Wmdecay1_phi("MC_Wdecay1_" + parentstring + "_phi");
-    static const SG::AuxElement::Decorator<int> dec_MC_Wmdecay1_pdgId("MC_Wdecay1_" + parentstring + "_pdgId");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wmdecay1_m("MC_Wdecay1" + parentstring + "_m");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wmdecay1_pt("MC_Wdecay1" + parentstring + "_pt");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wmdecay1_eta("MC_Wdecay1" + parentstring + "_eta");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wmdecay1_phi("MC_Wdecay1" + parentstring + "_phi");
+    static const SG::AuxElement::Decorator<int> dec_MC_Wmdecay1_pdgId("MC_Wdecay1" + parentstring + "_pdgId");
 
-    static const SG::AuxElement::Decorator<float> dec_MC_Wmdecay2_m("MC_Wdecay2_" + parentstring + "_m");
-    static const SG::AuxElement::Decorator<float> dec_MC_Wmdecay2_pt("MC_Wdecay2_" + parentstring + "_pt");
-    static const SG::AuxElement::Decorator<float> dec_MC_Wmdecay2_eta("MC_Wdecay2_" + parentstring + "_eta");
-    static const SG::AuxElement::Decorator<float> dec_MC_Wmdecay2_phi("MC_Wdecay2_" + parentstring + "_phi");
-    static const SG::AuxElement::Decorator<int> dec_MC_Wmdecay2_pdgId("MC_Wdecay2_" + parentstring + "_pdgId");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wmdecay2_m("MC_Wdecay2" + parentstring + "_m");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wmdecay2_pt("MC_Wdecay2" + parentstring + "_pt");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wmdecay2_eta("MC_Wdecay2" + parentstring + "_eta");
+    static const SG::AuxElement::Decorator<float> dec_MC_Wmdecay2_phi("MC_Wdecay2" + parentstring + "_phi");
+    static const SG::AuxElement::Decorator<int> dec_MC_Wmdecay2_pdgId("MC_Wdecay2" + parentstring + "_pdgId");
 
     std::string prefix = "MC_" + ((parent != "") ? parent + "_Wm" : "Wm");
 

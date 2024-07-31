@@ -39,7 +39,7 @@ class TopSpaNetConfig(ConfigBlock):
         alg.regressed_neutrino_pz   = self.topology+'_spanet_reg_nu_pz_%SYS%'
         alg.regressed_ttbar_mass    = self.topology+'_spanet_reg_ttbar_m_%SYS%'
 
-        if self.topology == 'TtbarLjets' or self.topology == 'TtbarLjetsNu':
+        if self.topology == 'TtbarLjetsNu':
             config.addOutputVar('EventInfo', alg.leptonic_b_index, self.topology+'_spanet_lep_b_index')
             config.addOutputVar('EventInfo', alg.hadronic_b_index, self.topology+'_spanet_had_b_index')
             config.addOutputVar('EventInfo', alg.down_index, self.topology+'_spanet_down_index')
@@ -48,9 +48,8 @@ class TopSpaNetConfig(ConfigBlock):
             config.addOutputVar('EventInfo', alg.hadronic_top_assignment, self.topology+'_spanet_had_top_assignment')
             config.addOutputVar('EventInfo', alg.leptonic_top_detection, self.topology+'_spanet_lep_top_detection')
             config.addOutputVar('EventInfo', alg.hadronic_top_detection, self.topology+'_spanet_had_top_detection')
-            if self.topology == 'TtbarLjetsNu':
-                config.addOutputVar('EventInfo', alg.regressed_neutrino_eta, self.topology+'_spanet_reg_nu_eta')
-                config.addOutputVar('EventInfo', alg.regressed_neutrino_px, self.topology+'_spanet_reg_nu_px')
-                config.addOutputVar('EventInfo', alg.regressed_neutrino_py, self.topology+'_spanet_reg_nu_py')
-                config.addOutputVar('EventInfo', alg.regressed_neutrino_pz, self.topology+'_spanet_reg_nu_pz')
-                config.addOutputVar('EventInfo', alg.regressed_ttbar_mass, self.topology+'_spanet_reg_ttbar_m')
+            config.addOutputVar('EventInfo', alg.regressed_neutrino_eta, self.topology+'_spanet_reg_nu_eta')
+            config.addOutputVar('EventInfo', alg.regressed_neutrino_px, self.topology+'_spanet_reg_nu_px')
+            config.addOutputVar('EventInfo', alg.regressed_neutrino_py, self.topology+'_spanet_reg_nu_py')
+            config.addOutputVar('EventInfo', alg.regressed_neutrino_pz, self.topology+'_spanet_reg_nu_pz')
+            config.addOutputVar('EventInfo', alg.regressed_ttbar_mass, self.topology+'_spanet_reg_ttbar_m')

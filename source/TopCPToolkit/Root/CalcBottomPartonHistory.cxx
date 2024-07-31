@@ -13,10 +13,10 @@ namespace top {
 
     TLorentzVector b;
 
-    static const SG::AuxElement::Decorator<float> dec_MC_b_m("MC_W_" + parentstring + "_m");
-    static const SG::AuxElement::Decorator<float> dec_MC_b_pt("MC_W_" + parentstring + "_pt");
-    static const SG::AuxElement::Decorator<float> dec_MC_b_eta("MC_W_" + parentstring + "_eta");
-    static const SG::AuxElement::Decorator<float> dec_MC_b_phi("MC_W_" + parentstring + "_phi");
+    static const SG::AuxElement::Decorator<float> dec_MC_b_m("MC_b" + parentstring + "_m");
+    static const SG::AuxElement::Decorator<float> dec_MC_b_pt("MC_b" + parentstring + "_pt");
+    static const SG::AuxElement::Decorator<float> dec_MC_b_eta("MC_b" + parentstring + "_eta");
+    static const SG::AuxElement::Decorator<float> dec_MC_b_phi("MC_b" + parentstring + "_phi");
 
     std::string prefix = "MC_";
     if (parent != "") prefix += parent + "_b";
@@ -35,10 +35,10 @@ namespace top {
 
     TLorentzVector bbar;
 
-    static const SG::AuxElement::Decorator<float> dec_MC_bbar_m("MC_W_" + parentstring + "_m");
-    static const SG::AuxElement::Decorator<float> dec_MC_bbar_pt("MC_W_" + parentstring + "_pt");
-    static const SG::AuxElement::Decorator<float> dec_MC_bbar_eta("MC_W_" + parentstring + "_eta");
-    static const SG::AuxElement::Decorator<float> dec_MC_bbar_phi("MC_W_" + parentstring + "_phi");
+    static const SG::AuxElement::Decorator<float> dec_MC_bbar_m("MC_bbar" + parentstring + "_m");
+    static const SG::AuxElement::Decorator<float> dec_MC_bbar_pt("MC_bbar" + parentstring + "_pt");
+    static const SG::AuxElement::Decorator<float> dec_MC_bbar_eta("MC_bbar" + parentstring + "_eta");
+    static const SG::AuxElement::Decorator<float> dec_MC_bbar_phi("MC_bbar" + parentstring + "_phi");
 
     std::string prefix = "MC_";
     if (parent != "") prefix += parent + "_bbar";

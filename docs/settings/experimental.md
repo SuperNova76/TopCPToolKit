@@ -5,23 +5,9 @@
     No such method exist for experimental algorithms!
 --->
 
-## Config blocks
+## Config blocks
 
-### [SVMassAlg](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/SVMassConfig.py)
-Name in YAML: **SVMass**
-
-Decorates the output jets with the secondary vertex mass (SVMass).
-
-`containerName`
-:   the name of the output container after calibration.
-
-`eventSelection`
-:   optional event filter to run on. The default is `''` (empty string), i.e. all events.
-
-!!! success "Registers the following variables:"
-    - `SVMass`: the secondary vertex mass of every jet.
-
-### [VGammaORConfig]((https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/VGammaORConfig.py)
+### [VGammaORConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/VGammaORConfig.py)
 Name in YAML: **VGammaOR**
 
 Adds a new event-level variable `in_vgamma_overlap` using the [VGammaORTool](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/VGammaORTool). The new variable can be used to remove to overlap between e.g. V+jets and Vy+jets samples.

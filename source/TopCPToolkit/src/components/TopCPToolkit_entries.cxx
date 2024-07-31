@@ -10,13 +10,10 @@
 #include <TopCPToolkit/RunSpaNetAlg.h>
 #include <TopCPToolkit/RunTtbarNNLORecursiveRewAlg.h>
 #include <TopCPToolkit/JetMatchingAlg.h>
-#include <TopCPToolkit/JetReclusteringAlg.h>
-#include <TopCPToolkit/SVMassAlg.h>
 #include <TopCPToolkit/SoftMuonSelectorAlg.h>
 #include <TopCPToolkit/PartonHistoryToSpinInputAlg.h>
 #include <TopCPToolkit/TopSpinDensityMatrixAlg.h>
 
-DECLARE_COMPONENT (SVMassAlg)
 DECLARE_COMPONENT (top::RunTtbarNNLORecursiveRewAlg)
 DECLARE_COMPONENT (top::RunSpaNetAlg)
 DECLARE_COMPONENT (top::RunPartonHistoryAlg)
@@ -25,7 +22,6 @@ DECLARE_COMPONENT (top::ParticleLevelAlg)
 DECLARE_COMPONENT (top::KLFitterFinalizeOutputAlg)
 DECLARE_COMPONENT (top::KLFitterAlg)
 DECLARE_COMPONENT (top::JetMatchingAlg)
-DECLARE_COMPONENT (top::JetReclusteringAlg)
 DECLARE_COMPONENT (top::SoftMuonSelectorAlg)
 DECLARE_COMPONENT (top::PartonHistoryToSpinInputAlg)
 DECLARE_COMPONENT (top::TopSpinDensityMatrixAlg)

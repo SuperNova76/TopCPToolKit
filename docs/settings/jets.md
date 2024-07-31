@@ -212,21 +212,29 @@ Computes the per-event b-tagging SF, i.e. a product of b-tagging efficiency/inef
 !!! success "Registers the following variables:"
     - `weight_ftag_effSF_{btagger}_{btagWP}`: the per-event b-tagging efficiency SF
 
-### [JetReclusteringConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/JetReclusteringConfig.py)
+### [JetReclusteringConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/JetAnalysisAlgorithms/JetReclusteringConfig.py)
 Name in YAML: **JetReclustering**
 
 The algorithm to run FastJet with small-R jets as an input. The output of the algorithm is a new container containing the reclustered jets.
-The default output variables are: pt, eta, phi and e of the reclustered jets as well as a vector of indices pointing to the small-R jets that formed the reclusted jets
 
 `containerName`
-:   Name of the output reclustered jets container.
+:   name of the output reclustered jets container.
 
 `jets`
-:   Input jets to be used for reclustering (including the selection), e.g. `AnaJets.baselineJvt`.
+:   the input jet collection to recluster, with a possible selection, in the format `container` or `container.selection`.
+
+`clusteringAlgorithm`
+:   algorithm (string) to use to recluster the jets: `AntiKt`, `Kt`, `CamKt`.
 
 `reclusteredJetsRadius`
-:   R parameter of the anti-kt algorithm for the reclustered jets. Default is 1.0.
+:   radius parameter of the reclustering algorithm. The default is 1.0.
 
 `minPt`
-:   Minimum pT requirement for the reclustered jets. Can be used for thinning/selection, the decoration name is `passed_pt`. Default is 200000 (200 GeV).
+:   minimum $p_\mathrm{T}$ requirement (in MeV) on the reclustered jets, creating the selection `passed_pt`. The default is 20 GeV.
 
+!!! success "Registers the following variables:"
+    - `pt`: reclustered jet $p_\mathrm{T}$
+    - `eta`: reclustered jet $\eta$
+    - `phi`: reclustered jet $\phi$
+    - `e`: reclustered jet $E$
+    - `small_r_jet_indices`: vector of indices of the small-R jets clustered into this large-R jet
