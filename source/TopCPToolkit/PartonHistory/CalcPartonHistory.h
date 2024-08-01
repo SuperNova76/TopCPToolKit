@@ -28,7 +28,7 @@ namespace top {
 
     std::map<std::string, const xAOD::TruthParticle* > particleMap;
 
-    void AddToParticleMap(const xAOD::TruthParticle* particle, const std::string key);
+    void AddToParticleMap(const xAOD::TruthParticle* particle, const std::string& key);
     bool ExistsInMap(const std::string& key);
     bool Retrievep4(const std::string& key, PtEtaPhiMVector& p4);
     bool RetrievepdgId(const std::string& key, int& pdgId);
