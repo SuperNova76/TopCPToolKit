@@ -66,8 +66,7 @@ namespace top {
 
     bool handleBeforeFSR(const xAOD::TruthParticle* particle, const std::string& newKey, std::string& key);
     bool handleAfterFSR(const xAOD::TruthParticle* particle, const std::string& newKey, const std::string& oldKey, std::string& key);
-    bool handleBosonFromH(const xAOD::TruthParticle* particle, std::string& key, int decayID);
-    bool handleDecay(const xAOD::TruthParticle* particle, std::string& key, int decayID, bool isLast);
+    bool handleDecay(const xAOD::TruthParticle* particle, std::string& key, int decayID);
     void handleSameAsParent(const xAOD::TruthParticle* particle, std::string& key);
     void handleDefault(const xAOD::TruthParticle* particle, const std::string& newKey, std::string& key);
 
@@ -78,7 +77,7 @@ namespace top {
     void FillAntiBottomPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);
     void FillWpPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);
     void FillWmPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);
-    void FillZPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);
+    void FillZPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent, const int bosoID=-1);
     void FillTtbarPartonHistory(xAOD::PartonHistory* PartonHistory);
     void FillHiggsPartonHistory(xAOD::PartonHistory* PartonHistory);
 

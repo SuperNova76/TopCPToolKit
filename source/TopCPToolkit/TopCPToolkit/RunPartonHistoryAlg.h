@@ -20,6 +20,7 @@
 
 // HiggsParton histories
 #include "PartonHistory/CalcHWWPartonHistory.h"
+#include "PartonHistory/CalcHZZPartonHistory.h"
 
 namespace top {
 
