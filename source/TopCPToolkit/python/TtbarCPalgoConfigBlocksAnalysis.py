@@ -408,7 +408,7 @@ def makeTruthConfiguration(flags, algSeq, configSeq, factory, noSystematics=Fals
     # TODO: give it a factory when moving to Athena
     from TopCPToolkit.truthConfig import truthConfig
     cfg = truthConfig()
-    cfg.setOptionValue ('histories', 'Ttbar.Ttz')
+    cfg.setOptionValue ('histories', 'Ttbar')
     configSeq.append(cfg)
     outputContainers.update( cfg.getOutputContainers() )
 
