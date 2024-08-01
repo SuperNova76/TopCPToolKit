@@ -4,7 +4,7 @@
 namespace top {
   using ROOT::Math::PtEtaPhiMVector;
 
-  void CalcPartonHistory::FillZPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent) {
+  void CalcPartonHistory::FillZPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent, const int bosonID) {
     std::string parentstring = "";
     if (parent != "") parentstring = "_from_"+parent;
     

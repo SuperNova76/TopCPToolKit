@@ -2,7 +2,6 @@
 #include "PartonHistory/PartonHistoryUtils.h"
 
 namespace top {
-  using PartonHistoryUtils::decorateWithMPtPhi;
   using ROOT::Math::PtEtaPhiMVector;
   
   void CalcPartonHistory::FillTopPartonHistory(xAOD::PartonHistory* PartonHistory) {
@@ -74,7 +73,7 @@ namespace top {
 
   void CalcPartonHistory::FillTtbarPartonHistory(xAOD::PartonHistory* PartonHistory) {
     // assuming t and tbar partonhistory ran already
-    PtEtaPhiMVector temp;
+    PtEtaPhiMVector ttbar;
 
     PtEtaPhiMVector t_beforeFSR;
     PtEtaPhiMVector tbar_beforeFSR;
@@ -125,7 +124,7 @@ namespace top {
 	&& Retrievep4("MC_tbar_afterFSR", tbar_afterFSR)) {
       ttbar = t_afterFSR + tbar_afterFSR;
       // Since this is ttbar we don't set a pdgId
-      FillParticleInfo(dec_MC_ttbar_afterFSR_beforeDecay_m, dec_MC_ttbar_afterFSR_beforeDecay_pt, dec_MC_ttbar_afterFSR_beforeDecay_eta, dec_MC_ttbar_afterFSR_beforeDecay_phi, ttbar, PartonHistory);
+      FillParticleInfo(dec_MC_ttbar_afterFSR_m, dec_MC_ttbar_afterFSR_pt, dec_MC_ttbar_afterFSR_eta, dec_MC_ttbar_afterFSR_phi, ttbar, PartonHistory);
     }
 
     if (RetrieveParticleInfo("MC_t_WpDecay1", WpDecay1, WpDecay1_pdgId)
@@ -133,7 +132,7 @@ namespace top {
 	&& RetrieveParticleInfo("MC_t_WmDecay1", WmDecay1, WmDecay1_pdgId)
 	&& RetrieveParticleInfo("MC_t_WmDecay2", WmDecay2, WmDecay2_pdgId)
 	&& Retrievep4("MC_t_b_beforeFSR", b)
-	&& Retrievep4("MC_t_bbar_beforeFSR", bbar)) {
+	&& Retrievep4("MC_tbar_bbar_beforeFSR", bbar)) {
       ttbar = WpDecay1 + WpDecay2 + WmDecay1 + WmDecay2 + b + bbar;
       // Since this is ttbar we don't set a pdgId
       FillParticleInfo(dec_MC_ttbar_fromDecay_beforeFSR_m, dec_MC_ttbar_fromDecay_beforeFSR_pt, dec_MC_ttbar_fromDecay_beforeFSR_eta, dec_MC_ttbar_fromDecay_beforeFSR_phi, ttbar, PartonHistory);
@@ -144,7 +143,7 @@ namespace top {
 	&& RetrieveParticleInfo("MC_t_WmDecay1", WmDecay1, WmDecay1_pdgId)
 	&& RetrieveParticleInfo("MC_t_WmDecay2", WmDecay2, WmDecay2_pdgId)
 	&& Retrievep4("MC_t_b_afterFSR", b)
-	&& Retrievep4("MC_t_bbar_afterFSR", bbar)) {
+	&& Retrievep4("MC_tbar_bbar_afterFSR", bbar)) {
       ttbar = WpDecay1 + WpDecay2 + WmDecay1 + WmDecay2 + b + bbar;
       // Since this is ttbar we don't set a pdgId
       FillParticleInfo(dec_MC_ttbar_fromDecay_afterFSR_m, dec_MC_ttbar_fromDecay_afterFSR_pt, dec_MC_ttbar_fromDecay_afterFSR_eta, dec_MC_ttbar_fromDecay_afterFSR_phi, ttbar, PartonHistory);
