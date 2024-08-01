@@ -148,7 +148,7 @@ Get a local copy of the git repository with:
     ```sh
     git clone ssh://git@gitlab.cern.ch:7999/atlasphys-top/reco/TopCPToolkit.git TopCPToolkit_wAthena
     ```
-=== "HTML"
+=== "HTTP"
     ```sh
     git clone https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit.git TopCPToolkit_wAthena
     ```
