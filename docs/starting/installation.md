@@ -138,27 +138,63 @@ set( ATLAS_ENABLE_IDE_HELPERS OFF CACHE BOOL "Enable IDE helpers" )
 !!! tip
     This [cheatsheet](https://atlassoftwaredocs.web.cern.ch/gittutorial/GitCheatSheet.pdf) is very useful!
 
+Get a local copy of the git repository with:
+
+=== "Kerberos"
+    ```sh
+    git clone https://:@gitlab.cern.ch:8443/atlasphys-top/reco/TopCPToolkit.git TopCPToolkit_wAthena
+    ```
+=== "SSH"
+    ```sh
+    git clone ssh://git@gitlab.cern.ch:7999/atlasphys-top/reco/TopCPToolkit.git TopCPToolkit_wAthena
+    ```
+=== "HTTP"
+    ```sh
+    git clone https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit.git TopCPToolkit_wAthena
+    ```
+
+Set up a sparse-checkout of Athena under the directory `TopCPToolkit_wAthena/source/`:
+
+```sh
+cd TopCPToolkit_wAthena/source/
+setupATLAS
+lsetup git
+```
+
+!!! tip
+    See the [ATLAS software git tutorial](https://atlassoftwaredocs.web.cern.ch/gittutorial/env-setup/) for more details on how to set up and fork Athena on gitlab, sparse checkout packages, and make a merge request.
+
+```sh
+git atlas init-workdir https://:@gitlab.cern.ch:8443/[YOUR_USER_NAME]/athena.git
+cd athena/
+git atlas addpkg [PACKAGE_NAMES]
+```
 The packages you might want to add probably live under [PhysicsAnalysis/Algorithms/](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/).
 
-=== "Sparse-clone setup and compiling with acm"
-    This assumes you have used `acmSetup` instead of `asetup`
-    ```sh
-    acm sparse_clone_project athena
-    acm add_pkg athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms
-    acm compile
-    ```
+Remove the Athena project directory:
+```sh
+rm -r Projects/
+```
+Prepare the build area:
+```sh
+cd ../..
+mkdir -p build && cd build
+```
+Switch to the relevant AnalysisBase branch or release/25.2.x tag, for example:
+```sh
+asetup AnalysisBase,main,latest
+```
+
+Compile and set up environment:
 === "Simple"
-    Set up a sparse-checkout of Athena, using the `main` branch or the relevant `release/25.2.x` tag.
-    Then move `source/TopCPToolkit` to within the newly created `athena` folder.
-    From the `build` directory, you can now compile as:
     ```sh
-    cmake ../athena/Projects/WorkDir
+    cmake ../source
     make -j4
     source */setup.sh
     ```
 === "Debugging"
     ```sh
-    cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS='-g -O0' ../athena/Projects/WorkDir
+    cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS='-g -O0' ../source
     make -j4
     source */setup.sh
     ```
