@@ -1,7 +1,7 @@
 from AnalysisAlgorithmsConfig.ConfigBlock import ConfigBlock
 
 class PartonHistoryToSpinInputConfig(ConfigBlock):
-    """Turn the top parton histories into TLorentzVectors suitable for use"""
+    """Turn the top parton histories into PtEtaPhiMVector suitable for use"""
     """in the TopSpinDensityMatrixAlg"""
 
     def __init__(self):

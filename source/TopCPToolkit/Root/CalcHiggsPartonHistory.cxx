@@ -2,13 +2,17 @@
 #include "PartonHistory/PartonHistoryUtils.h"
 
 namespace top {
+  using ROOT::Math::PtEtaPhiMVector;
+
   void CalcPartonHistory::FillHiggsPartonHistory(xAOD::PartonHistory* PartonHistory) {
-
-    TLorentzVector H;
-    TLorentzVector HDecay1, HDecay2;
-    TLorentzVector HDecay1_Decay1, HDecay1_Decay2;
-    TLorentzVector HDecay2_Decay1, HDecay2_Decay2;
-
+    PtEtaPhiMVector H;
+    PtEtaPhiMVector HDecay1;
+    PtEtaPhiMVector HDecay2;
+    PtEtaPhiMVector HDecay1_Decay1;
+    PtEtaPhiMVector HDecay1_Decay2;
+    PtEtaPhiMVector HDecay2_Decay1;
+    PtEtaPhiMVector HDecay2_Decay2;
+        
     int HDecay1pdgId = 0;
     int HDecay2pdgId = 0;
     int HDecay1_Decay1pdgId = 0;

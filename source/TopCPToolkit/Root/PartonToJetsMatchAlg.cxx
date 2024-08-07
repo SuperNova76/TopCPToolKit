@@ -2,8 +2,12 @@
 #include "AthContainers/ConstDataVector.h"
 
 #include "PartonHistory/PartonHistory.h"
+#include "VectorHelpers/LorentzHelper.h"
 
 namespace top {
+  using ROOT::Math::PtEtaPhiEVector;
+  using ROOT::Math::PtEtaPhiMVector;
+  using ROOT::Math::VectorUtil::DeltaR;
 
   PartonToJetsMatchAlg::PartonToJetsMatchAlg(const std::string &name, ISvcLocator *pSvcLocator)
     : EL::AnaAlgorithm(name, pSvcLocator)
@@ -189,28 +193,28 @@ namespace top {
       return StatusCode::SUCCESS;
     }
 
-    TLorentzVector W_quark_up, W_quark_down, b_had, b_lep;
-
+    PtEtaPhiMVector W_quark_up, W_quark_down, b_had, b_lep;
+  
     if (t_isHadronic) {
-      b_had.SetPtEtaPhiM(MC_b_from_t_pt, MC_b_from_t_eta, MC_b_from_t_phi, MC_b_from_t_m);
-      b_lep.SetPtEtaPhiM(MC_bbar_from_tbar_pt, MC_bbar_from_tbar_eta, MC_bbar_from_tbar_phi, MC_bbar_from_tbar_m);
+      b_had.SetCoordinates(MC_b_from_t_pt, MC_b_from_t_eta, MC_b_from_t_phi, MC_b_from_t_m);
+      b_lep.SetCoordinates(MC_bbar_from_tbar_pt, MC_bbar_from_tbar_eta, MC_bbar_from_tbar_phi, MC_bbar_from_tbar_m);
       if (std::abs(MC_Wdecay1_from_t_pdgId) == 2 || std::abs(MC_Wdecay1_from_t_pdgId) == 4) {
-        W_quark_up  .SetPtEtaPhiM(MC_Wdecay1_from_t_pt, MC_Wdecay1_from_t_eta, MC_Wdecay1_from_t_phi, MC_Wdecay1_from_t_m);
-        W_quark_down.SetPtEtaPhiM(MC_Wdecay2_from_t_pt, MC_Wdecay2_from_t_eta, MC_Wdecay2_from_t_phi, MC_Wdecay2_from_t_m);
+        W_quark_up.SetCoordinates(MC_Wdecay1_from_t_pt, MC_Wdecay1_from_t_eta, MC_Wdecay1_from_t_phi, MC_Wdecay1_from_t_m);
+        W_quark_down.SetCoordinates(MC_Wdecay2_from_t_pt, MC_Wdecay2_from_t_eta, MC_Wdecay2_from_t_phi, MC_Wdecay2_from_t_m);
       } else {
-        W_quark_down.SetPtEtaPhiM(MC_Wdecay1_from_t_pt, MC_Wdecay1_from_t_eta, MC_Wdecay1_from_t_phi, MC_Wdecay1_from_t_m);
-        W_quark_up  .SetPtEtaPhiM(MC_Wdecay2_from_t_pt, MC_Wdecay2_from_t_eta, MC_Wdecay2_from_t_phi, MC_Wdecay2_from_t_m);
+        W_quark_down.SetCoordinates(MC_Wdecay1_from_t_pt, MC_Wdecay1_from_t_eta, MC_Wdecay1_from_t_phi, MC_Wdecay1_from_t_m);
+        W_quark_up.SetCoordinates(MC_Wdecay2_from_t_pt, MC_Wdecay2_from_t_eta, MC_Wdecay2_from_t_phi, MC_Wdecay2_from_t_m);
       }
 
     } else {
-      b_lep.SetPtEtaPhiM(MC_b_from_t_pt, MC_b_from_t_eta, MC_b_from_t_phi, MC_b_from_t_m);
-      b_had.SetPtEtaPhiM(MC_bbar_from_tbar_pt, MC_bbar_from_tbar_eta, MC_bbar_from_tbar_phi, MC_bbar_from_tbar_m);
+      b_lep.SetCoordinates(MC_b_from_t_pt, MC_b_from_t_eta, MC_b_from_t_phi, MC_b_from_t_m);
+      b_had.SetCoordinates(MC_bbar_from_tbar_pt, MC_bbar_from_tbar_eta, MC_bbar_from_tbar_phi, MC_bbar_from_tbar_m);
       if (std::abs(MC_Wdecay1_from_tbar_pdgId) == 2 || std::abs(MC_Wdecay1_from_tbar_pdgId) == 4) {
-        W_quark_up  .SetPtEtaPhiM(MC_Wdecay1_from_tbar_pt, MC_Wdecay1_from_tbar_eta, MC_Wdecay1_from_tbar_phi, MC_Wdecay1_from_tbar_m);
-        W_quark_down.SetPtEtaPhiM(MC_Wdecay2_from_tbar_pt, MC_Wdecay2_from_tbar_eta, MC_Wdecay2_from_tbar_phi, MC_Wdecay2_from_tbar_m);
+        W_quark_up.SetCoordinates(MC_Wdecay1_from_tbar_pt, MC_Wdecay1_from_tbar_eta, MC_Wdecay1_from_tbar_phi, MC_Wdecay1_from_tbar_m);
+        W_quark_down.SetCoordinates(MC_Wdecay2_from_tbar_pt, MC_Wdecay2_from_tbar_eta, MC_Wdecay2_from_tbar_phi, MC_Wdecay2_from_tbar_m);
       } else {
-        W_quark_down.SetPtEtaPhiM(MC_Wdecay1_from_tbar_pt, MC_Wdecay1_from_tbar_eta, MC_Wdecay1_from_tbar_phi, MC_Wdecay1_from_tbar_m);
-        W_quark_up  .SetPtEtaPhiM(MC_Wdecay2_from_tbar_pt, MC_Wdecay2_from_tbar_eta, MC_Wdecay2_from_tbar_phi, MC_Wdecay2_from_tbar_m);
+        W_quark_down.SetCoordinates(MC_Wdecay1_from_tbar_pt, MC_Wdecay1_from_tbar_eta, MC_Wdecay1_from_tbar_phi, MC_Wdecay1_from_tbar_m);
+        W_quark_up.SetCoordinates(MC_Wdecay2_from_tbar_pt, MC_Wdecay2_from_tbar_eta, MC_Wdecay2_from_tbar_phi, MC_Wdecay2_from_tbar_m);
       }
     }
 
@@ -221,13 +225,13 @@ namespace top {
 
     // loop over truth jets and try to identify
     for (std::size_t ijet = 0; ijet < selected_jets.size(); ++ijet) {
-      TLorentzVector truth_jet;
-      truth_jet.SetPtEtaPhiE(selected_jets.at(ijet)->pt(), selected_jets.at(ijet)->eta(), selected_jets.at(ijet)->phi(), selected_jets.at(ijet)->e());
+      PtEtaPhiEVector truth_jet;
+      truth_jet.SetCoordinates(selected_jets.at(ijet)->pt(), selected_jets.at(ijet)->eta(), selected_jets.at(ijet)->phi(), selected_jets.at(ijet)->e());
 
-      const double dr_up    = truth_jet.DeltaR(W_quark_up);
-      const double dr_down  = truth_jet.DeltaR(W_quark_down);
-      const double dr_b_had = truth_jet.DeltaR(b_had);
-      const double dr_b_lep = truth_jet.DeltaR(b_lep);
+      const double dr_up    = DeltaR(truth_jet, W_quark_up); 
+      const double dr_down  = DeltaR(truth_jet, W_quark_down); 
+      const double dr_b_had = DeltaR(truth_jet, b_had); 
+      const double dr_b_lep = DeltaR(truth_jet, b_lep); 
 
       dr_up_vec.emplace_back(dr_up);
       dr_down_vec.emplace_back(dr_down);

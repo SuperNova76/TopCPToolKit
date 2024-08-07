@@ -1,6 +1,7 @@
 #include "TopCPToolkit/PartonHistoryToSpinInputAlg.h"
 
 namespace top {
+  using ROOT::Math::PtEtaPhiMVector;
 
   PartonHistoryToSpinInputAlg::PartonHistoryToSpinInputAlg(const std::string &name,
                                                            ISvcLocator *pSvcLocator)
@@ -66,20 +67,20 @@ namespace top {
       static const SG::AuxElement::Accessor<float> acc_tbar_dec2_m("MC_Wdecay2_from_tbar_m");
       static const SG::AuxElement::Accessor<int>   acc_tbar_dec2_pdgid("MC_Wdecay2_from_tbar_pdgId");
 
-      // build the TLorentzVectors
-      TLorentzVector top, tbar, top_decay, tbar_decay;
-      top.SetPtEtaPhiM(acc_top_pt(*history), acc_top_eta(*history), acc_top_phi(*history), acc_top_m(*history));
-      tbar.SetPtEtaPhiM(acc_tbar_pt(*history), acc_tbar_eta(*history), acc_tbar_phi(*history), acc_tbar_m(*history));
+      // build the PtEtaPhiMVectors
+      PtEtaPhiMVector top, tbar, top_decay, tbar_decay;
+      top.SetCoordinates(acc_top_pt(*history), acc_top_eta(*history), acc_top_phi(*history), acc_top_m(*history));
+      tbar.SetCoordinates(acc_tbar_pt(*history), acc_tbar_eta(*history), acc_tbar_phi(*history), acc_tbar_m(*history));
       // ignore neutrinos and up-type quarks amongst the decay products
       std::set<int> ignored = {2, 4, 12, 14, 16};
       if (ignored.find(std::abs(acc_top_dec1_pdgid(*history))) != ignored.end())
-        top_decay.SetPtEtaPhiM(acc_top_dec2_pt(*history), acc_top_dec2_eta(*history), acc_top_dec2_phi(*history), acc_top_dec2_m(*history));
+        top_decay.SetCoordinates(acc_top_dec2_pt(*history), acc_top_dec2_eta(*history), acc_top_dec2_phi(*history), acc_top_dec2_m(*history));
       else
-        top_decay.SetPtEtaPhiM(acc_top_dec1_pt(*history), acc_top_dec1_eta(*history), acc_top_dec1_phi(*history), acc_top_dec1_m(*history));
+        top_decay.SetCoordinates(acc_top_dec1_pt(*history), acc_top_dec1_eta(*history), acc_top_dec1_phi(*history), acc_top_dec1_m(*history));
       if (ignored.find(std::abs(acc_tbar_dec1_pdgid(*history))) != ignored.end())
-        tbar_decay.SetPtEtaPhiM(acc_tbar_dec2_pt(*history), acc_tbar_dec2_eta(*history), acc_tbar_dec2_phi(*history), acc_tbar_dec2_m(*history));
+        tbar_decay.SetCoordinates(acc_tbar_dec2_pt(*history), acc_tbar_dec2_eta(*history), acc_tbar_dec2_phi(*history), acc_tbar_dec2_m(*history));
       else
-        tbar_decay.SetPtEtaPhiM(acc_tbar_dec1_pt(*history), acc_tbar_dec1_eta(*history), acc_tbar_dec1_phi(*history), acc_tbar_dec1_m(*history));
+        tbar_decay.SetCoordinates(acc_tbar_dec1_pt(*history), acc_tbar_dec1_eta(*history), acc_tbar_dec1_phi(*history), acc_tbar_dec1_m(*history));
 
       // decorate onto EventInfo
       m_top.set(*evtInfo, top, sys);

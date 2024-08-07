@@ -1,6 +1,8 @@
 #include "TopCPToolkit/TopSpinDensityMatrixAlg.h"
 #include "TopCPToolkit/SpinHelpers.h"
 
+using ROOT::Math::PtEtaPhiMVector;
+
 namespace top {
 
   TopSpinDensityMatrixAlg::TopSpinDensityMatrixAlg(const std::string &name,
@@ -52,15 +54,15 @@ namespace top {
       if (m_selection && !m_selection.getBool(*evtInfo, sys))
 	continue;
 
-      // collect the necessary TLorentzVectors
-      TLorentzVector top, tbar, top_analyser, tbar_analyser;
+      // collect the necessary PtEtaPhiMVectors
+      PtEtaPhiMVector top, tbar, top_analyser, tbar_analyser;
       top           = m_top.get(*evtInfo, sys);
       tbar          = m_tbar.get(*evtInfo, sys);
       top_analyser  = m_top_analyser.get(*evtInfo, sys);
       tbar_analyser = m_tbar_analyser.get(*evtInfo, sys);
 
       // the ttbar ZMF
-      TLorentzVector ttbar = top + tbar;
+      PtEtaPhiMVector ttbar = top + tbar;
 
       // compute the spin observables
       m_cos_theta_helicity_p.set(*evtInfo,
