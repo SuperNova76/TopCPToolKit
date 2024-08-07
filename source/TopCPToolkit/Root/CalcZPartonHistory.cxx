@@ -6,34 +6,35 @@ namespace top {
 
   void CalcPartonHistory::FillZPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent, const int bosonID) {
     std::string parentstring = "";
-    if (parent != "") parentstring = "_from_"+parent;
+    if (parent != "") parentstring = "_from_"+parent+"_";
+    else parentstring = "_";
     
     PtEtaPhiMVector Z;
 
     std::string decorator_prefix = "MC_";
-    if (bosonID != -1) decorator_prefix += std::to_string(bosonID) + "Z_";
-    else decorator_prefix += "Z_";
+    if (bosonID != -1) decorator_prefix += "Z" + std::to_string(bosonID);
+    else decorator_prefix += "Z";
     
     PtEtaPhiMVector ZDecay1, ZDecay2;
     int ZDecay1pdgId = -1;
     int ZDecay2pdgId = -1;
 
-    static const SG::AuxElement::Decorator<float> dec_MC_Z_m(decorator_prefix + parentstring + "_m");
-    static const SG::AuxElement::Decorator<float> dec_MC_Z_pt(decorator_prefix + parentstring + "_pt");
-    static const SG::AuxElement::Decorator<float> dec_MC_Z_eta(decorator_prefix + parentstring + "_eta");
-    static const SG::AuxElement::Decorator<float> dec_MC_Z_phi(decorator_prefix + parentstring + "_phi");
+    static const SG::AuxElement::Decorator<float> dec_MC_Z_m(decorator_prefix + parentstring + "m");
+    static const SG::AuxElement::Decorator<float> dec_MC_Z_pt(decorator_prefix + parentstring + "pt");
+    static const SG::AuxElement::Decorator<float> dec_MC_Z_eta(decorator_prefix + parentstring + "eta");
+    static const SG::AuxElement::Decorator<float> dec_MC_Z_phi(decorator_prefix + parentstring + "phi");
 
-    static const SG::AuxElement::Decorator<float> dec_MC_Zdecay1_m(decorator_prefix + "decay1_" + parentstring + "_m");
-    static const SG::AuxElement::Decorator<float> dec_MC_Zdecay1_pt(decorator_prefix + "decay1_" + parentstring + "_pt");
-    static const SG::AuxElement::Decorator<float> dec_MC_Zdecay1_eta(decorator_prefix + "decay1_" + parentstring + "_eta");
-    static const SG::AuxElement::Decorator<float> dec_MC_Zdecay1_phi(decorator_prefix + "decay1_" + parentstring + "_phi");
-    static const SG::AuxElement::Decorator<int> dec_MC_Zdecay1_pdgId(decorator_prefix + "decay1_" + parentstring + "_pdgId");
+    static const SG::AuxElement::Decorator<float> dec_MC_Zdecay1_m(decorator_prefix + "decay1" + parentstring + "m");
+    static const SG::AuxElement::Decorator<float> dec_MC_Zdecay1_pt(decorator_prefix + "decay1" + parentstring + "pt");
+    static const SG::AuxElement::Decorator<float> dec_MC_Zdecay1_eta(decorator_prefix + "decay1" + parentstring + "eta");
+    static const SG::AuxElement::Decorator<float> dec_MC_Zdecay1_phi(decorator_prefix + "decay1" + parentstring + "phi");
+    static const SG::AuxElement::Decorator<int> dec_MC_Zdecay1_pdgId(decorator_prefix + "decay1" + parentstring + "pdgId");
     
-    static const SG::AuxElement::Decorator<float> dec_MC_Zdecay2_m(decorator_prefix + "decay2_" + parentstring + "_m");
-    static const SG::AuxElement::Decorator<float> dec_MC_Zdecay2_pt(decorator_prefix + "decay2_" + parentstring + "_pt");
-    static const SG::AuxElement::Decorator<float> dec_MC_Zdecay2_eta(decorator_prefix + "decay2_" + parentstring + "_eta");
-    static const SG::AuxElement::Decorator<float> dec_MC_Zdecay2_phi(decorator_prefix + "decay2_" + parentstring + "_phi");
-    static const SG::AuxElement::Decorator<int> dec_MC_Zdecay2_pdgId(decorator_prefix + "decay2_" + parentstring + "_pdgId");
+    static const SG::AuxElement::Decorator<float> dec_MC_Zdecay2_m(decorator_prefix + "decay2" + parentstring + "m");
+    static const SG::AuxElement::Decorator<float> dec_MC_Zdecay2_pt(decorator_prefix + "decay2" + parentstring + "pt");
+    static const SG::AuxElement::Decorator<float> dec_MC_Zdecay2_eta(decorator_prefix + "decay2" + parentstring + "eta");
+    static const SG::AuxElement::Decorator<float> dec_MC_Zdecay2_phi(decorator_prefix + "decay2" + parentstring + "phi");
+    static const SG::AuxElement::Decorator<int> dec_MC_Zdecay2_pdgId(decorator_prefix + "decay2" + parentstring + "pdgId");
 
     static const SG::AuxElement::Decorator<int> dec_MC_Z_IsOnShell("MC_Z_IsOnShell");
 
@@ -42,6 +43,7 @@ namespace top {
     else accessor_prefix += "Z";
     if (bosonID != -1) accessor_prefix += std::to_string(bosonID);
 
+    std::cout << accessor_prefix << std::endl;
     FillDefaultParticleInfo(dec_MC_Z_m, dec_MC_Z_pt, dec_MC_Z_eta, dec_MC_Z_phi, PartonHistory);
     FillDefaultParticleInfo(dec_MC_Zdecay1_m, dec_MC_Zdecay1_pt, dec_MC_Zdecay1_eta, dec_MC_Zdecay1_phi, dec_MC_Zdecay1_pdgId, PartonHistory);
     FillDefaultParticleInfo(dec_MC_Zdecay2_m, dec_MC_Zdecay2_pt, dec_MC_Zdecay2_eta, dec_MC_Zdecay2_phi, dec_MC_Zdecay2_pdgId, PartonHistory);
