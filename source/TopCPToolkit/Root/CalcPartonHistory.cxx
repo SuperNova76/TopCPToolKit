@@ -368,7 +368,7 @@ namespace top {
 
 	int decayID = particle->pdgId() < 0 ? 2 : 1;
 	// if we have a Z or a gamma, we have to define the decayID differently
-	if (particle->pdgId() == 23 || particle->pdgId() == 22) {
+	if ((particle->pdgId() == 23 || particle->pdgId() == 22) && particle->nParents() != 0) {
 	  // We assign 1 for the first child and 2 for the second
 	  if (particle->parent()->child(0) == particle) decayID = 1;
 	  else decayID = 2;
