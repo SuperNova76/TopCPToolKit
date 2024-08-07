@@ -43,7 +43,6 @@ namespace top {
     else accessor_prefix += "Z";
     if (bosonID != -1) accessor_prefix += std::to_string(bosonID);
 
-    std::cout << accessor_prefix << std::endl;
     FillDefaultParticleInfo(dec_MC_Z_m, dec_MC_Z_pt, dec_MC_Z_eta, dec_MC_Z_phi, PartonHistory);
     FillDefaultParticleInfo(dec_MC_Zdecay1_m, dec_MC_Zdecay1_pt, dec_MC_Zdecay1_eta, dec_MC_Zdecay1_phi, dec_MC_Zdecay1_pdgId, PartonHistory);
     FillDefaultParticleInfo(dec_MC_Zdecay2_m, dec_MC_Zdecay2_pt, dec_MC_Zdecay2_eta, dec_MC_Zdecay2_phi, dec_MC_Zdecay2_pdgId, PartonHistory);
