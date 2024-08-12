@@ -112,48 +112,6 @@ namespace top {
     return Retrievep4(prefix, particle) && RetrievepdgId(prefix, pdgId);
   }
 
-  void CalcPartonHistory::FillParticleInfo(const SG::AuxElement::Decorator<float>& dec_m, const SG::AuxElement::Decorator<float>& dec_pt,
-					   const SG::AuxElement::Decorator<float>& dec_eta, const SG::AuxElement::Decorator<float>& dec_phi,
-					   const SG::AuxElement::Decorator<int>& dec_pdgId,
-					   const PtEtaPhiMVector& particle, int pdgId,
-					   xAOD::PartonHistory* history) {
-    dec_m(*history) = particle.M();
-    dec_pt(*history) = particle.Pt();
-    dec_eta(*history) = particle.Eta();
-    dec_phi(*history) = particle.Phi();
-    dec_pdgId(*history) = pdgId;
-  }
-
-  void CalcPartonHistory::FillParticleInfo(const SG::AuxElement::Decorator<float>& dec_m, const SG::AuxElement::Decorator<float>& dec_pt,
-					   const SG::AuxElement::Decorator<float>& dec_eta, const SG::AuxElement::Decorator<float>& dec_phi,
-					   const PtEtaPhiMVector& particle,
-					   xAOD::PartonHistory* history) {
-    dec_m(*history) = particle.M();
-    dec_pt(*history) = particle.Pt();
-    dec_eta(*history) = particle.Eta();
-    dec_phi(*history) = particle.Phi();
-  }
-
-  void CalcPartonHistory::FillDefaultParticleInfo(const SG::AuxElement::Decorator<float>& dec_m, const SG::AuxElement::Decorator<float>& dec_pt,
-						  const SG::AuxElement::Decorator<float>& dec_eta, const SG::AuxElement::Decorator<float>& dec_phi,
-						  const SG::AuxElement::Decorator<int>& dec_pdgId,
-						  xAOD::PartonHistory* history) {
-    dec_m(*history) = -1;
-    dec_pt(*history) = -1;
-    dec_eta(*history) = -999;
-    dec_phi(*history) = -999;
-    dec_pdgId(*history) = 0;
-  }
-
-  void CalcPartonHistory::FillDefaultParticleInfo(const SG::AuxElement::Decorator<float>& dec_m, const SG::AuxElement::Decorator<float>& dec_pt,
-						  const SG::AuxElement::Decorator<float>& dec_eta, const SG::AuxElement::Decorator<float>& dec_phi,
-						  xAOD::PartonHistory* history) {
-    dec_m(*history) = -1;
-    dec_pt(*history) = -1;
-    dec_eta(*history) = -999;
-    dec_phi(*history) = -999;
-  }
-
   void CalcPartonHistory::EnsureKeyExists(const std::string& key, const std::string& fallbackKey) {
     // Ensures that a given key exists in the particleMap.
     // If the key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
