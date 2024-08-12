@@ -5,5 +5,6 @@ You can explore the various CP algorithms in use in at least one of the analyses
 
 !!! tip
     The following useful options can be set on every config block:
+
     - `skipOnData`: do not run the block configuration on data samples
     - `skipOnMC`: do not run the block configuration on MC samples
