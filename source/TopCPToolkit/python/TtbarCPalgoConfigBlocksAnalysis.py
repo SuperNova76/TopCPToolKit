@@ -41,9 +41,11 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics=False
         configSeq += makeConfig ('Electrons.WorkingPoint', containerName='AnaElectrons', selectionName='loose')
         configSeq.setOptionValue ('.identificationWP', WPLoose[0])
         configSeq.setOptionValue ('.isolationWP', WPLoose[1])
+        configSeq.setOptionValue ('.noEffSF', True)
         configSeq += makeConfig ('Electrons.WorkingPoint', containerName='AnaElectrons', selectionName='tight')
         configSeq.setOptionValue ('.identificationWP', WPTight[0])
         configSeq.setOptionValue ('.isolationWP', WPTight[1])
+        configSeq.setOptionValue ('.noEffSF', True)
 
         configSeq += makeConfig ('Electrons.PtEtaSelection', containerName='AnaElectrons')
         configSeq.setOptionValue ('.selectionDecoration', 'selectPtEta')
@@ -220,7 +222,7 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics=False
 
     # a single lepton SF
     configSeq += makeConfig ('LeptonSF')
-    configSeq.setOptionValue ('.electrons', 'AnaElectrons.tight')
+    #configSeq.setOptionValue ('.electrons', 'AnaElectrons.tight')
     configSeq.setOptionValue ('.muons', 'AnaMuons.tight')
     #configSeq.setOptionValue ('.photons', 'AnaPhotons.tight')
     configSeq.setOptionValue ('.lepton_postfix', 'tight')
@@ -357,7 +359,7 @@ SAVE
     # bootstraps
     configSeq += makeConfig ('Bootstraps')
     configSeq.setOptionValue ('.nReplicas', 2000)
-    configSeq.setOptionValue ('.runOnMC', True)
+    configSeq.setOptionValue ('.skipOnMC', False)
 
     # add NTuple output config
     configSeq += makeConfig ('Output')
