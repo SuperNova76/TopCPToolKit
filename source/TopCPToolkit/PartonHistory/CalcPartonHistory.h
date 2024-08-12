@@ -34,23 +34,6 @@ namespace top {
     bool RetrievepdgId(const std::string& key, int& pdgId);
     bool RetrieveParticleInfo(const std::string& prefix, PtEtaPhiMVector& particle, int& pdgId);
 
-    void FillParticleInfo(const SG::AuxElement::Decorator<float>& dec_m, const SG::AuxElement::Decorator<float>& dec_pt,
-			  const SG::AuxElement::Decorator<float>& dec_eta, const SG::AuxElement::Decorator<float>& dec_phi,
-			  const PtEtaPhiMVector& particle,
-			  xAOD::PartonHistory *history);
-    void FillParticleInfo(const SG::AuxElement::Decorator<float>& dec_m, const SG::AuxElement::Decorator<float>& dec_pt,
-			  const SG::AuxElement::Decorator<float>& dec_eta, const SG::AuxElement::Decorator<float>& dec_phi,
-			  const SG::AuxElement::Decorator<int>& dec_pdgId,
-			  const PtEtaPhiMVector& particle, int pdgId,
-			  xAOD::PartonHistory *history);
-    void FillDefaultParticleInfo(const SG::AuxElement::Decorator<float>& dec_m, const SG::AuxElement::Decorator<float>& dec_pt,
-				 const SG::AuxElement::Decorator<float>& dec_eta, const SG::AuxElement::Decorator<float>& dec_phi,
-				 const SG::AuxElement::Decorator<int>& dec_pdgId,
-				 xAOD::PartonHistory* history);
-    void FillDefaultParticleInfo(const SG::AuxElement::Decorator<float>& dec_m, const SG::AuxElement::Decorator<float>& dec_pt,
-				 const SG::AuxElement::Decorator<float>& dec_eta, const SG::AuxElement::Decorator<float>& dec_phi,
-				 xAOD::PartonHistory* history);
-
     void EnsureKeyExists(const std::string& key, const std::string& fallbackKey);
     void EnsureTtbarKeysExist();
 
