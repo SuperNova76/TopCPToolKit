@@ -252,7 +252,7 @@ SpaNet:
 
 Bootstraps:
   nReplicas: 2000
-  runOnMC: True
+  skipOnMC: False
 
 # After configuring each container, many variables will be saved automatically.
 Output:

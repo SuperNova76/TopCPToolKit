@@ -59,9 +59,11 @@ Electrons:
       - selectionName: 'loose'
         identificationWP: 'TightLH'
         isolationWP: 'NonIso'
+        noEffSF: True
       - selectionName: 'tight'
         identificationWP: 'TightLH'
         isolationWP: 'Tight_VarRad'
+        noEffSF: True
     PtEtaSelection:
         minPt: 25000.0
         maxEta: 2.47
@@ -161,8 +163,8 @@ Thinning:
   #   selectionName: 'tight'
 
 LeptonSF:
-  - electrons: 'AnaElectrons.tight'
-    muons: 'AnaMuons.tight'
+  # - electrons: 'AnaElectrons.tight'
+  - muons: 'AnaMuons.tight'
   # photons: 'AnaPhotons.tight'
     lepton_postfix: 'tight'
 
@@ -264,7 +266,7 @@ SpaNet:
 
 Bootstraps:
   nReplicas: 2000
-  runOnMC: True
+  skipOnMC: False
 
 # After configuring each container, many variables will be saved automatically.
 Output:
