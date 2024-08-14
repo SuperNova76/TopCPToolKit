@@ -17,6 +17,7 @@
 #include "PartonHistory/CalcTtzPartonHistory.h"
 #include "PartonHistory/CalcTthPartonHistory.h"
 #include "PartonHistory/CalcTzqPartonHistory.h"
+#include "PartonHistory/CalcTqgammaPartonHistory.h"
 
 // HiggsParton histories
 #include "PartonHistory/CalcHWWPartonHistory.h"

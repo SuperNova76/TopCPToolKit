@@ -320,7 +320,7 @@ namespace top {
       std::string old_key = "";
       std::string new_key = "";
       std::string postfix = "";
-
+      
       for (auto it = path.begin(); it != path.end(); it++) {
 	const xAOD::TruthParticle* particle = *it;
 	bool isbeforeFSR = (hasIdenticalChild(particle));

@@ -57,6 +57,7 @@ namespace top {
     void FillTopPartonHistory(xAOD::PartonHistory* PartonHistory);
     void FillAntiTopPartonHistory(xAOD::PartonHistory* PartonHistory);
     void FillBottomPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);
+    void FillGammaPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);
     void FillAntiBottomPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);
     void FillWpPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);
     void FillWmPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);
