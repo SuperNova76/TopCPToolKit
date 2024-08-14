@@ -288,7 +288,9 @@ namespace top {
 	(hasParentAbsPdgId(particle, 24) && !hasParentPdgId(particle, particle->pdgId())) ||
 	(hasParentAbsPdgId(particle, 23) && !hasParentPdgId(particle, particle->pdgId()))) {
       std::string postfix;
-      postfix = "Decay" + std::to_string(decayID);
+      // Sometimes we have decays like W-> (l,nu,gamma) where the photon is FSR
+      if (particle->pdgId() == 22) postfix = "_GammaRad";
+      else postfix = "Decay" + std::to_string(decayID);
       AddToParticleMap(particle, key + postfix);
       key += postfix + "_";
       return true;
