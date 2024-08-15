@@ -60,8 +60,8 @@ class RunNuFlowsAlg final : public EL::AnaAlgorithm {
     // Inputs to the neural network
     CP::SysWriteDecorHandle<vector<vector<float>>> m_input_lep_decor{this, "input_lep", "input_lep_%SYS%", "The input vector for the leptons"};
     CP::SysWriteDecorHandle<vector<vector<float>>> m_input_jet_decor{this, "input_jet", "input_jet_%SYS%", "The input vector for the jets"};
-    CP::SysWriteDecorHandle<vector<float>> m_input_met_decor{this, "input_met", "input_met_%SYS%", "The input vector for the met"};
-    CP::SysWriteDecorHandle<vector<float>> m_input_misc_decor{this, "input_misc", "input_misc_%SYS%", "The input vector for the misc variables"};
+    CP::SysWriteDecorHandle<vector<vector<float>>> m_input_met_decor{this, "input_met", "input_met_%SYS%", "The input vector for the met"};
+    CP::SysWriteDecorHandle<vector<vector<float>>> m_input_misc_decor{this, "input_misc", "input_misc_%SYS%", "The input vector for the misc variables"};
 
     // Misc
     CP::SysReadSelectionHandle m_eventselection{this, "eventSelection", "", "event preselection to check before running this algorithm"};

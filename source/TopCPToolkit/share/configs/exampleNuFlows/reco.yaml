@@ -139,7 +139,7 @@ PartonHistory:
 
 NuFlows:
   - btagger: 'DL1dv01'
-    onnxfilepath: /home/users/l/leighm/TopCPToolkit/run/onnx_files
+    onnxfilepath: TopCPToolkit/nuflows/dummy
     write_inputs: True
     electrons: 'AnaElectrons.tight'
     muons: 'AnaMuons.tight'
@@ -149,31 +149,32 @@ NuFlows:
 
 Output:
   treeName: 'reco'
-  vars:
-    - 'OutMuons_NOSYS.truthOrigin -> mu_truthOrigin'
+  vars: []
+    # - 'OutMuons_NOSYS.truthOrigin -> mu_truthOrigin'
   metVars: []
   containers:
       # Format should follow: '<suffix>:<output container>'
-      el_: 'OutElectrons'
-      mu_: 'OutMuons'
-      jet_: 'OutJets'
-      met_: 'AnaMET'
+      # el_: 'OutElectrons'
+      # mu_: 'OutMuons'
+      # jet_: 'OutJets'
+      # met_: 'AnaMET'
       '': 'EventInfo'
       'Ttbar_': 'TopPartonHistoryTtbar'
 
   commands:
     # Turn output branches on and off with 'enable' and 'disable'
-    - disable jet_.*_eff.*
-    - disable jet_jvtEfficiency.*
     - disable trigPassed_HLT.*
     - disable Ttbar_MC.*before.*
+    - disable Ttbar_MC.*after.*
     - disable Ttbar_MC.*SC.*
-    - disable met_sumet.*
     - disable globalTriggerMatch
-    - disable el_select_tight.*
-    - disable mu_select_tight.*
-    - disable el.*effSF.*
-    - disable mu.*effSF.*
+    # - disable el_select_tight.*
+    # - disable mu_select_tight.*
+    # - disable el.*effSF.*
+    # - disable mu.*effSF.*
+    # - disable jet_.*_eff.*
+    # - disable jet_jvtEfficiency.*
+    # - disable met_sumet.*
 
 AddConfigBlocks:
     - modulePath: 'TopCPToolkit.LeptonSFCalculatorConfig'

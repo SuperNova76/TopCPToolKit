@@ -20,56 +20,63 @@ void TopNuFlowsDilepton::Sample(ConstDataVector<xAOD::ElectronContainer> &electr
 
     // Fill in the leptons
     for (const auto &l : electrons) {
-        std::vector<float> v = {static_cast<float>(l->p4().Px()),
-                                static_cast<float>(l->p4().Py()),
-                                static_cast<float>(l->p4().Pz()),
-                                static_cast<float>(std::log(l->p4().E())),
+        std::vector<float> v = {static_cast<float>(l->p4().Px() / 1000.0),
+                                static_cast<float>(l->p4().Py() / 1000.0),
+                                static_cast<float>(l->p4().Pz() / 1000.0),
+                                static_cast<float>(std::log(1.0 + l->p4().E() / 1000.0)),
                                 static_cast<float>(l->charge()),
                                 0.0};  // Flavor = 0 for electrons
         m_input_lep.push_back(v);
     }
     for (const auto &l : muons) {
-        std::vector<float> v = {static_cast<float>(l->p4().Px()),
-                                static_cast<float>(l->p4().Py()),
-                                static_cast<float>(l->p4().Pz()),
-                                static_cast<float>(std::log(l->p4().E())),
+        std::vector<float> v = {static_cast<float>(l->p4().Px() / 1000.0),
+                                static_cast<float>(l->p4().Py() / 1000.0),
+                                static_cast<float>(l->p4().Pz() / 1000.0),
+                                static_cast<float>(std::log(1.0 + l->p4().E() / 1000.0)),
                                 static_cast<float>(l->charge()),
-                                0.0};  // Flavor = 0 for electrons
+                                1.0};  // Flavor = 1 for muons
         m_input_lep.push_back(v);
     }
 
     // Fill in the jets
     for (const auto &j : jets) {
-        std::vector<float> v = {static_cast<float>(j->p4().Px()),
-                                static_cast<float>(j->p4().Py()),
-                                static_cast<float>(j->p4().Pz()),
-                                static_cast<float>(std::log(j->p4().E())),
-                                static_cast<float>(std::log(j->p4().M())),
+        std::vector<float> v = {static_cast<float>(j->p4().Px() / 1000.0),
+                                static_cast<float>(j->p4().Py() / 1000.0),
+                                static_cast<float>(j->p4().Pz() / 1000.0),
+                                static_cast<float>(std::log(1.0 + j->p4().E() / 1000.0)),
+                                static_cast<float>(std::log(1.0 + j->p4().M() / 1000.0)),
                                 static_cast<float>(j->auxdataConst<int>("ftag_quantile_" + m_btagger + "_Continuous"))};
         m_input_jet.push_back(v);
     }
 
     // MET information
-    m_input_met.push_back(met_mpx);
-    m_input_met.push_back(met_mpy);
-    m_input_met.push_back(met_sumet);
+    std::vector<float> met_v = {met_mpx / 1000.0f, met_mpy / 1000.0f, met_sumet / 1000.0f};
+    m_input_met.push_back(met_v);
 
     // Misc information (particle multiplicities)
-    m_input_misc.push_back(static_cast<float>(electrons.size()));
-    m_input_misc.push_back(static_cast<float>(muons.size()));
-    m_input_misc.push_back(static_cast<float>(jets.size()));
+    std::vector<float> misc_v = {static_cast<float>(electrons.size()),
+                                 static_cast<float>(muons.size()),
+                                 static_cast<float>(jets.size())};
+    m_input_misc.push_back(misc_v);
 
     // Create the Ort::Value objects for each of the inputs
     this->clearInputs();
-    this->addInputs(m_input_lep);
     this->addInputs(m_input_jet);
+    this->addInputs(m_input_lep);
     this->addInputs(m_input_met);
     this->addInputs(m_input_misc);
 
     // Select the appropriate network and run using ONNX
     m_model_idx = this->getSessionIndex(eventNumber);
-    // this->evaluate(m_model_idx);
-    // m_nu_out = this->getOutputs<float>("output");
+    this->evaluate(m_model_idx);
+
+    // Insert the neutrinos (first output)
+    auto out_array = this->getOutputs<float>(0);
+    int out_array_size = this->m_output_shapes[0][0];
+    m_nu_out.insert(m_nu_out.end(), &out_array[0], &out_array[out_array_size]);
+
+    // Insert the log-likelihood (second output)
+    m_loglik = this->getOutputs<float>(1)[0];
 }
 
 }  // namespace top
