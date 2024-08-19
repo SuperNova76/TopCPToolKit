@@ -97,6 +97,36 @@ namespace top {
     }
     return false;
   }
+
+  bool CalcPartonHistory::Retrievep4Gamma(PtEtaPhiMVector& p4, int& parentpdgId) {
+    // Retrieves the PtEtaPhiMVector associated with a 'GammaRad' key from the particleMap.
+    // Also retrieves the pdgId of the parent
+    // Returns true if the key exists and assigns the PtEtaPhiMVector to p4, otherwise returns false.
+    // Also assigns parent pdgId to parentpdgId
+    std::vector<const xAOD::TruthParticle*> gammaRadParticles;
+    // Extract particles with "GammaRad" in their key
+    for (const auto& entry : particleMap) {
+      if (entry.first.find("GammaRad") != std::string::npos) {
+	gammaRadParticles.push_back(entry.second);
+      }
+    }
+    // Check if we found any matching particles
+    if (gammaRadParticles.empty()) {
+        parentpdgId = -1;  // No match found, set parentPdgId to a sentinel value
+        return false;
+    }
+    // We can have multiple photons. Sort the particles by their pt(), in descending order
+    std::sort(gammaRadParticles.begin(), gammaRadParticles.end(),
+        [](const xAOD::TruthParticle* a, const xAOD::TruthParticle* b) {
+            return a->pt() > b->pt();
+        }
+    );
+    // The particle with the highest pt
+    const xAOD::TruthParticle* highestPtParticle = gammaRadParticles.at(0);
+    p4 = GetPtEtaPhiMfromTruth(highestPtParticle);
+    parentpdgId = highestPtParticle->parent()->pdgId();
+    return true;
+  }
   
   bool CalcPartonHistory::RetrievepdgId(const std::string& key, int& pdgId) {
     // Retrieves the PDG ID associated with a given key from the particleMap.
@@ -284,13 +314,15 @@ namespace top {
     // Handles the case where a particle originates from a decay.
     // We add the particle to the map with a key based on its decay ID and update the key.
     if (particle->nParents() == 0) return false;
-    if ((hasParentAbsPdgId(particle, 25) && !hasParentPdgId(particle, particle->pdgId())) ||
-	(hasParentAbsPdgId(particle, 24) && !hasParentPdgId(particle, particle->pdgId())) ||
-	(hasParentAbsPdgId(particle, 23) && !hasParentPdgId(particle, particle->pdgId()))) {
+    if ((particle->pdgId() == 22) ||
+	((hasParentAbsPdgId(particle, 25) && !hasParentPdgId(particle, particle->pdgId())) ||
+	 (hasParentAbsPdgId(particle, 24) && !hasParentPdgId(particle, particle->pdgId())) ||
+	 (hasParentAbsPdgId(particle, 23) && !hasParentPdgId(particle, particle->pdgId())))) {
       std::string postfix;
       // Sometimes we have decays like W-> (l,nu,gamma) where the photon is FSR
       if (particle->pdgId() == 22) postfix = "_GammaRad";
-      else postfix = "Decay" + std::to_string(decayID);
+      else postfix = "Decay";
+      postfix += std::to_string(decayID);
       AddToParticleMap(particle, key + postfix);
       key += postfix + "_";
       return true;
@@ -320,7 +352,7 @@ namespace top {
       std::string old_key = "";
       std::string new_key = "";
       std::string postfix = "";
-
+      
       for (auto it = path.begin(); it != path.end(); it++) {
 	const xAOD::TruthParticle* particle = *it;
 	bool isbeforeFSR = (hasIdenticalChild(particle));
@@ -330,8 +362,12 @@ namespace top {
 	// if we have a Z or a gamma, we have to define the decayID differently
 	if ((particle->pdgId() == 23 || particle->pdgId() == 22) && particle->nParents() != 0) {
 	  // We assign 1 for the first child and 2 for the second
-	  if (particle->parent()->child(0) == particle) decayID = 1;
-	  else decayID = 2;
+	  for (size_t i = 0; i < particle->parent()->nChildren(); ++i) {
+	    if (particle->parent()->child(i) == particle) {
+	      decayID = i + 1;  // Assuming decayID starts from 1
+	      break;
+	    }
+	  }
 	}
 
 	old_key = new_key;

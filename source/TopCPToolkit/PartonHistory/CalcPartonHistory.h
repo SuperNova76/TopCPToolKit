@@ -31,6 +31,7 @@ namespace top {
     void AddToParticleMap(const xAOD::TruthParticle* particle, const std::string& key);
     bool ExistsInMap(const std::string& key);
     bool Retrievep4(const std::string& key, PtEtaPhiMVector& p4);
+    bool Retrievep4Gamma(PtEtaPhiMVector& p4, int& parentpdgId);
     bool RetrievepdgId(const std::string& key, int& pdgId);
     bool RetrieveParticleInfo(const std::string& prefix, PtEtaPhiMVector& particle, int& pdgId);
 
@@ -57,6 +58,7 @@ namespace top {
     void FillTopPartonHistory(xAOD::PartonHistory* PartonHistory);
     void FillAntiTopPartonHistory(xAOD::PartonHistory* PartonHistory);
     void FillBottomPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);
+    void FillGammaPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);
     void FillAntiBottomPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);
     void FillWpPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);
     void FillWmPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);

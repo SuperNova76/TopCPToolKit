@@ -30,6 +30,7 @@ namespace xAOD {
 
     void IniVarTtbar();
     void IniVarTzq();
+    void IniVarTqGamma();
     void IniVarTtbarLight();
     void IniVarTbbar();
     void IniVarWlv();
