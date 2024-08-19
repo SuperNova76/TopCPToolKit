@@ -10,7 +10,7 @@ namespace top {
   class CalcTqgammaPartonHistory: public CalcPartonHistory {
   public:
     explicit CalcTqgammaPartonHistory(const std::string &name,
-				      const std::vector<std::string>& truthCollections = {"TruthTop","TruthBosonsWithDecayParticles", "TruthBottom", "TruthBoson"});
+				      const std::vector<std::string>& truthCollections = {"TruthTop"});
     virtual ~CalcTqgammaPartonHistory() {}
 
     //Storing parton history for tqgamma/tllq resonance analysis

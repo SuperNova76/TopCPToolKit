@@ -472,6 +472,7 @@ truth_branches = {
         "MC_gamma_pt",
         "MC_gamma_eta",
         "MC_gamma_phi",
+        "MC_gamma_origin",
         "MC_b_m",
         "MC_b_pt",
         "MC_b_eta",
