@@ -433,16 +433,11 @@ namespace xAOD {
     this->auxdecor< int >("MC_Wdecay2_from_tbar_pdgId") = 0;
 
     //photon variables
-    this->auxdecor< float >("MC_ph_m") = -1;
-    this->auxdecor< float >("MC_ph_pt") = -1;
-    this->auxdecor< float >("MC_ph_eta") = -1000;
-    this->auxdecor< float >("MC_ph_phi") = -1000;
-
-    this->auxdecor< int >("MC_branchtype_t") = -1;
-    this->auxdecor< int >("MC_branchtype_tbar") = -1;
-    this->auxdecor< int >("MC_initial_parton") = -1;
-    this->auxdecor< int >("MC_ph_from_t_tbar") = -1;
-    this->auxdecor< int >("MC_Event_Category") = -1;
+    this->auxdecor< float >("MC_gamma_m") = -1;
+    this->auxdecor< float >("MC_gamma_pt") = -1;
+    this->auxdecor< float >("MC_gamma_eta") = -1000;
+    this->auxdecor< float >("MC_gamm_phi") = -1000;
+    this->auxdecor< float >("MC_gamm_origin") = -1000;
   }
 
   // Initialize variables for thqtautau events
@@ -708,6 +703,7 @@ namespace xAOD {
     this->auxdecor< float >("MC_gamma_pt") = -1;
     this->auxdecor< float >("MC_gamma_eta") = -1000;
     this->auxdecor< float >("MC_gamma_phi") = -1000;
+    this->auxdecor< float >("MC_gamma_origin") = -1000;
 
     // spectator quarks
     this->auxdecor< float >("MC_b_m") = -1;
