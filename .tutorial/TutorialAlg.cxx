@@ -52,10 +52,10 @@ namespace top {
       
       PtEtaPhiEVector lepton;
       if ( electrons->size() > 0 ) {
-	lepton = GetPtEtaPhiEfromLepton(electrons->at(0));
+	lepton = GetPtEtaPhiE(electrons->at(0));
       }
       else if ( muons->size() > 0) {
-	lepton = GetPtEtaPhiEfromLepton(muons->at(0));
+	lepton = GetPtEtaPhiE(muons->at(0));
       }
 
       float et_miss  = (*met)["Final"]->met();
