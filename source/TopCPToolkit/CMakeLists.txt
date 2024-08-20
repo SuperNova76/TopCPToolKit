@@ -9,20 +9,27 @@ find_package(onnxruntime)
 # FastJet - needed for jet reclustering
 find_package( FastJet COMPONENTS fastjetplugins fastjettools )
 
+find_package( ROOT COMPONENTS Core Physics )
+
 # Add the shared library:
 if( XAOD_STANDALONE )
+  # Generate a CINT dictionary source file:
+  atlas_add_root_dictionary( TopCPToolkitLib _cintDictSource
+    ROOT_HEADERS Root/LinkDef.h
+    EXTERNAL_PACKAGES ROOT )
+
   atlas_add_library(
     TopCPToolkitLib
     TopCPToolkit/*.h PartonHistory/*.h TopParticleLevel/*.h TopSpaNet/*.h TopNNLOReweighter/*.h VectorHelpers/*.h
-    Root/*.cxx Root/preloader/*.cxx
-    INCLUDE_DIRS ${KLFITTER_INCLUDE_DIRS} ${ONNXRUNTIME_INCLUDE_DIRS}
+    Root/*.cxx Root/preloader/*.cxx ${_cintDictSource}
+    INCLUDE_DIRS ${ROOT_INCLUDE_DIRS} ${KLFITTER_INCLUDE_DIRS} ${ONNXRUNTIME_INCLUDE_DIRS}
     PUBLIC_HEADERS TopCPToolkit PartonHistory TopParticleLevel TopSpaNet TopNNLOReweighter VectorHelpers
-    LINK_LIBRARIES ${KLFITTER_LIBRARIES} ${ONNXRUNTIME_LIBRARIES}
-    AnaAlgorithmLib AsgAnalysisAlgorithmsLib xAODMissingET xAODJet xAODBTagging xAODEgamma xAODMuon xAODTau xAODTruth xAODCore PathResolver FourMomUtils FTagAnalysisInterfacesLib SystematicsHandlesLib SelectionHelpersLib MCTruthClassifierLib GammaORToolsLib
+    LINK_LIBRARIES ${ROOT_LIBRARIES} ${KLFITTER_LIBRARIES} ${ONNXRUNTIME_LIBRARIES}
+    AnaAlgorithmLib AsgAnalysisAlgorithmsLib xAODMissingET xAODJet xAODBTagging xAODEgamma xAODMuon xAODTau xAODTruth xAODCore PathResolver FourMomUtils FTagAnalysisInterfacesLib SystematicsHandlesLib SelectionHelpersLib MCTruthClassifierLib GammaORToolsLib AthContainers
     # THE FOLLOWING ARE NEEDED FOR THE COMPONENT PRELOADER:
     EgammaAnalysisAlgorithmsLib ElectronPhotonFourMomentumCorrectionLib MuonEfficiencyCorrectionsLib ElectronPhotonSelectorToolsLib TrackingAnalysisAlgorithmsLib TruthClassificationLib PMGToolsLib EventSelectionAlgorithmsLib xAODBTaggingEfficiencyLib JetAnalysisAlgorithmsLib JetJvtEfficiencyLib ElectronEfficiencyCorrectionLib JetUncertaintiesLib MuonAnalysisAlgorithmsLib FTagAnalysisAlgorithmsLib TrigGlobalEfficiencyCorrectionLib MuonSelectorToolsLib MuonMomentumCorrectionsLib METUtilitiesLib ParticleJetToolsLib PileupReweightingLib egammaMVACalibLib MetAnalysisAlgorithmsLib GoodRunsListsLib TauAnalysisAlgorithmsLib TriggerAnalysisAlgorithmsLib TrigConfxAODLib AssociationUtilsLib
     # END OF COMPONENT PRELOADER
-    )
+  )
 else ()
   atlas_add_library(
     TopCPToolkitLib
@@ -39,6 +46,7 @@ if ( XAOD_STANDALONE ) #Add the dictionary (for AnalysisBase only):
   atlas_add_dictionary(
     TopCPToolkitDict TopCPToolkit/TopCPToolkitDict.h
     TopCPToolkit/selection.xml LINK_LIBRARIES TopCPToolkitLib
+    EXTRA_FILES Root/dict/*.cxx
     )
 else () # Add a component library for AthAnalysis only:
   atlas_add_component (

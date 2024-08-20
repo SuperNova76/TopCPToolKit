@@ -8,15 +8,35 @@
 - [issue #148](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/148): Migrate ParticleLevelAlg to Athena
 - [issue #162](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/162): Add Soft Muon Tagging truth information
 - [issue #163](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/163): (Re)implementation of TtbarLight parton history
+- [issue #177](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/177): Adding NLO b quark information to single-top parton history branches
+- [issue #178](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/178): Adding light quark information to single-top parton history branches
+
+### 2.12.0 <small>August 20, 2024</small>
+- We run on AB 25.2.23
 - [issue #164](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/164): Implementation of HZZ parton history
-- [issue #165](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/165): Implementation of "Custom Angle Replacement" algorithm
+- [issue #165](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/165): Implementation of Custom Angle Replacement algorithm
+- [issue #167](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/167): Clarifying Ttbar truth variables
+- [issue #168](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/168): Fixing some names in the parton history code leading to empty branches
+- [issue #169](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/169): Prevent empty TTrees from being written out at all
+- [issue #170](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/170): Remove the SVMassAlg for FTAG experts :warning:[***interface change***](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/170#implementation):warning:
+- [issue #171](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/171): Migrate JetReclusteringAlg to Athena
+- [issue #172](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/172): Remove outdated SPA-Net model
+- [issue #173](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/173): Finding good solution for tZq parton history and splitting of t and tbar
+- [issue #174](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/174): Improve documentation on compiling TopCPToolkit with Athena packages
+- [issue #175](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/175): Adapt to new options to skip data or MC :warning:[***interface change***](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/175#implementation):warning:
+- [issue #176](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/176): Adding Tqgamma parton history
+- [issue #179](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/179): Adding ttgamma parton history
+- [issue #180](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/180): Adding tHq parton history
+- [issue #181](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/181): Fix gamma_origin type
+- [issue #182](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/182): Template lorentzhelper functions
+- [issue #183](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/183): Adding simple chi^2 based matching for single lepton ttbar reconstruction
 
 ### 2.11.0 <small>July 19, 2024</small>
 - We run on AB 25.2.20
 - [issue #147](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/147): Minor updates to the docs
 - [issue #154](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/154): Add truth neutrinos to particle-level and fix a bug with photons
-- [issue #155](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/155): Migrate BTaggingScoresAlg to Athena :warning:[***interface change***](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/155):warning:
-- [issue #156](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/156): Migrate FakeBkgCalculatorAlg to Athena :warning:[***interface change***](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/156):warning:
+- [issue #155](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/155): Migrate BTaggingScoresAlg to Athena :warning:[***interface change***](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/155#implementation):warning:
+- [issue #156](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/156): Migrate FakeBkgCalculatorAlg to Athena :warning:[***interface change***](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/156#implementation):warning:
 - [issue #157](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/157): Fix the issue that particle-level MET phi is always positive
 - [issue #158](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/158): Fix cppchecks
 - [issue #159](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/159): Migrate LeptonSFCalculatorAlg to Athena
