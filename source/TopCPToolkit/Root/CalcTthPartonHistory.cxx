@@ -13,18 +13,14 @@ namespace top {
     tthPartonHistory->IniVarTth();
     // Tracing truth particles
     CalcPartonHistory::TraceParticles(truthParticles);
-    CalcPartonHistory::EnsureKeyExists("MC_t_afterFSR", "MC_t");
-    CalcPartonHistory::EnsureKeyExists("MC_tbar_afterFSR", "MC_tbar");
-    CalcPartonHistory::EnsureKeyExists("MC_t_beforeFSR", "MC_t_afterFSR");
-    CalcPartonHistory::EnsureKeyExists("MC_tbar_beforeFSR", "MC_tbar_afterFSR");
 
     // Ensuring the necessary keys exist
     CalcPartonHistory::EnsureTtbarKeysExist();
 
     // Fill top parton history
-    CalcPartonHistory::FillTopPartonHistory(tthPartonHistory);
+    CalcPartonHistory::FillTopPartonHistory(tthPartonHistory, 0); // t mode
     // Fill anti top parton history
-    CalcPartonHistory::FillAntiTopPartonHistory(tthPartonHistory);
+    CalcPartonHistory::FillTopPartonHistory(tthPartonHistory, 1); // tbar mode
     // Fill ttbar parton history
     CalcPartonHistory::FillTtbarPartonHistory(tthPartonHistory);
     // Fill Higgs parton history

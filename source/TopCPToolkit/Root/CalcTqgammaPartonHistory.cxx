@@ -17,14 +17,10 @@ namespace top {
     // Ensuring the necessary keys exist
     CalcPartonHistory::EnsureTtbarKeysExist(); // this will fail on ttbar but that is ok.
     
-    // Fill top parton history
-    CalcPartonHistory::FillTopPartonHistory(tqgammaPartonHistory);
-    // Fill anti top parton history
-    CalcPartonHistory::FillAntiTopPartonHistory(tqgammaPartonHistory);
-    // Fill b parton history
-    CalcPartonHistory::FillBottomPartonHistory(tqgammaPartonHistory, "");
-    // Fill bbar parton history
-    CalcPartonHistory::FillAntiBottomPartonHistory(tqgammaPartonHistory, "");
+    // Fill top parton history (flavour agnostic)
+    CalcPartonHistory::FillTopPartonHistory(tqgammaPartonHistory, 2);
+    // Fill b (spectator b) parton history (flavour agnostic)
+    CalcPartonHistory::FillBottomPartonHistory(tqgammaPartonHistory, "", 2);
     // Fill Gamma parton history
     CalcPartonHistory::FillGammaPartonHistory(tqgammaPartonHistory, "");
 

@@ -26,9 +26,11 @@ namespace top {
     CalcPartonHistory::EnsureTtbarKeysExist();
 
     // Fill top parton history
-    CalcPartonHistory::FillTopPartonHistory(ttbarPartonHistory);
+    CalcPartonHistory::FillTopPartonHistory(ttbarPartonHistory, 0); // t mode
+
     // Fill anti top parton history
-    CalcPartonHistory::FillAntiTopPartonHistory(ttbarPartonHistory);
+    CalcPartonHistory::FillTopPartonHistory(ttbarPartonHistory, 1); // ttbar mode
+
     // Fill ttbar parton history
     CalcPartonHistory::FillTtbarPartonHistory(ttbarPartonHistory);
 

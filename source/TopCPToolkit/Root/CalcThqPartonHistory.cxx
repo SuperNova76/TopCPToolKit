@@ -18,13 +18,9 @@ namespace top {
     CalcPartonHistory::EnsureTtbarKeysExist(); // this will fail on ttbar but that is ok.
 
     // Fill top parton history
-    CalcPartonHistory::FillTopPartonHistory(thqPartonHistory);
-    // Fill anti top parton history
-    CalcPartonHistory::FillAntiTopPartonHistory(thqPartonHistory);
+    CalcPartonHistory::FillTopPartonHistory(thqPartonHistory, 2); // flavour agnostic mode
     // Fill b parton history
-    CalcPartonHistory::FillBottomPartonHistory(thqPartonHistory, "");
-    // Fill bbar parton history
-    CalcPartonHistory::FillAntiBottomPartonHistory(thqPartonHistory, "");
+    CalcPartonHistory::FillBottomPartonHistory(thqPartonHistory, "", 2); // flavour agnostic mode
     // Fill H parton history
     CalcPartonHistory::FillHiggsPartonHistory(thqPartonHistory);
 

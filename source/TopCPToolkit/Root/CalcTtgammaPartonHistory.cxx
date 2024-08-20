@@ -18,9 +18,9 @@ namespace top {
     CalcPartonHistory::EnsureTtbarKeysExist();
 
     // Fill top parton history
-    CalcPartonHistory::FillTopPartonHistory(ttgammaPartonHistory);
+    CalcPartonHistory::FillTopPartonHistory(ttgammaPartonHistory, 0); // t mode
     // Fill anti top parton history
-    CalcPartonHistory::FillAntiTopPartonHistory(ttgammaPartonHistory);
+    CalcPartonHistory::FillTopPartonHistory(ttgammaPartonHistory, 1); // tbar mode
     // Fill ttbar parton history
     CalcPartonHistory::FillTtbarPartonHistory(ttgammaPartonHistory);
     // Fill photon parton history
