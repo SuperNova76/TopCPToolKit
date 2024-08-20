@@ -437,7 +437,7 @@ namespace xAOD {
     this->auxdecor< float >("MC_gamma_pt") = -1;
     this->auxdecor< float >("MC_gamma_eta") = -1000;
     this->auxdecor< float >("MC_gamm_phi") = -1000;
-    this->auxdecor< float >("MC_gamm_origin") = -1000;
+    this->auxdecor< int >("MC_gamm_origin") = -1000;
   }
 
   // Initialize variables for thqtautau events
@@ -760,7 +760,7 @@ namespace xAOD {
     this->auxdecor< float >("MC_gamma_pt") = -1;
     this->auxdecor< float >("MC_gamma_eta") = -1000;
     this->auxdecor< float >("MC_gamma_phi") = -1000;
-    this->auxdecor< float >("MC_gamma_origin") = -1000;
+    this->auxdecor< int >("MC_gamma_origin") = -1000;
 
     // spectator quarks
     this->auxdecor< float >("MC_b_m") = -1;
