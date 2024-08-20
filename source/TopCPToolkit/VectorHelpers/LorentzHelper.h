@@ -16,12 +16,44 @@ using ROOT::Math::PtEtaPhiEVector;
 using ROOT::Math::PxPyPzMVector;
 using ROOT::Math::PxPyPzEVector;
 
-PtEtaPhiMVector GetPtEtaPhiMfromLepton(const xAOD::Electron *Lepton);
-PtEtaPhiEVector GetPtEtaPhiEfromLepton(const xAOD::Electron *Lepton);
-PtEtaPhiMVector GetPtEtaPhiMfromLepton(const xAOD::Muon *Lepton);
-PtEtaPhiEVector GetPtEtaPhiEfromLepton(const xAOD::Muon *Lepton);
-PtEtaPhiMVector GetPtEtaPhiMfromJet(const xAOD::Jet *Jet);
-PtEtaPhiEVector GetPtEtaPhiEfromJet(const xAOD::Jet *Jet);
+// Template function to create a PtEtaPhiMVector
+template <typename object>
+PtEtaPhiMVector GetPtEtaPhiM(const object *obj) {
+  return PtEtaPhiMVector(obj->pt(), // float px and py cast to double to build pT
+			 obj->eta(), // double
+			 obj->phi(), // double
+			 obj->m());  // double
+}
+
+// Template function to create a PtEtaPhiEVector
+template <typename object>
+PtEtaPhiEVector GetPtEtaPhiE(const object *obj) {
+  return PtEtaPhiEVector(obj->pt(), // float px and py cast to double to build pT
+			 obj->eta(), // double
+			 obj->phi(), // double
+			 obj->e());  // double
+}
+
+// Template function to create a PxPyPzMVector
+template <typename object>
+PxPyPzMVector GetPxPyPzM(const object *obj){
+  return PxPyPzMVector(obj->px(), //float
+		       obj->py(), //float
+		       obj->pz(), //float
+		       obj->m()); //double
+}
+
+// Template function to create a PxPyPzEVector
+template <typename object>
+PxPyPzMVector GetPxPyPzE(const object *obj){
+  return PxPyPzMVector(obj->px(), //float
+		       obj->py(), //float
+		       obj->pz(), //float
+		       obj->e()); //double
+}
+
+// We don't template these as some will include warnings and differ slightly!
+// This shall highlight the difference w.r.t. truth particle information
 PtEtaPhiMVector GetPtEtaPhiMfromTruth(const xAOD::TruthParticle *TruthParticle);
 PxPyPzMVector GetPxPyPzMfromTruth(const xAOD::TruthParticle *TruthParticle);
 PtEtaPhiEVector GetPtEtaPhiEfromTruth(const xAOD::TruthParticle *TruthParticle);

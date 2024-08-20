@@ -77,7 +77,7 @@ namespace top {
       unsigned int ireco = 0;
       //loop over all selected reco jet
       for (const xAOD::Jet *recojet : selected_jets) {
-        PtEtaPhiEVector reco_jet = GetPtEtaPhiEfromJet(recojet);
+        PtEtaPhiEVector reco_jet = GetPtEtaPhiE(recojet);
         //find deltaR to closest reco jet
         float minDR = JetMatchingAlg::get_minDR_reco(reco_jet, ireco, selected_jets);
         reco_to_reco_jet_closest_dR.push_back(minDR);
@@ -112,7 +112,7 @@ namespace top {
         m_reco_to_reco_jet_closest_dR.set(*jet, reco_to_reco_jet_closest_dR.at(ijet), sys);
         m_truth_to_truth_jet_closest_dR.set(*jet, truth_to_truth_jet_closest_dR.at(ijet), sys);
         //is there a truth lepton within dR<0.4 from the reco jet?
-        PtEtaPhiEVector reco_jet = GetPtEtaPhiEfromJet(jet);
+        PtEtaPhiEVector reco_jet = GetPtEtaPhiE(jet);
         double overlapping_truth_lepton_pt = -1;
         m_has_truth_lepton.set(*jet, JetMatchingAlg::find_close_lepton(reco_jet, *truth_electrons, *truth_muons, overlapping_truth_lepton_pt), sys);
         m_overlapping_truth_lepton_pt.set(*jet, overlapping_truth_lepton_pt, sys);
@@ -130,7 +130,7 @@ namespace top {
         ijet2++;
         continue;
       }
-      PtEtaPhiEVector jet2 = GetPtEtaPhiEfromJet(jet);
+      PtEtaPhiEVector jet2 = GetPtEtaPhiE(jet);
       if (DeltaR(jet1, jet2) < minDR) {
         minDR = DeltaR(jet1, jet2);
       }
@@ -144,7 +144,7 @@ namespace top {
     float minDR = 9999;
     int itruth = 0;
     for (const xAOD::Jet *truthjet : truth_jets) {
-      PtEtaPhiMVector truth_jet = GetPtEtaPhiMfromJet(truthjet);
+      PtEtaPhiMVector truth_jet = GetPtEtaPhiM(truthjet);
       if (DeltaR(reco_jet, truth_jet) < minDR) {
 	minDR = DeltaR(reco_jet, truth_jet);
 	truth_jet_index = itruth;
@@ -178,7 +178,7 @@ namespace top {
     int itruth1 = 0;
     for (const xAOD::Jet *truthjet1 : truth_jets) {
       if (itruth1 == truth_jet_index) {
-        PtEtaPhiMVector truth_jet1 = GetPtEtaPhiMfromJet(truthjet1);
+        PtEtaPhiMVector truth_jet1 = GetPtEtaPhiM(truthjet1);
         minDR = 9999;
         int itruth2 = 0;
         for (const xAOD::Jet *truthjet2 : truth_jets) {
@@ -186,7 +186,7 @@ namespace top {
               itruth2++;
               continue;
           }
-          PtEtaPhiMVector truth_jet2 = GetPtEtaPhiMfromJet(truthjet2);
+          PtEtaPhiMVector truth_jet2 = GetPtEtaPhiM(truthjet2);
           if (DeltaR(truth_jet1, truth_jet2) < minDR) {
 	    minDR = DeltaR(truth_jet1, truth_jet2);
           }
