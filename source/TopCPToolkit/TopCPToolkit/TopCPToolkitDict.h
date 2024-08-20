@@ -17,6 +17,7 @@
 #include "TopCPToolkit/SoftMuonSelectorAlg.h"
 #include "TopCPToolkit/PartonHistoryToSpinInputAlg.h"
 #include "TopCPToolkit/TopSpinDensityMatrixAlg.h"
+#include "TopCPToolkit/SinglelepHadronicChi2RecoAlg.h"
 
 
 // EDM include(s).

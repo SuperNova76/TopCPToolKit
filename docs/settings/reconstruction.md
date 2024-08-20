@@ -282,3 +282,43 @@ Constructs a series of observables used to measure spin correlations, polarisati
 
 !!! success "Additional variables toggled by `doEntanglement`"
     - `cos_phi`: cosine of the opening angle between the spin analysers of top and the anti-top quarks in their respective rest frames (related to the quantum entanglement marker $D$)
+
+### [SinglelepHadronicChi2RecoConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/SinglelepHadronicChi2RecoConfig.py)
+Name in YAML: **Chi2Reco**
+
+A simple chi^2 based reconstruction algorithm to match reco jets to the decay products of the hadronically decaying top in the single lepton selection. Chi^2 is defined as:
+
+```math
+/chi^2 = (reco_m_w - 80.38)^2/resolution_w^2 + (reco_m_top - top_mass)^2/resolution_t^2.
+```
+
+Permutations of jets are considered and the one with the best chi^2 value is considered to be the correct one.
+Only b-tagged jets are considerted on the position of the b-jet and only light-jets (non-b tagged) jets are considered for the position of the light jets. So make sure to have at least one b-jet in the selection
+
+`jets`
+:   the jet collection to run on. The defauls is `'AntiKt4TruthDressedWZJets'`
+
+`eventSelection`
+:   optional event filter to run on. The default is `'pass_ejets_%SYS%,as_char||pass_mujets_%SYS%,as_char'` (empty string), i.e. all events.
+
+
+`topMass`
+:   the mass of the top quark used in the chi^2 formula in GeV. The default is `'172.5'`
+
+`maxBJets`
+:   the maxium number of b-jets to consider (ordered in pT). The default is `'2'`
+
+`maxLightJets`
+:   the maxium number of light-jets (non-b) to consider (ordered in pT). The default is `'4'`
+
+`topResolution`
+:   the $resolution_t$ value in the chi^2 (in GeV). The default is `'35'`
+
+`wResolution`
+:   the $resolution_w$ value in the chi^2 (in GeV). The default is `'25'`
+
+`btagger`
+:   the name of the b-tagger used. Needs to be set. The default is `'DL1dv01'`
+
+`btagWP`
+:   the name of the b-tag WP. Needs to be set. The default is `'FixedCutBEff_77'`
