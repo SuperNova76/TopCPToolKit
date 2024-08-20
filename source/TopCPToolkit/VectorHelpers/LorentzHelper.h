@@ -1,6 +1,7 @@
 #ifndef LORENTZHELPER_H
 #define LORENTZHELPER_H
 
+// Include necessary header files
 #include "xAODTruth/xAODTruthHelpers.h"
 #include "xAODTruth/TruthParticle.h"
 #include "xAODJet/JetContainer.h"
@@ -9,16 +10,22 @@
 #include "Math/Vector4D.h"
 #include "Math/VectorUtil.h"
 
-ROOT::Math::PtEtaPhiMVector GetPtEtaPhiMfromLepton(const xAOD::Electron *Lepton);
-ROOT::Math::PtEtaPhiEVector GetPtEtaPhiEfromLepton(const xAOD::Electron *Lepton);
-ROOT::Math::PtEtaPhiMVector GetPtEtaPhiMfromLepton(const xAOD::Muon *Lepton);
-ROOT::Math::PtEtaPhiEVector GetPtEtaPhiEfromLepton(const xAOD::Muon *Lepton);
-ROOT::Math::PtEtaPhiMVector GetPtEtaPhiMfromJet(const xAOD::Jet *Jet);
-ROOT::Math::PtEtaPhiEVector GetPtEtaPhiEfromJet(const xAOD::Jet *Jet);
-ROOT::Math::PtEtaPhiMVector GetPtEtaPhiMfromTruth(const xAOD::TruthParticle *TruthParticle);
-ROOT::Math::PxPyPzMVector GetPxPyPzMfromTruth(const xAOD::TruthParticle *TruthParticle);
-ROOT::Math::PtEtaPhiEVector GetPtEtaPhiEfromTruth(const xAOD::TruthParticle *TruthParticle);
-ROOT::Math::PxPyPzEVector GetPxPyPzEfromTruth(const xAOD::TruthParticle *TruthParticle);
-ROOT::Math::PtEtaPhiMVector TLorentzToPtEtaPhiM(const TLorentzVector& p);
+// Using directives for convenience with ROOT::Math vector types
+using ROOT::Math::PtEtaPhiMVector;
+using ROOT::Math::PtEtaPhiEVector;
+using ROOT::Math::PxPyPzMVector;
+using ROOT::Math::PxPyPzEVector;
+
+PtEtaPhiMVector GetPtEtaPhiMfromLepton(const xAOD::Electron *Lepton);
+PtEtaPhiEVector GetPtEtaPhiEfromLepton(const xAOD::Electron *Lepton);
+PtEtaPhiMVector GetPtEtaPhiMfromLepton(const xAOD::Muon *Lepton);
+PtEtaPhiEVector GetPtEtaPhiEfromLepton(const xAOD::Muon *Lepton);
+PtEtaPhiMVector GetPtEtaPhiMfromJet(const xAOD::Jet *Jet);
+PtEtaPhiEVector GetPtEtaPhiEfromJet(const xAOD::Jet *Jet);
+PtEtaPhiMVector GetPtEtaPhiMfromTruth(const xAOD::TruthParticle *TruthParticle);
+PxPyPzMVector GetPxPyPzMfromTruth(const xAOD::TruthParticle *TruthParticle);
+PtEtaPhiEVector GetPtEtaPhiEfromTruth(const xAOD::TruthParticle *TruthParticle);
+PxPyPzEVector GetPxPyPzEfromTruth(const xAOD::TruthParticle *TruthParticle);
+PtEtaPhiMVector TLorentzToPtEtaPhiM(const TLorentzVector& p);
 
 #endif

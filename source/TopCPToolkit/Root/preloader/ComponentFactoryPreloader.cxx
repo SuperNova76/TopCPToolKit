@@ -43,6 +43,7 @@
 #include <AsgAnalysisAlgorithms/ObjectCutFlowHistAlg.h>
 #include <AsgAnalysisAlgorithms/OverlapRemovalAlg.h>
 #include <AsgAnalysisAlgorithms/PileupReweightingAlg.h>
+#include <AsgAnalysisAlgorithms/SysListDumperAlg.h>
 #include <AsgAnalysisAlgorithms/SystObjectLinkerAlg.h>
 #include <AsgAnalysisAlgorithms/TreeFillerAlg.h>
 #include <AsgAnalysisAlgorithms/TreeMakerAlg.h>
@@ -124,19 +125,19 @@
 #include <EventSelectionAlgorithms/DileptonInvariantMassSelectorAlg.h>
 #include <EventSelectionAlgorithms/ChargeSelectorAlg.h>
 #include <EventSelectionAlgorithms/DileptonInvariantMassWindowSelectorAlg.h>
-#include <TopCPToolkit/RunSpaNetAlg.h>
+#include <TopCPToolkit/CARAlg.h>
+#include <TopCPToolkit/JetMatchingAlg.h>
 #include <TopCPToolkit/KLFitterAlg.h>
 #include <TopCPToolkit/KLFitterFinalizeOutputAlg.h>
+#include <TopCPToolkit/PartonHistoryToSpinInputAlg.h>
+#include <TopCPToolkit/PartonToJetsMatchAlg.h>
 #include <TopCPToolkit/ParticleLevelAlg.h>
 #include <TopCPToolkit/RunPartonHistoryAlg.h>
+#include <TopCPToolkit/RunSpaNetAlg.h>
 #include <TopCPToolkit/RunTtbarNNLORecursiveRewAlg.h>
-#include <TopCPToolkit/PartonHistoryToSpinInputAlg.h>
-#include <TopCPToolkit/TopSpinDensityMatrixAlg.h>
-#include <TopCPToolkit/PartonToJetsMatchAlg.h>
-#include <TopCPToolkit/JetMatchingAlg.h>
-#include <TopCPToolkit/TutorialAlg.h>
 #include <TopCPToolkit/SoftMuonSelectorAlg.h>
-#include <AsgAnalysisAlgorithms/SysListDumperAlg.h>
+#include <TopCPToolkit/TopSpinDensityMatrixAlg.h>
+#include <TopCPToolkit/TutorialAlg.h>
 
 //
 // method implementations
@@ -218,19 +219,20 @@ namespace top
     ANA_CHECK (asg::registerAlgorithmFactory<CP::DileptonInvariantMassSelectorAlg> ("CP::DileptonInvariantMassSelectorAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::ChargeSelectorAlg> ("CP::ChargeSelectorAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<CP::DileptonInvariantMassWindowSelectorAlg> ("CP::DileptonInvariantMassWindowSelectorAlg"));
-    ANA_CHECK (asg::registerAlgorithmFactory<top::RunSpaNetAlg> ("top::RunSpaNetAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<CP::SysListDumperAlg> ("CP::SysListDumperAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<top::CARAlg> ("top::CARAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<top::JetMatchingAlg> ("top::JetMatchingAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::KLFitterAlg> ("top::KLFitterAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::KLFitterFinalizeOutputAlg> ("top::KLFitterFinalizeOutputAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<top::PartonHistoryToSpinInputAlg> ("top::PartonHistoryToSpinInputAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<top::PartonToJetsMatchAlg> ("top::PartonToJetsMatchAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::ParticleLevelAlg> ("top::ParticleLevelAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::RunPartonHistoryAlg> ("top::RunPartonHistoryAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<top::RunSpaNetAlg> ("top::RunSpaNetAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::RunTtbarNNLORecursiveRewAlg> ("top::RunTtbarNNLORecursiveRewAlg"));
-    ANA_CHECK (asg::registerAlgorithmFactory<top::PartonHistoryToSpinInputAlg> ("top::PartonHistoryToSpinInputAlg"));
-    ANA_CHECK (asg::registerAlgorithmFactory<top::TopSpinDensityMatrixAlg> ("top::TopSpinDensityMatrixAlg"));
-    ANA_CHECK (asg::registerAlgorithmFactory<top::PartonToJetsMatchAlg> ("top::PartonToJetsMatchAlg"));
-    ANA_CHECK (asg::registerAlgorithmFactory<top::JetMatchingAlg> ("top::JetMatchingAlg"));
-    ANA_CHECK (asg::registerAlgorithmFactory<top::TutorialAlg> ("top::TutorialAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::SoftMuonSelectorAlg> ("top::SoftMuonSelectorAlg"));
-    ANA_CHECK (asg::registerAlgorithmFactory<CP::SysListDumperAlg> ("CP::SysListDumperAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<top::TopSpinDensityMatrixAlg> ("top::TopSpinDensityMatrixAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<top::TutorialAlg> ("top::TutorialAlg"));
 
     ANA_CHECK (asg::registerToolFactory<AsgDeadHVCellRemovalTool> ("AsgDeadHVCellRemovalTool"));
     ANA_CHECK (asg::registerToolFactory<BTaggingSelectionTool> ("BTaggingSelectionTool"));

@@ -438,6 +438,11 @@ def makeTruthConfiguration(flags, algSeq, configSeq, factory, noSystematics=Fals
     cfg.setOptionValue ('doEntanglement', True)
     configSeq.append(cfg)
 
+    # from TopCPToolkit.CARConfig import CARConfig
+    # cfg = CARConfig()
+    # cfg.setOptionValue ('history', 'HWW')
+    # configSeq.append(cfg)
+
     # add NTuple output config
     configSeq += makeConfig ('Output')
     configSeq.setOptionValue ('.treeName', 'truth')

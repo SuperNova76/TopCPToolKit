@@ -8,6 +8,7 @@
 #include "TopCPToolkit/KLFitterResultAuxContainer.h"
 #include "TopCPToolkit/KLFitterFinalizeOutputAlg.h"
 #include "TopCPToolkit/RunPartonHistoryAlg.h"
+#include "TopCPToolkit/CARAlg.h"
 #include "TopCPToolkit/ParticleLevelAlg.h"
 #include "TopCPToolkit/PartonToJetsMatchAlg.h"
 #include "TopCPToolkit/RunSpaNetAlg.h"
