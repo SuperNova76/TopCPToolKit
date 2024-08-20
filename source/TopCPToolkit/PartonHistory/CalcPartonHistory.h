@@ -55,13 +55,10 @@ namespace top {
     void handleDefault(const xAOD::TruthParticle* particle, const std::string& newKey, std::string& key);
 
     void FillParticleMap(std::vector<std::vector<const xAOD::TruthParticle*>>& allPaths);
-    void FillTopPartonHistory(xAOD::PartonHistory* PartonHistory);
-    void FillAntiTopPartonHistory(xAOD::PartonHistory* PartonHistory);
-    void FillBottomPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);
+    void FillTopPartonHistory(xAOD::PartonHistory* PartonHistory, const int& mode);
+    void FillBottomPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent, const int& mode);
     void FillGammaPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);
-    void FillAntiBottomPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);
-    void FillWpPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);
-    void FillWmPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);
+    void FillWPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent, const int& mode);
     void FillZPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent, const int bosonID=-1);
     void FillTtbarPartonHistory(xAOD::PartonHistory* PartonHistory);
     void FillHiggsPartonHistory(xAOD::PartonHistory* PartonHistory);
