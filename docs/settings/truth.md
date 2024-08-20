@@ -236,3 +236,15 @@ Takes a parton history as input and prepares the 4-vectors of the top/anti-top a
 
 `tbar_decay`
 :   the name (string) to give the 4-vector for the decay product of the anti-top quark. The default is `'truth_tbar_decay_4vect_%SYS%'`.
+
+### [CARConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/CARConfig.py)
+Name in YAML: **CAR**
+
+Performs the "custom angle replacement" (CAR) [algorithm](https://journals.aps.org/prd/pdf/10.1103/PhysRevD.106.115021). An example can be found [here](https://journals.aps.org/prd/pdf/10.1103/PhysRevD.107.076016).
+
+`history`
+:   the parton history (string) to read. Possible options are `HWW` and `HZZ`.
+
+!!! success "Registers history-dependent variables:"
+    - in the format `history_MC_resonance_CAR_variable` (no systematics)
+    - e.g. `HWW_MC_Hdecay1_decay1_CAR_pt`

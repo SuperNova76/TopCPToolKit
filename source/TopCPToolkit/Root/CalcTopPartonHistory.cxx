@@ -4,7 +4,7 @@
 
 namespace top {
   using ROOT::Math::PtEtaPhiMVector;
-  
+
   void CalcPartonHistory::FillTopPartonHistory(xAOD::PartonHistory* PartonHistory) {
     // Filling the parton history for a top quark.
     // Fill the W+ parton history and assign the "t" as parent
