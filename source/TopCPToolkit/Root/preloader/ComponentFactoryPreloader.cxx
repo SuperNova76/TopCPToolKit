@@ -136,6 +136,7 @@
 #include <TopCPToolkit/RunSpaNetAlg.h>
 #include <TopCPToolkit/RunTtbarNNLORecursiveRewAlg.h>
 #include <TopCPToolkit/SoftMuonSelectorAlg.h>
+#include <TopCPToolkit/SinglelepHadronicChi2RecoAlg.h>
 #include <TopCPToolkit/TopSpinDensityMatrixAlg.h>
 #include <TopCPToolkit/TutorialAlg.h>
 
@@ -232,6 +233,7 @@ namespace top
     ANA_CHECK (asg::registerAlgorithmFactory<top::RunTtbarNNLORecursiveRewAlg> ("top::RunTtbarNNLORecursiveRewAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::SoftMuonSelectorAlg> ("top::SoftMuonSelectorAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::TopSpinDensityMatrixAlg> ("top::TopSpinDensityMatrixAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<top::SinglelepHadronicChi2RecoAlg> ("top::SinglelepHadronicChi2RecoAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::TutorialAlg> ("top::TutorialAlg"));
 
     ANA_CHECK (asg::registerToolFactory<AsgDeadHVCellRemovalTool> ("AsgDeadHVCellRemovalTool"));

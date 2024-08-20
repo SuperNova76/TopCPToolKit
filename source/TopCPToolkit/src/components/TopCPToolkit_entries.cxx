@@ -14,6 +14,7 @@
 #include <TopCPToolkit/SoftMuonSelectorAlg.h>
 #include <TopCPToolkit/PartonHistoryToSpinInputAlg.h>
 #include <TopCPToolkit/TopSpinDensityMatrixAlg.h>
+#include <TopCPToolkit/SinglelepHadronicChi2RecoAlg.h>
 
 DECLARE_COMPONENT (top::RunTtbarNNLORecursiveRewAlg)
 DECLARE_COMPONENT (top::RunSpaNetAlg)
@@ -27,3 +28,4 @@ DECLARE_COMPONENT (top::JetMatchingAlg)
 DECLARE_COMPONENT (top::SoftMuonSelectorAlg)
 DECLARE_COMPONENT (top::PartonHistoryToSpinInputAlg)
 DECLARE_COMPONENT (top::TopSpinDensityMatrixAlg)
+DECLARE_COMPONENT (top::SinglelepHadronicChi2RecoAlg)
