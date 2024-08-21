@@ -5,15 +5,15 @@ class SinglelepHadronicChi2RecoConfig(ConfigBlock):
 
     def __init__(self):
         super(SinglelepHadronicChi2RecoConfig, self).__init__()
-        self.addOption('jets', 'AntiKt4TruthDressedWZJets', type=str)
-        self.addOption('eventSelection', 'pass_ejets_%SYS%,as_char||pass_mujets_%SYS%,as_char', type=str)
+        self.addOption('jets', '', type=str)
+        self.addOption('eventSelection', '', type=str)
         self.addOption('topMass', 172.5, type=float)
         self.addOption('maxBJets', 2, type=int)
         self.addOption('maxLightJets', 4, type=int)
         self.addOption('topResolution', 35., type=float)
         self.addOption('wResolution', 25., type=float)
-        self.addOption('btagger', 'DL1dv01', type=str)
-        self.addOption('btagWP', 'FixedCutBEff_77', type=str)
+        self.addOption('btagger', '', type=str)
+        self.addOption('btagWP', '', type=str)
 
     def makeAlgs(self, config):
         alg = config.createAlgorithm('top::SinglelepHadronicChi2RecoAlg', 'SinglelepHadronicChi2RecoAlg')

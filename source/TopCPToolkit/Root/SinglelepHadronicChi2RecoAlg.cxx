@@ -124,6 +124,9 @@ namespace top {
       }
     }
 
+    // skip the matching if we dont have enough jets
+    if (bIndices.empty() || lIndices.size() < 2) return StatusCode::SUCCESS;
+
     // consider only N jets based on the settings
     if ((int)bIndices.size() > m_maxBJets) {
       bIndices.resize(m_maxBJets);
