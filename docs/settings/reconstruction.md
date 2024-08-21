@@ -296,10 +296,10 @@ Permutations of jets are considered and the one with the best chi^2 value is con
 Only b-tagged jets are considerted on the position of the b-jet and only light-jets (non-b tagged) jets are considered for the position of the light jets. So make sure to have at least one b-jet in the selection
 
 `jets`
-:   the jet collection to run on. The defauls is `'AntiKt4TruthDressedWZJets'`
+:   the jet collection to run on. The defauls is `''`
 
 `eventSelection`
-:   optional event filter to run on. The default is `'pass_ejets_%SYS%,as_char||pass_mujets_%SYS%,as_char'` (empty string), i.e. all events.
+:   optional event filter to run on. The default is `''` (empty string), i.e. all events.
 
 
 `topMass`
@@ -318,7 +318,7 @@ Only b-tagged jets are considerted on the position of the b-jet and only light-j
 :   the $resolution_w$ value in the chi^2 (in GeV). The default is `'25'`
 
 `btagger`
-:   the name of the b-tagger used. Needs to be set. The default is `'DL1dv01'`
+:   the name of the b-tagger used. Needs to be set. The default is `''`
 
 `btagWP`
-:   the name of the b-tag WP. Needs to be set. The default is `'FixedCutBEff_77'`
+:   the name of the b-tag WP. Needs to be set. The default is `''`
