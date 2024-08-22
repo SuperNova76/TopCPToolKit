@@ -46,27 +46,12 @@ Electrons:
         maxEta: 2.47
         useClusterEta: True
 
-Muons:
-  - containerName: 'AnaMuons'
-    IFFClassification: {}
-    WorkingPoint:
-      - selectionName: 'loose'
-        quality: 'Medium'
-        isolation: 'NonIso'
-      - selectionName: 'tight'
-        quality: 'Medium'
-        isolation: 'Tight_VarRad'
-        systematicBreakdown: True
-    PtEtaSelection:
-        minPt: 25000.0
-        maxEta: 2.5
-
 MissingET:
   - containerName: 'AnaMET'
     # Format should follow Object: '<containerName>.<postfix>'
     jets: 'AnaJets'
     electrons: 'AnaElectrons.tight'
-    muons: 'AnaMuons.tight'
+    setMuonJetEMScale: False
 
 OverlapRemoval:
   inputLabel: 'preselectOR'
@@ -74,15 +59,12 @@ OverlapRemoval:
   # Format should follow Object: '<containerName>.<postfix>'
   jets: 'AnaJets.baselineJvt'
   electrons: 'AnaElectrons.tight'
-  muons: 'AnaMuons.tight'
 
 ObjectCutFlow:
   - containerName: 'AnaElectrons'
     selectionName: 'tight'
   - containerName: 'AnaJets'
     selectionName: 'baselineJvt'
-  - containerName: 'AnaMuons'
-    selectionName: 'tight'
 
 Thinning:
   - containerName: 'AnaJets'
@@ -90,9 +72,6 @@ Thinning:
     selectionName: 'baselineJvt'
   - containerName: 'AnaElectrons'
     outputName: 'OutElectrons'
-    selectionName: 'tight||loose'
-  - containerName: 'AnaMuons'
-    outputName: 'OutMuons'
     selectionName: 'tight||loose'
 
 Trigger:
@@ -102,17 +81,13 @@ Trigger:
             - 'HLT_mu26_ivarmedium || HLT_mu50'
         '2022':
             - 'HLT_e26_lhtight_ivarloose_L1EM22VHI || HLT_e60_lhmedium_L1EM22VHI || HLT_e140_lhloose_L1EM22VHI'
-            - 'HLT_mu24_ivarmedium_L1MU14FCH || HLT_mu50_L1MU14FCH'
     noFilter: False
     electrons: 'AnaElectrons.tight'
     electronID: 'Tight'
     electronIsol: 'Tight_VarRad'
-    muons: 'AnaMuons.tight'
-    muonID: 'Medium'
 
 EventSelection:
   - electrons: 'AnaElectrons.loose'
-    muons: 'AnaMuons.tight'
     jets: 'AnaJets.baselineJvt'
     met: 'AnaMET'
     btagDecoration: 'ftag_select_DL1dv01_FixedCutBEff_85'
@@ -128,32 +103,20 @@ EventSelection:
         IMPORT SUBcommon
         EL_N 25000 >= 1
         EL_N tight 25000 == 1
-        MU_N 25000 == 0
         SAVE
       'mujets': |
         IMPORT SUBcommon
         EL_N 25000 == 0
-        MU_N 25000 == 1
         SAVE
 
 # After configuring each container, many variables will be saved automatically.
-
-Tutorial:
-  - electrons: 'AnaElectrons'
-    muons: 'AnaMuons'
-    met: 'AnaMET'
-    jets: 'AnaJets'
-    selection: 'pass_ejets_%SYS% || pass_mujets_%SYS%'
-
 Output:
   treeName: 'reco'
-  vars:
-    - 'OutMuons_NOSYS.truthOrigin -> mu_truthOrigin'
+  vars: []
   metVars: []
   containers:
       # Format should follow: '<suffix>:<output container>'
       el_: 'OutElectrons'
-      mu_: 'OutMuons'
       jet_: 'OutJets'
       met_: 'AnaMET'
       '': 'EventInfo'
