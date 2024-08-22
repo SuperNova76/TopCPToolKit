@@ -33,10 +33,10 @@ if( XAOD_STANDALONE )
 else ()
   atlas_add_library(
     TopCPToolkitLib
-    TopCPToolkit/*.h TopPartons/*.h TopParticleLevel/*.h TopSpaNet/*.h TopNNLOReweighter/*.h
+    TopCPToolkit/*.h HiggsPartons/*.h TopParticleLevel/*.h TopSpaNet/*.h TopNuFlows/*.h TopNNLOReweighter/*.h VectorHelpers/*.h
     Root/*.cxx
     INCLUDE_DIRS ${KLFITTER_INCLUDE_DIRS} ${ONNXRUNTIME_INCLUDE_DIRS} ${FASTJET_INCLUDE_DIRS}
-    PUBLIC_HEADERS TopCPToolkit TopPartons TopParticleLevel TopSpaNet TopNNLOReweighter
+    PUBLIC_HEADERS TopCPToolkit PartonHistory TopParticleLevel TopSpaNet TopNuFlows TopNNLOReweighter VectorHelpers
     LINK_LIBRARIES ${KLFITTER_LIBRARIES} ${ONNXRUNTIME_LIBRARIES} ${FASTJET_LIBRARIES}
     AnaAlgorithmLib AsgAnalysisAlgorithmsLib xAODMissingET xAODJet xAODBTagging xAODEgamma xAODMuon xAODTau xAODTruth xAODCore PathResolver FourMomUtils FTagAnalysisInterfacesLib SystematicsHandlesLib SelectionHelpersLib MCTruthClassifierLib GammaORToolsLib
     )
@@ -63,6 +63,13 @@ endif ()
 
 # Install files from the package:
 atlas_install_python_modules(python/*.py)
-atlas_install_joboptions(bin/*.py)
-atlas_install_scripts(bin/runTop_el.py)
+
+if (XAOD_STANDALONE)
+  atlas_install_joboptions(bin/ab/*.py)
+  atlas_install_scripts(bin/ab/*.py)
+else()
+  atlas_install_joboptions(bin/aa/*.py)
+  atlas_install_scripts(bin/aa/*.py)
+endif()
+
 atlas_install_data(share/*)

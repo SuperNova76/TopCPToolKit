@@ -17,6 +17,10 @@ namespace top {
 
 // ONNX only accepts flattened arrays!
 // So we inlcude helper functions for flattening vectors and getting their shapes
+// This is helpful for passing multi-dimensional vectors to the onnx wrapper
+// without having to know their shape in advance.
+// All this is in service for the addInputs method which can now accept
+// multi-dimensional vectors
 
 // First we define a way to get the type of each element in a vector
 // Base class, if we have a scalar (element), just return the type
