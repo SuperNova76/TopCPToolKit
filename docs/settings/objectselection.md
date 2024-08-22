@@ -1,3 +1,4 @@
+<!---
 ## Make-methods
 
 ### [makePtEtaSelectionConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
@@ -27,7 +28,6 @@ Name in YAML: **X.PtEtaSelection**, with X amongst: Jets, Electrons, Photons, Mu
 `selectionName`
 :   the name of the selection to append this to. The default is `''` (empty string), meaning that the cuts are applied to every object within the container. Specifying a name (e.g. `loose`) applies the cut only to those object who also pass that selection.
 
-<!---
 ### [makeOutputThinningConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
 
 `seq`
@@ -69,6 +69,7 @@ Name in YAML: **X.PtEtaSelection**, with X amongst: Jets, Electrons, Photons, Mu
 ## Config blocks
 
 ### [PtEtaSelectionBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
+Name in YAML: **X.PtEtaSelection**, with X amongst: Jets, Electrons, Photons, Muons, TauJets
 
 `containerName`
 :   the name of the input container.
@@ -86,7 +87,7 @@ Name in YAML: **X.PtEtaSelection**, with X amongst: Jets, Electrons, Photons, Mu
 :   whether to use the cluster $\eta$ (`etaBE(2)`) instead of the object $\eta$ (for electrons and photons). The default is `False`.
 
 `selectionDecoration`
-:   the name of the decoration to set.
+:   the name of the decoration to set. The default is `'selectPtEta'`.
 
 `selectionName`
 :   the name of the selection to append this to. The default is `''` (empty string), meaning that the cuts are applied to every object within the container. Specifying a name (e.g. `loose`) applies the cut only to those object who also pass that selection.
@@ -111,6 +112,15 @@ Name in YAML: **Thinning**
 
 `configName`
 :   name of the block config, e.g. `Thinning`.
+
+`deepCopy`
+:   run a deep copy of the container. The default is `False`.
+
+`sortPt`
+:   whether to sort objects in $p_\mathrm{T}$. The default is `False`.
+
+`noUniformSelection`
+:   do not run the union over all selections. The default is `False`.
 
 ### [ObjectCutFlowBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
 Name in YAML: **ObjectCutFlow**

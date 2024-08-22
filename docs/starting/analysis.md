@@ -282,7 +282,7 @@ GeneratorLevelAnalysis: {}
 ```
 
 - Before a block can be called, it has to be declared (see previous section).
-- A block that is not explicitly called in the config will not be set up. 
+- A block that is not explicitly called in the config will not be set up.
 - Blocks are set up with their default arguments, unless otherwise specified: this is what we write in our YAML config, an overload of the default arguments.
 
 With these simple rules in mind, you are ready to write your own config!

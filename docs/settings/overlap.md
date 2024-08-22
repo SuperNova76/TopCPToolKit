@@ -75,17 +75,14 @@
 ### [OverlapAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/OverlapAnalysisConfig.py)
 Name in YAML: **OverlapRemoval**
 
-`configName`
-:   name of the block config, useful to distinguish the various blocks if different overlap removal strategies are set up. Set it to e.g. `OverlapRemoval`.
-
-`postfix`
-:   a postfix to apply to decorations and algorithm names. Typically not needed here.
+`selectionName`
+:   name of the block config, useful to distinguish the various blocks if different overlap removal strategies are set up. The default is `''` (empty string).
 
 `inputLabel`
-:   any possible label used to pick up the selected objects with. This should not be a label already used elsewhere, e.g. `preselectOR`.
+:   any possible label used to pick up the selected objects with. This should not be a label already used elsewhere, e.g. `preselectOR`. The default is `''` (emptry string).
 
 `outputLabel`
-:   decoration applied (internally) to the output objects, e.g. `passesOR`.
+:   decoration applied (internally) to the output objects. The default is `'passesOR'`.
 
 `linkOverlapObjects`
 :   whether to set up an element link between overlapping objects. The default is `False`.
@@ -188,6 +185,15 @@ Name in YAML: **OverlapRemoval**
 
 `doJetFatJetOR`
 :   whether to perform the overlap removal between jets and large-R jets. The default is `True.`
+
+`addToAllSelections`
+:   add OR selection decision into all object selections. The default is `True`.
+
+`nominalOnly`
+:   (experimental) toggle off the running of overlap removal on systematically-varied objects (instead, copy from nominal). The default is `False`.
+
+`nominalOnlyUnifiedSelection`
+:   (experimental) toggle off the running of overlap removal on systematically-varied objects (instead, copy from nominal), but consider the union of all systematically-varied object selections (not just nominal). The default is `False`.
 
 !!! success "Registers the following variables:"
     - `select_or`: the per-object overlap removal decision

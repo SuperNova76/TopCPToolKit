@@ -6,9 +6,9 @@ class PartonToJetsMatchConfig(ConfigBlock):
     def __init__(self):
         super(PartonToJetsMatchConfig, self).__init__()
         self.addOption('jets', 'AntiKt4TruthDressedWZJets', type=str)
-        self.addOption('eventSelection', 'pass_ejets_%SYS%||pass_mujets_%SYS%', type=str)
+        self.addOption('eventSelection', 'pass_ejets_%SYS%,as_char||pass_mujets_%SYS%,as_char', type=str)
         self.addOption('criticalDR', 0.3, type=float)
-        self.addOption('partonContainerName', 'TopPartonHistoryTtbar_NOSYS', type=str)
+        self.addOption('partonContainerName', 'PartonHistoryTtbar_NOSYS', type=str)
 
     def makeAlgs(self, config):
         from AnalysisAlgorithmsConfig.ConfigAccumulator import DataType
@@ -16,12 +16,10 @@ class PartonToJetsMatchConfig(ConfigBlock):
 
         alg = config.createAlgorithm('top::PartonToJetsMatchAlg', 'PartonToJetsMatchAlg')
 
-        if 'Truth' in self.jets: 
+        if 'Truth' in self.jets:
             config.setSourceName(self.jets.split(".")[0], self.jets.split(".")[0])
-            alg.jets, alg.jetSelection = config.readNameAndSelection(self.jets)
-        else:
-            alg.jets = self.jets
-            
+        alg.jets, alg.jetSelection = config.readNameAndSelection(self.jets)
+
         alg.eventSelection = self.eventSelection
         alg.criticalDR = self.criticalDR
         alg.partonContainerName = self.partonContainerName

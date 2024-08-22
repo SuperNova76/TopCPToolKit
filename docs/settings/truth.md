@@ -94,6 +94,15 @@ Name in YAML: **ParticleLevel**
 `ljetCollection`
 :   the large-R jet collection to run on. The default is `AntiKt10TruthTrimmedPtFrac5SmallR20Jets` for `DAOD_PHYS`, and `AntiKt10TruthSoftDropBeta100Zcut10Jets` for `DAOD_PHYSLITE`.
 
+`useTruthNeutrinos`
+:   whether to use neutrinos. The default is `False`.
+
+`nuPtMin`
+:   minimum neutrino $p_\mathrm{T}$, in MeV. The default is 0 GeV.
+
+`nuEtaMax`
+:   maximum neutrino $\vert\eta\vert$. The default is 10.
+
 `useTruthMET`
 :   whether to use MET. The default is `True`.
 
@@ -139,13 +148,13 @@ Name in YAML: **TtbarNNLO**
 Name in YAML: **PartonToJetsMatch**
 
 The algorithm matches jets with partons from ttbar lepton+jets topology. The output of the algorithm are four variables representing the indices (for the jets) of the b-jets from hadronically and semileptonically decaying tops, jets matched to the up-type and down-type quarks from the hadronic W decay. Finally, a flag is added for dilepton events.
-The matching algorithm looks for the closest jets in $\Delta R$. For multiple matches (or for dilepton events) the multi-matched objects have index set to -1.
+The matching algorithm looks jets that are within the selected delta R. If more than one jet passed the criterium, the index is set to -1. For multiple objects matching the same index (or for dilepton events) the multi-matched objects have index set to -1.
 
 `jets`
 :   jet collection name (string) for matching, can be reco jets or truth jets. The default is `AntiKt4TruthDressedWZJets`.
 
 `eventSelection`
-:   event selection (string) for matching. The default is `pass_ejets_%SYS%||pass_mujets_%SYS%`.
+:   event selection (string) for matching. The default is `pass_ejets_%SYS%,as_char||pass_mujets_%SYS%,as_char`.
 
 `criticalDR`
 :   maximum $\Delta R$ (float) used for matching. The default is `0.3`.
@@ -190,7 +199,7 @@ The algorithm adds three variables for reco jets: index of matched truth jet, $\
     - `truth_jet_paired_index`: the index of the truth-level jets matched to the detector-level jets
     - `reco_to_reco_jet_closest_dR`: the minimum $\Delta R$ with respect to detector-level jets
     - `truth_to_truth_jet_closest_dR`: the minimum $\Delta R$ of the matched truth-level jet with respect to truth-level jets
-    - `has_truth_lepton`: label for reco jets if they have an overlapping truth lepton 
+    - `has_truth_lepton`: label for reco jets if they have an overlapping truth lepton
     - `overlapping_truth_lepton_pt`: $p_\mathrm{T}$ of the truth lepton that overlaps with the reco jet
 
 ### [IFFLeptonDecorationBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
@@ -207,3 +216,35 @@ Name in YAML: **X.IFFClassification**, with X amongst: Electrons, Muons
 
 !!! success "Registers the following variables:"
     - `IFFClass`: the decision of the [IFF `TruthClassificationTool`](https://gitlab.cern.ch/atlas/athena/-/tree/21.2/PhysicsAnalysis/AnalysisCommon/TruthClassification)  (no systematics)
+
+### [PartonHistoryToSpinInputConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/PartonHistoryToSpinInputConfig.py)
+Name in YAML: **SpinInputs**
+
+Takes a parton history as input and prepares the 4-vectors of the top/anti-top and their respective spin analysers.
+
+`history`
+:   the top parton history (string) to read. The default is `None`.
+
+`top`
+:   the name (string) to give the 4-vector for the top quark. The default is `'truth_top_4vect_%SYS%'`.
+
+`tbar`
+:   the name (string) to give the 4-vector for the anti-top quark. The default is `'truth_tbar_4vect_%SYS%'`.
+
+`top_decay`
+:   the name (string) to give the 4-vector for the decay product of the top quark. The default is `'truth_top_decay_4vect_%SYS%'`.
+
+`tbar_decay`
+:   the name (string) to give the 4-vector for the decay product of the anti-top quark. The default is `'truth_tbar_decay_4vect_%SYS%'`.
+
+### [CARConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/CARConfig.py)
+Name in YAML: **CAR**
+
+Performs the "custom angle replacement" (CAR) [algorithm](https://journals.aps.org/prd/pdf/10.1103/PhysRevD.106.115021). An example can be found [here](https://journals.aps.org/prd/pdf/10.1103/PhysRevD.107.076016).
+
+`history`
+:   the parton history (string) to read. Possible options are `HWW` and `HZZ`.
+
+!!! success "Registers history-dependent variables:"
+    - in the format `history_MC_resonance_CAR_variable` (no systematics)
+    - e.g. `HWW_MC_Hdecay1_decay1_CAR_pt`

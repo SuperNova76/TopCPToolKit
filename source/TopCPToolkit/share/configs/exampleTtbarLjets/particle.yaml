@@ -1,4 +1,6 @@
-CommonServices: {}
+CommonServices:
+  systematicsHistogram: 'listOfSystematicsParticleLevel'
+  runSystematics: True
 
 GeneratorLevelAnalysis: {}
 
@@ -6,6 +8,7 @@ ParticleLevel:
   useTruthLargeRJets: True
   useTruthPhotons: True
   useTruthTaus: True
+  useTruthNeutrinos: True
 
 EventSelection:
   - electrons: 'ParticleLevelElectrons'
@@ -46,6 +49,7 @@ Output:
       'tau_': 'ParticleLevelTaus'
       'jet_': 'ParticleLevelJets'
       'ljet_': 'ParticleLevelLargeRJets'
+      'nu_': 'ParticleLevelNeutrinos'
       'met_': 'ParticleLevelMissingET'
 
 AddConfigBlocks:

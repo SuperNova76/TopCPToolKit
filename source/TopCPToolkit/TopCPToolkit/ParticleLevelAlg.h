@@ -39,8 +39,8 @@ namespace top {
     StatusCode save;
     StatusCode saveAux;
 
-    bool m_useTruthElectrons, m_useTruthMuons, m_useTruthPhotons,
-      m_useTruthTaus, m_useTruthJets, m_useTruthLargeRJets, m_useTruthMET,
+    bool m_useTruthElectrons, m_useTruthMuons, m_useTruthPhotons, m_useTruthTaus,
+      m_useTruthJets, m_useTruthLargeRJets, m_useTruthNeutrinos, m_useTruthMET,
       m_doOverlapRemoval;
     float m_el_ptMin, m_el_etaMax;
     bool m_el_notFromHadron, m_el_tauIsHadron;
@@ -52,27 +52,28 @@ namespace top {
     float m_jet_ptMin, m_jet_etaMax;
     float m_ljet_ptMin, m_ljet_etaMax;
     std::string m_ljet_collection;
+    float m_nu_ptMin, m_nu_etaMax;
 
-    const xAOD::TruthParticleContainer *inputElectrons, *inputMuons,
-      *inputPhotons, *inputTaus;
-    xAOD::TruthParticleContainer *outputElectrons, *outputMuons, *outputPhotons,
-      *outputTaus;
-    xAOD::TruthParticleAuxContainer *outputElectronsAux, *outputMuonsAux,
-      *outputPhotonsAux, *outputTausAux;
+    const xAOD::TruthParticleContainer *inputElectrons=0, *inputMuons=0,
+      *inputPhotons=0, *inputTaus=0, *inputNeutrinos=0;
+    xAOD::TruthParticleContainer *outputElectrons=0, *outputMuons=0, *outputPhotons=0,
+      *outputTaus=0, *outputNeutrinos=0;
+    xAOD::TruthParticleAuxContainer *outputElectronsAux=0, *outputMuonsAux=0,
+      *outputPhotonsAux=0, *outputTausAux=0, *outputNeutrinosAux=0;
 
-    const xAOD::JetContainer *inputJets, *inputLargeRJets;
-    xAOD::JetContainer *outputJets, *outputLargeRJets;
-    xAOD::JetAuxContainer *outputJetsAux, *outputLargeRJetsAux;
+    const xAOD::JetContainer *inputJets=0, *inputLargeRJets=0;
+    xAOD::JetContainer *outputJets=0, *outputLargeRJets=0;
+    xAOD::JetAuxContainer *outputJetsAux=0, *outputLargeRJetsAux=0;
 
-    const xAOD::MissingETContainer *inputMissingET;
-    xAOD::MissingETContainer *outputMissingET;
-    xAOD::MissingETAuxContainer *outputMissingETAux;
+    const xAOD::MissingETContainer *inputMissingET=0;
+    xAOD::MissingETContainer *outputMissingET=0;
+    xAOD::MissingETAuxContainer *outputMissingETAux=0;
 
-    std::vector<MCTruthPartClassifier::ParticleOrigin> photon_origins;
+    std::vector<MCTruthPartClassifier::ParticleOrigin> photon_origins{};
     std::string photon_isolationVar;
     float photon_isolationCut;
 
-    const xAOD::EventInfo *evtInfo;
+    const xAOD::EventInfo *evtInfo=0;
   };
 
 }  // namespace top

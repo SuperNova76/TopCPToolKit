@@ -18,7 +18,7 @@ unset( _version )
 # Try to figure out what project is our parent. Just using a hard-coded list
 # of possible project names. Basically the names of all the other
 # sub-directories inside the Projects/ directory in the repository.
-set( _parentProjectNames Athena AthenaP1 AnalysisBase AthAnalysis AthSimulation AthDerivation AnalysisTop )
+set( _parentProjectNames Athena AthenaP1 AnalysisBase AthAnalysis AthSimulation AthDerivation )
 set( _defaultParentProject AnalysisBase )
 foreach( _pp ${_parentProjectNames} )
    if( NOT "$ENV{${_pp}_DIR}" STREQUAL "" )

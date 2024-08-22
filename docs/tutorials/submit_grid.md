@@ -119,7 +119,7 @@ which means this derivation has been deleted.
     ```
     and look for the one with the largest p-tag.
 
-Different MC campaigns exist which correspond to different years of data-taking and different releases. In particular, MC campaign MC20 corresponds to Run-2 data and release 22 (R22), and MC campaign MC23 corresponds to Run-3 data and release 25 (R25). See [here](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/DataMCForAnalysis#Corresponding_MC_campaigns_for_d) for a table of summary. 
+Different MC campaigns exist which correspond to different years of data-taking and different releases. In particular, MC campaign MC20 corresponds to Run-2 data and release 22 (R22), and MC campaign MC23 corresponds to Run-3 data and release 25 (R25). See [here](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/DataMCForAnalysis#Corresponding_MC_campaigns_for_d) for a table of summary.
 
 For both release 22 and release 25, two derivation formats are available: `DAOD_PHYS` and `DAOD_PHYSLITE`. TopCPToolkit can work with either format. More information on `DAOD_PHYS` and `DAOD_PHYSLITE` can be found [here](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/DAODPhys).
 
@@ -127,7 +127,7 @@ The [Physics Modelling Group (PMG)](https://twiki.cern.ch/twiki/bin/view/AtlasPr
 - [Central page for MC20](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/CentralMC20ProductionListNew)
 - [Central page for MC23](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/CentralMC23ProductionListNew)
 
-If we don't know the full dataset name, it is usually possible to search it out via rucio following some assumptions. Let's assume that the derivation format we want is `DAOD_PHYSLITE`, and the DSID is 601229 (everyone's favorite PowhegPythia semi-leptonic ttbar sample in MC23). To obtain simulation for currently available Run-3 datasets, we will need two samples corresponding to the 2022 (mc23a) and 2023 (mc23d) data-taking period. This can be distinguished based on the r-tag, which is r14622 and r15224, respectively. 
+If we don't know the full dataset name, it is usually possible to search it out via rucio following some assumptions. Let's assume that the derivation format we want is `DAOD_PHYSLITE`, and the DSID is 601229 (everyone's favorite PowhegPythia semi-leptonic ttbar sample in MC23). To obtain simulation for currently available Run-3 datasets, we will need two samples corresponding to the 2022 (mc23a) and 2023 (mc23d) data-taking period. This can be distinguished based on the r-tag, which is r14622 and r15224, respectively.
 
 !!! example "Exercise"
     Let's search for the 601229 mc23a samples.
@@ -191,7 +191,7 @@ Physics considerations need to be made here, which choice is feasible. Full-sim 
     - Without pile-up: 	`r14716` (AMI tag), `r14663` (merging tag)
     - Nominal (AF3 only): `r14932` (AMI tag), `r14663` (merging tag)
     - Without pile-up (AF3 only): `r14933` (AMI tag), `r14663` (merging tag)
-        
+
 - [MC23d](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/AtlasProductionGroupMC23d#Reconstruction):
     - Nominal: `r15224` (AMI tag), `r15225` (merging tag)
     - Without pile-up: 	`r15439` (AMI tag), `r15225` (merging tag)
@@ -229,15 +229,15 @@ PHYS_ttbar_PP8_mc20e (1 dataset)
 Analysis Settings:
  -Code:           runTop_el.py --no-systematics --parton --particle
 Grid Settings:
- -GridUsername:   username 
+ -GridUsername:   username
  -Suffix:         230320-v0
- -ExcludedSites:  
- -ForceSite:      
+ -ExcludedSites:
+ -ForceSite:
  -NoSubmit:       True
  -MergeType:      Default out of (None, Default, xAOD)
  -memory:         2000 in MB
- -maxNFilesPerJob 
- -OtherOptions:   
+ -maxNFilesPerJob
+ -OtherOptions:
  -nameShortener:  <bound method basicInDSNameShortener of <GridSubmission.grid.Config object at 0x7fddac9813a0>>
  -reuseTarBall:   False
  -DestSE          <not set>
@@ -276,7 +276,7 @@ Firstly, **panda often likes to skip external files**, especially `.root` files 
 config.otherOptions = '--extFile=file1,file2,...' # just the names of the files should be sufficient, but relative paths should also (probably) work
 ```
 
-Secondly, **never use absolute paths**, e.g. `/afs.cern.ch/user/...` in config files, as the directory structure on a grid site is different, the contents of the files sent to grid are extracted to some path on grid that you in general have no control over. 
+Secondly, **never use absolute paths**, e.g. `/afs.cern.ch/user/...` in config files, as the directory structure on a grid site is different, the contents of the files sent to grid are extracted to some path on grid that you in general have no control over.
 
 ### Other useful features of the grid submission scripts
 

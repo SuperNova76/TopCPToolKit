@@ -128,7 +128,7 @@
     It is possible to build histograms while running the EventLoop (e.g. cutflow histograms), but it's not a convenient feature nor one we are serioulsy considering for analysis purposes. We strongly recommend to leave the histogramming to a second, more specialised and efficient step.
 
 ??? question "How do I create new variables, that are not directly related to an existing object collection (e.g. jets, leptons)?"
-    Any variable you wish to save to the output must be decorated onto objects belonging to some container. For event-level variables (e.g. object multiplicities, reconstructed resonance kinematics, etc.), you should decorate the `EventInfo` container (which has a single object). You can find multiple examples of algorithms decorating the `EventInfo` in TopCPToolkit (e.g. [`LeptonSFCalculatorAlg`](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/Root/LeptonSFCalculatorAlg.cxx)).
+    Any variable you wish to save to the output must be decorated onto objects belonging to some container. For event-level variables (e.g. object multiplicities, reconstructed resonance kinematics, etc.), you should decorate the `EventInfo` container (which has a single object). A simple example of algorithm decorating `EventInfo` is [`LeptonSFCalculatorAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/Root/LeptonSFCalculatorAlg.cxx).
 
 ??? question "My favourite post-processing/histogramming framework doesn't work with the output of TopCPToolkit! How do I fix it?"
     This is expected, due to the change in format of the output (see earlier FAQ item). Dataframe-based workflows are more adapted than `ROOT::TTree::Draw`-style approaches. We strongly recommend [FastFrames](https://atlas-project-topreconstruction.web.cern.ch/fastframesdocumentation/).
@@ -138,3 +138,6 @@
 
 ??? question "Why do some systematically-varied vector branches sometimes feature default values?"
     This is a consequence of the single-TTree formalism. For each object, we need to keep track of two things: what quantities associated to this object are affected by systematics? and is this object still valid (in the sense of JVT cuts, overlap removal, etc.) for a given systematic variation? To that end, you'll find branches named `object_select_XYZ_%SYS%` that contains booleans. These booleans tell you whether the object at that index passes the selection XYZ for a given systematic. Only when this is true should you consider the corresponding entry of the object kinematic vector.
+
+??? question "Are objects (electrons, muons, jets, ...) sorted in pT for each event in the output ntuples?"
+    No. In CP algorithms (and hence TopCPToolkit) objects are **NOT** guaranteed to be sorted in pT because of the single-TTree format. With systematics, pT ordering cannot be preserved. Sorting in the NTuple is not attempted, not even in a nominal-only run.

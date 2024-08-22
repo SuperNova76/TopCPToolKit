@@ -1,5 +1,5 @@
-#ifndef TOPPARTONS_RUNPARTONHISTORYALG_H
-#define TOPPARTONS_RUNPARTONHISTORYALG_H
+#ifndef PARTONS_RUNPARTONHISTORYALG_H
+#define PARTONS_RUNPARTONHISTORYALG_H
 
 #include <AnaAlgorithm/AnaAlgorithm.h>
 
@@ -11,12 +11,19 @@
 #include <vector>
 
 // TopParton histories
-#include "TopPartons/CalcTopPartonHistory.h"
-#include "TopPartons/CalcTtbarPartonHistory.h"
-#include "TopPartons/CalcTtbarLightPartonHistory.h"
-#include "TopPartons/CalcTTZPartonHistory.h"
-#include "TopPartons/CalcTthPartonHistory.h"
-#include "TopPartons/CalcTzqPartonHistory.h"
+#include "PartonHistory/CalcPartonHistory.h"
+#include "PartonHistory/CalcTtbarPartonHistory.h"
+// #include "PartonHistory/CalcTtbarLightPartonHistory.h"
+#include "PartonHistory/CalcTtzPartonHistory.h"
+#include "PartonHistory/CalcTthPartonHistory.h"
+#include "PartonHistory/CalcTzqPartonHistory.h"
+#include "PartonHistory/CalcThqPartonHistory.h"
+#include "PartonHistory/CalcTqgammaPartonHistory.h"
+#include "PartonHistory/CalcTtgammaPartonHistory.h"
+
+// HiggsParton histories
+#include "PartonHistory/CalcHWWPartonHistory.h"
+#include "PartonHistory/CalcHZZPartonHistory.h"
 
 namespace top {
 
@@ -29,8 +36,8 @@ namespace top {
     virtual StatusCode finalize() override;
 
  private:
-    std::string m_topPartonScheme;
-    std::unique_ptr<CalcTopPartonHistory> m_topPartonHistory;
+    std::string m_PartonScheme;
+    std::unique_ptr<CalcPartonHistory> m_PartonHistory;
 
   };
 

@@ -128,7 +128,7 @@ We will soon attempt to write our own CP algorithm, so let's summarise the key p
 
 The following handles are commonly used in CP and analysis algorithms.
 We'll use some of them ourselves in this tutorial!
-For container handles, any `xAOD::` container can be used; for decoration handles, all the standard types are supported (even `TLorentzVector` and `std::vector`!).
+For container handles, any `xAOD::` container can be used; for decoration handles, all the standard types are supported (even `PtEtaPhiMVector` and `std::vector`!).
 It is also possible to make arrays of handles, to be configured by the user.
 
 - [`SysListHandle`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/SystematicsHandles/SystematicsHandles/SysListHandle.h): used exclusively for the systematics list
@@ -318,19 +318,19 @@ The loop over all relevant systematics is already set up for us, so let's commen
     ```
 
 To compute the $M_\mathrm{T}(W)$ observable, we need access to the one lepton in the event - but we don't know if it's an electron or a muon!
-There are multiple ways of dealing with such a situation, but we'll do something very simple: we'll set up an empty `TLorentzVector` and check the sizes of both the electron and muon containers to decide which one to read from, then we'll fill the `TLorentzVector` with the first element of that container.
+There are multiple ways of dealing with such a situation, but we'll do something very simple: we'll set up an empty `PtEtaPhiMVector` and check the sizes of both the electron and muon containers to decide which one to read from, then we'll fill the `PtEtaPhiMVector` with the first element of that container.
 
 We also need to collect the missing transverse momentum magnitude and its azimuthal angle from the MET container.
 Note that the MET container in fact contains multiple objects, the various MET terms, and we need to access by name the one called "Final".
 
 !!! example "Exercise"
-    Build the lepton `TLorentzVector` from the electron and muon containers, and call it `lepton`.
+    Build the lepton `PtEtaPhiMVector` from the electron and muon containers, and call it `lepton`.
     Obtain the MET components `et_miss` and `phi_miss` from the appropriate MET object.
 
 ??? success "Solution"
     Still in the loop over systematics, and after the code we've just added, write:
     ```cpp
-    TLorentzVector lepton;
+    PtEtaPhiMVector lepton;
     if ( electrons->size() > 0 ) {
       lepton = electrons->at(0)->p4();
     }

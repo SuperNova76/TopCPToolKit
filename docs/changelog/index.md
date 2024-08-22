@@ -5,6 +5,81 @@
 ### Upcoming release
 - [issue #94](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/94): add algorithm for NuFlows reconstruction
 - [issue #125](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/125): Add a tutorial on deploying trained ML models for inference
+- [issue #148](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/148): Migrate ParticleLevelAlg to Athena
+- [issue #162](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/162): Add Soft Muon Tagging truth information
+- [issue #163](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/163): (Re)implementation of TtbarLight parton history
+- [issue #177](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/177): Adding NLO b quark information to single-top parton history branches
+- [issue #178](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/178): Adding light quark information to single-top parton history branches
+
+### 2.12.0 <small>August 20, 2024</small>
+- We run on AB 25.2.23
+- [issue #164](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/164): Implementation of HZZ parton history
+- [issue #165](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/165): Implementation of Custom Angle Replacement algorithm
+- [issue #167](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/167): Clarifying Ttbar truth variables
+- [issue #168](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/168): Fixing some names in the parton history code leading to empty branches
+- [issue #169](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/169): Prevent empty TTrees from being written out at all
+- [issue #170](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/170): Remove the SVMassAlg for FTAG experts :warning:[***interface change***](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/170#implementation):warning:
+- [issue #171](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/171): Migrate JetReclusteringAlg to Athena
+- [issue #172](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/172): Remove outdated SPA-Net model
+- [issue #173](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/173): Finding good solution for tZq parton history and splitting of t and tbar
+- [issue #174](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/174): Improve documentation on compiling TopCPToolkit with Athena packages
+- [issue #175](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/175): Adapt to new options to skip data or MC :warning:[***interface change***](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/175#implementation):warning:
+- [issue #176](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/176): Adding Tqgamma parton history
+- [issue #179](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/179): Adding ttgamma parton history
+- [issue #180](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/180): Adding tHq parton history
+- [issue #181](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/181): Fix gamma_origin type
+- [issue #182](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/182): Template lorentzhelper functions
+- [issue #183](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/183): Adding simple chi^2 based matching for single lepton ttbar reconstruction
+
+### 2.11.0 <small>July 19, 2024</small>
+- We run on AB 25.2.20
+- [issue #147](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/147): Minor updates to the docs
+- [issue #154](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/154): Add truth neutrinos to particle-level and fix a bug with photons
+- [issue #155](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/155): Migrate BTaggingScoresAlg to Athena :warning:[***interface change***](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/155#implementation):warning:
+- [issue #156](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/156): Migrate FakeBkgCalculatorAlg to Athena :warning:[***interface change***](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/156#implementation):warning:
+- [issue #157](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/157): Fix the issue that particle-level MET phi is always positive
+- [issue #158](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/158): Fix cppchecks
+- [issue #159](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/159): Migrate LeptonSFCalculatorAlg to Athena
+- [issue #160](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/160): Migrate VGammaORAlg to Athena
+- [issue #161](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/161): Rewrite and simplify the parton histories
+- [issue #166](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/166): New options to configure the EGamma calibration model
+
+### 2.10.0 <small>June 19, 2024</small>
+- We run on AB 25.2.15
+- [issue #140](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/140): New algorithm for ttbar spin density matrix calculations
+- [issue #143](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/143): Print a list of branches that are read from input files
+- [issue #145](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/145): Migrate ExtraParticleDecorationAlg to Athena :warning:[***interface change***](../settings/experimental.md#extraparticledecorationconfig):warning:
+- [issue #146](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/146): Migrate ExtraPhotonDecorationAlg to Athena :warning:[***interface change***](../settings/experimental.md#extraphotondecorationconfig):warning:
+- [issue #149](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/149): Migrate IOStatsAlg to Athena
+- [issue #150](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/150): Migrate DiTauMassCalculatorAlg to Athena :warning:[***interface change***](../settings/reconstruction.md#ditaumassblock):warning:
+- [issue #151](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/151): Document new config blocks for per-tau and per-electron trigger efficiencies and SFs
+- [issue #152](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/152): Lepton scale factor calculator cannot handle multiple instances
+- [issue #153](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/153): Fix issues with parton to jet matching
+
+### 2.9.2 <small>May 24, 2024</small>
+- We run on AB 25.2.12
+- [issue #142](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/142): Fix compatibility with 25.2.11
+- [issue #143](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/143): Print a list of branches that are read from input files
+- [issue #144](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/144): Allow per-event lepton SF to be calculated in the absence of isolation
+
+!!! warning
+    AnalysisBase version 25.2.11 is not compatible. See [here](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/142) for more information.
+
+### 2.9.1 <small>May 15, 2024</small>
+- We run on AB 25.2.10
+- [issue #141](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/141): Add support for AthAnalysis
+
+### 2.9.0 <small>May 10, 2024</small>
+- We run on AB 25.2.10
+- [issue #121](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/121): Make a HowToExtendAnalysisTop-like skeleton for TopCPToolkit
+- [issue #129](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/129): Expose the option btagIgnoreOutOfValidityRange of BTaggingEfficiencyTool to KLFitterConfig
+- [issue #130](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/130): Creating the ExtraPhotonDecorationAlg
+- [issue #131](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/131): Document the new friendly systematics categories options
+- [issue #133](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/133): Silence harmless warnings from hadd
+- [issue #134](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/134): Fix BTagScoresConfig bugs
+- [issue #137](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/137): Bugfix for new release 25.2.9
+- [issue #138](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/138): Minor improvements to the docs and CI
+- [issue #139](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/139): Better failure discovery on the Grid
 
 ### 2.8.0 <small>April 22, 2024</small>
 - We run on AB 25.2.7

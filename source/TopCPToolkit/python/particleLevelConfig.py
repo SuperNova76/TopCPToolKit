@@ -51,6 +51,12 @@ particlelevel_branch_mappings = {
         'phi                      -> phi',
         'e                        -> e',
     ],
+    "neutrinos": [
+        'pt                       -> pt',
+        'eta                      -> eta',
+        'phi                      -> phi',
+        'e                        -> e',
+    ],
     "met": [
         'met_met                  -> met',
         'met_phi                  -> phi',
@@ -68,6 +74,7 @@ class particleLevelConfig(ConfigBlock):
         self.addOption('useTruthTaus', False, type=bool)
         self.addOption('useTruthJets', True, type=bool)
         self.addOption('useTruthLargeRJets', False, type=bool)
+        self.addOption('useTruthNeutrinos', False, type=bool)
         self.addOption('useTruthMET', True, type=bool)
         self.addOption('doOverlapRemoval', True, type=bool)
         self.addOption('elPtMin', None, type=float)
@@ -89,7 +96,9 @@ class particleLevelConfig(ConfigBlock):
         self.addOption('ljetPtMin', None, type=float)
         self.addOption('ljetEtaMax', None, type=float)
         self.addOption('ljetCollection', None, type=str)
-    
+        self.addOption('nuPtMin', None, type=float)
+        self.addOption('nuEtaMax', None, type=float)
+
     def makeAlgs(self, config):
 
         if config.dataType() is DataType.Data: return
@@ -101,6 +110,7 @@ class particleLevelConfig(ConfigBlock):
         alg.useTruthTaus       = self.useTruthTaus
         alg.useTruthJets       = self.useTruthJets
         alg.useTruthLargeRJets = self.useTruthLargeRJets
+        alg.useTruthNeutrinos  = self.useTruthNeutrinos
         alg.useTruthMET        = self.useTruthMET
         alg.doOverlapRemoval   = self.doOverlapRemoval
 
@@ -144,12 +154,17 @@ class particleLevelConfig(ConfigBlock):
             elif config.isPhyslite(): alg.ljet_collection = 'AntiKt10TruthSoftDropBeta100Zcut10Jets'
             if self.ljetPtMin: alg.ljet_ptMin = self.ljetPtMin
             if self.ljetEtaMax: alg.ljet_etaMax = self.ljetEtaMax
+        if self.useTruthNeutrinos:
+            container = "ParticleLevelNeutrinos"
+            config = self.createAndFillOutputContainer(config, container, "neutrinos")
+            if self.nuPtMin: alg.nu_ptMin = self.nuPtMin
+            if self.nuEtaMax: alg.nu_etaMax = self.nuEtaMax
         if self.useTruthMET:
             container = "ParticleLevelMissingET"
             config = self.createAndFillOutputContainer(config, container, "met", True)
 
         return
-    
+
     def createAndFillOutputContainer(self, config, container, map_key, isMET=False):
         # create the output container for that object collection
         _ = config.writeName(container, isMet=isMET)
@@ -159,9 +174,9 @@ class particleLevelConfig(ConfigBlock):
             inputname  = mapping.split("->")[0].rstrip()
             outputname = mapping.split("->")[1].lstrip()
             config.addOutputVar(container, inputname, outputname, noSys=True)
-        
+
         return config
-    
+
     def getOutputContainers(self):
         # return a dictionary of containers that can be added to the OutputAnalysisConfig
         containerDict = {}
@@ -177,6 +192,8 @@ class particleLevelConfig(ConfigBlock):
             containerDict['jet_']  = 'ParticleLevelJets'
         if self.useTruthLargeRJets:
             containerDict['ljet_'] = 'ParticleLevelLargeRJets'
+        if self.useTruthNeutrinos:
+            containerDict['nu_']   = 'ParticleLevelNeutrinos'
         if self.useTruthMET:
             containerDict['met_']  = 'ParticleLevelMissingET'
 

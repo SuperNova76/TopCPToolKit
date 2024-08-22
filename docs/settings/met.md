@@ -89,6 +89,15 @@ Name in YAML: **MissingET**
 `invisible`
 :   any input container to be treated as invisible particles, in the format `container` (no selection).
 
+`metWP`
+:   the MET working point to use: `Loose`, `Tight` (default), `Tighter`, `Tenacious`.
+
+`skipSystematicJetSelection`
+:   EXPERIMENTAL: whether to use simplified OR based on nominal jets and for jet-related systematics only. WARNING: this option is strictly for doing physics studies of the feasibility of this OR scheme, it should not be used in a regular analysis. The default is `False`.
+
+`saveSignificance`
+:   whether to save the MET significance. The default is `True`.
+
 !!! note
     Defining a jet container is mandatory, but all other input containers are optional.
 
@@ -96,6 +105,9 @@ Name in YAML: **MissingET**
     - `met`: the transverse missing energy $E_\mathrm{T}$
     - `phi`: the transverse missing energy $\phi$
     - `sumet`: the sum of all visible transverse missing momentum
+
+!!! success "Additional variables toggled by `saveSignificance`:"
+    - `significance`: the transverse missing energy significance
 
 !!! abstract "MET definitions"
     - `mpx`: $p_{x,\mathrm{miss}} = - \sum p_x$

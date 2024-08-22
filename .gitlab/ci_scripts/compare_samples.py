@@ -47,7 +47,8 @@ def getHistograms(inputfile):
     for key in keys:
         obj = key.ReadObj()
         if isinstance(obj, TH1):
-            histos.append(obj.GetName())
+            if "EventLoop" not in obj.GetName():
+                histos.append(obj.GetName())
 
     return histos
 
@@ -153,7 +154,7 @@ def compareEvents(key, branches, ref_file, new_file):
     for event_idx in range(ref_events):
         ref_tree.GetEntry(event_idx)
         # check that the event number is in both trees, otherwise we will print many warnings below...
-        new_tree.GetEntryWithIndex(getattr(ref_tree, "eventNumber"))
+        new_tree.GetEntry( new_tree.GetEntryNumberWithIndex(getattr(ref_tree, "eventNumber")) )
         if getattr(ref_tree, "eventNumber") != getattr(new_tree, "eventNumber"):
             logger.warning(f"{orange_code}  Entry with eventNumber {getattr(ref_tree,'eventNumber')} doesn't exist in the new file. Skipping.{reset_code}")
             continue
@@ -164,7 +165,7 @@ def compareEvents(key, branches, ref_file, new_file):
                 # !!! Exceptions !!!
                 # SPA-Net floating point error
                 if "spanet_had_top_score" in branch or "spanet_had_top_assignment" in branch:
-                    if math.isclose(ref_value, new_value, rel_tol=1e-6): continue
+                    if math.isclose(ref_value, new_value, rel_tol=1e-5): continue
                 logger.debug(f"{orange_code}Warning: Branch {branch} differs for event {getattr(ref_tree,'eventNumber')}:{reset_code}")
                 logger.debug(f"{orange_code}  --> reference:{reset_code} {ref_value}")
                 logger.debug(f"{orange_code}  --> new file: {reset_code} {new_value}")

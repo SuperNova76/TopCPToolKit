@@ -50,21 +50,29 @@ Assuming you are working on Lxplus or an equivalent setup with access to CVMFS, 
     cd build
     ```
 
-followed by a suitable choice of AnalysisBase release:
-=== "New setup"
+followed by a suitable choice of Analysis release:
+=== "New AnalysisBase setup"
     ```sh
     asetup AnalysisBase,25.2.X
+    ```
+=== "New AthAnalysis setup (with acmSetup)"
+    ```sh
+    acmSetup AthAnalysis,25.2.X
     ```
 === "Re-use existing setup"
     ```sh
     asetup --restore
     ```
+=== "Re-use existing acmSetup"
+    ```sh
+    acmSetup
+    ```
 
 !!! tip
-    AnalysisBase releases in the 25.2.x series are [listed here](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/AnalysisBaseReleaseNotes25pt2), together with the changes that went into them. Those that affect CP algorithms are tagged with `CPAlgorithms`.
+    Analysis releases in the 25.2.x series are [listed here](https://twiki.cern.ch/twiki/bin/view/AtlasProtected/AnalysisBaseReleaseNotes25pt2), together with the changes that went into them. Those that affect CP algorithms are tagged with `CPAlgorithms`.
 
 For a fresh compilation, or to include new files from the `source/` folder:
-=== "Simple"
+=== "Simple (not necessary if you used acmSetup above)"
     ```sh
     cmake ../source
     ```
@@ -79,7 +87,11 @@ then compile and set up the new environment:
     make -j4
     source */setup.sh
     ```
-=== "Re-use existing setup"
+=== "Compile with acmSetup"
+    ```sh
+    acm compile
+    ```
+=== "Re-use existing setup (not necessary with acmSetup)"
     ```sh
     source */setup.sh
     ```
@@ -116,7 +128,7 @@ set( ATLAS_ENABLE_IDE_HELPERS OFF CACHE BOOL "Enable IDE helpers" )
 <!-- !!! tip
     Using VS Code? You may want to grab the config files we provide at `/afs/cern.ch/user/o/omajersk/public/TopCPToolKitStuff/.vscode/` (experimental!) :thinking_face: -->
 
-## Expert mode: compiling against Athena
+## Expert mode: compiling against Analysis Release
 
 !!! warning
     Only do this if you really have to... :slight_smile:
@@ -126,19 +138,63 @@ set( ATLAS_ENABLE_IDE_HELPERS OFF CACHE BOOL "Enable IDE helpers" )
 !!! tip
     This [cheatsheet](https://atlassoftwaredocs.web.cern.ch/gittutorial/GitCheatSheet.pdf) is very useful!
 
-Set up a sparse-checkout of Athena, using the `main` branch or the relevant `release/25.2.x` tag.
+Get a local copy of the git repository with:
+
+=== "Kerberos"
+    ```sh
+    git clone https://:@gitlab.cern.ch:8443/atlasphys-top/reco/TopCPToolkit.git TopCPToolkit_wAthena
+    ```
+=== "SSH"
+    ```sh
+    git clone ssh://git@gitlab.cern.ch:7999/atlasphys-top/reco/TopCPToolkit.git TopCPToolkit_wAthena
+    ```
+=== "HTTP"
+    ```sh
+    git clone https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit.git TopCPToolkit_wAthena
+    ```
+
+Set up a sparse-checkout of Athena under the directory `TopCPToolkit_wAthena/source/`:
+
+```sh
+cd TopCPToolkit_wAthena/source/
+setupATLAS
+lsetup git
+```
+
+!!! tip
+    See the [ATLAS software git tutorial](https://atlassoftwaredocs.web.cern.ch/gittutorial/env-setup/) for more details on how to set up and fork Athena on gitlab, sparse checkout packages, and make a merge request.
+
+```sh
+git atlas init-workdir https://:@gitlab.cern.ch:8443/[YOUR_USER_NAME]/athena.git
+cd athena/
+git atlas addpkg [PACKAGE_NAMES]
+```
 The packages you might want to add probably live under [PhysicsAnalysis/Algorithms/](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/).
-Then move `source/TopCPToolkit` to within the newly created `athena` folder.
-From the `build` directory, you can now compile as:
+
+Remove the Athena project directory:
+```sh
+rm -r Projects/
+```
+Prepare the build area:
+```sh
+cd ../..
+mkdir -p build && cd build
+```
+Switch to the relevant AnalysisBase branch or release/25.2.x tag, for example:
+```sh
+asetup AnalysisBase,main,latest
+```
+
+Compile and set up environment:
 === "Simple"
     ```sh
-    cmake ../athena/Projects/WorkDir
+    cmake ../source
     make -j4
     source */setup.sh
     ```
 === "Debugging"
     ```sh
-    cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS='-g -O0' ../athena/Projects/WorkDir
+    cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS='-g -O0' ../source
     make -j4
     source */setup.sh
     ```

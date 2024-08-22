@@ -16,7 +16,9 @@
 #include <xAODEventInfo/EventInfo.h>
 
 namespace top {
-
+  using ROOT::Math::PtEtaPhiMVector;
+  using ROOT::Math::PtEtaPhiEVector;
+  
   class JetMatchingAlg final : public EL::AnaAlgorithm {
 
   public:
@@ -24,7 +26,7 @@ namespace top {
     virtual StatusCode initialize() override;
     virtual StatusCode execute() override;
 
-  private: 
+  private:
     //systematics
     CP::SysListHandle m_systematicsList {this};
     CP::SysReadHandle<xAOD::EventInfo> m_eventInfoHandle {
@@ -48,7 +50,7 @@ namespace top {
     CP::SysReadSelectionHandle m_selection {
       this, "eventSelection", "", "Name of the selection on which this JetMatching instance is allowed to run"
     };
-    
+
     //output decorations
     CP::SysWriteDecorHandle<int> m_truth_jet_paired_index {
       this, "truth_jet_paired_index", "truth_jet_paired_index_%SYS%", "Index of the matched true jet"
@@ -62,20 +64,19 @@ namespace top {
     CP::SysWriteDecorHandle<bool> m_has_truth_lepton {
       this, "has_truth_lepton", "has_truth_lepton_%SYS%", "reco jet has truth lepton at dR < 0.4"
     };
-    
+
     CP::SysWriteDecorHandle<float> m_overlapping_truth_lepton_pt {
       this, "overlapping_truth_lepton_pt", "overlapping_truth_lepton_pt_%SYS%", "pt of the overlapping truth lepton"
     };
-    
-    
+
+
     float m_criticalDR = 0.3;
     float m_criticalDR_leptons = 0.4;
     
-    float get_minDR_reco(TLorentzVector jet1, unsigned int ijet1, ConstDataVector<xAOD::JetContainer> selected_jets);
+    float get_minDR_reco(PtEtaPhiEVector jet1, unsigned int ijet1, ConstDataVector<xAOD::JetContainer> selected_jets);
     float get_minDR_truth(const xAOD::JetContainer &truth_jets, int truth_jet_index);
-    int get_matched_truth(TLorentzVector reco_jet, const xAOD::JetContainer &truth_jets);
-    bool find_close_lepton(TLorentzVector& reco_jet, const xAOD::TruthParticleContainer &truth_electrons, const xAOD::TruthParticleContainer &truth_muons, double& overlapping_truth_lepton_pt);
-    
+    int get_matched_truth(PtEtaPhiEVector reco_jet, const xAOD::JetContainer &truth_jets);
+    bool find_close_lepton(PtEtaPhiEVector& reco_jet, const xAOD::TruthParticleContainer &truth_electrons, const xAOD::TruthParticleContainer &truth_muons, double& overlapping_truth_lepton_pt);
   };
 
 } // namespace top

@@ -39,11 +39,13 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics=False
         WPLoose = ["TightLH", "NonIso"]  # no isolation
         WPTight = ["TightLH", "Tight_VarRad"]
         configSeq += makeConfig ('Electrons.WorkingPoint', containerName='AnaElectrons', selectionName='loose')
-        configSeq.setOptionValue ('.likelihoodWP', WPLoose[0])
+        configSeq.setOptionValue ('.identificationWP', WPLoose[0])
         configSeq.setOptionValue ('.isolationWP', WPLoose[1])
+        configSeq.setOptionValue ('.noEffSF', True)
         configSeq += makeConfig ('Electrons.WorkingPoint', containerName='AnaElectrons', selectionName='tight')
-        configSeq.setOptionValue ('.likelihoodWP', WPTight[0])
+        configSeq.setOptionValue ('.identificationWP', WPTight[0])
         configSeq.setOptionValue ('.isolationWP', WPTight[1])
+        configSeq.setOptionValue ('.noEffSF', True)
 
         configSeq += makeConfig ('Electrons.PtEtaSelection', containerName='AnaElectrons')
         configSeq.setOptionValue ('.selectionDecoration', 'selectPtEta')
@@ -87,11 +89,6 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics=False
 
         configSeq += makeConfig ('Jets.JVT', containerName='AnaJets')
 
-        configSeq += makeConfig ('Jets.PtEtaSelection', containerName='AnaJets')
-        configSeq.setOptionValue ('.selectionDecoration', 'selectPtEta')
-        configSeq.setOptionValue ('.minPt', 25e3)
-        configSeq.setOptionValue ('.maxEta', 2.5)
-
         # b-tagging
         for WP in WPs:
             configSeq += makeConfig ('Jets.FlavourTagging', containerName='AnaJets')
@@ -102,6 +99,11 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics=False
             configSeq.setOptionValue ('.btagWP', WP)
 
         outputContainers['jet_'] = 'OutJets'
+
+        configSeq += makeConfig ('Jets.PtEtaSelection', containerName='AnaJets')
+        configSeq.setOptionValue ('.selectionDecoration', 'selectPtEta')
+        configSeq.setOptionValue ('.minPt', 25e3)
+        configSeq.setOptionValue ('.maxEta', 2.5)
 
     # TODO VR track jets b-tagging -- not yet in CDI ?
     if use_track_jets:
@@ -190,7 +192,7 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics=False
         '2016': ['HLT_e26_lhtight_nod0_ivarloose || HLT_e60_lhmedium_nod0 || HLT_e140_lhloose_nod0', 'HLT_mu26_ivarmedium || HLT_mu50'],
         '2017': ['HLT_e26_lhtight_nod0_ivarloose || HLT_e60_lhmedium_nod0 || HLT_e140_lhloose_nod0', 'HLT_mu26_ivarmedium || HLT_mu50'],
         '2018': ['HLT_e26_lhtight_nod0_ivarloose || HLT_e60_lhmedium_nod0 || HLT_e140_lhloose_nod0', 'HLT_mu26_ivarmedium || HLT_mu50'],
-        '2022': ['HLT_e26_lhtight_ivarloose_L1EM22VHI || HLT_e60_lhmedium_L1EM22VHI || HLT_e140_lhloose_L1EM22VHI', 'HLT_mu26_ivarmedium_L1MU14FCH || HLT_mu50_L1MU14FCH'],
+        '2022': ['HLT_e26_lhtight_ivarloose_L1EM22VHI || HLT_e60_lhmedium_L1EM22VHI || HLT_e140_lhloose_L1EM22VHI', 'HLT_mu24_ivarmedium_L1MU14FCH || HLT_mu50_L1MU14FCH'],
     }
     individual_triggers = list(set(substring.strip() for chains_list in triggerChainsPerYear.values() for chain in chains_list for substring in chain.split('||')))
     configSeq += makeConfig ( 'Trigger' )
@@ -219,30 +221,11 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics=False
         configSeq += makeConfig ('ObjectCutFlow', containerName='AnaTrackJets', selectionName='')
 
     # a single lepton SF
-    # TODO: give it a factory when moving to Athena
-    from TopCPToolkit.LeptonSFCalculatorConfig import LeptonSFCalculatorConfig
-    cfg = LeptonSFCalculatorConfig()
-    cfg.setOptionValue ('electrons', 'AnaElectrons.tight')
-    cfg.setOptionValue ('muons', 'AnaMuons.tight')
-    #cfg.setOptionValue ('photons', 'AnaPhotons.tight')
-    cfg.setOptionValue ('lepton_postfix', 'tight')
-    configSeq.append(cfg)
-
-    # energy decorations
-    # TODO: give it a factory when moving to Athena
-    from TopCPToolkit.ExtraParticleDecorationConfig import ExtraParticleDecorationConfig
-    if use_electrons:
-        cfg = ExtraParticleDecorationConfig('El')
-        cfg.setOptionValue('particles', 'AnaElectrons')
-        configSeq.append(cfg)
-    if use_muons:
-        cfg = ExtraParticleDecorationConfig('Mu')
-        cfg.setOptionValue('particles', 'AnaMuons')
-        configSeq.append(cfg)
-    if use_jets:
-        cfg = ExtraParticleDecorationConfig('Jet')
-        cfg.setOptionValue('particles', 'AnaJets')
-        configSeq.append(cfg)
+    configSeq += makeConfig ('LeptonSF')
+    #configSeq.setOptionValue ('.electrons', 'AnaElectrons.tight')
+    configSeq.setOptionValue ('.muons', 'AnaMuons.tight')
+    #configSeq.setOptionValue ('.photons', 'AnaPhotons.tight')
+    configSeq.setOptionValue ('.lepton_postfix', 'tight')
 
     # the IFF lepton classification
     if use_electrons:
@@ -351,33 +334,32 @@ SAVE
 
     # TODO: give it a factory when moving to Athena
     from TopCPToolkit.TopSpaNetConfig import TopSpaNetConfig
-    for topology in ['TtbarLjets', 'TtbarLjetsNu']:
+    for topology in ['TtbarLjetsNu']:
         cfg = TopSpaNetConfig()
         cfg.setOptionValue ('electrons', 'AnaElectrons.tight')
         cfg.setOptionValue ('muons', 'AnaMuons.tight')
         cfg.setOptionValue ('jets', 'AnaJets.baselineJvt')
         cfg.setOptionValue ('met', 'AnaMET')
-        cfg.setOptionValue ('eventSelection', 'pass_ejets_%SYS%||pass_mujets_%SYS%')
+        cfg.setOptionValue ('eventSelection', 'pass_ejets_%SYS%,as_char||pass_mujets_%SYS%,as_char')
         cfg.setOptionValue ('topology', topology)
         configSeq.append(cfg)
 
-    # TODO: give it a factory when moving to Athena
     if use_taus:
-        from TopCPToolkit.DiTauMassConfig import DiTauMassConfig
-        cfg += DiTauMassConfig()
-        cfg.setOptionValue ('electrons', 'AnaElectrons.tight')
-        cfg.setOptionValue ('muons', 'AnaMuons.tight')
-        cfg.setOptionValue ('taus', 'AnaTauJets.tight')
-        cfg.setOptionValue ('jets', 'AnaJets.baselineJvt')
-        cfg.setOptionValue ('met', 'AnaMET')
-        cfg.setOptionValue ('eventSelection', '')
-        cfg.setOptionValue ('saveExtraVariables', True)
-        configSeq.append(cfg)
+        configSeq += makeConfig ('DiTauMMC')
+        configSeq.setOptionValue ('.electrons', 'AnaElectrons.tight')
+        configSeq.setOptionValue ('.muons', 'AnaMuons.tight')
+        configSeq.setOptionValue ('.taus', 'AnaTauJets.tight')
+        configSeq.setOptionValue ('.jets', 'AnaJets.baselineJvt')
+        configSeq.setOptionValue ('.met', 'AnaMET')
+        configSeq.setOptionValue ('.eventSelection', '')
+        configSeq.setOptionValue ('.saveExtraVariables', True)
+        configSeq.setOptionValue ('.doMLNU3P', True)
+        configSeq.setOptionValue (',doMAXW', True)
 
     # bootstraps
     configSeq += makeConfig ('Bootstraps')
     configSeq.setOptionValue ('.nReplicas', 2000)
-    configSeq.setOptionValue ('.runOnMC', True)
+    configSeq.setOptionValue ('.skipOnMC', False)
 
     # add NTuple output config
     configSeq += makeConfig ('Output')
@@ -400,14 +382,20 @@ SAVE
                                           noSystematics=noSystematics)
     configSeq.fullConfigure(configAccumulator)
 
+    from AnaAlgorithm.DualUseConfig import isAthena, useComponentAccumulator
+    if isAthena and useComponentAccumulator:
+        return configAccumulator.CA
 
-def makeTruthConfiguration(flags, algSeq, noSystematics=False):
-    configSeq = ConfigSequence()
-    factory = ConfigFactory()
+
+def makeTruthConfiguration(flags, algSeq, configSeq, factory, noSystematics=False):
+
     makeConfig = factory.makeConfig
 
     truth_branches = []
     outputContainers = {'': 'EventInfo'}
+
+    # primary vertex
+    configSeq += makeConfig ('EventCleaning')
 
     # PMG TruthWeightTool
     configSeq += makeConfig ('GeneratorLevelAnalysis')
@@ -422,7 +410,7 @@ def makeTruthConfiguration(flags, algSeq, noSystematics=False):
     # TODO: give it a factory when moving to Athena
     from TopCPToolkit.truthConfig import truthConfig
     cfg = truthConfig()
-    cfg.setOptionValue ('histories', 'Ttbar.TtbarLight')
+    cfg.setOptionValue ('histories', 'Ttbar')
     configSeq.append(cfg)
     outputContainers.update( cfg.getOutputContainers() )
 
@@ -433,6 +421,27 @@ def makeTruthConfiguration(flags, algSeq, noSystematics=False):
     #cfg.setOptionValue ('reweightType','3D')
     #cfg.setOptionValue ('sampleID', 'aMCH7')
     configSeq.append(cfg)
+
+    # example spin analysis
+    from TopCPToolkit.PartonHistoryToSpinInputConfig import PartonHistoryToSpinInputConfig
+    cfg = PartonHistoryToSpinInputConfig()
+    cfg.setOptionValue ('history', 'Ttbar')
+    configSeq.append(cfg)
+    from TopCPToolkit.TopSpinDensityMatrixConfig import TopSpinDensityMatrixConfig
+    cfg = TopSpinDensityMatrixConfig()
+    cfg.setOptionValue ('setup', 'QEttbarExample')
+    cfg.setOptionValue ('top', 'truth_top_4vect_%SYS%')
+    cfg.setOptionValue ('tbar', 'truth_tbar_4vect_%SYS%')
+    cfg.setOptionValue ('top_decay', 'truth_top_decay_4vect_%SYS%')
+    cfg.setOptionValue ('tbar_decay', 'truth_tbar_decay_4vect_%SYS%')
+    cfg.setOptionValue ('doHelicityBasis', True)
+    cfg.setOptionValue ('doEntanglement', True)
+    configSeq.append(cfg)
+
+    # from TopCPToolkit.CARConfig import CARConfig
+    # cfg = CARConfig()
+    # cfg.setOptionValue ('history', 'HWW')
+    # configSeq.append(cfg)
 
     # add NTuple output config
     configSeq += makeConfig ('Output')
@@ -448,6 +457,10 @@ def makeTruthConfiguration(flags, algSeq, noSystematics=False):
                                           noSystematics=noSystematics)
     configSeq.fullConfigure(configAccumulator)
 
+    from AnaAlgorithm.DualUseConfig import isAthena, useComponentAccumulator
+    if isAthena and useComponentAccumulator:
+        return configAccumulator.CA
+
 
 def makeParticleLevelConfiguration(flags, algSeq, configSeq, factory, noSystematics=False, noFilter=False):
 
@@ -455,6 +468,9 @@ def makeParticleLevelConfiguration(flags, algSeq, configSeq, factory, noSystemat
 
     particleLevel_branches = []
     outputContainers = {'': 'EventInfo'}
+
+    # primary vertex
+    configSeq += makeConfig ('EventCleaning')
 
     # PMG TruthWeightTool
     configSeq += makeConfig ('GeneratorLevelAnalysis')
@@ -472,6 +488,7 @@ def makeParticleLevelConfiguration(flags, algSeq, configSeq, factory, noSystemat
     cfg.setOptionValue ('useTruthLargeRJets', True)
     cfg.setOptionValue ('useTruthPhotons', True)
     cfg.setOptionValue ('useTruthTaus', True)
+    cfg.setOptionValue ('useTruthNeutrinos', True)
     configSeq.append(cfg)
     outputContainers.update( cfg.getOutputContainers() )
 
@@ -515,3 +532,7 @@ SAVE
                                           autoconfigFromFlags=flags,
                                           noSystematics=noSystematics)
     configSeq.fullConfigure(configAccumulator)
+
+    from AnaAlgorithm.DualUseConfig import isAthena, useComponentAccumulator
+    if isAthena and useComponentAccumulator:
+        return configAccumulator.CA

@@ -140,4 +140,4 @@ namespace xAOD {
 // Define a ClassID for the type.
 CLASS_DEF( xAOD::KLFitterResultAuxContainer, 1292529835, 1 )
 
-#endif // ANALYSISTOP_TOPEVENT_KLFITTERRESULTAUXCONTAINER_H
+#endif

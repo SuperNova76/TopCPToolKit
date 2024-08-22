@@ -25,6 +25,9 @@ Name in YAML: **Output**
 `containers`
 :   a dictionary mapping prefixes (key) to container names (values) to be used when saving to the output tree. Branches are then of the form `prefix_decoration`.
 
+`containersOnlyForMC`
+:   same as containers, but for MC-only containers so as to avoid a crash when running on data. The default is `{}` (empty dictionary).
+
 `treeName`
 :   name of the output TTree to save. The default is `analysis`.
 
@@ -33,6 +36,15 @@ Name in YAML: **Output**
 
     !!! tip
         For a particle-level truth analysis, you likely want to recover `'NonInt'` instead. See [MET_Truth](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/Run2xAODMissingET#MET_Truth).
+
+`storeSelectionFlags`
+:   whether to store one branch for each object selection. The default is `True`.
+
+`selectionFlagPrefix`
+:   the prefix (string) used when naming selection branches. The default is `'select'`.
+
+`alwaysAddNosys`
+:   if set to `True`, all branches will be given a systematics suffix, even if they have no systematics (beyond the nominal). The default is `False`.
 
 `commands`
 :   a list of strings containing commands (regexp strings prefaced by the keywords `enable` or `disable`) to turn on/off the writing of branches to the output ntuple. The default is `None` (no modification to the scheduled output branches).

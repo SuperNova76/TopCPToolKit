@@ -20,7 +20,7 @@ _campaigns_AMITag = {
 
 _years_runNumbers = {
     # for each year (dict key), provide list of [min runNumber, max runNumber)
-    # i.e. we check min runNumber <= runNumber < max runNumber 
+    # i.e. we check min runNumber <= runNumber < max runNumber
     2015: [0, 290000],
     2016: [290000, 320000],
     2017: [320000, 342000],

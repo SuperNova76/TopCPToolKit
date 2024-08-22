@@ -19,6 +19,7 @@ class KLFitterConfig(ConfigBlock):
                        'xAODBTaggingEfficiency/13TeV/2022-22-13TeV-MC20-CDI-2022-07-28_v1.root', type=str)
         self.addOption('btagger', 'DL1dv00', type=str)
         self.addOption('btagWP', 'FixedCutBEff_77', type=str)
+        self.addOption('btagIgnoreOutOfValidityRange', False, type=bool)
         self.addOption('selectionRegionsConfig', '', type=str)
         self.addOption('saveAllPermutations', False, type=bool)
         # list of dictionaries for the per-region config options
@@ -55,7 +56,7 @@ class KLFitterConfig(ConfigBlock):
             alg.SaveAllPermutations = self.saveAllPermutations
 
             # these settings can be defined per-region, but if not, we fallback to global setting
-            alg.selectionDecorationName = selectionName + '_%SYS%'
+            alg.selectionDecorationName = selectionName + '_%SYS%,as_char'
             alg.LHType = self.likelihoodType
             alg.LeptonType = perRegionConfig.get('leptonType', self.leptonType)
             alg.JetSelectionMode = perRegionConfig.get('jetSelectionMode', self.jetSelectionMode)
@@ -71,6 +72,7 @@ class KLFitterConfig(ConfigBlock):
                 jetCollection = config.originalName(self.jets.split('.')[0])
                 alg.BTaggingEfficiencyTool.JetAuthor = jetCollection
                 alg.BTaggingEfficiencyTool.ScaleFactorFileName = self.bTagCDIFile
+                alg.BTaggingEfficiencyTool.IgnoreOutOfValidityRange = self.btagIgnoreOutOfValidityRange
                 alg.BTaggingEfficiencyTool.MinPt = 20e3  # hardcoded to the recommendation for EMPFlow at the moment
                 # NOTE the efficiency tool is simply set to the default generator,
                 # meaning the results are not correct for alternative showering generators!!

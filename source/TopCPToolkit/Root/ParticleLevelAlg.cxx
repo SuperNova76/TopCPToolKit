@@ -21,6 +21,7 @@ namespace top {
       m_useTruthTaus(false),
       m_useTruthJets(true),
       m_useTruthLargeRJets(false),
+      m_useTruthNeutrinos(false),
       m_useTruthMET(true),
       m_doOverlapRemoval(true),
       m_el_ptMin(25e3),
@@ -41,7 +42,10 @@ namespace top {
       m_jet_etaMax(2.5),
       m_ljet_ptMin(25e3),
       m_ljet_etaMax(2.5),
-      m_ljet_collection("AntiKt10TruthTrimmedPtFrac5SmallR20Jets")
+      m_ljet_collection("AntiKt10TruthTrimmedPtFrac5SmallR20Jets"),
+      m_nu_ptMin(0.),
+      m_nu_etaMax(10.),
+      photon_isolationCut(0)
   {
     declareProperty("useTruthElectrons", m_useTruthElectrons,
 		    "config: use electrons?");
@@ -51,6 +55,8 @@ namespace top {
     declareProperty("useTruthJets", m_useTruthJets, "config: use jets?");
     declareProperty("useTruthLargeRJets", m_useTruthLargeRJets,
 		    "config: use large-R jets?");
+    declareProperty("useTruthNeutrinos", m_useTruthNeutrinos,
+		    "config: use neutrinos?");
     declareProperty("useTruthMET", m_useTruthMET, "config: use MET?");
     declareProperty("doOverlapRemoval", m_doOverlapRemoval,
 		    "config: perform default overlap removal?");
@@ -81,6 +87,8 @@ namespace top {
     declareProperty("ljet_etaMax", m_ljet_etaMax,
 		    "large-R jets: maximum abs(eta)");
     declareProperty("ljet_collection", m_ljet_collection, "large-R jets: collection name");
+    declareProperty("nu_ptMin", m_nu_ptMin, "neutrinos: minimum pT [MeV]");
+    declareProperty("nu_etaMax", m_nu_etaMax, "neutrinos: maximum abs(eta)");
   }
 
   StatusCode ParticleLevelAlg::initialize() {
@@ -152,6 +160,8 @@ namespace top {
     }
     if (m_useTruthLargeRJets)
       ANA_CHECK(evtStore()->retrieve(inputLargeRJets, m_ljet_collection));
+    if (m_useTruthNeutrinos)
+      ANA_CHECK(evtStore()->retrieve(inputNeutrinos, "TruthNeutrinos"));
     if (m_useTruthMET)
       ANA_CHECK(evtStore()->retrieve(inputMissingET, "MET_Truth"));
 
@@ -165,6 +175,9 @@ namespace top {
 
     // decorators
     static const SG::AuxElement::Decorator<float> dec_particle_charge("charge");
+    static const SG::AuxElement::Decorator<float> dec_particle_pt("pt");
+    static const SG::AuxElement::Decorator<float> dec_particle_eta("eta");
+    static const SG::AuxElement::Decorator<float> dec_particle_phi("phi");
     static const SG::AuxElement::Decorator<float> dec_particle_energy("e");
     static const SG::AuxElement::Decorator<int> dec_num_truth_bjets_nocuts("num_truth_bjets_nocuts");
     static const SG::AuxElement::Decorator<int> dec_num_truth_cjets_nocuts("num_truth_cjets_nocuts");
@@ -176,6 +189,7 @@ namespace top {
     std::list<std::size_t> idx_taus;
     std::list<std::size_t> idx_jets;
     std::list<std::size_t> idx_ljets;
+    std::list<std::size_t> idx_neutrinos;
 
     // apply electron selection
     if (m_useTruthElectrons) {
@@ -353,15 +367,27 @@ namespace top {
       }
     }
 
+    // apply neutrino selection
+    if (m_useTruthNeutrinos) {
+      for (std::size_t i = 0; i < inputNeutrinos->size(); ++i) {
+	const auto* neutrino = inputNeutrinos->at(i);
+
+	// pT and eta cuts
+	if (neutrino->pt() < m_nu_ptMin)
+	  continue;
+	if (std::abs(neutrino->eta()) > m_nu_etaMax)
+	  continue;
+
+	// neutrino is accepted
+	idx_neutrinos.push_back(i);
+      }
+    }
+
     // user-friendly MET decorations
     if (m_useTruthMET) {
       for (const xAOD::MissingET* etmiss : *inputMissingET) {
-	float metx = etmiss->auxdataConst<float>("mpx");
-	float mety = etmiss->auxdataConst<float>("mpy");
-	float met_met = std::sqrt(metx * metx + mety * mety);
-	float met_phi = std::acos(metx / met_met);
-	etmiss->auxdecor<float>("met_met") = met_met;
-	etmiss->auxdecor<float>("met_phi") = met_phi;
+	etmiss->auxdecor<float>("met_met") = etmiss->met();
+	etmiss->auxdecor<float>("met_phi") = etmiss->phi();
       }
     }
 
@@ -425,7 +451,6 @@ namespace top {
 	xAOD::TruthParticle* electron = new xAOD::TruthParticle();
 	electron->makePrivateStore(*elPtr);
 
-	dec_particle_energy(*electron) = electron->e();
 	dec_particle_charge(*electron) = electron->charge();
 
 	outputElectrons->push_back(electron);
@@ -447,7 +472,6 @@ namespace top {
 	xAOD::TruthParticle* muon = new xAOD::TruthParticle();
 	muon->makePrivateStore(*muPtr);
 
-	dec_particle_energy(*muon) = muon->e();
 	dec_particle_charge(*muon) = muon->charge();
 
 	outputMuons->push_back(muon);
@@ -455,7 +479,7 @@ namespace top {
       outputSGKey = "ParticleLevelMuons_NOSYS";
       save = TDS()->record(outputMuons, outputSGKey);
       saveAux = TDS()->record(outputMuonsAux, outputSGKey + "Aux.");
-      if (!save)
+      if (!save || !saveAux)
 	return StatusCode::FAILURE;
     }
 
@@ -469,7 +493,9 @@ namespace top {
 	xAOD::TruthParticle* photon = new xAOD::TruthParticle();
 	photon->makePrivateStore(*phPtr);
 
-	dec_particle_energy(*photon) = photon->e();
+	dec_particle_pt(*photon) = photon->pt();
+	dec_particle_eta(*photon) = photon->eta();
+	dec_particle_phi(*photon) = photon->phi();
 
 	outputPhotons->push_back(photon);
       }
@@ -490,7 +516,9 @@ namespace top {
 	xAOD::TruthParticle* tau = new xAOD::TruthParticle();
 	tau->makePrivateStore(*tauPtr);
 
-	dec_particle_energy(*tau) = tau->e();
+	dec_particle_pt(*tau) = tau->pt();
+	dec_particle_eta(*tau) = tau->eta();
+	dec_particle_phi(*tau) = tau->phi();
 	dec_particle_charge(*tau) = tau->charge();
 
 	outputTaus->push_back(tau);
@@ -542,6 +570,29 @@ namespace top {
       saveAux = TDS()->record(outputLargeRJetsAux, outputSGKey + "Aux.");
       if (!save || !saveAux)
 	return StatusCode::FAILURE;
+    }
+
+    // write out the neutrino container (no selection)
+    if (m_useTruthNeutrinos) {
+      outputNeutrinos = new xAOD::TruthParticleContainer();
+      outputNeutrinosAux = new xAOD::TruthParticleAuxContainer();
+      outputNeutrinos->setStore(outputNeutrinosAux);
+      for (auto v : idx_neutrinos) {
+	const auto& nuPtr = inputNeutrinos->at(v);
+	xAOD::TruthParticle* nu = new xAOD::TruthParticle();
+	nu->makePrivateStore(*nuPtr);
+
+	dec_particle_pt(*nu) = nu->pt();
+	dec_particle_eta(*nu) = nu->eta();
+	dec_particle_phi(*nu) = nu->phi();
+
+	outputNeutrinos->push_back(nu);
+      }
+      outputSGKey = "ParticleLevelNeutrinos_NOSYS";
+      save = TDS()->record(outputNeutrinos, outputSGKey);
+      saveAux = TDS()->record(outputNeutrinosAux, outputSGKey + "Aux.");
+      if (!save || !saveAux)
+        return StatusCode::FAILURE;
     }
 
     // write out the MET container

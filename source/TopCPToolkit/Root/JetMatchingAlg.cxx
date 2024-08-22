@@ -1,7 +1,10 @@
 #include "TopCPToolkit/JetMatchingAlg.h"
 #include "AthContainers/ConstDataVector.h"
+#include "VectorHelpers/LorentzHelper.h"
 
 namespace top {
+  using ROOT::Math::PtEtaPhiMVector;
+  using ROOT::Math::VectorUtil::DeltaR;
 
   JetMatchingAlg::JetMatchingAlg(const std::string &name, ISvcLocator *pSvcLocator)
     : EL::AnaAlgorithm(name, pSvcLocator)
@@ -74,7 +77,7 @@ namespace top {
       unsigned int ireco = 0;
       //loop over all selected reco jet
       for (const xAOD::Jet *recojet : selected_jets) {
-        TLorentzVector reco_jet = recojet->p4();
+        PtEtaPhiEVector reco_jet = GetPtEtaPhiE(recojet);
         //find deltaR to closest reco jet
         float minDR = JetMatchingAlg::get_minDR_reco(reco_jet, ireco, selected_jets);
         reco_to_reco_jet_closest_dR.push_back(minDR);
@@ -109,9 +112,9 @@ namespace top {
         m_reco_to_reco_jet_closest_dR.set(*jet, reco_to_reco_jet_closest_dR.at(ijet), sys);
         m_truth_to_truth_jet_closest_dR.set(*jet, truth_to_truth_jet_closest_dR.at(ijet), sys);
         //is there a truth lepton within dR<0.4 from the reco jet?
-        TLorentzVector reco_jet = jet->p4();
+        PtEtaPhiEVector reco_jet = GetPtEtaPhiE(jet);
         double overlapping_truth_lepton_pt = -1;
-        m_has_truth_lepton.set(*jet, JetMatchingAlg::find_close_lepton(reco_jet, *truth_electrons, *truth_muons, overlapping_truth_lepton_pt), sys); 
+        m_has_truth_lepton.set(*jet, JetMatchingAlg::find_close_lepton(reco_jet, *truth_electrons, *truth_muons, overlapping_truth_lepton_pt), sys);
         m_overlapping_truth_lepton_pt.set(*jet, overlapping_truth_lepton_pt, sys);
         ijet++;
       }
@@ -119,7 +122,7 @@ namespace top {
     return StatusCode::SUCCESS;
   }
 
-  float JetMatchingAlg::get_minDR_reco(TLorentzVector jet1, unsigned int ijet1, ConstDataVector<xAOD::JetContainer> selected_jets) {
+  float JetMatchingAlg::get_minDR_reco(PtEtaPhiEVector jet1, unsigned int ijet1, ConstDataVector<xAOD::JetContainer> selected_jets) {
     float minDR = 9999;
     unsigned int ijet2 = 0;
     for (const xAOD::Jet *jet : selected_jets) {
@@ -127,24 +130,24 @@ namespace top {
         ijet2++;
         continue;
       }
-      TLorentzVector jet2 = jet->p4();
-      if (jet1.DeltaR(jet2) < minDR) {
-        minDR = jet1.DeltaR(jet2);
+      PtEtaPhiEVector jet2 = GetPtEtaPhiE(jet);
+      if (DeltaR(jet1, jet2) < minDR) {
+        minDR = DeltaR(jet1, jet2);
       }
       ijet2++;
     }
     return minDR;
   }
     
-  int JetMatchingAlg::get_matched_truth(TLorentzVector reco_jet, const xAOD::JetContainer &truth_jets) {
+  int JetMatchingAlg::get_matched_truth(PtEtaPhiEVector reco_jet, const xAOD::JetContainer &truth_jets) {
     int truth_jet_index = -1;
     float minDR = 9999;
     int itruth = 0;
     for (const xAOD::Jet *truthjet : truth_jets) {
-      TLorentzVector truth_jet = truthjet->p4();
-      if (reco_jet.DeltaR(truth_jet) < minDR) {
-          minDR = reco_jet.DeltaR(truth_jet);
-          truth_jet_index = itruth;
+      PtEtaPhiMVector truth_jet = GetPtEtaPhiM(truthjet);
+      if (DeltaR(reco_jet, truth_jet) < minDR) {
+	minDR = DeltaR(reco_jet, truth_jet);
+	truth_jet_index = itruth;
       }
       itruth++;
     }
@@ -152,30 +155,30 @@ namespace top {
     return truth_jet_index;
   }
 
-  bool JetMatchingAlg::find_close_lepton(TLorentzVector& reco_jet, const xAOD::TruthParticleContainer &truth_electrons, const xAOD::TruthParticleContainer &truth_muons, double& overlapping_truth_lepton_pt) {
+  bool JetMatchingAlg::find_close_lepton(PtEtaPhiEVector& reco_jet, const xAOD::TruthParticleContainer &truth_electrons, const xAOD::TruthParticleContainer &truth_muons, double& overlapping_truth_lepton_pt) {
     for (const xAOD::TruthParticle *electron : truth_electrons) {
-      const TLorentzVector& TLVelectron = electron->p4();
-      if (reco_jet.DeltaR(TLVelectron) < m_criticalDR_leptons) {
+      const PtEtaPhiMVector& TLVelectron = GetPtEtaPhiMfromTruth(electron);
+      if (DeltaR(reco_jet, TLVelectron) < m_criticalDR_leptons) {
           overlapping_truth_lepton_pt = TLVelectron.Pt();
           return true;
       }
     }
     for (const xAOD::TruthParticle *muon : truth_muons) {
-      const TLorentzVector& TLVmuon = muon->p4();
-      if (reco_jet.DeltaR(TLVmuon) < m_criticalDR_leptons) {
+      const PtEtaPhiMVector& TLVmuon = GetPtEtaPhiMfromTruth(muon);
+      if (DeltaR(reco_jet, TLVmuon) < m_criticalDR_leptons) {
         overlapping_truth_lepton_pt = TLVmuon.Pt();
         return true;
       }
     }
     return false;
   }
-   
+
   float JetMatchingAlg::get_minDR_truth(const xAOD::JetContainer &truth_jets, int truth_jet_index) {
     float minDR = 9999;
     int itruth1 = 0;
     for (const xAOD::Jet *truthjet1 : truth_jets) {
       if (itruth1 == truth_jet_index) {
-        TLorentzVector truth_jet1 = truthjet1->p4();
+        PtEtaPhiMVector truth_jet1 = GetPtEtaPhiM(truthjet1);
         minDR = 9999;
         int itruth2 = 0;
         for (const xAOD::Jet *truthjet2 : truth_jets) {
@@ -183,9 +186,9 @@ namespace top {
               itruth2++;
               continue;
           }
-          TLorentzVector truth_jet2 = truthjet2->p4();
-          if (truth_jet1.DeltaR(truth_jet2) < minDR) {
-              minDR = truth_jet1.DeltaR(truth_jet2);
+          PtEtaPhiMVector truth_jet2 = GetPtEtaPhiM(truthjet2);
+          if (DeltaR(truth_jet1, truth_jet2) < minDR) {
+	    minDR = DeltaR(truth_jet1, truth_jet2);
           }
           itruth2++;
         }
@@ -193,7 +196,7 @@ namespace top {
       }
       itruth1++;
     }
-    return minDR;    
+    return minDR;
   }
 
 } // namespace top

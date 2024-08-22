@@ -2,6 +2,12 @@
 
 ### Starting a new analysis
 
+#### If you do not need to modify TopCPToolkit
+
+An example [skeleton package](https://gitlab.cern.ch/atlasphys-top/reco/HowToExtendTopCPToolkit) is provided to help set up your own package to work with the TopCPToolkit. After setting up TopCPToolkit, you can download the skeleton package under `TopCPToolkit/source/`. Steps to install and use the skeleton package can be found in its [README](https://gitlab.cern.ch/atlasphys-top/reco/HowToExtendTopCPToolkit#howtoextendtopcptoolkit).
+
+#### If you plan to merge your code back to TopCPToolkit
+
 You should create your own [fork](https://docs.gitlab.com/ee/user/project/repository/forking_workflow.html) of this repository.
 When submitting a merge request to include a feature centrally, you can always change the target repository to this one.
 

@@ -1,3 +1,4 @@
+<!---
 ## Make-methods
 
 ### [makeCommonServicesConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
@@ -8,7 +9,7 @@ Name in YAML: **CommonServices**
 
 _Returns an instance of [`CommonServicesConfig`](#commonservicesconfig), see the available options below._
 
-<!---
+
 ### [makeEventCleaningConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/EventCleaningConfig.py)
 
 `seq`
@@ -22,7 +23,6 @@ _Returns an instance of [`CommonServicesConfig`](#commonservicesconfig), see the
 
 `userGRLFiles`
 :   a list of GRL files (list of strings) to select data from. The default is `[]` (empty list).
---->
 
 ### [makeGeneratorAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
 Name in YAML: **GeneratorLevelAnalysis**
@@ -42,7 +42,6 @@ Name in YAML: **GeneratorLevelAnalysis**
 !!! success "Registers the following variables:"
     - `generatorWeight`: the event-level PMG generator weight
 
-<!---
 ### [makePileupReweightingConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
 
 `seq`
@@ -112,6 +111,10 @@ See [Registering new blocks](../starting/analysis.md#registering-new-blocks-dire
 `filterSystematics`
 :   a regexp string against which the systematics names will be matched. Only positive matches are retained and used in the evaluation of the various algorithms.
 
+`onlySystematicsCategories`
+:   a list of strings defining categories of systematics to enable (only recommended for studies / partial ntuple productions). Choose amongst: `jets`, `electrons`, `muons`, `photons`, `taus`, `met`, `ftag`, `event`.
+This option is overridden by `filterSystematics`.
+
     !!! tip
         See the [guide](../starting/running_local.md#filtering-systematics) on how to use the systematics filter.
 
@@ -145,7 +148,14 @@ Name in YAML: **EventCleaning**
     !!! warning
         In AnalysisBase, vectors of bools cannot be handled properly. Instead, use 0/1 values.
 
+`GRLDict`
+:   a custom GRL dictionary with key some name and value a GRL file. The default is `{}` (empty dictionary), i.e. use recommended values.
+
+`noFilter`
+:   whether to toggle off event filtering. The default is `False`, i.e. apply filtering.
+
 ### [GeneratorAnalysisBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/AsgAnalysisConfig.py)
+Name in YAML: **GeneratorLevelAnalysis**
 
 `saveCutBookkeepers`
 :   whether to save the cut bookkeepers information into the output file. The default is `True`.
@@ -198,9 +208,6 @@ Name in YAML: **Bootstraps**
 
 `decoration`
 :   the name of the output vector branch containing the bootstrapped weights. The default is `bootstrapWeights`.
-
-`runOnMC`
-:   toggle to force running on MC samples. The default is `False`, i.e. run only on data.
 
 ## TopCPToolkit modules
 

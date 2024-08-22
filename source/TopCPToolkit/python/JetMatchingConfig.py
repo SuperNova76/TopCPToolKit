@@ -16,7 +16,7 @@ class JetMatchingConfig(ConfigBlock):
 
     def makeAlgs(self, config):
         from AnalysisAlgorithmsConfig.ConfigAccumulator import DataType
-        if config.dataType() is DataType.Data: 
+        if config.dataType() is DataType.Data:
             print(">>> Running on data. Will not run JetMatchingAlg.")
             return
 
@@ -28,13 +28,13 @@ class JetMatchingConfig(ConfigBlock):
         alg.truthElectrons =  self.truthElectrons
         alg.truthMuons = self.truthMuons
         alg.eventSelection = self.eventSelection
-        
+
         alg.truth_jet_paired_index = 'truth_jet_paired_index_%SYS%'
         alg.reco_to_reco_jet_closest_dR = 'reco_to_reco_jet_closest_dR_%SYS%'
         alg.truth_to_truth_jet_closest_dR = 'truth_to_truth_jet_closest_dR_%SYS%'
         alg.has_truth_lepton = 'has_truth_lepton_%SYS%'
         alg.overlapping_truth_lepton_pt = 'overlapping_truth_lepton_pt_%SYS%'
-        
+
         config.addOutputVar(self.jets.split('.')[0], alg.truth_jet_paired_index, 'truth_jet_paired_index', noSys=True)
         config.addOutputVar(self.jets.split('.')[0], alg.reco_to_reco_jet_closest_dR, 'reco_to_reco_jet_closest_dR')
         config.addOutputVar(self.jets.split('.')[0], alg.truth_to_truth_jet_closest_dR, 'truth_to_truth_jet_closest_dR', noSys=True)

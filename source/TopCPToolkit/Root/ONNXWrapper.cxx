@@ -5,18 +5,18 @@
 
 namespace top {
 
-ONNXWrapper::ONNXWrapper(
+  ONNXWrapper::ONNXWrapper(
     const std::string& name,
-    const std::vector<std::string>& filepaths_model_cv) : asg::AsgTool(name),
-                                                          m_memory_info(Ort::MemoryInfo::CreateCpu(OrtArenaAllocator, OrtMemTypeDefault)) {
+    const std::vector<std::string>& filepaths_model_cv) :
+    asg::AsgTool(name),
+    m_env(std::make_shared<Ort::Env>(ORT_LOGGING_LEVEL_WARNING, "")),
+    m_session_options(std::make_shared<Ort::SessionOptions>()),
+    m_memory_info(Ort::MemoryInfo::CreateCpu(OrtArenaAllocator, OrtMemTypeDefault))
+  {
     // TODO check at least one model path is provided
-
-    // initialise all the ort stuff
-    m_env = std::make_shared<Ort::Env>(ORT_LOGGING_LEVEL_WARNING, "");
 
     // any session options are set via this object
     // use single thread (single CPU core) for the model evaluation
-    m_session_options = std::make_shared<Ort::SessionOptions>();
     m_session_options->SetIntraOpNumThreads(1);
     // ONNX can perform optimizations of the model graph to improve performance (ORT_ENABLE_EXTENDED)
     m_session_options->SetGraphOptimizationLevel(GraphOptimizationLevel::ORT_ENABLE_EXTENDED);

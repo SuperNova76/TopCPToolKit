@@ -1,7 +1,7 @@
 #include "TopCPToolkit/KLFitterFinalizeOutputAlg.h"
 
 namespace top {
-  
+
   KLFitterFinalizeOutputAlg::KLFitterFinalizeOutputAlg(const std::string &name, ISvcLocator *pSvcLocator)
     : EL::AnaAlgorithm(name, pSvcLocator) {
   }

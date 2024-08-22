@@ -34,6 +34,7 @@
     - `pt`: photon $p_\mathrm{T}$
     - `eta`: photon $\eta$ (no systematics)
     - `phi`: photon $\phi$ (no systematics)
+    - `e`: photon $E$
 
 
 ### [makePhotonWorkingPointConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/python/PhotonAnalysisConfig.py)
@@ -76,6 +77,12 @@ Name in YAML: **Photons**
 `containerName`
 :   the name of the output container after calibration.
 
+`ESModel`
+:   flag for Egamma calibration. The default is `''` (empty string), which uses the current recommendations.
+
+`decorrelationModel`
+:   decorrelation model for the EGamma energy scale. Supported choices are: `FULL_v1`, `1NP_v1` (default).
+
 `postfix`
 :   a postfix to apply to decorations and algorithm names. Typically not needed here since the calibration is common to all photons.
 
@@ -91,9 +98,6 @@ Name in YAML: **Photons**
 `recomputeIsEM`
 :   whether to recompute the photon shower shape fudge corrections (sets up an instance of [`CP::PhotonShowerShapeFudgeAlg`](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/Root/PhotonShowerShapeFudgeAlg.cxx)). The default is `False`, i.e. to use derivation variables.
 
-`ptSelectionOutput`
-:  whether or not to apply a minimum $p_\mathrm{T}$ cut to calibrated photons. The default is `False`.
-
 `minPt`
 :   the minimum $p_\mathrm{T}$ cut to apply to calibrated photons. The default is 10 GeV.
 
@@ -103,11 +107,14 @@ Name in YAML: **Photons**
 `forceFullSimConfig`
 :   whether to force the tool to use the configuration meant for full simulation samples. Only for testing purposes. The default is `False`.
 
+`splitCalibrationAndSmearing`
+:   EXPERIMENTAL: This splits the EgammaCalibrationAndSmearingTool into two steps. The first step applies a baseline calibration that is not affected by systematics. The second step then applies the systematics dependent corrections.  The net effect is that the slower first step only has to be run once, while the second is run once per systematic. ATLASG-2358. The default is `False`.
 
 !!! success "Registers the following variables:"
     - `pt`: photon $p_\mathrm{T}$
     - `eta`: photon $\eta$ (no systematics)
     - `phi`: photon $\phi$ (no systematics)
+    - `e`: photon $E$: (*since AnalysisBase 25.2.13*)
 
 ### [PhotonWorkingPointConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/python/PhotonAnalysisConfig.py)
 Name in YAML: **Photons.WorkingPoint**
@@ -127,6 +134,9 @@ Name in YAML: **Photons.WorkingPoint**
 `isolationWP`
 :   the ID WP (string) to use. Supported isolation WPs: `FixedCutLoose`, `FixedCutTight`, `TightCaloOnly`, `NonIso`.
 
+`closeByCorrection`
+:   whether to use close-by-corrected isolation working points. The default is `False`.
+
 `recomputeIsEM`
 :   whether to rerun the cut-based selection. The default is `False`, i.e. to use derivation flags.
 
@@ -143,3 +153,15 @@ Name in YAML: **Photons.WorkingPoint**
     - `select`: whether the photon passes the ID and isolation cuts
     - `id_effSF`: the per-photon ID SF
     - `isol_effSF`: the per-photon isolation SF
+
+### [PhotonExtraVariablesBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/EgammaAnalysisAlgorithms/python/PhotonExtraVariablesConfig.py)
+Name in YAML: **Photons.ExtraVariables** (*since AnalysisBase 25.2.13*)
+
+Decorates the output photons with the conversion type and calorimeter $\eta$.
+
+`containerName`
+:   the input photon container.
+
+!!! success "Registers the following variables:"
+    - `conversionType`: photon conversion type (no systematics)
+    - `caloEta2`: calorimeter $\eta$ from 2nd sampling layer (no systematics)

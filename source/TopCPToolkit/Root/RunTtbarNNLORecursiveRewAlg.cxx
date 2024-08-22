@@ -4,6 +4,8 @@ namespace top {
 
     RunTtbarNNLORecursiveRewAlg::RunTtbarNNLORecursiveRewAlg(const std::string &name, ISvcLocator *pSvcLocator)
         : EL::AnaAlgorithm(name, pSvcLocator)
+	, m_sampleID(-1)
+	, m_reweightType(-1)
         , m_user_sampleID("SetMe")
         , m_user_reweightType("SetMe")
         , m_reweightPath("SetMe")
@@ -17,7 +19,7 @@ namespace top {
             declareProperty("reweightingPath", m_reweightPath, "Path to the directory containing the histograms for reweighting ");
             declareProperty("reweightingSuffix", m_reweightSuffix, "Suffix to apply to ROOT filenames, in order to access specific variations.");
         }
-    
+
     StatusCode RunTtbarNNLORecursiveRewAlg::initialize() {
         ANA_MSG_INFO("Initializing RunTtbarNNLORecursiveRew " << name() );
 
@@ -60,11 +62,11 @@ namespace top {
 
         // retrieve the parton history
         const xAOD::PartonHistory* ttbarPartonHistory(nullptr);
-        if ( evtStore()->contains<xAOD::PartonHistory>("TopPartonHistoryTtbar_NOSYS") ) {
-            ANA_CHECK(evtStore()->retrieve(ttbarPartonHistory, "TopPartonHistoryTtbar_NOSYS"));
+        if ( evtStore()->contains<xAOD::PartonHistory>("PartonHistoryTtbar_NOSYS") ) {
+            ANA_CHECK(evtStore()->retrieve(ttbarPartonHistory, "PartonHistoryTtbar_NOSYS"));
         }
         else {
-            ANA_MSG_ERROR("Attempting to run the ttbar NNLO reweighter without a valid TopPartonHistoryTtbar!");
+            ANA_MSG_ERROR("Attempting to run the ttbar NNLO reweighter without a valid PartonHistoryTtbar!");
         }
 
         // define accessors

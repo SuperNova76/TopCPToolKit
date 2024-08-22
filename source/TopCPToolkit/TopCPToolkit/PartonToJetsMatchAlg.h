@@ -25,6 +25,8 @@ namespace top {
     private:
       StatusCode execute_syst(const CP::SystematicSet &sys);
 
+      int FindIndex(const std::vector<double>& dr) const;
+
       // systematics
       CP::SysListHandle m_systematicsList {this};
 
@@ -34,7 +36,7 @@ namespace top {
       CP::SysReadSelectionHandle m_jetSelection {
         this, "jetSelection", "", "the selection on the input jets"
 	  };
-      
+
       CP::SysReadHandle<xAOD::EventInfo> m_eventInfoHandle {
         this, "eventInfo", "EventInfo", "the EventInfo container to read selection decisions from"
 	  };
