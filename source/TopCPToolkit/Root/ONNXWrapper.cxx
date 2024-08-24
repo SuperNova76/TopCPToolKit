@@ -23,7 +23,7 @@ namespace top {
 
     // create the session and load model into memory
     for (auto& fpath_model : filepaths_model_cv) {
-      auto fp = PathResolverFindCalibFile(fpath_model);
+      auto fp = PathResolver::find_file(fpath_model, "CALIBPATH", PathResolver::RecursiveSearch);
 
       ANA_MSG_VERBOSE("Load model from " << fp);
 
