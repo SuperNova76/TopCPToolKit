@@ -21,9 +21,9 @@ namespace top {
     CalcPartonHistory::EnsureKeyExists("MC_Z_beforeFSR", "MC_Z_afterFSR");
 
     // Fill top parton history
-    CalcPartonHistory::FillTopPartonHistory(ttZPartonHistory);
+    CalcPartonHistory::FillTopPartonHistory(ttZPartonHistory, 0); // t mode
     // Fill anti top parton history
-    CalcPartonHistory::FillAntiTopPartonHistory(ttZPartonHistory);
+    CalcPartonHistory::FillTopPartonHistory(ttZPartonHistory, 1); // ttbar mode
     // Fill ttbar parton history
     CalcPartonHistory::FillTtbarPartonHistory(ttZPartonHistory);
     // Fill Z parton history

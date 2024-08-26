@@ -19,14 +19,10 @@ namespace top {
     CalcPartonHistory::EnsureKeyExists("MC_Z_afterFSR", "MC_Z");
     CalcPartonHistory::EnsureKeyExists("MC_Z_beforeFSR", "MC_Z_afterFSR");
 
-    // Fill top parton history
-    CalcPartonHistory::FillTopPartonHistory(tzqPartonHistory);
-    // Fill anti top parton history
-    CalcPartonHistory::FillAntiTopPartonHistory(tzqPartonHistory);
-    // Fill b parton history
-    CalcPartonHistory::FillBottomPartonHistory(tzqPartonHistory, "");
-    // Fill bbar parton history
-    CalcPartonHistory::FillAntiBottomPartonHistory(tzqPartonHistory, "");
+    // Fill top parton history (flavour agnostic)
+    CalcPartonHistory::FillTopPartonHistory(tzqPartonHistory, 2);
+    // Fill b (spectator b) parton history (flavour agnostic)
+    CalcPartonHistory::FillBottomPartonHistory(tzqPartonHistory, "", 2);
     // Fill Z parton history
     CalcPartonHistory::FillZPartonHistory(tzqPartonHistory, "");
 

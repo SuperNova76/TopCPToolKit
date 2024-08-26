@@ -1,5 +1,5 @@
-#ifndef ANALYSISTOP_TOPPARTONS_PARTONHISORTY_H
-#define ANALYSISTOP_TOPPARTONS_PARTONHISORTY_H
+#ifndef PARTONS_PARTONHISTORY_H
+#define PARTONS_PARTONHISTORY_H
 
 // EDM include(s):
 #include "AthContainers/DataVector.h"
@@ -30,6 +30,7 @@ namespace xAOD {
 
     void IniVarTtbar();
     void IniVarTzq();
+    void IniVarTqGamma();
     void IniVarTtbarLight();
     void IniVarTbbar();
     void IniVarWlv();

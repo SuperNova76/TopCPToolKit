@@ -1,5 +1,6 @@
 #include "PartonHistory/CalcPartonHistory.h"
 #include "PartonHistory/PartonHistoryUtils.h"
+#include "VectorHelpers/DecoratorHelpers.h"
 
 namespace top {
   using ROOT::Math::PtEtaPhiMVector;

@@ -209,9 +209,6 @@ Name in YAML: **Bootstraps**
 `decoration`
 :   the name of the output vector branch containing the bootstrapped weights. The default is `bootstrapWeights`.
 
-`runOnMC`
-:   toggle to force running on MC samples. The default is `False`, i.e. run only on data.
-
 ## TopCPToolkit modules
 
 ### [metaConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/metaConfig.py)

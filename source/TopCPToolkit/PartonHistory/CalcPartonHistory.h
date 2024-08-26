@@ -31,25 +31,9 @@ namespace top {
     void AddToParticleMap(const xAOD::TruthParticle* particle, const std::string& key);
     bool ExistsInMap(const std::string& key);
     bool Retrievep4(const std::string& key, PtEtaPhiMVector& p4);
+    bool Retrievep4Gamma(PtEtaPhiMVector& p4, int& parentpdgId);
     bool RetrievepdgId(const std::string& key, int& pdgId);
     bool RetrieveParticleInfo(const std::string& prefix, PtEtaPhiMVector& particle, int& pdgId);
-
-    void FillParticleInfo(const SG::AuxElement::Decorator<float>& dec_m, const SG::AuxElement::Decorator<float>& dec_pt,
-			  const SG::AuxElement::Decorator<float>& dec_eta, const SG::AuxElement::Decorator<float>& dec_phi,
-			  const PtEtaPhiMVector& particle,
-			  xAOD::PartonHistory *history);
-    void FillParticleInfo(const SG::AuxElement::Decorator<float>& dec_m, const SG::AuxElement::Decorator<float>& dec_pt,
-			  const SG::AuxElement::Decorator<float>& dec_eta, const SG::AuxElement::Decorator<float>& dec_phi,
-			  const SG::AuxElement::Decorator<int>& dec_pdgId,
-			  const PtEtaPhiMVector& particle, int pdgId,
-			  xAOD::PartonHistory *history);
-    void FillDefaultParticleInfo(const SG::AuxElement::Decorator<float>& dec_m, const SG::AuxElement::Decorator<float>& dec_pt,
-				 const SG::AuxElement::Decorator<float>& dec_eta, const SG::AuxElement::Decorator<float>& dec_phi,
-				 const SG::AuxElement::Decorator<int>& dec_pdgId,
-				 xAOD::PartonHistory* history);
-    void FillDefaultParticleInfo(const SG::AuxElement::Decorator<float>& dec_m, const SG::AuxElement::Decorator<float>& dec_pt,
-				 const SG::AuxElement::Decorator<float>& dec_eta, const SG::AuxElement::Decorator<float>& dec_phi,
-				 xAOD::PartonHistory* history);
 
     void EnsureKeyExists(const std::string& key, const std::string& fallbackKey);
     void EnsureTtbarKeysExist();
@@ -71,12 +55,10 @@ namespace top {
     void handleDefault(const xAOD::TruthParticle* particle, const std::string& newKey, std::string& key);
 
     void FillParticleMap(std::vector<std::vector<const xAOD::TruthParticle*>>& allPaths);
-    void FillTopPartonHistory(xAOD::PartonHistory* PartonHistory);
-    void FillAntiTopPartonHistory(xAOD::PartonHistory* PartonHistory);
-    void FillBottomPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);
-    void FillAntiBottomPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);
-    void FillWpPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);
-    void FillWmPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);
+    void FillTopPartonHistory(xAOD::PartonHistory* PartonHistory, const int& mode);
+    void FillBottomPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent, const int& mode);
+    void FillGammaPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent);
+    void FillWPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent, const int& mode);
     void FillZPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent, const int bosonID=-1);
     void FillTtbarPartonHistory(xAOD::PartonHistory* PartonHistory);
     void FillHiggsPartonHistory(xAOD::PartonHistory* PartonHistory);
