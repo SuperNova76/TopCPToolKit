@@ -123,9 +123,11 @@ class ONNXWrapper : public asg::AsgTool {
 
     template <typename T>
     void addInputs(
-        const std::vector<T>& values, const std::vector<int64_t>& shape) {
-        m_input_tensors.push_back(
-            Ort::Value::CreateTensor<T>(m_memory_info, values.data(), values.size(), shape.data(), shape.size()));
+      std::vector<T>& values, const std::vector<int64_t>& shape
+    ) {
+      m_input_tensors.push_back(
+        Ort::Value::CreateTensor<T>(m_memory_info, values.data(), values.size(), shape.data(), shape.size())
+      );
     }
 
     // Extra method for multidimensional vectors with auto flatten and shape calculation
