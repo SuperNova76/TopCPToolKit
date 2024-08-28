@@ -15,7 +15,7 @@ namespace top {
   class ONNXWrapper : public asg::AsgTool {
   public:
 
-    ONNXWrapper(const std::string& name, const std::vector<std::string>& filepaths_model_cv);
+    ONNXWrapper(const std::string& name, const std::vector<std::string>& filepaths_model_cv, bool verbose=false);
 
     virtual ~ONNXWrapper() = default;
 
@@ -129,7 +129,7 @@ namespace top {
     std::unordered_map<std::string, unsigned> m_input_name_index;
     std::unordered_map<std::string, unsigned> m_output_name_index;
 
-    bool m_verbose {false};
+    bool m_verbose;
   };
 
 } // namespace top

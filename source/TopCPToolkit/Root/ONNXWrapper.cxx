@@ -7,11 +7,13 @@ namespace top {
 
   ONNXWrapper::ONNXWrapper(
     const std::string& name,
-    const std::vector<std::string>& filepaths_model_cv) :
+    const std::vector<std::string>& filepaths_model_cv,
+    bool verbose) :
     asg::AsgTool(name),
     m_env(std::make_shared<Ort::Env>(ORT_LOGGING_LEVEL_WARNING, "")),
     m_session_options(std::make_shared<Ort::SessionOptions>()),
-    m_memory_info(Ort::MemoryInfo::CreateCpu(OrtArenaAllocator, OrtMemTypeDefault))
+    m_memory_info(Ort::MemoryInfo::CreateCpu(OrtArenaAllocator, OrtMemTypeDefault)),
+    m_verbose(verbose)
   {
     // TODO check at least one model path is provided
 
@@ -24,8 +26,9 @@ namespace top {
     // create the session and load model into memory
     for (auto& fpath_model : filepaths_model_cv) {
       auto fp = PathResolver::find_file(fpath_model, "CALIBPATH", PathResolver::RecursiveSearch);
-
-      ANA_MSG_VERBOSE("Load model from " << fp);
+      if (m_verbose) {
+        ANA_MSG_INFO("Load model from " << fp);
+      }
 
       m_sessions.emplace_back(new Ort::Session(*m_env, fp.c_str(), *m_session_options));
     }
@@ -43,37 +46,37 @@ namespace top {
     }
 
     if (m_verbose){
-      ANA_MSG_VERBOSE("Inputs:");
+      ANA_MSG_INFO("Inputs:");
       for (long unsigned int i=0; i<m_input_name_index.size(); ++i){
-        ANA_MSG_VERBOSE(session->GetInputNameAllocated(i, allocator).get() << " ");
+        ANA_MSG_INFO(session->GetInputNameAllocated(i, allocator).get() << " ");
       }
-      ANA_MSG_VERBOSE("Outputs:");
+      ANA_MSG_INFO("Outputs:");
       for (long unsigned int i=0; i<m_output_name_index.size(); ++i){
-        ANA_MSG_VERBOSE(session->GetOutputNameAllocated(i, allocator).get() << " ");
+        ANA_MSG_INFO(session->GetOutputNameAllocated(i, allocator).get() << " ");
       }
     }
 
     // first vector -- the individual input nodes
-    // // second vector -- the shape of the input node, e.g. for 1xN shape, the vector has two elements with values {1, N}
+    // second vector -- the shape of the input node, e.g. for 1xN shape, the vector has two elements with values {1, N}
     size_t input_node_count = session->GetInputCount();
     m_input_shapes = std::vector<std::vector<int64_t>> (input_node_count);
     for (size_t i = 0; i < input_node_count; i++) m_input_shapes[i] = session->GetInputTypeInfo(i).GetTensorTypeAndShapeInfo().GetShape();
 
     if (m_verbose) {
-      ANA_MSG_VERBOSE("input shapes = ");
+      ANA_MSG_INFO("input shapes = ");
       for (long unsigned int i=0; i < m_input_shapes.size(); ++i){
-        ANA_MSG_VERBOSE(session->GetInputNameAllocated(i, allocator).get() << ": " << m_input_shapes[i].size());
+        ANA_MSG_INFO(session->GetInputNameAllocated(i, allocator).get() << ": " << m_input_shapes[i].size());
 
         Ort::TypeInfo type_info = m_sessions.front()->GetInputTypeInfo(i);
         auto tensor_info = type_info.GetTensorTypeAndShapeInfo();
         ONNXTensorElementDataType type = tensor_info.GetElementType();
         std::vector<int64_t> dims = tensor_info.GetShape();
 
-        ANA_MSG_VERBOSE(" : "<<" type= "<<type << ", shape = [");
+        ANA_MSG_INFO(" : "<<" type= "<<type << ", shape = [");
         for (long unsigned int j=0; j < dims.size(); ++j){
-          ANA_MSG_VERBOSE(dims[j]);
+          ANA_MSG_INFO(dims[j]);
         }
-        ANA_MSG_VERBOSE("]");
+        ANA_MSG_INFO("]");
       }
     }
 
@@ -83,20 +86,20 @@ namespace top {
     for (size_t i = 0; i < output_node_count; i++) m_output_shapes[i] = session->GetOutputTypeInfo(i).GetTensorTypeAndShapeInfo().GetShape();
 
     if (m_verbose) {
-      ANA_MSG_VERBOSE("output shapes = ");
+      ANA_MSG_INFO("output shapes = ");
       for (long unsigned int i=0; i < m_output_shapes.size(); ++i){
-        ANA_MSG_VERBOSE(session->GetOutputNameAllocated(i, allocator).get() << ": " << m_output_shapes[i].size());
+        ANA_MSG_INFO(session->GetOutputNameAllocated(i, allocator).get() << ": " << m_output_shapes[i].size());
 
         Ort::TypeInfo type_info = m_sessions.front()->GetOutputTypeInfo(i);
         auto tensor_info = type_info.GetTensorTypeAndShapeInfo();
         ONNXTensorElementDataType type = tensor_info.GetElementType();
         std::vector<int64_t> dims = tensor_info.GetShape();
 
-        ANA_MSG_VERBOSE(" : "<<" type= "<<type << ", shape = [");
+        ANA_MSG_INFO(" : "<<" type= "<<type << ", shape = [");
         for (long unsigned int j=0; j < dims.size(); ++j){
-          ANA_MSG_VERBOSE(dims[j]);
+          ANA_MSG_INFO(dims[j]);
         }
-        ANA_MSG_VERBOSE("]");
+        ANA_MSG_INFO("]");
       }
     }
 
