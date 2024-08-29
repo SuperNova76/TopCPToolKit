@@ -110,6 +110,9 @@ namespace top {
 
     void makeVerbose(bool verbosity) { m_verbose = verbosity; }
 
+    void printInputInfo();
+    void printOutputInfo();
+
   protected:
 
     // ort
@@ -124,6 +127,8 @@ namespace top {
     Ort::MemoryInfo m_memory_info; // where to allocate the tensors
     std::vector<Ort::Value> m_input_tensors;
     std::vector<Ort::Value> m_output_tensors;
+    std::vector<ONNXTensorElementDataType> m_input_types;
+    std::vector<ONNXTensorElementDataType> m_output_types;
 
     // map from node name to node index
     std::unordered_map<std::string, unsigned> m_input_name_index;
