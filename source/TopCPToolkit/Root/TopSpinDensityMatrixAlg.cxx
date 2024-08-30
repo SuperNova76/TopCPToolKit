@@ -92,17 +92,17 @@ namespace top {
       m_cos_phi.set(*evtInfo,
 		      SpinHelpers::cos_phi(                   top, tbar, ttbar, top_analyser, tbar_analyser), sys);
       m_cos_theta_x_p.set(*evtInfo,
-				  SpinHelpers::cos_theta_x(   ttbar, top_analyser), sys);          
+				  SpinHelpers::cos_theta_x(   ttbar, top, top_analyser), sys);          
       m_cos_theta_x_m.set(*evtInfo,
-				  SpinHelpers::cos_theta_x(   ttbar, tbar_analyser), sys);                    
+				  SpinHelpers::cos_theta_x(   ttbar, tbar, tbar_analyser), sys);                    
       m_cos_theta_y_p.set(*evtInfo,
-				  SpinHelpers::cos_theta_y(   ttbar, top_analyser), sys);          
+				  SpinHelpers::cos_theta_y(   ttbar, top, top_analyser), sys);          
       m_cos_theta_y_m.set(*evtInfo,
-				  SpinHelpers::cos_theta_y(   ttbar, tbar_analyser), sys);    
+				  SpinHelpers::cos_theta_y(   ttbar, tbar, tbar_analyser), sys);    
       m_cos_theta_z_p.set(*evtInfo,
-				  SpinHelpers::cos_theta_z(   ttbar, top_analyser), sys);          
+				  SpinHelpers::cos_theta_z(   ttbar, top, top_analyser), sys);          
       m_cos_theta_z_m.set(*evtInfo,
-				  SpinHelpers::cos_theta_z(   ttbar, tbar_analyser), sys);                        
+				  SpinHelpers::cos_theta_z(   ttbar, tbar, tbar_analyser), sys);                        
     }
 
     return StatusCode::SUCCESS;

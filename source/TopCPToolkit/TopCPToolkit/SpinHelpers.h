@@ -175,42 +175,57 @@ namespace SpinHelpers
     return theta;
   }
 
-  float cos_theta_x(const PtEtaPhiMVector &ttbar, PtEtaPhiMVector analyser)
+  float cos_theta_x(const PtEtaPhiMVector &ttbar, PtEtaPhiMVector parent, PtEtaPhiMVector analyser)
   {
 
     XYZVector x_vector(1., 0., 0.);
 
     Boost boost_to_ttbar = Boost(ttbar.BoostToCM());
 
+    parent = boost_to_ttbar * parent;
     analyser = boost_to_ttbar * analyser;
+
+    Boost boost_to_parent = Boost(parent.BoostToCM());
+
+    analyser = boost_to_parent * analyser;
 
     float theta = analyser.Vect().Unit().Dot(x_vector);
 
     return theta;
   }
 
-  float cos_theta_y(const PtEtaPhiMVector &ttbar, PtEtaPhiMVector analyser)
+  float cos_theta_y(const PtEtaPhiMVector &ttbar, PtEtaPhiMVector parent, PtEtaPhiMVector analyser)
   {
 
     XYZVector y_vector(0., 1., 0.);
 
     Boost boost_to_ttbar = Boost(ttbar.BoostToCM());
 
+    parent = boost_to_ttbar * parent;
     analyser = boost_to_ttbar * analyser;
+
+    Boost boost_to_parent = Boost(parent.BoostToCM());
+
+    analyser = boost_to_parent * analyser;
 
     float theta = analyser.Vect().Unit().Dot(y_vector);
 
     return theta;
   }
 
-  float cos_theta_z(const PtEtaPhiMVector &ttbar, PtEtaPhiMVector analyser)
+  float cos_theta_z(const PtEtaPhiMVector &ttbar, PtEtaPhiMVector parent, PtEtaPhiMVector analyser)
   {
 
     XYZVector z_vector(0., 0., 1.);
 
     Boost boost_to_ttbar = Boost(ttbar.BoostToCM());
 
+    parent = boost_to_ttbar * parent;
     analyser = boost_to_ttbar * analyser;
+
+    Boost boost_to_parent = Boost(parent.BoostToCM());
+
+    analyser = boost_to_parent * analyser;
 
     float theta = analyser.Vect().Unit().Dot(z_vector);
 
