@@ -86,7 +86,7 @@ std::vector<int64_t> calculateDimensions(const std::vector<T>& vec) {
 
 class ONNXWrapper : public asg::AsgTool {
    public:
-    ONNXWrapper(const std::string& name, const std::vector<std::string>& filepaths_model_cv);
+    ONNXWrapper(const std::string& name, const std::vector<std::string>& filepaths_model_cv, bool verbose = false);
 
     virtual ~ONNXWrapper() = default;
 
@@ -186,6 +186,9 @@ class ONNXWrapper : public asg::AsgTool {
 
     void makeVerbose(bool verbosity) { m_verbose = verbosity; }
 
+    void printInputInfo();
+    void printOutputInfo();
+
    protected:
     // ort
     std::shared_ptr<Ort::Env> m_env;
@@ -200,12 +203,14 @@ class ONNXWrapper : public asg::AsgTool {
     Ort::MemoryInfo m_memory_info;                 // where to allocate the tensors
     std::vector<Ort::Value> m_input_tensors;
     std::vector<Ort::Value> m_output_tensors;
+    std::vector<ONNXTensorElementDataType> m_input_types;
+    std::vector<ONNXTensorElementDataType> m_output_types;
 
     // map from node name to node index
     std::unordered_map<std::string, unsigned> m_input_name_index;
     std::unordered_map<std::string, unsigned> m_output_name_index;
 
-    bool m_verbose{false};
+    bool m_verbose;
 };
 
 }  // namespace top
