@@ -25,6 +25,12 @@ namespace top {
     ANA_CHECK(m_cos_theta_transverse_m.initialize(m_systematicsList, m_eventInfoHandle));
     ANA_CHECK(m_cos_theta_raxis_p.initialize(m_systematicsList, m_eventInfoHandle));
     ANA_CHECK(m_cos_theta_raxis_m.initialize(m_systematicsList, m_eventInfoHandle));
+    ANA_CHECK(m_cos_theta_x_p.initialize(m_systematicsList, m_eventInfoHandle));
+    ANA_CHECK(m_cos_theta_x_m.initialize(m_systematicsList, m_eventInfoHandle));
+    ANA_CHECK(m_cos_theta_y_p.initialize(m_systematicsList, m_eventInfoHandle));
+    ANA_CHECK(m_cos_theta_y_m.initialize(m_systematicsList, m_eventInfoHandle));
+    ANA_CHECK(m_cos_theta_z_p.initialize(m_systematicsList, m_eventInfoHandle));
+    ANA_CHECK(m_cos_theta_z_m.initialize(m_systematicsList, m_eventInfoHandle));
     ANA_CHECK(m_cos_phi.initialize(m_systematicsList, m_eventInfoHandle));
 
     ANA_CHECK(m_systematicsList.initialize());
@@ -48,6 +54,12 @@ namespace top {
       m_cos_theta_transverse_m.set(*evtInfo, defaultvalue, sys);
       m_cos_theta_raxis_p.set(*evtInfo, defaultvalue, sys);
       m_cos_theta_raxis_m.set(*evtInfo, defaultvalue, sys);
+      m_cos_theta_x_p.set(*evtInfo, defaultvalue, sys);
+      m_cos_theta_x_m.set(*evtInfo, defaultvalue, sys);
+      m_cos_theta_y_p.set(*evtInfo, defaultvalue, sys);
+      m_cos_theta_y_m.set(*evtInfo, defaultvalue, sys);
+      m_cos_theta_z_p.set(*evtInfo, defaultvalue, sys);
+      m_cos_theta_z_m.set(*evtInfo, defaultvalue, sys);
       m_cos_phi.set(*evtInfo, defaultvalue, sys);
 
       // check the selection
@@ -79,6 +91,18 @@ namespace top {
 			    SpinHelpers::cos_theta_raxis_minus(     top, tbar, ttbar, top_analyser, tbar_analyser), sys);
       m_cos_phi.set(*evtInfo,
 		      SpinHelpers::cos_phi(                   top, tbar, ttbar, top_analyser, tbar_analyser), sys);
+      m_cos_theta_x_p.set(*evtInfo,
+				  SpinHelpers::cos_theta_x(   ttbar, top, top_analyser), sys);          
+      m_cos_theta_x_m.set(*evtInfo,
+				  SpinHelpers::cos_theta_x(   ttbar, tbar, tbar_analyser), sys);                    
+      m_cos_theta_y_p.set(*evtInfo,
+				  SpinHelpers::cos_theta_y(   ttbar, top, top_analyser), sys);          
+      m_cos_theta_y_m.set(*evtInfo,
+				  SpinHelpers::cos_theta_y(   ttbar, tbar, tbar_analyser), sys);    
+      m_cos_theta_z_p.set(*evtInfo,
+				  SpinHelpers::cos_theta_z(   ttbar, top, top_analyser), sys);          
+      m_cos_theta_z_m.set(*evtInfo,
+				  SpinHelpers::cos_theta_z(   ttbar, tbar, tbar_analyser), sys);                        
     }
 
     return StatusCode::SUCCESS;
