@@ -12,45 +12,52 @@ void TopNuFlowsDilepton::Sample(ConstDataVector<xAOD::ElectronContainer> &electr
                                 ConstDataVector<xAOD::JetContainer> &jets,
                                 float met_mpx, float met_mpy, float met_sumet,
                                 unsigned long long eventNumber) {
-    // Clear all inputs to the model
+    // Clear all inputs + outputs to the model
     m_input_lep.clear();
     m_input_jet.clear();
     m_input_met.clear();
     m_input_misc.clear();
+    m_nu_out.clear();
+    m_loglik = 0.0;
 
     // Fill in the leptons
     for (const auto &l : electrons) {
-        std::vector<float> v = {static_cast<float>(l->p4().Px() / 1000.0),
-                                static_cast<float>(l->p4().Py() / 1000.0),
-                                static_cast<float>(l->p4().Pz() / 1000.0),
-                                static_cast<float>(std::log(1.0 + l->p4().E() / 1000.0)),
-                                static_cast<float>(l->charge()),
-                                0.0};  // Flavor = 0 for electrons
+        std::vector<float> v = {
+            static_cast<float>(l->p4().Px() / 1000.0),
+            static_cast<float>(l->p4().Py() / 1000.0),
+            static_cast<float>(l->p4().Pz() / 1000.0),
+            static_cast<float>(std::log(1.0 + l->p4().E() / 1000.0)),
+            static_cast<float>(l->charge()),
+            0.0};  // Flavor = 0 for electrons
         m_input_lep.push_back(v);
     }
     for (const auto &l : muons) {
-        std::vector<float> v = {static_cast<float>(l->p4().Px() / 1000.0),
-                                static_cast<float>(l->p4().Py() / 1000.0),
-                                static_cast<float>(l->p4().Pz() / 1000.0),
-                                static_cast<float>(std::log(1.0 + l->p4().E() / 1000.0)),
-                                static_cast<float>(l->charge()),
-                                1.0};  // Flavor = 1 for muons
+        std::vector<float> v = {
+            static_cast<float>(l->p4().Px() / 1000.0),
+            static_cast<float>(l->p4().Py() / 1000.0),
+            static_cast<float>(l->p4().Pz() / 1000.0),
+            static_cast<float>(std::log(1.0 + l->p4().E() / 1000.0)),
+            static_cast<float>(l->charge()),
+            1.0};  // Flavor = 1 for muons
         m_input_lep.push_back(v);
     }
 
     // Fill in the jets
     for (const auto &j : jets) {
-        std::vector<float> v = {static_cast<float>(j->p4().Px() / 1000.0),
-                                static_cast<float>(j->p4().Py() / 1000.0),
-                                static_cast<float>(j->p4().Pz() / 1000.0),
-                                static_cast<float>(std::log(1.0 + j->p4().E() / 1000.0)),
-                                static_cast<float>(std::log(1.0 + j->p4().M() / 1000.0)),
-                                static_cast<float>(j->auxdataConst<int>("ftag_quantile_" + m_btagger + "_Continuous"))};
+        std::vector<float> v = {
+            static_cast<float>(j->p4().Px() / 1000.0),
+            static_cast<float>(j->p4().Py() / 1000.0),
+            static_cast<float>(j->p4().Pz() / 1000.0),
+            static_cast<float>(std::log(1.0 + j->p4().E() / 1000.0)),
+            static_cast<float>(std::log(1.0 + j->p4().M() / 1000.0)),
+            static_cast<float>(
+                j->auxdataConst<int>("ftag_quantile_" + m_btagger + "_Continuous"))};
         m_input_jet.push_back(v);
     }
 
     // MET information
-    std::vector<float> met_v = {met_mpx / 1000.0f, met_mpy / 1000.0f, met_sumet / 1000.0f};
+    std::vector<float> met_v = {met_mpx / 1000.0f, met_mpy / 1000.0f,
+                                met_sumet / 1000.0f};
     m_input_met.push_back(met_v);
 
     // Misc information (particle multiplicities)
@@ -59,8 +66,11 @@ void TopNuFlowsDilepton::Sample(ConstDataVector<xAOD::ElectronContainer> &electr
                                  static_cast<float>(jets.size())};
     m_input_misc.push_back(misc_v);
 
-    // Create the Ort::Value objects for each of the inputs
+    // Clear the inputs and outputs
     this->clearInputs();
+    this->clearOutputs();
+
+    // Add the inputs (appends to m_input_tensors)
     this->addInputs(m_input_jet);
     this->addInputs(m_input_lep);
     this->addInputs(m_input_met);

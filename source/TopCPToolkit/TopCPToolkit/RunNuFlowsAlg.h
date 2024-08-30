@@ -54,10 +54,10 @@ class RunNuFlowsAlg final : public EL::AnaAlgorithm {
     CP::SysReadHandle<xAOD::EventInfo> m_eventInfoHandle{this, "eventInfo", "EventInfo", "the EventInfo container to read selection decisions from"};
 
     // Output decorations
-    CP::SysWriteDecorHandle<vector<float>> m_nu_out_decor{this, "nu_out", "nu_out_%SYS%", "Sampled value of all neurtinos"};
-    CP::SysWriteDecorHandle<float> m_loglik_decor{this, "loglik", "loglik_%SYS%", "Log likelihood of the (anti)neutrino solution"};
+    CP::SysWriteDecorHandle<vector<float>> m_nu_out_decor{this, "nu_out", "nu_out_%SYS%", "Sampled value of the unfolded vector"};
+    CP::SysWriteDecorHandle<float> m_loglik_decor{this, "loglik", "loglik_%SYS%", "Log likelihood of the unfolded solution"};
 
-    // Inputs to the neural network
+    // Inputs to the conditional normalizing flow
     CP::SysWriteDecorHandle<vector<vector<float>>> m_input_lep_decor{this, "input_lep", "input_lep_%SYS%", "The input vector for the leptons"};
     CP::SysWriteDecorHandle<vector<vector<float>>> m_input_jet_decor{this, "input_jet", "input_jet_%SYS%", "The input vector for the jets"};
     CP::SysWriteDecorHandle<vector<vector<float>>> m_input_met_decor{this, "input_met", "input_met_%SYS%", "The input vector for the met"};

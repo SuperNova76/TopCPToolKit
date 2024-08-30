@@ -51,7 +51,9 @@ void flatten(const std::vector<T>& vec, std::vector<typename scalar_type<T>::typ
     }
 }
 
-// Helper function to start the flattening process and create the output vector
+// Actual function one would typically use
+// Creates the output using the correct type and
+// Coppies into it a flattened version of the vector
 template <typename T>
 std::vector<typename scalar_type<T>::type> flatten(const std::vector<T>& vec) {
     std::vector<typename scalar_type<T>::type> output;
@@ -88,9 +90,7 @@ class ONNXWrapper : public asg::AsgTool {
 
     virtual ~ONNXWrapper() = default;
 
-    inline std::vector<Ort::Value> evaluate(
-        std::vector<Ort::Value>& input_tensors,
-        unsigned index_network = 0) {
+    inline std::vector<Ort::Value> evaluate(std::vector<Ort::Value>& input_tensors, unsigned index_network = 0) {
         Ort::Session& session ATLAS_THREAD_SAFE = *m_sessions[index_network];
 
         std::vector<const char*> inputNames(m_input_node_names.size());
@@ -114,30 +114,25 @@ class ONNXWrapper : public asg::AsgTool {
     void clearInputs() { m_input_tensors.clear(); }
     void clearOutputs() { m_output_tensors.clear(); }
 
+    // This form of initialization means that m_input_tensors own the buffers
     template <typename T>
-    void addInputs(
-        T* p_data, size_t p_data_element_count, const int64_t* shape, size_t shape_len) {
-        m_input_tensors.push_back(
-            Ort::Value::CreateTensor<T>(m_memory_info, p_data, p_data_element_count, shape, shape_len));
+    void addInputs(T* p_data, size_t p_data_element_count, const int64_t* shape, size_t shape_len) {
+        m_input_tensors.emplace_back(Ort::Value::CreateTensor<T>(m_allocator, shape, shape_len));
+        std::memcpy(m_input_tensors.back().GetTensorMutableData<T>(), p_data, p_data_element_count * sizeof(T));
     }
 
+    // For passing flattened vectors with the intended shapes
     template <typename T>
-    void addInputs(
-      std::vector<T>& values, const std::vector<int64_t>& shape
-    ) {
-      m_input_tensors.push_back(
-        Ort::Value::CreateTensor<T>(m_memory_info, values.data(), values.size(), shape.data(), shape.size())
-      );
+    void addInputs(std::vector<T>& values, const std::vector<int64_t>& shape) {
+        addInputs(values.data(), values.size(), shape.data(), shape.size());
     }
 
-    // Extra method for multidimensional vectors with auto flatten and shape calculation
+    // For multidimensional vectors with auto flatten and shape calculation
     template <typename T>
-    void addInputs(const std::vector<T>& values) {
+    void addInputs(std::vector<T>& values) {
         auto flat = flatten(values);
-        std::vector<int64_t> shape = calculateDimensions(values);
-        m_input_tensors.push_back(
-            Ort::Value::CreateTensor<typename scalar_type<T>::type>(
-                m_memory_info, flat.data(), flat.size(), shape.data(), shape.size()));
+        auto shape = calculateDimensions(values);
+        addInputs(flat, shape);
     }
 
     template <typename T>
@@ -173,6 +168,11 @@ class ONNXWrapper : public asg::AsgTool {
     }
 
     template <typename T>
+    T* getInputs(unsigned node) {
+        return m_input_tensors.at(node).GetTensorMutableData<T>();
+    }
+
+    template <typename T>
     T* getOutputs(const std::string& node_name) {
         try {
             // find the node index from the node name
@@ -196,7 +196,8 @@ class ONNXWrapper : public asg::AsgTool {
     std::vector<std::vector<int64_t>> m_input_shapes;
     std::vector<std::vector<int64_t>> m_output_shapes;
 
-    Ort::MemoryInfo m_memory_info;  // where to allocate the tensors
+    Ort::AllocatorWithDefaultOptions m_allocator;  // default allocator
+    Ort::MemoryInfo m_memory_info;                 // where to allocate the tensors
     std::vector<Ort::Value> m_input_tensors;
     std::vector<Ort::Value> m_output_tensors;
 
