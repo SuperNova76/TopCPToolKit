@@ -11,7 +11,7 @@ ONNXWrapper::ONNXWrapper(
     bool verbose) : asg::AsgTool(name),
                     m_env(std::make_shared<Ort::Env>(ORT_LOGGING_LEVEL_WARNING, "")),
                     m_session_options(std::make_shared<Ort::SessionOptions>()),
-                    m_memory_info(Ort::MemoryInfo::CreateCpu(OrtArenam_allocator, OrtMemTypeDefault)),
+                    m_memory_info(Ort::MemoryInfo::CreateCpu(OrtArenaAllocator, OrtMemTypeDefault)),
                     m_verbose(verbose) {
     // TODO check at least one model path is provided
 
