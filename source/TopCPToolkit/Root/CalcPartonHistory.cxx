@@ -112,7 +112,7 @@ namespace top {
     }
     // Check if we found any matching particles
     if (gammaRadParticles.empty()) {
-        parentpdgId = -1;  // No match found, set parentPdgId to a sentinel value
+        parentpdgId = 0;  // No match found, set parentPdgId to a sentinel value
         return false;
     }
     // We can have multiple photons. Sort the particles by their pt(), in descending order
@@ -140,6 +140,13 @@ namespace top {
 
   bool CalcPartonHistory::RetrieveParticleInfo(const std::string& prefix, PtEtaPhiMVector& particle, int& pdgId) {
     return Retrievep4(prefix, particle) && RetrievepdgId(prefix, pdgId);
+  }
+
+  bool CalcPartonHistory::RetrieveParticleInfo(const std::string& prefix, const std::string& alt_prefix, PtEtaPhiMVector& particle, int& pdgId) {
+    if (! (Retrievep4(prefix, particle) && RetrievepdgId(prefix, pdgId))) {
+      return Retrievep4(alt_prefix, particle) && RetrievepdgId(alt_prefix, pdgId);
+    }
+    return true;
   }
 
   void CalcPartonHistory::EnsureKeyExists(const std::string& key, const std::string& fallbackKey) {

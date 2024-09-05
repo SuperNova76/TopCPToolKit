@@ -28,19 +28,6 @@ namespace xAOD {
     virtual ~PartonHistory() {} // avoid virtual methods until NtupleMaker no longer using reinterpret_cast (see https://gitlab.cern.ch/atlas/athena/-/merge_requests/71369)
 #endif
 
-    void IniVarTtbar();
-    void IniVarTzq();
-    void IniVarTqGamma();
-    void IniVarTtbarLight();
-    void IniVarTbbar();
-    void IniVarWlv();
-    void IniVarWtb();
-    void IniVarZ();
-    void IniVarTtGamma();
-    void IniVarThq();
-    void IniVarTth();
-    void IniVarHWW();
-    void IniVarHZZ();
   };
 
   class PartonHistoryAux: public AuxInfoBase {
