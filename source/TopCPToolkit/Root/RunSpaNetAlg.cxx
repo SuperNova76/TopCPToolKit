@@ -1,4 +1,5 @@
 #include "TopCPToolkit/RunSpaNetAlg.h"
+#include "AthContainers/ConstDataVector.h"
 
 namespace top {
 
@@ -6,8 +7,9 @@ namespace top {
     : EL::AnaAlgorithm(name, pSvcLocator)
     , m_topology("SetMe")
     , m_btagger("SetMe")
+    , m_topologyEnum(SpaNetEnums::Topology::TtbarLjetsNu)
   {
-    declareProperty("topology", m_topology, "SPA-Net topology to use. Choose between: 'TtbarLjets'.");
+    declareProperty("topology", m_topology, "SPA-Net topology to use. Choose between: 'TtbarLjetsNu'.");
     declareProperty("btagger", m_btagger, "Btagging algorithm to use. Must support the 'Continuous' WP in order to retrieve the quantile bin.");
   }
 
@@ -52,13 +54,7 @@ namespace top {
 
     ANA_CHECK(m_systematicsList.initialize());
 
-    if (m_topologyEnum == SpaNetEnums::Topology::TtbarLjets) {
-      m_spanet_reco = std::unique_ptr<top::TopSpaNetTopology> (new top::TopSpaNetTtbarLjets("AsgSpaNetTool"+m_topology,
-											    "dev/AnalysisTop/SpaNetModels/spanet_ttbarljets_trainedoneven.onnx",
-											    "dev/AnalysisTop/SpaNetModels/spanet_ttbarljets_trainedonodd.onnx")
-							       );
-    }
-    else if (m_topologyEnum == SpaNetEnums::Topology::TtbarLjetsNu) {
+    if (m_topologyEnum == SpaNetEnums::Topology::TtbarLjetsNu) {
       m_spanet_reco = std::unique_ptr<top::TopSpaNetTopology> (new top::TopSpaNetTtbarLjetsNu("AsgSpaNetTool"+m_topology,
 											    "dev/AnalysisTop/SpaNetModels/spanet_ttbarljetsnu_trainedoneven.onnx",
 											    "dev/AnalysisTop/SpaNetModels/spanet_ttbarljetsnu_trainedonodd.onnx")
@@ -145,19 +141,7 @@ namespace top {
 			   );
 
     // decorate EventInfo depending on the topology
-    if (m_topologyEnum == SpaNetEnums::Topology::TtbarLjets) {
-      const std::vector<int>& best_indices = m_spanet_reco->GetOutputIndices();
-      m_lep_b_idx_decor.set(*evtInfo, best_indices[0], sys);
-      m_had_b_idx_decor.set(*evtInfo, best_indices[1], sys);
-      m_down_idx_decor.set( *evtInfo, best_indices[2], sys);
-      m_up_idx_decor.set(   *evtInfo, best_indices[3], sys);
-      const std::vector<float>& best_scores = m_spanet_reco->GetOutputScores();
-      m_had_top_assignment_decor.set(*evtInfo, best_scores[0], sys);
-      m_lep_top_assignment_decor.set(*evtInfo, best_scores[1], sys);
-      m_had_top_detection_decor.set(*evtInfo, best_scores[2], sys);
-      m_lep_top_detection_decor.set(*evtInfo, best_scores[3], sys);
-    }
-    else if (m_topologyEnum == SpaNetEnums::Topology::TtbarLjetsNu) {
+    if (m_topologyEnum == SpaNetEnums::Topology::TtbarLjetsNu) {
       const std::vector<int>& best_indices = m_spanet_reco->GetOutputIndices();
       m_lep_b_idx_decor.set(*evtInfo, best_indices[0], sys);
       m_had_b_idx_decor.set(*evtInfo, best_indices[1], sys);
