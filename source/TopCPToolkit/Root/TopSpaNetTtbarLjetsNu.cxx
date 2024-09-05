@@ -185,14 +185,14 @@ namespace top {
     for (unsigned long int i=0; i < input_jet_tensor_dims.size(); ++i){
         jet_input_size = jet_input_size*input_jet_tensor_dims[i];
     }
-    this->linkInputs(
+    this->linkInput(
       **jet_values, jet_input_size, input_jet_tensor_dims.data(), input_jet_tensor_dims.size()
     );
     int jet_mask_size = 1;
     for (unsigned long int i=0; i < input_jet_tensor_dims_mask.size(); ++i){
       jet_mask_size = jet_mask_size*input_jet_tensor_dims_mask[i];
     }
-    this->linkInputs(
+    this->linkInput(
       *jet_masks, jet_mask_size, input_jet_tensor_dims_mask.data(), input_jet_tensor_dims_mask.size()
     );
 
@@ -200,14 +200,14 @@ namespace top {
     for (unsigned long int i=0; i < input_lepton_tensor_dims.size(); ++i){
         lepton_input_size = lepton_input_size*input_lepton_tensor_dims[i];
     }
-    this->linkInputs(
+    this->linkInput(
       **lepton_values, lepton_input_size, input_lepton_tensor_dims.data(), input_lepton_tensor_dims.size()
     );
     int lepton_mask_size = 1;
     for (unsigned long int i=0; i < input_lepton_tensor_dims_mask.size(); ++i){
       lepton_mask_size = lepton_mask_size*input_lepton_tensor_dims_mask[i];
     }
-    this->linkInputs(
+    this->linkInput(
       *lepton_masks, lepton_mask_size, input_lepton_tensor_dims_mask.data(), input_lepton_tensor_dims_mask.size()
     );
 
@@ -215,14 +215,14 @@ namespace top {
     for (unsigned long int i=0; i < input_global_tensor_dims.size(); ++i){
         global_input_size = global_input_size*input_global_tensor_dims[i];
     }
-    this->linkInputs(
+    this->linkInput(
       **global_values, global_input_size, input_global_tensor_dims.data(), input_global_tensor_dims.size()
     );
     int global_mask_size = 1;
     for (unsigned long int i=0; i < input_global_tensor_dims_mask.size(); ++i){
       global_mask_size = global_mask_size*input_global_tensor_dims_mask[i];
     }
-    this->linkInputs(
+    this->linkInput(
       *global_masks, global_mask_size, input_global_tensor_dims_mask.data(), input_global_tensor_dims_mask.size()
     );
 
