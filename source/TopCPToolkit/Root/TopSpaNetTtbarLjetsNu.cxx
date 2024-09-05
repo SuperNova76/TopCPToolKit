@@ -2,7 +2,9 @@
 
 namespace top {
 
-TopSpaNetTtbarLjetsNu::TopSpaNetTtbarLjetsNu(const std::string& name, std::string model_even, std::string model_odd) : TopSpaNetTopology(name, model_even, model_odd) {
+  TopSpaNetTtbarLjetsNu::TopSpaNetTtbarLjetsNu(const std::string& name, std::string model_even, std::string model_odd) :
+    TopSpaNetTopology(name, model_even, model_odd)
+  {
     m_MAX_JETS = 20;
     m_NUM_JET_FEATURES = m_input_shapes[0][2];
 
@@ -11,13 +13,14 @@ TopSpaNetTtbarLjetsNu::TopSpaNetTtbarLjetsNu(const std::string& name, std::strin
 
     m_MAX_GLOBALS = 1;
     m_NUM_GLOBAL_FEATURES = m_input_shapes[4][2];
-}
+  }
 
-void TopSpaNetTtbarLjetsNu::Predict(ConstDataVector<xAOD::ElectronContainer>& electrons,
-                                    ConstDataVector<xAOD::MuonContainer>& muons,
-                                    ConstDataVector<xAOD::JetContainer>& jets,
-                                    float met_met, float met_phi,
-                                    unsigned long long eventNumber) {
+  void TopSpaNetTtbarLjetsNu::Predict(ConstDataVector<xAOD::ElectronContainer>& electrons,
+				      ConstDataVector<xAOD::MuonContainer>& muons,
+				      ConstDataVector<xAOD::JetContainer>& jets,
+				      float met_met, float met_phi,
+				      unsigned long long eventNumber) {
+    // Set container for leptons and their properties
     xAOD::IParticleContainer leptons(SG::VIEW_ELEMENTS);
     std::vector<int> lepton_charges;
     lepton_charges.clear();
@@ -25,18 +28,24 @@ void TopSpaNetTtbarLjetsNu::Predict(ConstDataVector<xAOD::ElectronContainer>& el
     lepton_etags.clear();
     std::vector<int> lepton_mutags;
     lepton_mutags.clear();
-    for (const xAOD::Electron* t : electrons) {
-        leptons.push_back(const_cast<xAOD::Electron*>(t));
-        lepton_charges.push_back(t->charge());
-        lepton_etags.push_back(1);
-        lepton_mutags.push_back(0);
+
+    // Process electrons and store their properties
+    for (const xAOD::Electron *t : electrons){
+      leptons.push_back(const_cast<xAOD::Electron*>(t));
+      lepton_charges.push_back(t->charge());
+      lepton_etags.push_back(1);
+      lepton_mutags.push_back(0);
     }
-    for (const xAOD::Muon* t : muons) {
-        leptons.push_back(const_cast<xAOD::Muon*>(t));
-        lepton_charges.push_back(t->charge());
-        lepton_etags.push_back(0);
-        lepton_mutags.push_back(1);
+
+    // Process muons and store their properties
+    for (const xAOD::Muon *t : muons){
+      leptons.push_back(const_cast<xAOD::Muon*>(t));
+      lepton_charges.push_back(t->charge());
+      lepton_etags.push_back(0);
+      lepton_mutags.push_back(1);
     }
+
+    // Since this is Ttbar l+jets we expect exactly one lepton
     if (leptons.size() > 1) ANA_MSG_VERBOSE("WARNING: Multiple leptons found, using first one only");
 
     // currently theres a bug with spanet whereby we need to use a batchsize > 1; so for now, we will just add a dummy second event, hence the [2] below
@@ -49,35 +58,43 @@ void TopSpaNetTtbarLjetsNu::Predict(ConstDataVector<xAOD::ElectronContainer>& el
     float global_values[2][1][3];
     bool global_masks[2][1];
 
-    for (long unsigned int i = 0; i < static_cast<long unsigned int>(m_MAX_JETS); ++i) {
-        std::vector<float> jet_kin;
+    // Process jets and store their properties
+    for (long unsigned int i=0; i < static_cast<long unsigned int>(m_MAX_JETS); ++i){
+      std::vector<float> jet_kin;
 
-        if (i < jets.size()) {
-            // TODO: Avoid hard coding these? maybe give the list of inputs in the config, or read the spanet config file, or something?
-            auto jet = jets[i];
-            jet_kin.push_back(std::log(jet->p4().E() + 1));
-            jet_kin.push_back(std::log(jet->p4().Pt() + 1));
-            jet_kin.push_back(jet->p4().Eta());
-            jet_kin.push_back(sin(jet->p4().Phi()));
-            jet_kin.push_back(cos(jet->p4().Phi()));
-            if (jet->isAvailable<int>("ftag_quantile_" + m_btagger + "_Continuous")) {
-                jet_kin.push_back(jet->auxdataConst<int>("ftag_quantile_" + m_btagger + "_Continuous"));
-            } else {
-                jet_kin.push_back(0);
-            }
-            jet_masks[0][i] = 1;
-
-            for (int j = 0; j < m_NUM_JET_FEATURES; ++j) jet_values[0][i][j] = jet_kin[j];
-            ANA_MSG_VERBOSE("PT = " << jet_values[0][i][1] << ", ETA = " << jet_values[0][i][2] << ", COSPHI = " << jet_values[0][i][4] << ", SINPHI = " << jet_values[0][i][3] << ", E = " << jet_values[0][i][0] << ", btag = " << jet_values[0][i][5]);
-        } else {
-            // now fill the dummy values for the rest
-            for (int j = 0; j < m_NUM_JET_FEATURES; ++j) jet_values[0][i][j] = 0.0;
-            jet_masks[0][i] = 0;
+      if (i < jets.size()){
+        // TODO: Avoid hard coding these? maybe give the list of inputs in the config, or read the spanet config file, or something?
+      	auto jet = jets[i];
+        jet_kin.push_back(std::log(jet->p4().E() + 1));
+        jet_kin.push_back(std::log(jet->p4().Pt() + 1));
+        jet_kin.push_back(jet->p4().Eta());
+        jet_kin.push_back(sin(jet->p4().Phi()));
+        jet_kin.push_back(cos(jet->p4().Phi()));
+        if (jet->isAvailable<int>("ftag_quantile_"+m_btagger+"_Continuous")){
+          jet_kin.push_back(jet->auxdataConst<int>("ftag_quantile_"+m_btagger+"_Continuous"));
         }
-        // add a dummy second event because einsum is dumb with batchsize=1
-        // TODO: fix this :)
-        jet_masks[1][i] = 0;
-        for (int j = 0; j < m_NUM_JET_FEATURES; ++j) jet_values[1][i][j] = 0.0;
+        else {
+          jet_kin.push_back(0);
+        }
+        jet_masks[0][i]=1;
+
+        for (int j=0; j < m_NUM_JET_FEATURES; ++j) jet_values[0][i][j] = jet_kin[j];
+        ANA_MSG_VERBOSE("PT = " << jet_values[0][i][1] << \
+                        ", ETA = " << jet_values[0][i][2] << \
+                        ", COSPHI = " << jet_values[0][i][4] <<  \
+                        ", SINPHI = " << jet_values[0][i][3] << \
+                        ", E = " << jet_values[0][i][0] << \
+                        ", btag = " << jet_values[0][i][5]);
+      }
+      else {
+        // now fill the dummy values for the rest
+        for (int j=0; j < m_NUM_JET_FEATURES; ++j) jet_values[0][i][j] = 0.0;
+        jet_masks[0][i]=0;
+      }
+      // add a dummy second event because einsum is dumb with batchsize=1
+      // TODO: fix this :)
+      jet_masks[1][i] = 0;
+      for (int j=0; j < m_NUM_JET_FEATURES; ++j) jet_values[1][i][j] = 0.0;
     }
 
     for (long unsigned int i = 0; i < static_cast<long unsigned int>(m_MAX_LEPTONS); ++i) {
@@ -95,17 +112,24 @@ void TopSpaNetTtbarLjetsNu::Predict(ConstDataVector<xAOD::ElectronContainer>& el
             lepton_kin.push_back(lepton_mutags[i]);
             lepton_masks[0][i] = 1;
 
-            for (int j = 0; j < m_NUM_LEPTON_FEATURES; ++j) lepton_values[0][i][j] = lepton_kin[j];
-            ANA_MSG_VERBOSE("PT = " << lepton_values[0][i][1] << ", ETA = " << lepton_values[0][i][2] << ", COSPHI = " << lepton_values[0][i][4] << ", SINPHI = " << lepton_values[0][i][3] << ", E = " << lepton_values[0][i][0] << ", etag = " << lepton_values[0][i][5] << ", mutag = " << lepton_values[0][i][6]);
-        } else {
-            // now fill the dummy values for the rest
-            for (int j = 0; j < m_NUM_LEPTON_FEATURES; ++j) lepton_values[0][i][j] = 0.0;
-            lepton_masks[0][i] = 0;
-        }
-        // add a dummy second event because einsum is dumb with batchsize=1
-        // TODO: fix this :)
-        lepton_masks[1][i] = 0;
-        for (int j = 0; j < m_NUM_LEPTON_FEATURES; ++j) lepton_values[1][i][j] = 0.0;
+        for (int j=0; j < m_NUM_LEPTON_FEATURES; ++j) lepton_values[0][i][j] = lepton_kin[j];
+        ANA_MSG_VERBOSE("PT = " << lepton_values[0][i][1] << \
+                        ", ETA = " << lepton_values[0][i][2] << \
+                        ", COSPHI = " << lepton_values[0][i][4] << \
+                        ", SINPHI = " << lepton_values[0][i][3] << \
+                        ", E = " << lepton_values[0][i][0] << \
+                        ", etag = " << lepton_values[0][i][5]  << \
+                        ", mutag = " << lepton_values[0][i][6]);
+      }
+      else {
+        // now fill the dummy values for the rest
+        for (int j=0; j < m_NUM_LEPTON_FEATURES; ++j) lepton_values[0][i][j] = 0.0;
+        lepton_masks[0][i]=0;
+      }
+      // add a dummy second event because einsum is dumb with batchsize=1
+      // TODO: fix this :)
+      lepton_masks[1][i] = 0;
+      for (int j=0; j < m_NUM_LEPTON_FEATURES; ++j) lepton_values[1][i][j] = 0.0;
     }
 
     for (int i = 0; i < m_MAX_GLOBALS; ++i) {
@@ -117,12 +141,14 @@ void TopSpaNetTtbarLjetsNu::Predict(ConstDataVector<xAOD::ElectronContainer>& el
 
         global_masks[0][i] = 1;
 
-        for (int j = 0; j < m_NUM_GLOBAL_FEATURES; ++j) global_values[0][i][j] = global_kin[j];
-        ANA_MSG_VERBOSE("MET = " << global_values[0][i][0] << ", COSPHI = " << global_values[0][i][2] << ", SINPHI = " << global_values[0][i][1]);
-        // add a dummy second event because einsum is dumb with batchsize=1
-        // TODO: fix this :)
-        global_masks[1][i] = 0;
-        for (int j = 0; j < m_NUM_GLOBAL_FEATURES; ++j) global_values[1][i][j] = 0.0;
+      for (int j=0; j < m_NUM_GLOBAL_FEATURES; ++j) global_values[0][i][j] = global_kin[j];
+      ANA_MSG_VERBOSE("MET = " << global_values[0][i][0] << \
+                      ", COSPHI = " << global_values[0][i][2] << \
+                      ", SINPHI = " << global_values[0][i][1]);
+      // add a dummy second event because einsum is dumb with batchsize=1
+      // TODO: fix this :)
+      global_masks[1][i] = 0;
+      for (int j=0; j < m_NUM_GLOBAL_FEATURES; ++j) global_values[1][i][j] = 0.0;
     }
 
     // create a vector of 64-bit integers with the input tensor dimension
@@ -219,17 +245,15 @@ void TopSpaNetTtbarLjetsNu::Predict(ConstDataVector<xAOD::ElectronContainer>& el
 
     int bestlb = -1;
     float max_lb = -999;
-    for (int i = 0; i < NUM_JETS; ++i) {  // loop only over the jets, we dont want to predict the lep entry
-        // For our case, we want to prioritise the hadtop prediction over the leptop; so ignore jets in the hadtop prediction
-
-        if (i == bestz || i == bestrow || i == bestcol) continue;
-        if (tlpred[i] > max_lb) {
-            max_lb = tlpred[i];
-            bestlb = i;
-        }
+    for (int i=0; i < NUM_JETS; ++i){ // loop only over the jets, we dont want to predict the lep entry
+      // For our case, we want to prioritise the hadtop prediction over the leptop; so ignore jets in the hadtop prediction
+      if (i == bestz || i == bestrow || i == bestcol ) continue;
+      if (tlpred[i] > max_lb){
+        max_lb = tlpred[i];
+        bestlb = i;
+      }
     }
-    ANA_MSG_VERBOSE("EventNo: " << eventNumber << ", Max = " << max << ", indx = " << bestrow << "," << bestcol << "," << bestz);
-
+    ANA_MSG_VERBOSE("EventNo: " << eventNumber <<  ", Max = " << max << ", indx = " << bestrow << "," << bestcol << "," << bestz);
     ANA_MSG_VERBOSE("SPANET Down jet = " << bestz << ", up jet = " << bestcol << ", bhad = " << bestrow << ", blep = " << bestlb << " (Njets = " << NUM_JETS << ")");
 
     m_lep_b = bestlb;
