@@ -5,6 +5,7 @@
 #include "PartonHistory/CalcPartonHistory.h"
 #include "xAODTruth/TruthParticleContainer.h"
 #include "PartonHistory/PartonHistory.h"
+#include "VectorHelpers/DecoratorHelpers.h"
 
 namespace top {
   class CalcTtbarPartonHistory: public CalcPartonHistory {
@@ -21,6 +22,8 @@ namespace top {
   protected:
     virtual StatusCode runHistorySaver(const xAOD::TruthParticleContainer* truthParticles,
                                        xAOD::PartonHistory* ttbarPartonHistory) override;
+
+    virtual void initializeDecorators() override;
   };
 }
 

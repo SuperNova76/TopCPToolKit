@@ -21,6 +21,8 @@ namespace top {
   protected:
     virtual StatusCode runHistorySaver(const xAOD::TruthParticleContainer* truthParticles,
                                        xAOD::PartonHistory* hwwPartonHistory) override;
+
+    virtual void initializeDecorators() override;
   };
 }
 
