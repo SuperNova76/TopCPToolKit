@@ -116,33 +116,38 @@ class ONNXWrapper : public asg::AsgTool {
 
     // This form of initialization means that m_input_tensors own the buffers
     template <typename T>
-    void addInputs(T* p_data, size_t p_data_element_count, const int64_t* shape, size_t shape_len) {
+    void addInput(T* p_data, size_t p_data_element_count, const int64_t* shape, size_t shape_len) {
         m_input_tensors.emplace_back(Ort::Value::CreateTensor<T>(m_allocator, shape, shape_len));
         std::memcpy(m_input_tensors.back().GetTensorMutableData<T>(), p_data, p_data_element_count * sizeof(T));
     }
 
-    // For passing flattened vectors with the intended shapes
+    // This does not copy the buffer! So the caller must ensure the buffer persists
     template <typename T>
-    void addInputs(std::vector<T>& values, const std::vector<int64_t>& shape) {
-        addInputs(values.data(), values.size(), shape.data(), shape.size());
+    void linkInput(T* p_data, size_t p_data_element_count, const int64_t* shape, size_t shape_len) {
+        m_input_tensors.push_back(Ort::Value::CreateTensor<T>(m_memory_info, p_data, p_data_element_count, shape, shape_len));
+    }
+
+    template <typename T>
+    void addInput(std::vector<T>& values, const std::vector<int64_t>& shape) {
+        addInput(values.data(), values.size(), shape.data(), shape.size());
+    }
+
+    template <typename T>
+    void linkInput(std::vector<T>& values, const std::vector<int64_t>& shape) {
+        addInput(values.data(), values.size(), shape.data(), shape.size());
     }
 
     // For multidimensional vectors with auto flatten and shape calculation
     template <typename T>
-    void addInputs(std::vector<T>& values) {
+    void addInput(std::vector<T>& values) {
         auto flat = flatten(values);
         auto shape = calculateDimensions(values);
-        addInputs(flat, shape);
+        addInput(flat, shape);
     }
 
     template <typename T>
-    inline void setInputs(const std::string& node_name, T* p_data, size_t p_data_element_count, const int64_t* shape, size_t shape_len) {
-        // resize m_input_tensors in case it is not of the same size as m_input_node_names
-
-        // m_input_tensors.resize(m_input_node_names.size());
-        // Does not compile. Ort::Value is not DefaultInsertable.
-        // m_input_tensors.resize(m_input_node_names.size(), Ort::Value(nullptr));
-        // Does not compile either. Ort::Value is not CopyInsertable.
+    inline void setInputLink(const std::string& node_name, T* p_data, size_t p_data_element_count, const int64_t* shape, size_t shape_len) {
+        // make sure the input tensors vector is large enough
         for (size_t i = 0; i < m_input_node_names.size() - m_input_tensors.size(); i++) {
             m_input_tensors.emplace_back(nullptr);
         }
@@ -156,10 +161,9 @@ class ONNXWrapper : public asg::AsgTool {
         }
     }
 
-    // overload
     template <typename T>
-    void setInputs(const std::string& node_name, const std::vector<T>& values, const std::vector<int64_t>& shape) {
-        setInputs(node_name, values.data(), values.size(), shape.data(), shape.size());
+    void setInputLink(const std::string& node_name, const std::vector<T>& values, const std::vector<int64_t>& shape) {
+        setInputLink(node_name, values.data(), values.size(), shape.data(), shape.size());
     }
 
     template <typename T>
@@ -185,7 +189,6 @@ class ONNXWrapper : public asg::AsgTool {
     }
 
     void makeVerbose(bool verbosity) { m_verbose = verbosity; }
-
     void printInputInfo();
     void printOutputInfo();
 
