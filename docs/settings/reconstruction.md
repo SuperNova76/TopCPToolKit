@@ -266,6 +266,9 @@ Constructs a series of observables used to measure spin correlations, polarisati
 `doHelicityBasis`
 :   whether to compute the observables in the helicity basis. The default is `False`.
 
+`doBeamBasis`
+:   whether to compute the observables in the beam basis. The default is `False`.
+
 `doEntanglement`
 :   whether to compute observables related to spin entanglement. The default is `False`.
 
@@ -279,6 +282,14 @@ Constructs a series of observables used to measure spin correlations, polarisati
     - `cos_theta_transverse_m`: cosine of the $\theta$ angle for the spin analyser of the anti-top quark along the transverse axis
     - `cos_theta_raxis_p`: cosine of the $\theta$ angle for the spin analyser of the top quark along the third axis
     - `cos_theta_raxis_m`: cosine of the $\theta$ angle for the spin analyser of the anti-top quark along the third axis
+
+!!! success "Additional variables toggled by `doBeamBasis`"
+    - `cos_theta_x_p`: cosine of the $\theta$ angle for the spin analyser of the top quark along the x axis
+    - `cos_theta_x_m`: cosine of the $\theta$ angle for the spin analyser of the anti-top quark along the x axis
+    - `cos_theta_y_p`: cosine of the $\theta$ angle for the spin analyser of the top quark along the y axis
+    - `cos_theta_y_m`: cosine of the $\theta$ angle for the spin analyser of the anti-top quark along the y axis
+    - `cos_theta_z_p`: cosine of the $\theta$ angle for the spin analyser of the top quark along the beam axis
+    - `cos_theta_z_m`: cosine of the $\theta$ angle for the spin analyser of the anti-top quark along the beam axis
 
 !!! success "Additional variables toggled by `doEntanglement`"
     - `cos_phi`: cosine of the opening angle between the spin analysers of top and the anti-top quarks in their respective rest frames (related to the quantum entanglement marker $D$)

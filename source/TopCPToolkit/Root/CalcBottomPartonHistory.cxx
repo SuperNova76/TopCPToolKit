@@ -5,53 +5,35 @@
 namespace top {
   using ROOT::Math::PtEtaPhiMVector;
 
-  void CalcPartonHistory::FillBottomPartonHistory(xAOD::PartonHistory* PartonHistory, const std::string& parent, const int& mode) {
-    std::string parentstring = "";
-    if (parent != "") parentstring = "_from_"+parent;
+  void CalcPartonHistory::FillBottomPartonHistory(xAOD::PartonHistory* PartonHistory,
+						  const std::string& parent,
+						  const int& mode,
+						  PartonDecorator& dec) {
+    std::string parentstring = parent.empty() ? "" : "_from_" + parent;
+    std::string basePrefix = "MC_" + (parent.empty() ? "" : parent + "_");
+    std::string prefix, alt_prefix, suffix;
+    PtEtaPhiMVector v;
+    int pdgId = 0;
 
+    alt_prefix = basePrefix + "bar_bbar";
     if (mode == 0 || mode == 2) { // 0 == b, 2 == flavour agnostic
-      PtEtaPhiMVector b;
-      int b_pdgId = -1;
-
-      static const SG::AuxElement::Decorator<float> dec_MC_b_m("MC_b" + parentstring + "_m");
-      static const SG::AuxElement::Decorator<float> dec_MC_b_pt("MC_b" + parentstring + "_pt");
-      static const SG::AuxElement::Decorator<float> dec_MC_b_eta("MC_b" + parentstring + "_eta");
-      static const SG::AuxElement::Decorator<float> dec_MC_b_phi("MC_b" + parentstring + "_phi");
-      static const SG::AuxElement::Decorator<int> dec_MC_b_pdgId("MC_b" + parentstring + "_pdgId");
-
-      std::string prefix = "MC_";
-      if (parent != "") prefix += parent + "_b";
-      else prefix += "b";
-
-      if (RetrieveParticleInfo(prefix + "_beforeFSR", b, b_pdgId)) {
-	FillParticleInfo(dec_MC_b_m, dec_MC_b_pt, dec_MC_b_eta, dec_MC_b_phi, dec_MC_b_pdgId, b, b_pdgId, PartonHistory);
-      }
-      else {
-	// first we have to adapt the prefix! Currently the parent can only be a top so there we just need to add "bar"
-	prefix = "MC_" + ((parent != "") ? parent + "bar_bbar" : "bbar");
-	if (mode == 2 && RetrieveParticleInfo(prefix + "_beforeFSR", b, b_pdgId)) {
-	  // Note that we save bbar into b because we are flavour agnostic!
-	  FillParticleInfo(dec_MC_b_m, dec_MC_b_pt, dec_MC_b_eta, dec_MC_b_phi, dec_MC_b_pdgId, b, b_pdgId, PartonHistory);
-	}
-      }
+      // Decorating with defaults in case the particle doesn't exist
+      suffix = "b";
+      prefix = basePrefix + suffix;
+      dec.decorateDefault("MC_" + suffix + parentstring, PartonHistory);
+      // Currently the parent can only be a top so there we just need to add "bar"
     }
-    if (mode == 1) { // 1 == bbar
-      PtEtaPhiMVector bbar;
-      int bbar_pdgId = -1;
+    if ( mode == 1 ) {
+      suffix = "bbar";
+      prefix = basePrefix + suffix;
+      dec.decorateDefault("MC_" + suffix + parentstring, PartonHistory);
+    }
 
-      static const SG::AuxElement::Decorator<float> dec_MC_bbar_m("MC_bbar" + parentstring + "_m");
-      static const SG::AuxElement::Decorator<float> dec_MC_bbar_pt("MC_bbar" + parentstring + "_pt");
-      static const SG::AuxElement::Decorator<float> dec_MC_bbar_eta("MC_bbar" + parentstring + "_eta");
-      static const SG::AuxElement::Decorator<float> dec_MC_bbar_phi("MC_bbar" + parentstring + "_phi");
-      static const SG::AuxElement::Decorator<int> dec_MC_bbar_pdgId("MC_bbar" + parentstring + "_pdgId");
-
-      std::string prefix = "MC_";
-      if (parent != "") prefix += parent + "_bbar";
-      else prefix += "bbar";
-
-      if (RetrieveParticleInfo(prefix + "_beforeFSR", bbar, bbar_pdgId)) {
-	FillParticleInfo(dec_MC_bbar_m, dec_MC_bbar_pt, dec_MC_bbar_eta, dec_MC_bbar_phi, dec_MC_bbar_pdgId, bbar, bbar_pdgId, PartonHistory);
-      }
+    // Note, the order of evaluation matters here. The prefix depends on the mode.
+    // The flavour agnostic part is only triggered if mode == 2 AND the first retrieve function returns false
+    if ( RetrieveParticleInfo(prefix + "_beforeFSR", v, pdgId) ||
+	 (mode == 2 && RetrieveParticleInfo(prefix + parentstring, alt_prefix + parentstring + "bar", v, pdgId))) {
+      dec.decorateParticle("MC_" + suffix  + parentstring, v, pdgId, PartonHistory);
     }
   }
 }

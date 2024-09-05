@@ -63,6 +63,24 @@ namespace top {
     CP::SysWriteDecorHandle<float> m_cos_phi {
       this, "D", "", "cos(phi) between the two spin analysers"
     };
+    CP::SysWriteDecorHandle<float> m_cos_theta_x_p {
+      this, "cxp", "", "cos(theta)+ along the x-axis"
+    };  
+    CP::SysWriteDecorHandle<float> m_cos_theta_x_m {
+      this, "cxm", "", "cos(theta)- along the x-axis"
+    };        
+    CP::SysWriteDecorHandle<float> m_cos_theta_y_p {
+      this, "cyp", "", "cos(theta)+ along the y-axis"
+    };  
+    CP::SysWriteDecorHandle<float> m_cos_theta_y_m {
+      this, "cym", "", "cos(theta)- along the y-axis"
+    };        
+    CP::SysWriteDecorHandle<float> m_cos_theta_z_p {
+      this, "czp", "", "cos(theta)+ along the z-axis"
+    };  
+    CP::SysWriteDecorHandle<float> m_cos_theta_z_m {
+      this, "czm", "", "cos(theta)- along the z-axis"
+    };                
   };
 
 } // namespace top
