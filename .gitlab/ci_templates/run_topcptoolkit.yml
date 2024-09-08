@@ -70,6 +70,15 @@ variables:
   - set +e
   - cd ../
 
+.run_tutorial_yaml: &run_tutorial_yaml
+  - set -e
+  - cd ${CI_PROJECT_DIR}/${JOBNAME}
+  - mkdir ${RUN_DIR}
+  - cd ${RUN_DIR}
+  - runTop_el.py -i ${INPUTFILE} -o output_${JOBNAME} --particle -e 100 -t tutorial 1> log_TopCPToolkit.txt
+  - set +e
+  - cd ../
+
 .base_job_template:
   stage: run
   tags:
@@ -107,6 +116,13 @@ variables:
     - *prepare_dirs
     - *restore_environment
     - *run_top_el_yaml
+
+.latest_ab_tutorial_template:
+  extends: .base_job_template
+  script:
+    - *prepare_dirs
+    - *restore_environment
+    - *run_tutorial_yaml
 
 .reference_aa_template:
   extends: .base_job_template
@@ -525,7 +541,7 @@ latestABnightlyRun3YAMLdata:
   allow_failure: true
 
 latestABreleaseRun2tutorial:
-  extends: .latest_ab_job_template
+  extends: .latest_ab_tutorial_template
   stage: tutorial
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
@@ -536,7 +552,7 @@ latestABreleaseRun2tutorial:
   allow_failure: true
 
 latestABreleaseRun3tutorial:
-  extends: .latest_ab_job_template
+  extends: .latest_ab_tutorial_template
   stage: tutorial
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
