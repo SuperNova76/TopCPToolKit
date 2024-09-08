@@ -252,7 +252,7 @@ latestABrelease4tutorial:
     - *prepare_dirs
     - source ${CI_PROJECT_DIR}/.gitlab/ci_scripts/setup_latest_AB_release.sh
     - *setup_kerberos
-    - cd ${CI_PROJECT_DIR} && source solve_tutorial.sh
+    - cd ${CI_PROJECT_DIR} && source solve_tutorial.sh && cd ${JOBNAME}
     - *compile_topcptoolkit
     - echo "BUILD_PATH=${JOBNAME}/${BUILD_DIR}" >> build.env
     - echo "ASETUP_PATH=${JOBNAME}" >> build.env
