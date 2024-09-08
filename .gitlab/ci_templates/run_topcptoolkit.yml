@@ -1,5 +1,6 @@
 stages:
   - run
+  - tutorial
 
 variables:
   RUN_DIR: run
@@ -521,4 +522,26 @@ latestABnightlyRun3YAMLdata:
     JOBNAME: job_latestABnightlyRun3YAMLdata
     INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_data22.txt
   needs: [latestABnightly]
+  allow_failure: true
+
+latestABreleaseRun2tutorial:
+  extends: .latest_ab_job_template
+  stage: tutorial
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
+  variables:
+    JOBNAME: job_latestABreleaseRun2tutorial
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc20.txt
+  needs: [latestABrelease4tutorial]
+  allow_failure: true
+
+latestABreleaseRun3tutorial:
+  extends: .latest_ab_job_template
+  stage: tutorial
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_PIPELINE_SOURCE == "schedule"'
+  variables:
+    JOBNAME: job_latestABreleaseRun3tutorial
+    INPUTFILE:  ${CI_PROJECT_DIR}/.gitlab/ci_scripts/input_mc23.txt
+  needs: [latestABrelease4tutorial]
   allow_failure: true
