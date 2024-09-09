@@ -154,12 +154,14 @@ This happens in several steps, separated by these statements:
 We won't go into the detail of this configuration, but it's also valuable information for developing and debugging TopCPToolkit.
 The next interesting bit is right after, and takes the form of a tree structure:
 ```
-/*** AlgSequence/AnalysisSequence **********************************************
+/*** AlgSequence/AlgSequence ***************************************************
 | /*** PythonConfig AsgService/CP::SystematicsSvc/SystematicsSvc *****************
-| |- sigmaRecommended: 1
 | \--- (End of PythonConfig AsgService/CP::SystematicsSvc/SystematicsSvc) --------
 | /*** PythonConfig AsgService/CP::SelectionNameSvc/SelectionNameSvc *************
 | \--- (End of PythonConfig AsgService/CP::SelectionNameSvc/SelectionNameSvc) ----
+| /*** PythonConfig AnaAlgorithm/CP::SysListDumperAlg/SystematicsPrinter *********
+| |- histogramName: 'listOfSystematics'
+| \--- (End of PythonConfig AnaAlgorithm/CP::SysListDumperAlg/SystematicsPrinter)
 | /*** PythonConfig AnaAlgorithm/CP::PileupReweightingAlg/PileupReweightingAlg ***
 | |- pileupReweightingTool:
 | | /*** Private Tool CP::PileupReweightingTool/pileupReweightingTool **************
@@ -251,7 +253,6 @@ hadd compression setting for all output: 1
 hadd Source file 1: only_reco_histograms.root
 hadd Source file 2: output_reco.root
 hadd Target path: output.root:/
-Warning in <TList::Merge>: input list is empty - nothing to merge with
 ```
 
 The last warning is safe to ignore, here. What we have done behind the scenes is write the ntuple to a file called `output_reco.root`, and the metadata histograms to `only_reco_histograms.root`.
@@ -312,11 +313,13 @@ Electrons:
     IFFClassification: {}
     WorkingPoint:
       - selectionName: 'loose'
-        likelihoodWP: 'TightLH'
+        identificationWP: 'TightLH'
         isolationWP: 'NonIso'
+        noEffSF: True
       - selectionName: 'tight'
-        likelihoodWP: 'TightLH'
+        identificationWP: 'TightLH'
         isolationWP: 'Tight_VarRad'
+        noEffSF: True
     PtEtaSelection:
         minPt: 25000.0
         maxEta: 2.47
