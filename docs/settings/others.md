@@ -166,6 +166,9 @@ Name in YAML: **GeneratorLevelAnalysis**
 `cutBookkeepersSystematics`
 :   whether to also save the cut bookkeepers systematics. The default is `None` (follows the global systematics flag). Set to `False` or `True` to override.
 
+`streamName`
+:   name of the output stream to save the cut bookkeeper in. The default is `ANALYSIS`.
+
 !!! success "Registers the following variables:"
     - `generatorWeight`: the event-level PMG generator weight
 
