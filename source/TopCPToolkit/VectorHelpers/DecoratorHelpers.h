@@ -162,6 +162,18 @@ struct PartonDecorator {
     }
   }
 
+  /** 
+   * @brief Initialize pT, eta, phi, m float decorators.
+   *
+   * @param names A vector of decorator names.
+   */
+  void initializePtEtaPhiMDecorator(const std::string &prefix) {
+    initializeFloatDecorator(prefix + "_pt");
+    initializeFloatDecorator(prefix + "_eta");
+    initializeFloatDecorator(prefix + "_phi");
+    initializeFloatDecorator(prefix + "_m");
+  }
+
   /**
    * @brief Initialize an integer decorator by name.
    *

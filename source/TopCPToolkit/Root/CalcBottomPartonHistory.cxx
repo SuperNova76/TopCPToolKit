@@ -20,20 +20,26 @@ namespace top {
       // Decorating with defaults in case the particle doesn't exist
       suffix = "b";
       prefix = basePrefix + suffix;
-      dec.decorateDefault("MC_" + suffix + parentstring, PartonHistory);
+      dec.decorateDefault("MC_" + suffix + "_beforeFSR" + parentstring, PartonHistory);
+      dec.decorateDefault("MC_" + suffix + "_afterFSR" + parentstring, PartonHistory);
       // Currently the parent can only be a top so there we just need to add "bar"
     }
     if ( mode == 1 ) {
       suffix = "bbar";
       prefix = basePrefix + suffix;
-      dec.decorateDefault("MC_" + suffix + parentstring, PartonHistory);
+      dec.decorateDefault("MC_" + suffix + "_beforeFSR" + parentstring, PartonHistory);
+      dec.decorateDefault("MC_" + suffix + "_afterFSR" + parentstring, PartonHistory);
     }
 
     // Note, the order of evaluation matters here. The prefix depends on the mode.
     // The flavour agnostic part is only triggered if mode == 2 AND the first retrieve function returns false
     if ( RetrieveParticleInfo(prefix + "_beforeFSR", v, pdgId) ||
 	 (mode == 2 && RetrieveParticleInfo(prefix + parentstring, alt_prefix + parentstring + "bar", v, pdgId))) {
-      dec.decorateParticle("MC_" + suffix  + parentstring, v, pdgId, PartonHistory);
+      dec.decorateParticle("MC_" + suffix + "_beforeFSR" + parentstring, v, pdgId, PartonHistory);
+    }
+    if ( RetrieveParticleInfo(prefix + "_afterFSR", v, pdgId) ||
+	 (mode == 2 && RetrieveParticleInfo(prefix + parentstring, alt_prefix + parentstring + "bar", v, pdgId))) {
+      dec.decorateParticle("MC_" + suffix + "_afterFSR" + parentstring, v, pdgId, PartonHistory);
     }
   }
 }

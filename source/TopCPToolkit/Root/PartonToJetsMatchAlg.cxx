@@ -81,92 +81,92 @@ namespace top {
     int down_index(-1);
     bool isDilepton(false);
 
-    float MC_Wdecay1_from_t_pt = 0;
-    float MC_Wdecay1_from_t_eta = 0;
-    float MC_Wdecay1_from_t_phi = 0;
-    float MC_Wdecay1_from_t_m = 0;
-    int   MC_Wdecay1_from_t_pdgId = 0;
-    float MC_Wdecay2_from_t_pt = 0;
-    float MC_Wdecay2_from_t_eta = 0;
-    float MC_Wdecay2_from_t_phi = 0;
-    float MC_Wdecay2_from_t_m = 0;
-    int   MC_Wdecay2_from_t_pdgId = 0;
-    float MC_Wdecay1_from_tbar_pt = 0;
-    float MC_Wdecay1_from_tbar_eta = 0;
-    float MC_Wdecay1_from_tbar_phi = 0;
-    float MC_Wdecay1_from_tbar_m = 0;
-    int   MC_Wdecay1_from_tbar_pdgId = 0;
-    float MC_Wdecay2_from_tbar_pt = 0;
-    float MC_Wdecay2_from_tbar_eta = 0;
-    float MC_Wdecay2_from_tbar_phi = 0;
-    float MC_Wdecay2_from_tbar_m = 0;
-    int   MC_Wdecay2_from_tbar_pdgId = 0;
-    float MC_b_from_t_pt = 0;
-    float MC_b_from_t_eta = 0;
-    float MC_b_from_t_phi = 0;
-    float MC_b_from_t_m = 0;
-    float MC_bbar_from_tbar_pt = 0;
-    float MC_bbar_from_tbar_eta = 0;
-    float MC_bbar_from_tbar_phi = 0;
-    float MC_bbar_from_tbar_m = 0;
+    float MC_Wdecay1_afterFSR_from_t_pt = 0;
+    float MC_Wdecay1_afterFSR_from_t_eta = 0;
+    float MC_Wdecay1_afterFSR_from_t_phi = 0;
+    float MC_Wdecay1_afterFSR_from_t_m = 0;
+    int   MC_Wdecay1_afterFSR_from_t_pdgId = 0;
+    float MC_Wdecay2_afterFSR_from_t_pt = 0;
+    float MC_Wdecay2_afterFSR_from_t_eta = 0;
+    float MC_Wdecay2_afterFSR_from_t_phi = 0;
+    float MC_Wdecay2_afterFSR_from_t_m = 0;
+    int   MC_Wdecay2_afterFSR_from_t_pdgId = 0;
+    float MC_Wdecay1_afterFSR_from_tbar_pt = 0;
+    float MC_Wdecay1_afterFSR_from_tbar_eta = 0;
+    float MC_Wdecay1_afterFSR_from_tbar_phi = 0;
+    float MC_Wdecay1_afterFSR_from_tbar_m = 0;
+    int   MC_Wdecay1_afterFSR_from_tbar_pdgId = 0;
+    float MC_Wdecay2_afterFSR_from_tbar_pt = 0;
+    float MC_Wdecay2_afterFSR_from_tbar_eta = 0;
+    float MC_Wdecay2_afterFSR_from_tbar_phi = 0;
+    float MC_Wdecay2_afterFSR_from_tbar_m = 0;
+    int   MC_Wdecay2_afterFSR_from_tbar_pdgId = 0;
+    float MC_b_afterFSR_from_t_pt = 0;
+    float MC_b_afterFSR_from_t_eta = 0;
+    float MC_b_afterFSR_from_t_phi = 0;
+    float MC_b_afterFSR_from_t_m = 0;
+    float MC_bbar_afterFSR_from_tbar_pt = 0;
+    float MC_bbar_afterFSR_from_tbar_eta = 0;
+    float MC_bbar_afterFSR_from_tbar_phi = 0;
+    float MC_bbar_afterFSR_from_tbar_m = 0;
 
-    if(topParton->auxdata<float>("MC_Wdecay1_from_t_pt") > 0) {
-      MC_Wdecay1_from_t_pt    = topParton->auxdata<float>("MC_Wdecay1_from_t_pt");
-      MC_Wdecay1_from_t_eta   = topParton->auxdata<float>("MC_Wdecay1_from_t_eta");
-      MC_Wdecay1_from_t_phi   = topParton->auxdata<float>("MC_Wdecay1_from_t_phi");
-      MC_Wdecay1_from_t_m     = topParton->auxdata<float>("MC_Wdecay1_from_t_m");
-      MC_Wdecay1_from_t_pdgId = topParton->auxdata<int>("MC_Wdecay1_from_t_pdgId");
+    if(topParton->auxdata<float>("MC_Wdecay1_afterFSR_from_t_pt") > 0) {
+      MC_Wdecay1_afterFSR_from_t_pt    = topParton->auxdata<float>("MC_Wdecay1_afterFSR_from_t_pt");
+      MC_Wdecay1_afterFSR_from_t_eta   = topParton->auxdata<float>("MC_Wdecay1_afterFSR_from_t_eta");
+      MC_Wdecay1_afterFSR_from_t_phi   = topParton->auxdata<float>("MC_Wdecay1_afterFSR_from_t_phi");
+      MC_Wdecay1_afterFSR_from_t_m     = topParton->auxdata<float>("MC_Wdecay1_afterFSR_from_t_m");
+      MC_Wdecay1_afterFSR_from_t_pdgId = topParton->auxdata<int>("MC_Wdecay1_afterFSR_from_t_pdgId");
     } else {
       // something is wrong with the truth information
       return StatusCode::SUCCESS;
     }
 
-    if(topParton->auxdata<float>("MC_Wdecay2_from_t_pt") > 0) {
-      MC_Wdecay2_from_t_pt    = topParton->auxdata<float>("MC_Wdecay2_from_t_pt");
-      MC_Wdecay2_from_t_eta   = topParton->auxdata<float>("MC_Wdecay2_from_t_eta");
-      MC_Wdecay2_from_t_phi   = topParton->auxdata<float>("MC_Wdecay2_from_t_phi");
-      MC_Wdecay2_from_t_m     = topParton->auxdata<float>("MC_Wdecay2_from_t_m");
-      MC_Wdecay2_from_t_pdgId = topParton->auxdata<int>("MC_Wdecay2_from_t_pdgId");
+    if(topParton->auxdata<float>("MC_Wdecay2_afterFSR_from_t_pt") > 0) {
+      MC_Wdecay2_afterFSR_from_t_pt    = topParton->auxdata<float>("MC_Wdecay2_afterFSR_from_t_pt");
+      MC_Wdecay2_afterFSR_from_t_eta   = topParton->auxdata<float>("MC_Wdecay2_afterFSR_from_t_eta");
+      MC_Wdecay2_afterFSR_from_t_phi   = topParton->auxdata<float>("MC_Wdecay2_afterFSR_from_t_phi");
+      MC_Wdecay2_afterFSR_from_t_m     = topParton->auxdata<float>("MC_Wdecay2_afterFSR_from_t_m");
+      MC_Wdecay2_afterFSR_from_t_pdgId = topParton->auxdata<int>("MC_Wdecay2_afterFSR_from_t_pdgId");
     } else {
       // something is wrong with the truth information
       return StatusCode::SUCCESS;
     }
 
-    if(topParton->auxdata<float>("MC_Wdecay1_from_tbar_pt") > 0) {
-      MC_Wdecay1_from_tbar_pt    = topParton->auxdata<float>("MC_Wdecay1_from_tbar_pt");
-      MC_Wdecay1_from_tbar_eta   = topParton->auxdata<float>("MC_Wdecay1_from_tbar_eta");
-      MC_Wdecay1_from_tbar_phi   = topParton->auxdata<float>("MC_Wdecay1_from_tbar_phi");
-      MC_Wdecay1_from_tbar_m     = topParton->auxdata<float>("MC_Wdecay1_from_tbar_m");
-      MC_Wdecay1_from_tbar_pdgId = topParton->auxdata<int>("MC_Wdecay1_from_tbar_pdgId");
+    if(topParton->auxdata<float>("MC_Wdecay1_afterFSR_from_tbar_pt") > 0) {
+      MC_Wdecay1_afterFSR_from_tbar_pt    = topParton->auxdata<float>("MC_Wdecay1_afterFSR_from_tbar_pt");
+      MC_Wdecay1_afterFSR_from_tbar_eta   = topParton->auxdata<float>("MC_Wdecay1_afterFSR_from_tbar_eta");
+      MC_Wdecay1_afterFSR_from_tbar_phi   = topParton->auxdata<float>("MC_Wdecay1_afterFSR_from_tbar_phi");
+      MC_Wdecay1_afterFSR_from_tbar_m     = topParton->auxdata<float>("MC_Wdecay1_afterFSR_from_tbar_m");
+      MC_Wdecay1_afterFSR_from_tbar_pdgId = topParton->auxdata<int>("MC_Wdecay1_afterFSR_from_tbar_pdgId");
     } else {
       // something is wrong with the truth information
       return StatusCode::SUCCESS;
     }
 
-    if(topParton->auxdata<float>("MC_Wdecay2_from_tbar_pt") > 0) {
-      MC_Wdecay2_from_tbar_pt    = topParton->auxdata<float>("MC_Wdecay2_from_tbar_pt");
-      MC_Wdecay2_from_tbar_eta   = topParton->auxdata<float>("MC_Wdecay2_from_tbar_eta");
-      MC_Wdecay2_from_tbar_phi   = topParton->auxdata<float>("MC_Wdecay2_from_tbar_phi");
-      MC_Wdecay2_from_tbar_m     = topParton->auxdata<float>("MC_Wdecay2_from_tbar_m");
-      MC_Wdecay2_from_tbar_pdgId = topParton->auxdata<int>("MC_Wdecay2_from_tbar_pdgId");
+    if(topParton->auxdata<float>("MC_Wdecay2_afterFSR_from_tbar_pt") > 0) {
+      MC_Wdecay2_afterFSR_from_tbar_pt    = topParton->auxdata<float>("MC_Wdecay2_afterFSR_from_tbar_pt");
+      MC_Wdecay2_afterFSR_from_tbar_eta   = topParton->auxdata<float>("MC_Wdecay2_afterFSR_from_tbar_eta");
+      MC_Wdecay2_afterFSR_from_tbar_phi   = topParton->auxdata<float>("MC_Wdecay2_afterFSR_from_tbar_phi");
+      MC_Wdecay2_afterFSR_from_tbar_m     = topParton->auxdata<float>("MC_Wdecay2_afterFSR_from_tbar_m");
+      MC_Wdecay2_afterFSR_from_tbar_pdgId = topParton->auxdata<int>("MC_Wdecay2_afterFSR_from_tbar_pdgId");
     } else {
       // something is wrong with the truth information
       return StatusCode::SUCCESS;
     }
-    if(topParton->auxdata<float>("MC_b_from_t_pt") > 0) {
-      MC_b_from_t_pt    = topParton->auxdata<float>("MC_b_from_t_pt");
-      MC_b_from_t_eta   = topParton->auxdata<float>("MC_b_from_t_eta");
-      MC_b_from_t_phi   = topParton->auxdata<float>("MC_b_from_t_phi");
-      MC_b_from_t_m     = topParton->auxdata<float>("MC_b_from_t_m");
+    if(topParton->auxdata<float>("MC_b_afterFSR_from_t_pt") > 0) {
+      MC_b_afterFSR_from_t_pt    = topParton->auxdata<float>("MC_b_afterFSR_from_t_pt");
+      MC_b_afterFSR_from_t_eta   = topParton->auxdata<float>("MC_b_afterFSR_from_t_eta");
+      MC_b_afterFSR_from_t_phi   = topParton->auxdata<float>("MC_b_afterFSR_from_t_phi");
+      MC_b_afterFSR_from_t_m     = topParton->auxdata<float>("MC_b_afterFSR_from_t_m");
     } else {
       return StatusCode::SUCCESS;
     }
 
-    if(topParton->auxdata<float>("MC_bbar_from_tbar_pt") > 0) {
-      MC_bbar_from_tbar_pt    = topParton->auxdata<float>("MC_bbar_from_tbar_pt");
-      MC_bbar_from_tbar_eta   = topParton->auxdata<float>("MC_bbar_from_tbar_eta");
-      MC_bbar_from_tbar_phi   = topParton->auxdata<float>("MC_bbar_from_tbar_phi");
-      MC_bbar_from_tbar_m     = topParton->auxdata<float>("MC_bbar_from_tbar_m");
+    if(topParton->auxdata<float>("MC_bbar_afterFSR_from_tbar_pt") > 0) {
+      MC_bbar_afterFSR_from_tbar_pt    = topParton->auxdata<float>("MC_bbar_afterFSR_from_tbar_pt");
+      MC_bbar_afterFSR_from_tbar_eta   = topParton->auxdata<float>("MC_bbar_afterFSR_from_tbar_eta");
+      MC_bbar_afterFSR_from_tbar_phi   = topParton->auxdata<float>("MC_bbar_afterFSR_from_tbar_phi");
+      MC_bbar_afterFSR_from_tbar_m     = topParton->auxdata<float>("MC_bbar_afterFSR_from_tbar_m");
     } else {
       return StatusCode::SUCCESS;
     }
@@ -176,14 +176,14 @@ namespace top {
     bool tbar_isHadronic(false);
 
     // check for weird values
-    if (MC_Wdecay1_from_t_pdgId == 0) return StatusCode::SUCCESS;
-    if (MC_Wdecay2_from_t_pdgId == 0) return StatusCode::SUCCESS;
-    if (MC_Wdecay1_from_tbar_pdgId == 0) return StatusCode::SUCCESS;
-    if (MC_Wdecay2_from_tbar_pdgId == 0) return StatusCode::SUCCESS;
+    if (MC_Wdecay1_afterFSR_from_t_pdgId == 0) return StatusCode::SUCCESS;
+    if (MC_Wdecay2_afterFSR_from_t_pdgId == 0) return StatusCode::SUCCESS;
+    if (MC_Wdecay1_afterFSR_from_tbar_pdgId == 0) return StatusCode::SUCCESS;
+    if (MC_Wdecay2_afterFSR_from_tbar_pdgId == 0) return StatusCode::SUCCESS;
 
     // if top has a hadronic decay of W
-    if ((std::abs(MC_Wdecay1_from_t_pdgId) < 6) || (std::abs(MC_Wdecay2_from_t_pdgId) < 6)) t_isHadronic = true;
-    if ((std::abs(MC_Wdecay1_from_tbar_pdgId) < 6) || (std::abs(MC_Wdecay2_from_tbar_pdgId) < 6)) tbar_isHadronic = true;
+    if ((std::abs(MC_Wdecay1_afterFSR_from_t_pdgId) < 6) || (std::abs(MC_Wdecay2_afterFSR_from_t_pdgId) < 6)) t_isHadronic = true;
+    if ((std::abs(MC_Wdecay1_afterFSR_from_tbar_pdgId) < 6) || (std::abs(MC_Wdecay2_afterFSR_from_tbar_pdgId) < 6)) tbar_isHadronic = true;
 
     if (!t_isHadronic && !tbar_isHadronic) isDilepton = true;
     else isDilepton = false;
@@ -196,25 +196,25 @@ namespace top {
     PtEtaPhiMVector W_quark_up, W_quark_down, b_had, b_lep;
   
     if (t_isHadronic) {
-      b_had.SetCoordinates(MC_b_from_t_pt, MC_b_from_t_eta, MC_b_from_t_phi, MC_b_from_t_m);
-      b_lep.SetCoordinates(MC_bbar_from_tbar_pt, MC_bbar_from_tbar_eta, MC_bbar_from_tbar_phi, MC_bbar_from_tbar_m);
-      if (std::abs(MC_Wdecay1_from_t_pdgId) == 2 || std::abs(MC_Wdecay1_from_t_pdgId) == 4) {
-        W_quark_up.SetCoordinates(MC_Wdecay1_from_t_pt, MC_Wdecay1_from_t_eta, MC_Wdecay1_from_t_phi, MC_Wdecay1_from_t_m);
-        W_quark_down.SetCoordinates(MC_Wdecay2_from_t_pt, MC_Wdecay2_from_t_eta, MC_Wdecay2_from_t_phi, MC_Wdecay2_from_t_m);
+      b_had.SetCoordinates(MC_b_afterFSR_from_t_pt, MC_b_afterFSR_from_t_eta, MC_b_afterFSR_from_t_phi, MC_b_afterFSR_from_t_m);
+      b_lep.SetCoordinates(MC_bbar_afterFSR_from_tbar_pt, MC_bbar_afterFSR_from_tbar_eta, MC_bbar_afterFSR_from_tbar_phi, MC_bbar_afterFSR_from_tbar_m);
+      if (std::abs(MC_Wdecay1_afterFSR_from_t_pdgId) == 2 || std::abs(MC_Wdecay1_afterFSR_from_t_pdgId) == 4) {
+        W_quark_up.SetCoordinates(MC_Wdecay1_afterFSR_from_t_pt, MC_Wdecay1_afterFSR_from_t_eta, MC_Wdecay1_afterFSR_from_t_phi, MC_Wdecay1_afterFSR_from_t_m);
+        W_quark_down.SetCoordinates(MC_Wdecay2_afterFSR_from_t_pt, MC_Wdecay2_afterFSR_from_t_eta, MC_Wdecay2_afterFSR_from_t_phi, MC_Wdecay2_afterFSR_from_t_m);
       } else {
-        W_quark_down.SetCoordinates(MC_Wdecay1_from_t_pt, MC_Wdecay1_from_t_eta, MC_Wdecay1_from_t_phi, MC_Wdecay1_from_t_m);
-        W_quark_up.SetCoordinates(MC_Wdecay2_from_t_pt, MC_Wdecay2_from_t_eta, MC_Wdecay2_from_t_phi, MC_Wdecay2_from_t_m);
+        W_quark_down.SetCoordinates(MC_Wdecay1_afterFSR_from_t_pt, MC_Wdecay1_afterFSR_from_t_eta, MC_Wdecay1_afterFSR_from_t_phi, MC_Wdecay1_afterFSR_from_t_m);
+        W_quark_up.SetCoordinates(MC_Wdecay2_afterFSR_from_t_pt, MC_Wdecay2_afterFSR_from_t_eta, MC_Wdecay2_afterFSR_from_t_phi, MC_Wdecay2_afterFSR_from_t_m);
       }
 
     } else {
-      b_lep.SetCoordinates(MC_b_from_t_pt, MC_b_from_t_eta, MC_b_from_t_phi, MC_b_from_t_m);
-      b_had.SetCoordinates(MC_bbar_from_tbar_pt, MC_bbar_from_tbar_eta, MC_bbar_from_tbar_phi, MC_bbar_from_tbar_m);
-      if (std::abs(MC_Wdecay1_from_tbar_pdgId) == 2 || std::abs(MC_Wdecay1_from_tbar_pdgId) == 4) {
-        W_quark_up.SetCoordinates(MC_Wdecay1_from_tbar_pt, MC_Wdecay1_from_tbar_eta, MC_Wdecay1_from_tbar_phi, MC_Wdecay1_from_tbar_m);
-        W_quark_down.SetCoordinates(MC_Wdecay2_from_tbar_pt, MC_Wdecay2_from_tbar_eta, MC_Wdecay2_from_tbar_phi, MC_Wdecay2_from_tbar_m);
+      b_lep.SetCoordinates(MC_b_afterFSR_from_t_pt, MC_b_afterFSR_from_t_eta, MC_b_afterFSR_from_t_phi, MC_b_afterFSR_from_t_m);
+      b_had.SetCoordinates(MC_bbar_afterFSR_from_tbar_pt, MC_bbar_afterFSR_from_tbar_eta, MC_bbar_afterFSR_from_tbar_phi, MC_bbar_afterFSR_from_tbar_m);
+      if (std::abs(MC_Wdecay1_afterFSR_from_tbar_pdgId) == 2 || std::abs(MC_Wdecay1_afterFSR_from_tbar_pdgId) == 4) {
+        W_quark_up.SetCoordinates(MC_Wdecay1_afterFSR_from_tbar_pt, MC_Wdecay1_afterFSR_from_tbar_eta, MC_Wdecay1_afterFSR_from_tbar_phi, MC_Wdecay1_afterFSR_from_tbar_m);
+        W_quark_down.SetCoordinates(MC_Wdecay2_afterFSR_from_tbar_pt, MC_Wdecay2_afterFSR_from_tbar_eta, MC_Wdecay2_afterFSR_from_tbar_phi, MC_Wdecay2_afterFSR_from_tbar_m);
       } else {
-        W_quark_down.SetCoordinates(MC_Wdecay1_from_tbar_pt, MC_Wdecay1_from_tbar_eta, MC_Wdecay1_from_tbar_phi, MC_Wdecay1_from_tbar_m);
-        W_quark_up.SetCoordinates(MC_Wdecay2_from_tbar_pt, MC_Wdecay2_from_tbar_eta, MC_Wdecay2_from_tbar_phi, MC_Wdecay2_from_tbar_m);
+        W_quark_down.SetCoordinates(MC_Wdecay1_afterFSR_from_tbar_pt, MC_Wdecay1_afterFSR_from_tbar_eta, MC_Wdecay1_afterFSR_from_tbar_phi, MC_Wdecay1_afterFSR_from_tbar_m);
+        W_quark_up.SetCoordinates(MC_Wdecay2_afterFSR_from_tbar_pt, MC_Wdecay2_afterFSR_from_tbar_eta, MC_Wdecay2_afterFSR_from_tbar_phi, MC_Wdecay2_afterFSR_from_tbar_m);
       }
     }
 

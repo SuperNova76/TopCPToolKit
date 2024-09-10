@@ -74,10 +74,10 @@ namespace top {
       dec.decorateParticle("MC_ttbar_afterFSR", ttbar, PartonHistory);
     }
 
-    if (Retrievep4("MC_t_WpDecay1", WpDecay1)
-	&& Retrievep4("MC_t_WpDecay2", WpDecay2)
-	&& Retrievep4("MC_t_WmDecay1", WmDecay1)
-	&& Retrievep4("MC_t_WmDecay2", WmDecay2)
+    if (Retrievep4("MC_t_WpDecay1_beforeFSR", WpDecay1)
+	&& Retrievep4("MC_t_WpDecay2_beforeFSR", WpDecay2)
+	&& Retrievep4("MC_tbar_WmDecay1_beforeFSR", WmDecay1)
+	&& Retrievep4("MC_tbar_WmDecay2_beforeFSR", WmDecay2)
 	&& Retrievep4("MC_t_b_beforeFSR", b)
 	&& Retrievep4("MC_tbar_bbar_beforeFSR", bbar)) {
       ttbar = WpDecay1 + WpDecay2 + WmDecay1 + WmDecay2 + b + bbar;
@@ -85,10 +85,10 @@ namespace top {
       dec.decorateParticle("MC_ttbar_fromDecay_beforeFSR", ttbar, PartonHistory);
     }
 
-    if (Retrievep4("MC_t_WpDecay1", WpDecay1)
-	&& Retrievep4("MC_t_WpDecay2", WpDecay2)
-	&& Retrievep4("MC_t_WmDecay1", WmDecay1)
-	&& Retrievep4("MC_t_WmDecay2", WmDecay2)
+    if (Retrievep4("MC_t_WpDecay1_afterFSR", WpDecay1)
+	&& Retrievep4("MC_t_WpDecay2_afterFSR", WpDecay2)
+	&& Retrievep4("MC_tbar_WmDecay1_afterFSR", WmDecay1)
+	&& Retrievep4("MC_tbar_WmDecay2_afterFSR", WmDecay2)
 	&& Retrievep4("MC_t_b_afterFSR", b)
 	&& Retrievep4("MC_tbar_bbar_afterFSR", bbar)) {
       ttbar = WpDecay1 + WpDecay2 + WmDecay1 + WmDecay2 + b + bbar;
