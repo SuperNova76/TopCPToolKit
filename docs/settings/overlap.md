@@ -76,7 +76,7 @@
 Name in YAML: **OverlapRemoval**
 
 `selectionName`
-:   name of the block config, useful to distinguish the various blocks if different overlap removal strategies are set up. The default is `''` (empty string).
+:   name of the common selection to which to append the OR decision, needed to distinguish between the various overlap removal strategies that may be set up. The default is `''` (empty string), which applies the OR decision to the entire input containers.
 
 `inputLabel`
 :   any possible label used to pick up the selected objects with. This should not be a label already used elsewhere, e.g. `preselectOR`. The default is `''` (emptry string).
@@ -187,7 +187,7 @@ Name in YAML: **OverlapRemoval**
 :   whether to perform the overlap removal between jets and large-R jets. The default is `True.`
 
 `addToAllSelections`
-:   add OR selection decision into all object selections. The default is `True`.
+:   add OR selection decision into all object selections. The default is `False`.
 
 `nominalOnly`
 :   (experimental) toggle off the running of overlap removal on systematically-varied objects (instead, copy from nominal). The default is `False`.
