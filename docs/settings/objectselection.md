@@ -80,11 +80,26 @@ Name in YAML: **X.PtEtaSelection**, with X amongst: Jets, Electrons, Photons, Mu
 `minPt`
 :   minimum $p_\mathrm{T}$ value to cut on, in MeV. No default value.
 
+`maxPt`
+:   maximum $p_\mathrm{T}$ value to cut on, in MeV. No default value.
+
+`minEta`
+:   minimum $\vert\eta\vert$ value to cut on. No default value.
+
 `maxEta`
 :   maximum $\vert\eta\vert$ value to cut on. No default value.
 
+`etaGapLow`
+:   low end of the $\vert\eta\vert$  gap. No default value.
+
+`etaGapHigh`
+:   high end of the $\vert\eta\vert$ gap. No default value.
+
 `useClusterEta`
 :   whether to use the cluster $\eta$ (`etaBE(2)`) instead of the object $\eta$ (for electrons and photons). The default is `False`.
+
+`useDressedProperties`
+:   whether to use the dressed kinematic properties (for truth particles only). The default is False.
 
 `selectionDecoration`
 :   the name of the decoration to set. The default is `'selectPtEta'`.
