@@ -169,6 +169,9 @@ Name in YAML: **GeneratorLevelAnalysis**
 `cutBookkeepersSystematics`
 :   whether to also save the cut bookkeepers systematics. The default is `None` (follows the global systematics flag). Set to `False` or `True` to override.
 
+`histPattern`
+:   the histogram name pattern for the cut bookkeeper histogram names. The default is `None`.
+
 `streamName`
 :   name of the output stream to save the cut bookkeeper in. The default is `ANALYSIS`.
 
