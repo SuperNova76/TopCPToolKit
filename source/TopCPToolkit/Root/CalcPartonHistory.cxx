@@ -127,7 +127,7 @@ namespace top {
     parentpdgId = highestPtParticle->parent()->pdgId();
     return true;
   }
-  
+
   bool CalcPartonHistory::RetrievepdgId(const std::string& key, int& pdgId) {
     // Retrieves the PDG ID associated with a given key from the particleMap.
     // Returns true if the key exists and assigns the PDG ID to pdgId, otherwise returns false.
@@ -149,6 +149,145 @@ namespace top {
     return true;
   }
 
+  void CalcPartonHistory::InitializeTopDecorators() {
+    m_t_dec.initializePtEtaPhiMDecorator("MC_t_beforeFSR");
+    m_t_dec.initializePtEtaPhiMDecorator("MC_b_beforeFSR_from_t");
+    m_t_dec.initializePtEtaPhiMDecorator("MC_W_beforeFSR_from_t");
+    m_t_dec.initializePtEtaPhiMDecorator("MC_Wdecay1_beforeFSR_from_t");
+    m_t_dec.initializePtEtaPhiMDecorator("MC_Wdecay2_beforeFSR_from_t");
+
+    m_t_dec.initializePtEtaPhiMDecorator("MC_t_afterFSR");
+    m_t_dec.initializePtEtaPhiMDecorator("MC_b_afterFSR_from_t");
+    m_t_dec.initializePtEtaPhiMDecorator("MC_W_afterFSR_from_t");
+    m_t_dec.initializePtEtaPhiMDecorator("MC_Wdecay1_afterFSR_from_t");
+    m_t_dec.initializePtEtaPhiMDecorator("MC_Wdecay2_afterFSR_from_t");
+
+    m_t_dec.initializeIntDecorator("MC_t_beforeFSR_pdgId");
+    m_t_dec.initializeIntDecorator("MC_b_beforeFSR_from_t_pdgId");
+    m_t_dec.initializeIntDecorator("MC_W_beforeFSR_from_t_pdgId");
+    m_t_dec.initializeIntDecorator("MC_Wdecay1_beforeFSR_from_t_pdgId");
+    m_t_dec.initializeIntDecorator("MC_Wdecay2_beforeFSR_from_t_pdgId");
+
+    m_t_dec.initializeIntDecorator("MC_t_afterFSR_pdgId");
+    m_t_dec.initializeIntDecorator("MC_b_afterFSR_from_t_pdgId");
+    m_t_dec.initializeIntDecorator("MC_W_afterFSR_from_t_pdgId");
+    m_t_dec.initializeIntDecorator("MC_Wdecay1_afterFSR_from_t_pdgId");
+    m_t_dec.initializeIntDecorator("MC_Wdecay2_afterFSR_from_t_pdgId");
+  }
+
+  void CalcPartonHistory::InitializeAntiTopDecorators() {
+    m_tbar_dec.initializePtEtaPhiMDecorator("MC_tbar_beforeFSR");
+    m_tbar_dec.initializePtEtaPhiMDecorator("MC_bbar_beforeFSR_from_tbar");
+    m_tbar_dec.initializePtEtaPhiMDecorator("MC_W_beforeFSR_from_tbar");
+    m_tbar_dec.initializePtEtaPhiMDecorator("MC_Wdecay1_beforeFSR_from_tbar");
+    m_tbar_dec.initializePtEtaPhiMDecorator("MC_Wdecay2_beforeFSR_from_tbar");
+
+    m_tbar_dec.initializePtEtaPhiMDecorator("MC_tbar_afterFSR");
+    m_tbar_dec.initializePtEtaPhiMDecorator("MC_bbar_afterFSR_from_tbar");
+    m_tbar_dec.initializePtEtaPhiMDecorator("MC_W_afterFSR_from_tbar");
+    m_tbar_dec.initializePtEtaPhiMDecorator("MC_Wdecay1_afterFSR_from_tbar");
+    m_tbar_dec.initializePtEtaPhiMDecorator("MC_Wdecay2_afterFSR_from_tbar");
+
+    m_tbar_dec.initializeIntDecorator("MC_tbar_beforeFSR_pdgId");
+    m_tbar_dec.initializeIntDecorator("MC_bbar_beforeFSR_from_tbar_pdgId");
+    m_tbar_dec.initializeIntDecorator("MC_W_beforeFSR_from_tbar_pdgId");
+    m_tbar_dec.initializeIntDecorator("MC_Wdecay1_beforeFSR_from_tbar_pdgId");
+    m_tbar_dec.initializeIntDecorator("MC_Wdecay2_beforeFSR_from_tbar_pdgId");
+
+    m_tbar_dec.initializeIntDecorator("MC_tbar_afterFSR_pdgId");
+    m_tbar_dec.initializeIntDecorator("MC_bbar_afterFSR_from_tbar_pdgId");
+    m_tbar_dec.initializeIntDecorator("MC_W_afterFSR_from_tbar_pdgId");
+    m_tbar_dec.initializeIntDecorator("MC_Wdecay1_afterFSR_from_tbar_pdgId");
+    m_tbar_dec.initializeIntDecorator("MC_Wdecay2_afterFSR_from_tbar_pdgId");
+  }
+
+  void CalcPartonHistory::InitializeBottomDecorators() {
+    m_b_dec.initializePtEtaPhiMDecorator("MC_b_beforeFSR");
+    m_b_dec.initializePtEtaPhiMDecorator("MC_b_afterFSR");
+
+    m_b_dec.initializeIntDecorator("MC_b_beforeFSR_pdgId");
+    m_b_dec.initializeIntDecorator("MC_b_afterFSR_pdgId");
+  }
+
+  void CalcPartonHistory::InitializeAntiBottomDecorators() {
+    m_bbar_dec.initializePtEtaPhiMDecorator("MC_bbar_beforeFSR");
+    m_bbar_dec.initializePtEtaPhiMDecorator("MC_bbar_afterFSR");
+
+    m_bbar_dec.initializeIntDecorator("MC_bbar_beforeFSR_pdgId");
+    m_bbar_dec.initializeIntDecorator("MC_bbar_afterFSR_pdgId");
+  }
+
+  void CalcPartonHistory::InitializeTtbarDecorators() {
+    m_ttbar_dec.initializeFloatDecorator({"MC_ttbar_beforeFSR_m", "MC_ttbar_beforeFSR_pt", "MC_ttbar_beforeFSR_eta", "MC_ttbar_beforeFSR_phi"});
+    m_ttbar_dec.initializeFloatDecorator({"MC_ttbar_fromDecay_beforeFSR_m", "MC_ttbar_fromDecay_beforeFSR_pt", "MC_ttbar_fromDecay_beforeFSR_eta", "MC_ttbar_fromDecay_beforeFSR_phi"});
+
+    m_ttbar_dec.initializeFloatDecorator({"MC_ttbar_afterFSR_m", "MC_ttbar_afterFSR_pt", "MC_ttbar_afterFSR_eta", "MC_ttbar_afterFSR_phi"});
+    m_ttbar_dec.initializeFloatDecorator({"MC_ttbar_fromDecay_afterFSR_m", "MC_ttbar_fromDecay_afterFSR_pt", "MC_ttbar_fromDecay_afterFSR_eta", "MC_ttbar_fromDecay_afterFSR_phi"});
+  }
+
+  void CalcPartonHistory::InitializePhotonDecorators() {
+    m_gamma_dec.initializePtEtaPhiMDecorator("MC_gamma");
+    m_gamma_dec.initializeIntDecorator("MC_gamma_origin");
+  }
+
+  void CalcPartonHistory::InitializeHiggsDecorators() {
+    m_H_dec.initializePtEtaPhiMDecorator("MC_H_beforeFSR");
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay1_beforeFSR");
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay2_beforeFSR");
+
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay1_decay1_beforeFSR");
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay2_decay1_beforeFSR");
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay1_decay2_beforeFSR");
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay2_decay2_beforeFSR");
+
+    m_H_dec.initializePtEtaPhiMDecorator("MC_H_afterFSR");
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay1_afterFSR");
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay2_afterFSR");
+
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay1_decay1_afterFSR");
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay2_decay1_afterFSR");
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay1_decay2_afterFSR");
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay2_decay2_afterFSR");
+
+    m_H_dec.initializeIntDecorator("MC_H_beforeFSR_pdgId");
+    m_H_dec.initializeIntDecorator("MC_Hdecay1_beforeFSR_pdgId");
+    m_H_dec.initializeIntDecorator("MC_Hdecay2_beforeFSR_pdgId");
+
+    m_H_dec.initializeIntDecorator("MC_Hdecay1_decay1_beforeFSR_pdgId");
+    m_H_dec.initializeIntDecorator("MC_Hdecay2_decay1_beforeFSR_pdgId");
+    m_H_dec.initializeIntDecorator("MC_Hdecay1_decay2_beforeFSR_pdgId");
+    m_H_dec.initializeIntDecorator("MC_Hdecay2_decay2_beforeFSR_pdgId");
+
+    m_H_dec.initializeIntDecorator("MC_H_afterFSR_pdgId");
+    m_H_dec.initializeIntDecorator("MC_Hdecay1_afterFSR_pdgId");
+    m_H_dec.initializeIntDecorator("MC_Hdecay2_afterFSR_pdgId");
+
+    m_H_dec.initializeIntDecorator("MC_Hdecay1_decay1_afterFSR_pdgId");
+    m_H_dec.initializeIntDecorator("MC_Hdecay2_decay1_afterFSR_pdgId");
+    m_H_dec.initializeIntDecorator("MC_Hdecay1_decay2_afterFSR_pdgId");
+    m_H_dec.initializeIntDecorator("MC_Hdecay2_decay2_afterFSR_pdgId");
+  }
+
+  void CalcPartonHistory::InitializeZDecorators() {
+    m_Z_dec.initializePtEtaPhiMDecorator("MC_Z_beforeFSR");
+    m_Z_dec.initializePtEtaPhiMDecorator("MC_Zdecay1_beforeFSR");
+    m_Z_dec.initializePtEtaPhiMDecorator("MC_Zdecay2_beforeFSR");
+
+    m_Z_dec.initializePtEtaPhiMDecorator("MC_Z_afterFSR");
+    m_Z_dec.initializePtEtaPhiMDecorator("MC_Zdecay1_afterFSR");
+    m_Z_dec.initializePtEtaPhiMDecorator("MC_Zdecay2_afterFSR");
+
+    m_Z_dec.initializeIntDecorator("MC_Z_beforeFSR_pdgId");
+    m_Z_dec.initializeIntDecorator("MC_Zdecay1_beforeFSR_pdgId");
+    m_Z_dec.initializeIntDecorator("MC_Zdecay2_beforeFSR_pdgId");
+
+    m_Z_dec.initializeIntDecorator("MC_Z_afterFSR_pdgId");
+    m_Z_dec.initializeIntDecorator("MC_Zdecay1_afterFSR_pdgId");
+    m_Z_dec.initializeIntDecorator("MC_Zdecay2_afterFSR_pdgId");
+
+    m_Z_dec.initializeIntDecorator("MC_Z_IsOnShell");
+  }
+
   void CalcPartonHistory::EnsureKeyExists(const std::string& key, const std::string& fallbackKey) {
     // Ensures that a given key exists in the particleMap.
     // If the key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
@@ -161,22 +300,68 @@ namespace top {
       particleMap[key] = particleMap[fallbackKey];
     }
   }
-  
+
+  void CalcPartonHistory::EnsureTopKeysExist() {
+    // Ensures that all relevant top keys exists in the particleMap.
+    // Note, if a particle has no FSR it will be saved as afterFSR
+    // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
+    EnsureKeyExists("MC_t_Wp_beforeFSR", "MC_t_Wp_afterFSR");
+    EnsureKeyExists("MC_t_WpDecay1_beforeFSR", "MC_t_WpDecay1_afterFSR");
+    EnsureKeyExists("MC_t_WpDecay2_beforeFSR", "MC_t_WpDecay2_afterFSR");
+    EnsureKeyExists("MC_t_beforeFSR", "MC_t_afterFSR");
+    EnsureKeyExists("MC_t_b_beforeFSR", "MC_t_b_afterFSR");
+  }
+
+  void CalcPartonHistory::EnsureAntiTopKeysExist() {
+    // Ensures that all relevant anti top keys exists in the particleMap.
+    // Note, if a particle has no FSR it will be saved as afterFSR
+    // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
+    EnsureKeyExists("MC_tbar_Wm_beforeFSR", "MC_tbar_Wm_afterFSR");
+    EnsureKeyExists("MC_tbar_WmDecay1_beforeFSR", "MC_tbar_WmDecay1_afterFSR");
+    EnsureKeyExists("MC_tbar_WmDecay2_beforeFSR", "MC_tbar_WmDecay2_afterFSR");
+    EnsureKeyExists("MC_tbar_beforeFSR", "MC_tbar_afterFSR");
+    EnsureKeyExists("MC_tbar_bbar_beforeFSR", "MC_tbar_bbar_afterFSR");
+  }
+
+  void CalcPartonHistory::EnsureBottomKeysExist() {
+    // Ensures that all relevant bottom keys exists in the particleMap.
+    // Note, if a particle has no FSR it will be saved as afterFSR
+    // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
+    EnsureKeyExists("MC_b_beforeFSR", "MC_b_afterFSR");
+  }
+
+  void CalcPartonHistory::EnsureAntiBottomKeysExist() {
+    // Ensures that all relevant anti bottom keys exists in the particleMap.
+    // Note, if a particle has no FSR it will be saved as afterFSR
+    // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
+    EnsureKeyExists("MC_bbar_beforeFSR", "MC_bbar_afterFSR");
+  }
+
+  void CalcPartonHistory::EnsureZKeysExist() {
+    // Ensures that all relevant Z keys exists in the particleMap.
+    // Note, if a particle has no FSR it will be saved as afterFSR
+    // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
+    EnsureKeyExists("MC_Z_beforeFSR", "MC_Z_afterFSR");
+  }
+
+  void CalcPartonHistory::EnsureHiggsKeysExist() {
+    // Ensures that all relevant higgs keys exists in the particleMap.
+    // Note, if a particle has no FSR it will be saved as afterFSR
+    // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
+    EnsureKeyExists("MC_H_beforeFSR", "MC_H_afterFSR");
+    EnsureKeyExists("MC_HDecay1_beforeFSR", "MC_HDecay1_afterFSR");
+    EnsureKeyExists("MC_HDecay2_beforeFSR", "MC_HDecay2_afterFSR");
+    EnsureKeyExists("MC_HDecay1_Decay1_beforeFSR", "MC_HDecay1_Decay1_afterFSR");
+    EnsureKeyExists("MC_HDecay1_Decay2_beforeFSR", "MC_HDecay1_Decay2_afterFSR");
+    EnsureKeyExists("MC_HDecay2_Decay1_beforeFSR", "MC_HDecay2_Decay1_afterFSR");
+    EnsureKeyExists("MC_HDecay2_Decay2_beforeFSR", "MC_HDecay2_Decay2_afterFSR");
+  }
+
   void CalcPartonHistory::EnsureTtbarKeysExist() {
     // Ensures that all relevant Ttbar key exists in the particleMap.
     // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
-    EnsureKeyExists("MC_t_Wp_afterFSR", "MC_t_Wp");
-    EnsureKeyExists("MC_tbar_Wm_afterFSR", "MC_tbar_Wm");
-    EnsureKeyExists("MC_t_Wp_beforeFSR", "MC_t_Wp_afterFSR");
-    EnsureKeyExists("MC_tbar_Wm_beforeFSR", "MC_tbar_Wm_afterFSR");
-    EnsureKeyExists("MC_t_afterFSR", "MC_t");
-    EnsureKeyExists("MC_tbar_afterFSR", "MC_tbar");
-    EnsureKeyExists("MC_t_beforeFSR", "MC_t_afterFSR");
-    EnsureKeyExists("MC_tbar_beforeFSR", "MC_tbar_afterFSR");
-    EnsureKeyExists("MC_t_b_afterFSR", "MC_t_b");
-    EnsureKeyExists("MC_tbar_bbar_afterFSR", "MC_tbar_bbar");
-    EnsureKeyExists("MC_t_b_beforeFSR", "MC_t_b_afterFSR");
-    EnsureKeyExists("MC_tbar_bbar_beforeFSR", "MC_tbar_bbar_afterFSR");
+    EnsureTopKeysExist();
+    EnsureAntiTopKeysExist();
   }
 
   std::string CalcPartonHistory::GetParticleType(const xAOD::TruthParticle* particle) {
@@ -309,7 +494,13 @@ namespace top {
 	return true;
       }
     }
-    if (hasParentPdgId(particle, particle->pdgId())) {
+    else if (hasParentPdgId(particle, particle->pdgId())) {
+      if (!(newKey == oldKey)) key += newKey;
+      AddToParticleMap(particle, key + postfix);
+      return true;
+    }
+    // finally we can also have particles from the hard interaction
+    else if (!hasParentPdgId(particle, particle->pdgId()) && !hasIdenticalChild(particle)) {
       if (!(newKey == oldKey)) key += newKey;
       AddToParticleMap(particle, key + postfix);
       return true;
@@ -330,7 +521,9 @@ namespace top {
       if (particle->pdgId() == 22) postfix = "_GammaRad";
       else postfix = "Decay";
       postfix += std::to_string(decayID);
-      AddToParticleMap(particle, key + postfix);
+      const xAOD::TruthParticle* particle_afterFSR = PartonHistoryUtils::findAfterFSR(particle);
+      AddToParticleMap(particle, key + postfix + "_beforeFSR");
+      AddToParticleMap(particle_afterFSR, key + postfix + "_afterFSR");
       key += postfix + "_";
       return true;
     }
@@ -359,7 +552,7 @@ namespace top {
       std::string old_key = "";
       std::string new_key = "";
       std::string postfix = "";
-      
+
       for (auto it = path.begin(); it != path.end(); it++) {
 	const xAOD::TruthParticle* particle = *it;
 	bool isbeforeFSR = (hasIdenticalChild(particle));

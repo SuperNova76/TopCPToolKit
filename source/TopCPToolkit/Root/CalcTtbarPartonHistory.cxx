@@ -10,36 +10,9 @@ namespace top {
   }
 
   void CalcTtbarPartonHistory::initializeDecorators() {
-    m_t_dec.initializeFloatDecorator({"MC_t_beforeFSR_m", "MC_t_beforeFSR_pt", "MC_t_beforeFSR_eta", "MC_t_beforeFSR_phi"});
-    m_t_dec.initializeIntDecorator("MC_t_beforeFSR_pdgId");
-    m_t_dec.initializeFloatDecorator({"MC_t_afterFSR_m", "MC_t_afterFSR_pt", "MC_t_afterFSR_eta", "MC_t_afterFSR_phi"});
-    m_t_dec.initializeIntDecorator("MC_t_afterFSR_pdgId");
-    m_t_dec.initializeFloatDecorator({"MC_b_from_t_m", "MC_b_from_t_pt", "MC_b_from_t_eta", "MC_b_from_t_phi"});
-    m_t_dec.initializeIntDecorator("MC_b_from_t_pdgId");
-    m_t_dec.initializeFloatDecorator({"MC_W_from_t_m", "MC_W_from_t_pt", "MC_W_from_t_eta", "MC_W_from_t_phi"});
-    m_t_dec.initializeIntDecorator("MC_W_from_t_pdgId");
-    m_t_dec.initializeFloatDecorator({"MC_Wdecay1_from_t_m", "MC_Wdecay1_from_t_pt", "MC_Wdecay1_from_t_eta", "MC_Wdecay1_from_t_phi"});
-    m_t_dec.initializeIntDecorator("MC_Wdecay1_from_t_pdgId");
-    m_t_dec.initializeFloatDecorator({"MC_Wdecay2_from_t_m", "MC_Wdecay2_from_t_pt", "MC_Wdecay2_from_t_eta", "MC_Wdecay2_from_t_phi"});
-    m_t_dec.initializeIntDecorator("MC_Wdecay2_from_t_pdgId");
-
-    m_tbar_dec.initializeFloatDecorator({"MC_tbar_beforeFSR_m", "MC_tbar_beforeFSR_pt", "MC_tbar_beforeFSR_eta", "MC_tbar_beforeFSR_phi"});
-    m_tbar_dec.initializeIntDecorator("MC_tbar_beforeFSR_pdgId");
-    m_tbar_dec.initializeFloatDecorator({"MC_tbar_afterFSR_m", "MC_tbar_afterFSR_pt", "MC_tbar_afterFSR_eta", "MC_tbar_afterFSR_phi"});
-    m_tbar_dec.initializeIntDecorator("MC_tbar_afterFSR_pdgId");
-    m_tbar_dec.initializeFloatDecorator({"MC_bbar_from_tbar_m", "MC_bbar_from_tbar_pt", "MC_bbar_from_tbar_eta", "MC_bbar_from_tbar_phi"});
-    m_tbar_dec.initializeIntDecorator("MC_bbar_from_tbar_pdgId");
-    m_tbar_dec.initializeFloatDecorator({"MC_W_from_tbar_m", "MC_W_from_tbar_pt", "MC_W_from_tbar_eta", "MC_W_from_tbar_phi"});
-    m_tbar_dec.initializeIntDecorator("MC_W_from_tbar_pdgId");
-    m_tbar_dec.initializeFloatDecorator({"MC_Wdecay1_from_tbar_m", "MC_Wdecay1_from_tbar_pt", "MC_Wdecay1_from_tbar_eta", "MC_Wdecay1_from_tbar_phi"});
-    m_tbar_dec.initializeIntDecorator("MC_Wdecay1_from_tbar_pdgId");
-    m_tbar_dec.initializeFloatDecorator({"MC_Wdecay2_from_tbar_m", "MC_Wdecay2_from_tbar_pt", "MC_Wdecay2_from_tbar_eta", "MC_Wdecay2_from_tbar_phi"});
-    m_tbar_dec.initializeIntDecorator("MC_Wdecay2_from_tbar_pdgId");
-
-    m_ttbar_dec.initializeFloatDecorator({"MC_ttbar_beforeFSR_m", "MC_ttbar_beforeFSR_pt", "MC_ttbar_beforeFSR_eta", "MC_ttbar_beforeFSR_phi"});
-    m_ttbar_dec.initializeFloatDecorator({"MC_ttbar_afterFSR_m", "MC_ttbar_afterFSR_pt", "MC_ttbar_afterFSR_eta", "MC_ttbar_afterFSR_phi"});
-    m_ttbar_dec.initializeFloatDecorator({"MC_ttbar_fromDecay_beforeFSR_m", "MC_ttbar_fromDecay_beforeFSR_pt", "MC_ttbar_fromDecay_beforeFSR_eta", "MC_ttbar_fromDecay_beforeFSR_phi"});
-    m_ttbar_dec.initializeFloatDecorator({"MC_ttbar_fromDecay_afterFSR_m", "MC_ttbar_fromDecay_afterFSR_pt", "MC_ttbar_fromDecay_afterFSR_eta", "MC_ttbar_fromDecay_afterFSR_phi"});
+    CalcPartonHistory::InitializeTopDecorators();
+    CalcPartonHistory::InitializeAntiTopDecorators();
+    CalcPartonHistory::InitializeTtbarDecorators();
   }
 
   StatusCode CalcTtbarPartonHistory::runHistorySaver(const xAOD::TruthParticleContainer* truthParticles,

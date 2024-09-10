@@ -10,7 +10,7 @@ namespace top {
   class CalcTzqPartonHistory: public CalcPartonHistory {
   public:
     explicit CalcTzqPartonHistory(const std::string &name,
-				  const std::vector<std::string>& truthCollections = {"TruthTop","TruthBosonsWithDecayParticles", "TruthBottom"});
+				  const std::vector<std::string>& truthCollections = {"TruthTop","TruthBosonsWithDecayParticles"});
     virtual ~CalcTzqPartonHistory() {}
 
     //Storing parton history for tZq/tllq resonance analysis
