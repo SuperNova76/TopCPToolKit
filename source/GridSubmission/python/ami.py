@@ -62,6 +62,14 @@ def get_ptag(ldn):
     else:
         return match.group(0)[1:]
 
+# Take a single LDN, extract its r-tag and return it.
+def get_rtag(ldn):
+    regex = re.compile("_r[0-9]+")
+    match = regex.search(ldn)
+    if not match:
+        raise ldn_decypher_error
+    else:
+        return match.group(0)[1:-1]
 
 # Return the type of LDN we're looking at (e.g. simul.HITS,
 # recon.AOD, DAOD_TOPQ1 or other derivation).
@@ -219,12 +227,18 @@ def check_sample_status(samples, stop_on_error=False):
             if not latest_ldn:
                 status_ok = False
             elif not ldn == latest_ldn:
-                try:
-                    status_msg += ", " + logger.WARNING + "latest p-tag: " + get_ptag(latest_ldn) + logger.ENDC
-                    status_ok = False
-                except ldn_decypher_error:
-                    print("Could not identify p-tag of LDN: %s" % latest_ldn)
-                    sys.exit(1)
+                # Users may have mixed different r-tags (MC campaign) in the same dataset,
+                # so we first check if the LDN and latest LDN actually belong to the same campaign.
+                # If they don't, the current code is not really equipped to deal with it, so we don't check further.
+                if get_rtag(ldn) != get_rtag(latest_ldn):
+                    status_msg += ", " + logger.OKGREEN + "latest" + logger.ENDC
+                else:
+                    try:
+                        status_msg += ", " + logger.WARNING + "latest p-tag: " + get_ptag(latest_ldn) + logger.ENDC
+                        status_ok = False
+                    except ldn_decypher_error:
+                        print("Could not identify p-tag of LDN: %s" % latest_ldn)
+                        sys.exit(1)
             else:
                 status_msg += ", " + logger.OKGREEN + "latest" + logger.ENDC
 
