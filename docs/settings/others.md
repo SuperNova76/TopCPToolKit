@@ -148,6 +148,9 @@ Name in YAML: **EventCleaning**
     !!! warning
         In AnalysisBase, vectors of bools cannot be handled properly. Instead, use 0/1 values.
 
+`runGRL`
+:   whether to run GRL decoration/selection. The default is `True`.
+
 `GRLDict`
 :   a custom GRL dictionary with key some name and value a GRL file. The default is `{}` (empty dictionary), i.e. use recommended values.
 
