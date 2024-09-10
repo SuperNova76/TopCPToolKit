@@ -34,7 +34,7 @@ Note that we are now on the `main` branch, which is used for development.
 For the purposes of this tutorial, we will use a [stable release](../changelog/index.md) instead:
 ```sh
 git fetch -a
-git checkout tags/v2.12.0 -b mytutorial
+git checkout tags/v2.13.0 -b mytutorial
 ```
 
 ## Setting up the environment

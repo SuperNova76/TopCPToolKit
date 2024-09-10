@@ -4,12 +4,20 @@
 
 ### Upcoming release
 - [issue #94](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/94): add algorithm for NuFlows reconstruction
-- [issue #125](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/125): Add a tutorial on deploying trained ML models for inference
 - [issue #148](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/148): Migrate ParticleLevelAlg to Athena
 - [issue #162](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/162): Add Soft Muon Tagging truth information
 - [issue #163](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/163): (Re)implementation of TtbarLight parton history
 - [issue #177](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/177): Adding NLO b quark information to single-top parton history branches
 - [issue #178](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/178): Adding light quark information to single-top parton history branches
+
+### 2.13.0 <small>September 10, 2024</small>
+- We run on AB 25.2.25
+- [issue #125](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/125): Add a tutorial on deploying trained ML models for inference
+- [issue #184](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/184): Minor updates to ONNXWrapper :warning:[***interface change***](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/184#implementation):warning:
+- [issue #185](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/185): Improve ONNXWrapper logging
+- [issue #188](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/188): Updating tutorial to rc-2.12.0 and R25.2.25
+- [issue #189](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/189): Improving use of parton level decorators :warning:[***interface change***](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/189#implementation):warning:
+- [issue #191](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/191): Keep the tutorial up-to-date with latest AB releases
 
 ### 2.12.0 <small>August 20, 2024</small>
 - We run on AB 25.2.23
