@@ -50,6 +50,12 @@ Jets:
       - containerName: 'AnaJets.baselineJvt'
         btagger: 'DL1dv01'
         btagWP: 'FixedCutBEff_85'
+  - containerName: 'AnaLJets'
+    jetCollection: 'AntiKt10UFOCSSKSoftDropBeta100Zcut10Jets'
+    largeRMass: 'Comb'
+    PtEtaSelection:
+        minPt: 200000.0
+        maxEta: 2.0
 
 Electrons:
   - containerName: 'AnaElectrons'
@@ -268,6 +274,7 @@ Bootstraps:
   nReplicas: 2000
   skipOnMC: False
 
+
 # After configuring each container, many variables will be saved automatically.
 Output:
   treeName: 'reco'
@@ -280,6 +287,7 @@ Output:
       # ph_: 'OutPhotons'
       # tau_: 'OutTauJets'
       jet_: 'OutJets'
+      ljet_: 'AnaLJets'
       met_: 'AnaMET'
       klfitter_: 'KLFitterResult'
       '': 'EventInfo'
