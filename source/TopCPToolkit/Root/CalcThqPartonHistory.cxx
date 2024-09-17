@@ -21,7 +21,9 @@ namespace top {
     CalcPartonHistory::TraceParticles(truthParticles);
 
     // Ensuring the necessary keys exist
-    CalcPartonHistory::EnsureTtbarKeysExist(); // this will fail on ttbar but that is ok.
+    CalcPartonHistory::EnsureTtbarKeysExist();
+    CalcPartonHistory::EnsurebbbarKeysExist();
+    CalcPartonHistory::EnsureHiggsKeysExist();
 
     // Fill top parton history
     CalcPartonHistory::FillTopPartonHistory(thqPartonHistory, 2, m_t_dec); // flavour agnostic mode

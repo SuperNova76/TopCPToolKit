@@ -14,6 +14,9 @@ namespace top {
     ///Return particle after FSR (before the decay vertex)
     const xAOD::TruthParticle* findAfterFSR(const xAOD::TruthParticle* particle);
 
+    // determine whether potentialChild is child of parent
+    bool isChildOf(const xAOD::TruthParticle* parent, const xAOD::TruthParticle* potentialChild);
+	  
     ///Looking for tops without children -> must be broken
     bool isBrokenTop(const xAOD::TruthParticle* particle);
 

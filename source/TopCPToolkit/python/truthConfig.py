@@ -257,9 +257,9 @@ truth_branches = {
     "Ttz" : branches["t"]+branches["tbar"]+branches["ttbar"]+branches["Z"],
     "Tth" : branches["t"]+branches["tbar"]+branches["ttbar"]+branches["Higgs"],
     "Ttgamma" : branches["t"]+branches["tbar"]+branches["ttbar"]+branches["Photon"],
-    "Tzq" : branches["t"]+branches["Z"],
-    "Thq" : branches["t"]+branches["Higgs"],
-    "Tqgamma" : branches["t"]+branches["Photon"],
+    "Tzq" : branches["t"]+branches["Z"]+branches["b"],
+    "Thq" : branches["t"]+branches["Higgs"]+branches["b"],
+    "Tqgamma" : branches["t"]+branches["Photon"]+branches["b"],
     "HWW": branches["Higgs"],
     "HZZ": branches["Higgs"]
 }
