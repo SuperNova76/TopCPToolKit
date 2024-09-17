@@ -130,12 +130,6 @@ Name in YAML: **Muons.TriggerSF**
 :   a dictionary with key (string) the year and value (list of strings) the trigger chains. The default is `{}` (empty dictionary).
 
 `muonID`
-:   the muon ID WP (string) to use.
-
-`electronIsol`
-:   the electron isolation WP (string) to use.
-
-`muonID`
 :   the muon quality WP (string) to use.
 
 `saveEff`

@@ -31,6 +31,9 @@ Name in YAML: **Output**
 `treeName`
 :   name of the output TTree to save. The default is `analysis`.
 
+`streamName`
+:   name of the output stream to save the tree in. The default is `ANALYSIS`.
+
 `metTermName`
 :   the name (string) of the MET term to save, turning the MET container into a single object. The default is `'Final'`.
 
