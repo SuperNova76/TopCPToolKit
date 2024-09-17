@@ -2,6 +2,7 @@
 #define DECORATORHELPERS_H
 
 #include <Math/Vector4D.h>
+
 #include <TMath.h>
 
 /**
@@ -225,90 +226,96 @@ struct PartonDecorator {
   }
 
   /**
-   * @brief Apply default particle kinematics decoration to a PartonHistory object.
+   * @brief Template to apply default particle kinematics decoration to a PartonHistory object.
    *
    * @param prefix The prefix to be added to the decorator names.
-   * @param partonHistory Pointer to the PartonHistory object to be decorated.
+   * @param object Pointer to the object to be decorated.
    */
-  void decorateDefault(const std::string& prefix, xAOD::PartonHistory* partonHistory) {
+  template<typename T>
+  void decorateDefault(const std::string& prefix, T* object) {
     FillDefaultParticleInfo(
       *getFloatDecorator(prefix + "_pt"),
       *getFloatDecorator(prefix + "_eta"),
       *getFloatDecorator(prefix + "_phi"),
       *getFloatDecorator(prefix + "_m"),
       *getIntDecorator(prefix + "_pdgId"),
-      partonHistory
+      object
     );
   }
 
  /**
-   * @brief Apply particle kinematics without PDG ID to a PartonHistory object.
+   * @brief Template to apply particle kinematics decoration without PDG ID to an object.
    *
    * @param prefix The prefix to be added to the decorator names.
-   * @param partonHistory Pointer to the PartonHistory object to be decorated.
+   * @param object Pointer to the object to be decorated.
    */
-  void decorateDefaultNoPdgId(const std::string& prefix, xAOD::PartonHistory* partonHistory) {
+  template<typename T>
+  void decorateDefaultNoPdgId(const std::string& prefix, T* object) {
     FillDefaultParticleInfo(
       *getFloatDecorator(prefix + "_pt"),
       *getFloatDecorator(prefix + "_eta"),
       *getFloatDecorator(prefix + "_phi"),
       *getFloatDecorator(prefix + "_m"),
-      partonHistory
+      object
     );
   }
 
  /**
-   * @brief Apply custom float decoration to a PartonHistory object.
+   * @brief Template to apply custom float decoration to an object.
    *
    * @param name The name of the decorator to be used for the custom float value.
    * @param value The custom float value to be used for decoration.
-   * @param partonHistory Pointer to the PartonHistory object to be decorated.
+   * @param object Pointer to the object to be decorated.
    */
-  void decorateCustom(const std::string& name, float value, xAOD::PartonHistory* partonHistory) {
-    FillParticleInfo(*getFloatDecorator(name), value, partonHistory);
+  template<typename T>
+  void decorateCustom(const std::string& name, float value, T* object) {
+    FillParticleInfo(*getFloatDecorator(name), value, object);
   }
 
   /**
-   * @brief Apply custom integer decoration to a PartonHistory object.
+   * @brief Template to apply custom integer decoration to an object.
    *
    * @param name The name of the decorator to be used for the custom integer value.
    * @param value The custom integer value to be used for decoration.
-   * @param partonHistory Pointer to the PartonHistory object to be decorated.
+   * @param object Pointer to the object to be decorated.
    */
-  void decorateCustom(const std::string& name, int value, xAOD::PartonHistory* partonHistory) {
-    FillParticleInfo(*getIntDecorator(name), value, partonHistory);
+  template<typename T>
+  void decorateCustom(const std::string& name, int value, T* object) {
+    FillParticleInfo(*getIntDecorator(name), value, object);
   }
 
 
   /**
-   * @brief Apply particle kinematics to a PartonHistory object.
+   * @brief Template to apply particle kinematics decoration to an object.
    *
    * @param prefix The prefix to be added to the decorator names.
    * @param p The particle vector containing pt, eta, phi, and mass.
-   * @param partonHistory Pointer to the PartonHistory object to be decorated.
+   * @param object Pointer to the object to be decorated.
    */
+  template<typename T>
   void decorateParticle(const std::string& prefix, const ROOT::Math::PtEtaPhiMVector& p,
-                        xAOD::PartonHistory* partonHistory) {
+                        T* object) {
     FillParticleInfo(
       *getFloatDecorator(prefix + "_pt"),
       *getFloatDecorator(prefix + "_eta"),
       *getFloatDecorator(prefix + "_phi"),
       *getFloatDecorator(prefix + "_m"),
       p,
-      partonHistory
+      object
     );
   }
 
   /**
-   * @brief Apply particle kinematics and PDG ID to a PartonHistory object.
+   * @brief Template to apply particle kinematics and PDG ID decoration to an object.
    *
    * @param prefix The prefix to be added to the decorator names.
    * @param p The particle vector containing pt, eta, phi, and mass.
    * @param pdgId The PDG ID of the particle.
-   * @param partonHistory Pointer to the PartonHistory object to be decorated.
+   * @param object Pointer to the object to be decorated.
    */
+  template<typename T>
   void decorateParticle(const std::string& prefix, const ROOT::Math::PtEtaPhiMVector& p,
-                        int pdgId, xAOD::PartonHistory* partonHistory) {
+                        int pdgId, T* object) {
     FillParticleInfo(
       *getFloatDecorator(prefix + "_pt"),
       *getFloatDecorator(prefix + "_eta"),
@@ -317,7 +324,7 @@ struct PartonDecorator {
       *getIntDecorator(prefix + "_pdgId"),
       p,
       pdgId,
-      partonHistory
+      object
     );
   }
 
