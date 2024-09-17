@@ -26,63 +26,6 @@ namespace top {
                     "Store Gate output name for the PartonHistory object");
   }
 
-  StatusCode CalcPartonHistory::buildContainerFromMultipleCollections(const std::vector<std::string> &collections, const std::string& out_contName)
-  {
-    ConstDataVector<DataVector<xAOD::TruthParticle_v1> > *out_cont = new ConstDataVector<DataVector<xAOD::TruthParticle_v1> > (SG::VIEW_ELEMENTS);
-
-    for(const std::string& collection : collections)
-    {
-      const xAOD::TruthParticleContainer* cont=nullptr;
-      ANA_CHECK(evtStore()->retrieve(cont,collection));
-      for(const xAOD::TruthParticle* p : *cont) out_cont->push_back(p);
-    }
-
-    //we give control of the container to the store, because in this way we are able to retrieve it as a const data vector, see https://twiki.cern.ch/twiki/bin/view/AtlasComputing/DataVector#ConstDataVector
-    StatusCode save = TDS()->record(out_cont,out_contName);
-    if (!save) return StatusCode::FAILURE;
-
-    return StatusCode::SUCCESS;
-  }
-
-  StatusCode CalcPartonHistory::linkBosonCollections()
-  {
-    return decorateCollectionWithLinksToAnotherCollection("TruthBoson","TruthBosonsWithDecayParticles","AT_linkToTruthBosonsWithDecayParticles");
-  }
-
-  StatusCode CalcPartonHistory::decorateCollectionWithLinksToAnotherCollection(const std::string &collectionToDecorate, const std::string &collectionToLink, const std::string &nameOfDecoration)
-  {
-    const xAOD::TruthParticleContainer* cont1(nullptr);
-    const xAOD::TruthParticleContainer* cont2(nullptr);
-    ANA_CHECK(evtStore()->retrieve(cont1,collectionToDecorate));
-    ANA_CHECK(evtStore()->retrieve(cont2,collectionToLink));
-
-    for(const xAOD::TruthParticle *p : *cont1)
-    {
-      const xAOD::TruthParticle* link =0;
-      for(const xAOD::TruthParticle *p2 : *cont2)
-      {
-        if(p->pdgId()==p2->pdgId() && p->barcode()==p2->barcode())
-        {
-          link=p2;
-          break;
-        }
-      }
-      p->auxdecor<const xAOD::TruthParticle*>(nameOfDecoration)=link;
-
-    }
-    return StatusCode::SUCCESS;
-  }
-
-  const xAOD::TruthParticle* CalcPartonHistory::getTruthParticleLinkedFromDecoration(const xAOD::TruthParticle* part, const std::string &decorationName)
-  {
-    if(!part->isAvailable<const xAOD::TruthParticle*>(decorationName)) return part;
-
-    const xAOD::TruthParticle* link=part->auxdecor<const xAOD::TruthParticle*>(decorationName);
-    if(link) return link;
-
-    return part;
-  }
-
   bool CalcPartonHistory::ExistsInMap(const std::string& key) {
     // Checks wether a given key exists in the particle map
     return (!(particleMap.find(key) == particleMap.end()));
@@ -364,6 +307,13 @@ namespace top {
     EnsureAntiTopKeysExist();
   }
 
+  void CalcPartonHistory::EnsurebbbarKeysExist() {
+    // Ensures that all relevant bbar key exists in the particleMap.
+    // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
+    EnsureBottomKeysExist();
+    EnsureAntiBottomKeysExist();
+  }
+
   std::string CalcPartonHistory::GetParticleType(const xAOD::TruthParticle* particle) {
     // returns a string representing the particle type based on the pdgId of a truth particle
     // At the moment not all of these states are necessary, however, they are usefull for debugging purposes
@@ -431,6 +381,7 @@ namespace top {
     if (PartonHistoryUtils::isAfterFSR(particle) && abs(particle->pdgId()) == 24) {
       particle = getTruthParticleLinkedFromDecoration(particle, "AT_linkToTruthBosonsWithDecayParticles");
     }
+
     // Add the current particle to the current path we are building
     currentPath.push_back(particle);
 
@@ -617,6 +568,76 @@ namespace top {
     if (!save || !saveAux) return StatusCode::FAILURE;
 
     return StatusCode::SUCCESS;
+  }
+
+  StatusCode CalcPartonHistory::buildContainerFromMultipleCollections(const std::vector<std::string> &collections, const std::string& out_contName)
+  {
+    ConstDataVector<DataVector<xAOD::TruthParticle_v1> > *out_cont = new ConstDataVector<DataVector<xAOD::TruthParticle_v1> > (SG::VIEW_ELEMENTS);
+    std::vector<const xAOD::TruthParticle*> p_candidates;
+    std::vector<const xAOD::TruthParticle*> p_parents;
+
+    for (const std::string& collection : collections) {
+      const xAOD::TruthParticleContainer* cont = nullptr;
+      ANA_CHECK(evtStore()->retrieve(cont, collection));
+      p_candidates.insert(p_candidates.end(), cont->begin(), cont->end());
+    }
+
+    for (const xAOD::TruthParticle* potential_parent : p_candidates) {
+      if (std::none_of(p_candidates.begin(), p_candidates.end(),
+		       [&](const xAOD::TruthParticle* other_candidate) {
+			 return other_candidate != potential_parent &&
+			   PartonHistoryUtils::isChildOf(other_candidate, potential_parent);
+		       })) {
+        p_parents.push_back(potential_parent);
+      }
+    }
+
+    out_cont->insert(out_cont->end(), p_parents.begin(), p_parents.end());
+
+    //we give control of the container to the store, because in this way we are able to retrieve it as a const data vector, see https://twiki.cern.ch/twiki/bin/view/AtlasComputing/DataVector#ConstDataVector
+    StatusCode save = TDS()->record(out_cont,out_contName);
+    if (!save) return StatusCode::FAILURE;
+
+    return StatusCode::SUCCESS;
+  }
+
+  StatusCode CalcPartonHistory::linkBosonCollections()
+  {
+    return decorateCollectionWithLinksToAnotherCollection("TruthBoson","TruthBosonsWithDecayParticles","AT_linkToTruthBosonsWithDecayParticles");
+  }
+
+  StatusCode CalcPartonHistory::decorateCollectionWithLinksToAnotherCollection(const std::string &collectionToDecorate, const std::string &collectionToLink, const std::string &nameOfDecoration)
+  {
+    const xAOD::TruthParticleContainer* cont1(nullptr);
+    const xAOD::TruthParticleContainer* cont2(nullptr);
+    ANA_CHECK(evtStore()->retrieve(cont1,collectionToDecorate));
+    ANA_CHECK(evtStore()->retrieve(cont2,collectionToLink));
+
+    for(const xAOD::TruthParticle *p : *cont1)
+    {
+      const xAOD::TruthParticle* link =0;
+      for(const xAOD::TruthParticle *p2 : *cont2)
+      {
+        if(p->pdgId()==p2->pdgId() && p->barcode()==p2->barcode())
+        {
+          link=p2;
+          break;
+        }
+      }
+      p->auxdecor<const xAOD::TruthParticle*>(nameOfDecoration)=link;
+
+    }
+    return StatusCode::SUCCESS;
+  }
+
+  const xAOD::TruthParticle* CalcPartonHistory::getTruthParticleLinkedFromDecoration(const xAOD::TruthParticle* part, const std::string &decorationName)
+  {
+    if(!part->isAvailable<const xAOD::TruthParticle*>(decorationName)) return part;
+
+    const xAOD::TruthParticle* link=part->auxdecor<const xAOD::TruthParticle*>(decorationName);
+    if(link) return link;
+
+    return part;
   }
 
   StatusCode CalcPartonHistory::linkTruthContainers(const xAOD::TruthParticleContainer* &tp) {

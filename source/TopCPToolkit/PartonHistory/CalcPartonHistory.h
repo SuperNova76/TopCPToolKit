@@ -54,6 +54,7 @@ namespace top {
     void EnsureTtbarKeysExist();
     void EnsureBottomKeysExist();
     void EnsureAntiBottomKeysExist();
+    void EnsurebbbarKeysExist();
     void EnsureZKeysExist();
     void EnsureHiggsKeysExist();
     void InitializeTopDecorators();

@@ -21,9 +21,9 @@ namespace top {
     CalcPartonHistory::TraceParticles(truthParticles);
 
     // Ensuring the necessary keys exist
-    CalcPartonHistory::EnsureTtbarKeysExist(); // this will fail on ttbar but that is ok.
-    CalcPartonHistory::EnsureKeyExists("MC_Z_afterFSR", "MC_Z");
-    CalcPartonHistory::EnsureKeyExists("MC_Z_beforeFSR", "MC_Z_afterFSR");
+    CalcPartonHistory::EnsureTtbarKeysExist();
+    CalcPartonHistory::EnsurebbbarKeysExist();
+    CalcPartonHistory::EnsureZKeysExist();
 
     // Fill top parton history (flavour agnostic)
     CalcPartonHistory::FillTopPartonHistory(tzqPartonHistory, 2, m_t_dec);
