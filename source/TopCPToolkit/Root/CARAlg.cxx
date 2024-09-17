@@ -1,5 +1,4 @@
 #include "TopCPToolkit/CARAlg.h"
-#include "VectorHelpers/DecoratorHelpers.h"
 
 #include <TRandom3.h>
 #include <cmath>
@@ -34,6 +33,8 @@ namespace top {
       m_PDF_costheta->SetParameter(0,m_Polarisations[0]);
       m_PDF_costheta->SetParameter(1,m_Polarisations[1]);
       m_PDF_costheta->SetParameter(2,m_Polarisations[2]);
+      initializeHVVdecorators();
+      initializeHVVaccessors();
     }
     else if (m_partonhistory == "HZZ") {
       ANA_MSG_INFO("Using the following Z-Polarisation parameters:");
@@ -43,6 +44,8 @@ namespace top {
       m_PDF_costheta->SetParameter(0,m_Polarisations[0]);
       m_PDF_costheta->SetParameter(1,m_Polarisations[1]);
       m_PDF_costheta->SetParameter(2,m_Polarisations[2]);
+      initializeHVVdecorators();
+      initializeHVVaccessors();
     }
 
     SetSeed(m_seed);
@@ -51,125 +54,161 @@ namespace top {
     return StatusCode::SUCCESS;
   }
 
+  void CARAlg::initializeHVVaccessors() {
+    m_CAR_acc.initializePtEtaPhiMAccessor("MC_Hdecay1_decay1_beforeFSR");
+    m_CAR_acc.initializePtEtaPhiMAccessor("MC_Hdecay1_decay2_beforeFSR");
+    m_CAR_acc.initializePtEtaPhiMAccessor("MC_Hdecay2_decay1_beforeFSR");
+    m_CAR_acc.initializePtEtaPhiMAccessor("MC_Hdecay2_decay2_beforeFSR");
+    m_CAR_acc.initializePtEtaPhiMAccessor("MC_Hdecay1_decay1_afterFSR");
+    m_CAR_acc.initializePtEtaPhiMAccessor("MC_Hdecay1_decay2_afterFSR");
+    m_CAR_acc.initializePtEtaPhiMAccessor("MC_Hdecay2_decay1_afterFSR");
+    m_CAR_acc.initializePtEtaPhiMAccessor("MC_Hdecay2_decay2_afterFSR");
+    m_CAR_acc.initializeIntAccessor("MC_Hdecay1_decay1_beforeFSR_pdgId");
+    m_CAR_acc.initializeIntAccessor("MC_Hdecay1_decay2_beforeFSR_pdgId");
+    m_CAR_acc.initializeIntAccessor("MC_Hdecay2_decay1_beforeFSR_pdgId");
+    m_CAR_acc.initializeIntAccessor("MC_Hdecay2_decay2_beforeFSR_pdgId");
+    m_CAR_acc.initializeIntAccessor("MC_Hdecay1_decay1_afterFSR_pdgId");
+    m_CAR_acc.initializeIntAccessor("MC_Hdecay1_decay2_afterFSR_pdgId");
+    m_CAR_acc.initializeIntAccessor("MC_Hdecay2_decay1_afterFSR_pdgId");
+    m_CAR_acc.initializeIntAccessor("MC_Hdecay2_decay2_afterFSR_pdgId");
+  }
 
-  void CARAlg::prepareCARInputsHVV(const std::string &decaytype) {
+  void CARAlg::initializeHVVdecorators() {
+    m_CAR_dec.initializePtEtaPhiMDecorator("MC_Hdecay1_decay1_beforeFSR_CAR");
+    m_CAR_dec.initializeIntDecorator("MC_Hdecay1_decay1_beforeFSR_CAR_pdgId");
+    m_CAR_dec.initializePtEtaPhiMDecorator("MC_Hdecay1_decay1_afterFSR_CAR");
+    m_CAR_dec.initializeIntDecorator("MC_Hdecay1_decay1_afterFSR_CAR_pdgId");
+
+    m_CAR_dec.initializePtEtaPhiMDecorator("MC_Hdecay1_decay2_beforeFSR_CAR");
+    m_CAR_dec.initializeIntDecorator("MC_Hdecay1_decay2_beforeFSR_CAR_pdgId");
+    m_CAR_dec.initializePtEtaPhiMDecorator("MC_Hdecay1_decay2_afterFSR_CAR");
+    m_CAR_dec.initializeIntDecorator("MC_Hdecay1_decay2_afterFSR_CAR_pdgId");
+
+    m_CAR_dec.initializePtEtaPhiMDecorator("MC_Hdecay2_decay1_beforeFSR_CAR");
+    m_CAR_dec.initializeIntDecorator("MC_Hdecay2_decay1_beforeFSR_CAR_pdgId");
+    m_CAR_dec.initializePtEtaPhiMDecorator("MC_Hdecay2_decay1_afterFSR_CAR");
+    m_CAR_dec.initializeIntDecorator("MC_Hdecay2_decay1_afterFSR_CAR_pdgId");
+
+    m_CAR_dec.initializePtEtaPhiMDecorator("MC_Hdecay2_decay2_beforeFSR_CAR");
+    m_CAR_dec.initializeIntDecorator("MC_Hdecay2_decay2_beforeFSR_CAR_pdgId");
+    m_CAR_dec.initializePtEtaPhiMDecorator("MC_Hdecay2_decay2_afterFSR_CAR");
+    m_CAR_dec.initializeIntDecorator("MC_Hdecay2_decay2_afterFSR_CAR_pdgId");
+  }
+
+  void CARAlg::prepareCARHVVInputs() {
     // Negatively charged fermions are always decay1!
-    if (decaytype == "HWW") {
+    if (m_partonhistory == "HWW") {
       // We are looking for l+ from W+
       // Hdecay1 is W+:
-      m_decay_map["V1_L1"] = m_Hdecay1_decay2_CAR; // l+
-      m_decay_map["V1_L2"] = m_Hdecay1_decay1_CAR; // nu
+      // beforeFSR
+      m_decay_map["V1_L1_beforeFSR"] = m_Hdecay1_decay2_beforeFSR_CAR; // l+
+      m_decay_map["V1_L2_beforeFSR"] = m_Hdecay1_decay1_beforeFSR_CAR; // nu
+      // afterFSR
+      m_decay_map["V1_L1_afterFSR"] = m_Hdecay1_decay2_afterFSR_CAR; // l+
+      m_decay_map["V1_L2_afterFSR"] = m_Hdecay1_decay1_afterFSR_CAR; // nu
       // We are looking for l- from W-
       // Hdecay2 is W-:
-      m_decay_map["V2_L1"] = m_Hdecay2_decay1_CAR; // l-
-      m_decay_map["V2_L2"] = m_Hdecay2_decay2_CAR; // nubar
+      // beforeFSR
+      m_decay_map["V2_L1_beforeFSR"] = m_Hdecay2_decay1_beforeFSR_CAR; // l-
+      m_decay_map["V2_L2_beforeFSR"] = m_Hdecay2_decay2_beforeFSR_CAR; // nubar
+      // afterFSR
+      m_decay_map["V2_L1_afterFSR"] = m_Hdecay2_decay1_afterFSR_CAR; // l-
+      m_decay_map["V2_L2_afterFSR"] = m_Hdecay2_decay2_afterFSR_CAR; // nubar
     }
-    else if (decaytype == "HZZ") {
+    else if (m_partonhistory == "HZZ") {
       // We are looking for l- from both Z
-      m_decay_map["V1_L1"] = m_Hdecay1_decay1_CAR; // l-
-      m_decay_map["V1_L2"] = m_Hdecay1_decay2_CAR; // l+
-      m_decay_map["V2_L1"] = m_Hdecay2_decay1_CAR; // l-
-      m_decay_map["V2_L2"] = m_Hdecay2_decay2_CAR; // l+
+      // beforeFSR
+      m_decay_map["V1_L1_beforeFSR"] = m_Hdecay1_decay1_beforeFSR_CAR; // l-
+      m_decay_map["V1_L2_beforeFSR"] = m_Hdecay1_decay2_beforeFSR_CAR; // l+
+      m_decay_map["V2_L1_beforeFSR"] = m_Hdecay2_decay1_beforeFSR_CAR; // l-
+      m_decay_map["V2_L2_beforeFSR"] = m_Hdecay2_decay2_beforeFSR_CAR; // l+
+      // afterFSR
+      m_decay_map["V1_L1_afterFSR"] = m_Hdecay1_decay1_afterFSR_CAR; // l-
+      m_decay_map["V1_L2_afterFSR"] = m_Hdecay1_decay2_afterFSR_CAR; // l+
+      m_decay_map["V2_L1_afterFSR"] = m_Hdecay2_decay1_afterFSR_CAR; // l-
+      m_decay_map["V2_L2_afterFSR"] = m_Hdecay2_decay2_afterFSR_CAR; // l+
     }
   }
 
+  void CARAlg::performDefaultHVVDecoration(const xAOD::EventInfo *evtInfo) {
+    m_CAR_dec.decorateDefault("MC_Hdecay1_decay1_beforeFSR_CAR", evtInfo);
+    m_CAR_dec.decorateDefault("MC_Hdecay1_decay1_afterFSR_CAR", evtInfo);
+
+    m_CAR_dec.decorateDefault("MC_Hdecay1_decay2_beforeFSR_CAR", evtInfo);
+    m_CAR_dec.decorateDefault("MC_Hdecay1_decay2_afterFSR_CAR", evtInfo);
+
+    m_CAR_dec.decorateDefault("MC_Hdecay2_decay1_beforeFSR_CAR", evtInfo);
+    m_CAR_dec.decorateDefault("MC_Hdecay2_decay1_afterFSR_CAR", evtInfo);
+
+    m_CAR_dec.decorateDefault("MC_Hdecay2_decay2_beforeFSR_CAR", evtInfo);
+    m_CAR_dec.decorateDefault("MC_Hdecay2_decay2_afterFSR_CAR", evtInfo);
+  }
+
+  void CARAlg::performHVVDecoration(const xAOD::EventInfo *evtInfo, const xAOD::PartonHistory *history) {
+    m_CAR_dec.decorateParticle("MC_Hdecay1_decay1_beforeFSR_CAR",
+			       m_Hdecay1_decay1_beforeFSR_CAR,
+			       m_CAR_acc.getInt("MC_Hdecay1_decay1_beforeFSR_pdgId", history),
+			       evtInfo);
+    m_CAR_dec.decorateParticle("MC_Hdecay1_decay1_afterFSR_CAR",
+			       m_Hdecay1_decay1_afterFSR_CAR,
+			       m_CAR_acc.getInt("MC_Hdecay1_decay1_afterFSR_pdgId", history),
+			       evtInfo);
+
+    m_CAR_dec.decorateParticle("MC_Hdecay1_decay2_beforeFSR_CAR",
+			       m_Hdecay1_decay2_beforeFSR_CAR,
+			       m_CAR_acc.getInt("MC_Hdecay1_decay2_beforeFSR_pdgId", history),
+			       evtInfo);
+    m_CAR_dec.decorateParticle("MC_Hdecay1_decay2_afterFSR_CAR",
+			       m_Hdecay1_decay2_afterFSR_CAR,
+			       m_CAR_acc.getInt("MC_Hdecay1_decay2_afterFSR_pdgId", history),
+			       evtInfo);
+
+    m_CAR_dec.decorateParticle("MC_Hdecay2_decay1_beforeFSR_CAR",
+			       m_Hdecay2_decay1_beforeFSR_CAR,
+			       m_CAR_acc.getInt("MC_Hdecay2_decay1_beforeFSR_pdgId", history),
+			       evtInfo);
+    m_CAR_dec.decorateParticle("MC_Hdecay2_decay1_afterFSR_CAR",
+			       m_Hdecay2_decay1_afterFSR_CAR,
+			       m_CAR_acc.getInt("MC_Hdecay2_decay1_afterFSR_pdgId", history),
+			       evtInfo);
+
+    m_CAR_dec.decorateParticle("MC_Hdecay2_decay2_beforeFSR_CAR",
+			       m_Hdecay2_decay2_beforeFSR_CAR,
+			       m_CAR_acc.getInt("MC_Hdecay2_decay2_beforeFSR_pdgId", history),
+			       evtInfo);
+    m_CAR_dec.decorateParticle("MC_Hdecay2_decay2_afterFSR_CAR",
+			       m_Hdecay2_decay2_afterFSR_CAR,
+			       m_CAR_acc.getInt("MC_Hdecay2_decay2_afterFSR_pdgId", history),
+			       evtInfo);
+  }
+
+  void CARAlg::prepareHVVInputVectors(const xAOD::PartonHistory *history) {
+    // Filling PtEtaPhiVectors for beforeFSR
+      m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay1_decay1_beforeFSR", m_Hdecay1_decay1_beforeFSR_CAR, history);
+      m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay1_decay2_beforeFSR", m_Hdecay1_decay2_beforeFSR_CAR, history);
+      m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay2_decay1_beforeFSR", m_Hdecay2_decay1_beforeFSR_CAR, history);
+      m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay2_decay2_beforeFSR", m_Hdecay2_decay2_beforeFSR_CAR, history);
+
+      // Filling PtEtaPhiVectors for afterFSR
+      m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay1_decay1_afterFSR", m_Hdecay1_decay1_afterFSR_CAR, history);
+      m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay1_decay2_afterFSR", m_Hdecay1_decay2_afterFSR_CAR, history);
+      m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay2_decay1_afterFSR", m_Hdecay2_decay1_afterFSR_CAR, history);
+      m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay2_decay2_afterFSR", m_Hdecay2_decay2_afterFSR_CAR, history);
+  }
+
   StatusCode CARAlg::execute() {
-
     for (const auto &sys : m_systematicsList.systematicsVector()) {
-
-      static const SG::AuxElement::Decorator<float> dec_MC_Hdecay1_decay1_CAR_m("MC_Hdecay1_decay1_CAR_m");
-      static const SG::AuxElement::Decorator<float> dec_MC_Hdecay1_decay1_CAR_pt("MC_Hdecay1_decay1_CAR_pt");
-      static const SG::AuxElement::Decorator<float> dec_MC_Hdecay1_decay1_CAR_eta("MC_Hdecay1_decay1_CAR_eta");
-      static const SG::AuxElement::Decorator<float> dec_MC_Hdecay1_decay1_CAR_phi("MC_Hdecay1_decay1_CAR_phi");
-      static const SG::AuxElement::Decorator<int> dec_MC_Hdecay1_decay1_CAR_pdgId("MC_Hdecay1_decay1_CAR_pdgId");
-
-      static const SG::AuxElement::Decorator<float> dec_MC_Hdecay1_decay2_CAR_m("MC_Hdecay1_decay2_CAR_m");
-      static const SG::AuxElement::Decorator<float> dec_MC_Hdecay1_decay2_CAR_pt("MC_Hdecay1_decay2_CAR_pt");
-      static const SG::AuxElement::Decorator<float> dec_MC_Hdecay1_decay2_CAR_eta("MC_Hdecay1_decay2_CAR_eta");
-      static const SG::AuxElement::Decorator<float> dec_MC_Hdecay1_decay2_CAR_phi("MC_Hdecay1_decay2_CAR_phi");
-      static const SG::AuxElement::Decorator<int> dec_MC_Hdecay1_decay2_CAR_pdgId("MC_Hdecay1_decay2_CAR_pdgId");
-
-      static const SG::AuxElement::Decorator<float> dec_MC_Hdecay2_decay1_CAR_m("MC_Hdecay2_decay1_CAR_m");
-      static const SG::AuxElement::Decorator<float> dec_MC_Hdecay2_decay1_CAR_pt("MC_Hdecay2_decay1_CAR_pt");
-      static const SG::AuxElement::Decorator<float> dec_MC_Hdecay2_decay1_CAR_eta("MC_Hdecay2_decay1_CAR_eta");
-      static const SG::AuxElement::Decorator<float> dec_MC_Hdecay2_decay1_CAR_phi("MC_Hdecay2_decay1_CAR_phi");
-      static const SG::AuxElement::Decorator<int> dec_MC_Hdecay2_decay1_CAR_pdgId("MC_Hdecay2_decay1_CAR_pdgId");
-
-      static const SG::AuxElement::Decorator<float> dec_MC_Hdecay2_decay2_CAR_m("MC_Hdecay2_decay2_CAR_m");
-      static const SG::AuxElement::Decorator<float> dec_MC_Hdecay2_decay2_CAR_pt("MC_Hdecay2_decay2_CAR_pt");
-      static const SG::AuxElement::Decorator<float> dec_MC_Hdecay2_decay2_CAR_eta("MC_Hdecay2_decay2_CAR_eta");
-      static const SG::AuxElement::Decorator<float> dec_MC_Hdecay2_decay2_CAR_phi("MC_Hdecay2_decay2_CAR_phi");
-      static const SG::AuxElement::Decorator<int> dec_MC_Hdecay2_decay2_CAR_pdgId("MC_Hdecay2_decay2_CAR_pdgId");
-
-      static const SG::AuxElement::Accessor<float> acc_MC_Hdecay1_m("MC_Hdecay1_m");
-      static const SG::AuxElement::Accessor<float> acc_MC_Hdecay2_m("MC_Hdecay2_m");
-
-      static const SG::AuxElement::Accessor<float> acc_MC_Hdecay1_decay1_m("MC_Hdecay1_decay1_m");
-      static const SG::AuxElement::Accessor<float> acc_MC_Hdecay1_decay1_eta("MC_Hdecay1_decay1_eta");
-      static const SG::AuxElement::Accessor<float> acc_MC_Hdecay1_decay1_phi("MC_Hdecay1_decay1_phi");
-      static const SG::AuxElement::Accessor<float> acc_MC_Hdecay1_decay1_pt("MC_Hdecay1_decay1_pt");
-      static const SG::AuxElement::Accessor<int> acc_MC_Hdecay1_decay1_pdgId("MC_Hdecay1_decay1_pdgId");
-
-      static const SG::AuxElement::Accessor<float> acc_MC_Hdecay1_decay2_m("MC_Hdecay1_decay2_m");
-      static const SG::AuxElement::Accessor<float> acc_MC_Hdecay1_decay2_eta("MC_Hdecay1_decay2_eta");
-      static const SG::AuxElement::Accessor<float> acc_MC_Hdecay1_decay2_phi("MC_Hdecay1_decay2_phi");
-      static const SG::AuxElement::Accessor<float> acc_MC_Hdecay1_decay2_pt("MC_Hdecay1_decay2_pt");
-      static const SG::AuxElement::Accessor<int> acc_MC_Hdecay1_decay2_pdgId("MC_Hdecay1_decay2_pdgId");
-
-      static const SG::AuxElement::Accessor<float> acc_MC_Hdecay2_decay1_m("MC_Hdecay2_decay1_m");
-      static const SG::AuxElement::Accessor<float> acc_MC_Hdecay2_decay1_eta("MC_Hdecay2_decay1_eta");
-      static const SG::AuxElement::Accessor<float> acc_MC_Hdecay2_decay1_phi("MC_Hdecay2_decay1_phi");
-      static const SG::AuxElement::Accessor<float> acc_MC_Hdecay2_decay1_pt("MC_Hdecay2_decay1_pt");
-      static const SG::AuxElement::Accessor<int> acc_MC_Hdecay2_decay1_pdgId("MC_Hdecay2_decay1_pdgId");
-
-      static const SG::AuxElement::Accessor<float> acc_MC_Hdecay2_decay2_m("MC_Hdecay2_decay2_m");
-      static const SG::AuxElement::Accessor<float> acc_MC_Hdecay2_decay2_eta("MC_Hdecay2_decay2_eta");
-      static const SG::AuxElement::Accessor<float> acc_MC_Hdecay2_decay2_phi("MC_Hdecay2_decay2_phi");
-      static const SG::AuxElement::Accessor<float> acc_MC_Hdecay2_decay2_pt("MC_Hdecay2_decay2_pt");
-      static const SG::AuxElement::Accessor<int> acc_MC_Hdecay2_decay2_pdgId("MC_Hdecay2_decay2_pdgId");
-
       // retrieve the EventInfo and parton history
       const xAOD::EventInfo *evtInfo = nullptr;
       ANA_CHECK(m_eventInfoHandle.retrieve(evtInfo, sys));
       const xAOD::PartonHistory *history = nullptr;
       ANA_CHECK(evtStore()->retrieve(history, m_partonContainerName));
 
-      FillDefaultParticleInfo(dec_MC_Hdecay1_decay1_CAR_pt, dec_MC_Hdecay1_decay1_CAR_eta, dec_MC_Hdecay1_decay1_CAR_phi, dec_MC_Hdecay1_decay1_CAR_m, dec_MC_Hdecay1_decay1_CAR_pdgId, evtInfo);
-      FillDefaultParticleInfo(dec_MC_Hdecay1_decay2_CAR_pt, dec_MC_Hdecay1_decay2_CAR_eta, dec_MC_Hdecay1_decay2_CAR_phi, dec_MC_Hdecay1_decay2_CAR_m, dec_MC_Hdecay1_decay2_CAR_pdgId, evtInfo);
-      FillDefaultParticleInfo(dec_MC_Hdecay2_decay1_CAR_pt, dec_MC_Hdecay2_decay1_CAR_eta, dec_MC_Hdecay2_decay1_CAR_phi, dec_MC_Hdecay2_decay1_CAR_m, dec_MC_Hdecay2_decay1_CAR_pdgId, evtInfo);
-      FillDefaultParticleInfo(dec_MC_Hdecay2_decay2_CAR_pt, dec_MC_Hdecay2_decay2_CAR_eta, dec_MC_Hdecay2_decay2_CAR_phi, dec_MC_Hdecay2_decay2_CAR_m, dec_MC_Hdecay2_decay2_CAR_pdgId, evtInfo);
-
-      // Filling PtEtaPhiVectors
-      m_Hdecay1_decay1_CAR.SetCoordinates(acc_MC_Hdecay1_decay1_pt(*history),
-					  acc_MC_Hdecay1_decay1_eta(*history),
-					  acc_MC_Hdecay1_decay1_phi(*history),
-					  acc_MC_Hdecay1_decay1_m(*history));
-      m_Hdecay1_decay2_CAR.SetCoordinates(acc_MC_Hdecay1_decay2_pt(*history),
-					  acc_MC_Hdecay1_decay2_eta(*history),
-					  acc_MC_Hdecay1_decay2_phi(*history),
-					  acc_MC_Hdecay1_decay2_m(*history));
-      m_Hdecay2_decay1_CAR.SetCoordinates(acc_MC_Hdecay2_decay1_pt(*history),
-					  acc_MC_Hdecay2_decay1_eta(*history),
-					  acc_MC_Hdecay2_decay1_phi(*history),
-					  acc_MC_Hdecay2_decay1_m(*history));
-      m_Hdecay2_decay2_CAR.SetCoordinates(acc_MC_Hdecay2_decay2_pt(*history),
-					  acc_MC_Hdecay2_decay2_eta(*history),
-					  acc_MC_Hdecay2_decay2_phi(*history),
-					  acc_MC_Hdecay2_decay2_m(*history));
-
-      // Determining HVV-specific order of CAR inputs
-      prepareCARInputsHVV(m_partonhistory);
-      // performing CAR
-      performCAR(m_decay_map["V1_L1"],
-		 m_decay_map["V1_L2"],
-		 m_decay_map["V2_L1"],
-		 m_decay_map["V2_L2"]);
-
-      // Filling CAR information
-      FillParticleInfo(dec_MC_Hdecay1_decay1_CAR_pt, dec_MC_Hdecay1_decay1_CAR_eta, dec_MC_Hdecay1_decay1_CAR_phi, dec_MC_Hdecay1_decay1_CAR_m, dec_MC_Hdecay1_decay1_CAR_pdgId, m_Hdecay1_decay1_CAR, acc_MC_Hdecay1_decay1_pdgId(*history), evtInfo);
-      FillParticleInfo(dec_MC_Hdecay1_decay2_CAR_pt, dec_MC_Hdecay1_decay2_CAR_eta, dec_MC_Hdecay1_decay2_CAR_phi, dec_MC_Hdecay1_decay2_CAR_m, dec_MC_Hdecay1_decay2_CAR_pdgId, m_Hdecay1_decay2_CAR, acc_MC_Hdecay1_decay2_pdgId(*history), evtInfo);
-      FillParticleInfo(dec_MC_Hdecay2_decay1_CAR_pt, dec_MC_Hdecay2_decay1_CAR_eta, dec_MC_Hdecay2_decay1_CAR_phi, dec_MC_Hdecay2_decay1_CAR_m, dec_MC_Hdecay2_decay1_CAR_pdgId, m_Hdecay2_decay1_CAR, acc_MC_Hdecay2_decay1_pdgId(*history), evtInfo);
-      FillParticleInfo(dec_MC_Hdecay2_decay2_CAR_pt, dec_MC_Hdecay2_decay2_CAR_eta, dec_MC_Hdecay2_decay2_CAR_phi, dec_MC_Hdecay2_decay2_CAR_m, dec_MC_Hdecay2_decay2_CAR_pdgId, m_Hdecay2_decay2_CAR, acc_MC_Hdecay2_decay2_pdgId(*history), evtInfo);
+      performDefaultHVVDecoration(evtInfo);
+      prepareHVVInputVectors(history);
+      prepareCARHVVInputs();
+      performCAR();
+      performHVVDecoration(evtInfo, history);
     }
     return StatusCode::SUCCESS;
   }
@@ -239,6 +278,23 @@ namespace top {
 
       // Set the transformed momentum
       result.SetPxPyPzE(px, py, pz, originalMomentum.E());
+  }
+
+  void CARAlg::performCAR() {
+    if (m_partonhistory == "HWW") {
+      // performing CAR for beforeFSR
+      performCAR(m_decay_map["V1_L1_beforeFSR"],
+		 m_decay_map["V1_L2_beforeFSR"],
+		 m_decay_map["V2_L1_beforeFSR"],
+		 m_decay_map["V2_L2_beforeFSR"]);
+
+      // performing CAR for afterFSR
+      performCAR(m_decay_map["V1_L1_afterFSR"],
+		 m_decay_map["V1_L2_afterFSR"],
+		 m_decay_map["V2_L1_afterFSR"],
+		 m_decay_map["V2_L2_afterFSR"]);
+    }
+    // TODO implement HZZ and ttbar
   }
 
   void CARAlg::performCAR(PtEtaPhiMVector& PV1_L1,

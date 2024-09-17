@@ -7,6 +7,9 @@
 #include <SystematicsHandles/SysWriteDecorHandle.h>
 #include <SelectionHelpers/SysReadSelectionHandle.h>
 
+#include "VectorHelpers/DecoratorHelpers.h"
+#include "VectorHelpers/AccessorHelpers.h"
+
 #include <PartonHistory/CalcPartonHistory.h>
 #include "PartonHistory/PartonHistoryUtils.h"
 
@@ -31,12 +34,21 @@ namespace top {
       virtual StatusCode initialize() override;
       virtual StatusCode execute() override;
       virtual StatusCode finalize() override;
-      void prepareCARInputsHVV(const std::string &decaytype);
+      void initializeHVVdecorators();
+      void initializeHVVaccessors();
+      void prepareCARHVVInputs();
+      void prepareHVVInputVectors(const xAOD::PartonHistory *history);
+      void performCAR();
       void performCAR(ROOT::Math::PtEtaPhiMVector& PV1_L1,
 		      ROOT::Math::PtEtaPhiMVector& PV1_L2,
 		      ROOT::Math::PtEtaPhiMVector& PV2_L1,
 		      ROOT::Math::PtEtaPhiMVector& PV2_L2);
+      void performDefaultHVVDecoration(const xAOD::EventInfo *evtInfo);
+      void performHVVDecoration(const xAOD::EventInfo *evtInfo, const xAOD::PartonHistory *history);
       void SetSeed(unsigned int);
+
+      PartonDecorator m_CAR_dec;
+      PartonAccessor m_CAR_acc;
 
     private:
       float getRandPhi();
@@ -62,7 +74,8 @@ namespace top {
       std::string m_partonContainerName;
       std::string m_partonhistory;
       std::map<std::string, PtEtaPhiMVector> m_decay_map;
-      PtEtaPhiMVector m_Hdecay1_decay1_CAR, m_Hdecay1_decay2_CAR, m_Hdecay2_decay1_CAR, m_Hdecay2_decay2_CAR;
+      PtEtaPhiMVector m_Hdecay1_decay1_beforeFSR_CAR, m_Hdecay1_decay2_beforeFSR_CAR, m_Hdecay2_decay1_beforeFSR_CAR, m_Hdecay2_decay2_beforeFSR_CAR;
+      PtEtaPhiMVector m_Hdecay1_decay1_afterFSR_CAR, m_Hdecay1_decay2_afterFSR_CAR, m_Hdecay2_decay1_afterFSR_CAR, m_Hdecay2_decay2_afterFSR_CAR;
 
       std::unique_ptr<TF1> m_PDF_costheta = std::make_unique<TF1>("CARPDF_costheta",
     "1/4*[1]*(1+x)**2 + [0]*(1-x**2) + 1/4*[2]*(1-x)**2", -1.0, 1.0);
