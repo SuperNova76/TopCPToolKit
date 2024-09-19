@@ -128,7 +128,7 @@ Name in YAML: **Jets.FlavourTagging**
 :   a postfix to apply to decorations and algorithm names. Typically not needed here as internally the string `f"{btagger}_{btagWP}"` is used.
 
 `btagger`
-:   the flavour tagging algorithm: `DL1dv01`, `GN2v00`. The default is `DL1r`.
+:   the flavour tagging algorithm: `DL1dv01`, `GN2v01`. The default is `DL1r`.
 
 `btagWP`
 :   the flavour tagging WP. The default is `FixedCutBEff_77`.
@@ -192,7 +192,7 @@ Name in YAML: **Jets.FlavourTagging**
     - `{btagger}_pb`: the per-jet bottom-flavour probability from tagger `{btagger}` (no systematics)
     - `{btagger}_ptau`: the per-jet tau-jet-flavour probability from tagger `{btagger}` (no systematics)
 
-### [FTagEventSFConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagEventSFnalysisConfig.py)
+### [FTagEventSFConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/FTagAnalysisAlgorithms/python/FTagEventSFAnalysisConfig.py)
 Name in YAML: **Jets.FlavourTaggingEventSF**
 
 Computes the per-event b-tagging SF, i.e. a product of b-tagging efficiency/inefficiency SFs over all jets in the specified jet container, which are within the region of validity of the FTAG calibrations. See the `containerName` argument below for passing jets with specific selection. The per-event scale factor `weight_ftag_effSF_<selectionName>` is decorated to EventInfo object (see `selectionName` below).
@@ -204,13 +204,33 @@ Computes the per-event b-tagging SF, i.e. a product of b-tagging efficiency/inef
 :   a postfix to apply to decorations and algorithm names. Typically not needed here as internally the string `f"{btagger}_{btagWP}"` is used.
 
 `btagger`
-:   the flavour tagging algorithm: `DL1dv01`, `GN2v00`.
+:   the flavour tagging algorithm: `DL1dv01`, `GN2v01`.
 
 `btagWP`
 :   the flavour tagging WP, e.g. `FixedCutBEff_77`, `Continuous`, etc.
 
 !!! success "Registers the following variables:"
     - `weight_ftag_effSF_{btagger}_{btagWP}`: the per-event b-tagging efficiency SF
+
+### [BJetCalibAnalysisConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/JetAnalysisAlgorithms/python/BJetCalibAnalysisConfig.py)
+Name in YAML: **Jets.BJetCalib**
+
+Corrections to the b-jet momentum to account also for muon-in-jet calibration, as developped in the $VHbb$ and $HH$ analyses. See the [BJetCalibrationTool](https://gitlab.cern.ch/r3hh-public/b-jet-energy-corrections) and [this presentation](https://indico.cern.ch/event/1401273/contributions/5890523/attachments/2834123/4952335/B-jet%20calibration%20in%20HH%20muon-in-jet%20and%20PtReco-1.pdf) for further information.
+
+`jetContainerName`
+:   the name of the input jet container.
+
+`muonContainerName`
+:   the name of the input muon container.
+
+`jetPreselection`
+:   the jet preselection.
+
+`muonPreselection`
+:   the muon preselection.
+
+`doPtCorr`
+:   whether to run the b-jet $p_\mathrm{T}$ correction on top of the muon-in-jet one. The default is `True`.
 
 ### [JetReclusteringConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/JetAnalysisAlgorithms/JetReclusteringConfig.py)
 Name in YAML: **JetReclustering**

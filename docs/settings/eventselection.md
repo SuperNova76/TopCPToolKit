@@ -177,16 +177,18 @@ The symbol `$` below is a placeholder for any of the following comparison operat
 
 | **Keyword** | **Options** | **Effect** |
 | ----------- | ----------- | ---------- |
-| `EL_N` | `ptmin $ ref`<br><br>`sel ptmin $ ref` | Compares (`$`) the number of electrons with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify a different electron selection. |
-| `MU_N` | `ptmin $ ref`<br><br>`sel ptmin $ ref` | Compares (`$`) the number of muons with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify a different muon selection. |
+| `EL_N` | `ptmin $ ref`<br><br>`sel ptmin $ ref` | Compares (`$`) the number of electrons with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify an additional electron selection. |
+| `MU_N` | `ptmin $ ref`<br><br>`sel ptmin $ ref` | Compares (`$`) the number of muons with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify an additional muon selection. |
 | `SUM_EL_N_MU_N` | `ptmin $ ref`<br><br>`ptminEL ptminMU $ ref` | Compares (`$`) the number of electrons and muons with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Same, but with different cuts for electrons/muons. |
-| `JET_N` | `ptmin $ ref`<br><br>`sel ptmin $ ref` | Compares (`$`) the number of jets with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify a different jet selection. |
-| `JET_N_BTAG` | `$ ref`<br><br>`tagger:WP $ ref` | Compares (`$`) the number of b-tagged jets to `ref`.<br><br>Use `tagger:WP` to specify a different b-tagging configuration. |
-| `LJET_N` | `ptmin $ ref` <br><br>`sel ptmin $ ref` | Compares (`$`) the number of large-R jets with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify a different large-R jet selection. |
-| `LJETMASS_N` | `massmin $ ref` <br><br>`sel massmin $ ref` | Compares (`$`) the number of large-R jets with <br>mass >`massmin` (in MeV) to `ref`.<br>Use `sel` to specify a different large-R jet selection. |
-| `LJETMASSWINDOW_N` | `low high $ ref`<br><br>`sel low high $ ref` | Compares (`$`) the number of large-R jets with <br>`low`< mass <`high` (in MeV) to `ref`.<br>Use `sel` to specify a different large-R jet selection.<br>(Append `veto` to veto the mass window instead.) |
-| `PH_N` | `ptmin $ ref`<br><br>`sel ptmin $ ref` | Compares (`$`) the number of photons with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify a different photon selection. |
-| `TAU_N` | `ptmin $ ref`<br><br>`sel ptmin $ ref` | Compares (`$`) the number of tau-jets with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify a different tau-jet selection. |
+| `JET_N` | `ptmin $ ref`<br><br>`sel ptmin $ ref` | Compares (`$`) the number of jets with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify an additional jet selection. |
+| `JET_N_BTAG` | `$ ref`<br><br>`tagger:WP $ ref` | Compares (`$`) the number of b-tagged jets to `ref`.<br><br>Use `tagger:WP` to specify an additional b-tagging configuration. |
+| `JET_N_GHOST` | `ghost $ ref` <br><br>`ghost ptmin $ ref` | Compares (`$`) the number of jets that contain `ghost`<br>particles with $p_\mathrm{T}>$`ptmin` (in MeV) to `ref`. Ghosts can be:<br>`B`, `C`, `W`, `Z`, `H`, `T` or `TAU`. Use `X!Y` to select `X`-ghosts but veto `Y`-ghosts. |
+| `LJET_N` | `ptmin $ ref` <br><br>`sel ptmin $ ref` | Compares (`$`) the number of large-R jets with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify an additional large-R jet selection. |
+| `LJET_N_GHOST` | `ghost $ ref` <br><br>`ghost ptmin $ ref` | Compares (`$`) the number of large-R jets that contain `ghost`<br>particles with $p_\mathrm{T}>$`ptmin` (in MeV) to `ref`. Ghosts can be:<br>`B`, `C`, `W`, `Z`, `H`, `T` or `TAU`. Use `X!Y` to select `X`-ghosts but veto `Y`-ghosts. |
+| `LJETMASS_N` | `massmin $ ref` <br><br>`sel massmin $ ref` | Compares (`$`) the number of large-R jets with <br>mass >`massmin` (in MeV) to `ref`.<br>Use `sel` to specify an additional large-R jet selection. |
+| `LJETMASSWINDOW_N` | `low high $ ref`<br><br>`sel low high $ ref` | Compares (`$`) the number of large-R jets with <br>`low`< mass <`high` (in MeV) to `ref`.<br>Use `sel` to specify an additional large-R jet selection.<br>(Append `veto` to veto the mass window instead.) |
+| `PH_N` | `ptmin $ ref`<br><br>`sel ptmin $ ref` | Compares (`$`) the number of photons with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify an additional photon selection. |
+| `TAU_N` | `ptmin $ ref`<br><br>`sel ptmin $ ref` | Compares (`$`) the number of tau-jets with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify an additional tau-jet selection. |
 | `MET` | `$ ref` | Compares (`$`) the MET to `ref` (in MeV). |
 | `MWT` | `$ ref` | Compares (`$`) the transverse mass of the W boson<br>(lepton+MET system) to `ref` (in MeV). |
 | `MET+MWT` | `$ ref` | Compares (`$`) the sum of the MET and the transverse mass<br>of the W boson(lepton+MET system) to `ref` (in MeV). |

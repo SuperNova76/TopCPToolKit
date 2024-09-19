@@ -129,7 +129,7 @@ Name in YAML: **Photons.WorkingPoint**
 :   a postfix to apply to decorations and algorithm names. Typically not needed here as `selectionName` is used internally.
 
 `qualityWP`
-:   the ID WP (string) to use. Supported ID WPs: `Tight`, `Loose`.
+:   the ID WP (string) to use. Supported ID WPs: `Tight`, `Medium`, `Loose`.
 
 `isolationWP`
 :   the ID WP (string) to use. Supported isolation WPs: `FixedCutLoose`, `FixedCutTight`, `TightCaloOnly`, `NonIso`.

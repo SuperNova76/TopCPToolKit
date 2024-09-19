@@ -49,7 +49,22 @@ namespace top {
     bool RetrieveParticleInfo(const std::string& prefix, const std::string& alt_prefix, PtEtaPhiMVector& particle, int& pdgId);
 
     void EnsureKeyExists(const std::string& key, const std::string& fallbackKey);
+    void EnsureTopKeysExist();
+    void EnsureAntiTopKeysExist();
     void EnsureTtbarKeysExist();
+    void EnsureBottomKeysExist();
+    void EnsureAntiBottomKeysExist();
+    void EnsurebbbarKeysExist();
+    void EnsureZKeysExist();
+    void EnsureHiggsKeysExist();
+    void InitializeTopDecorators();
+    void InitializeAntiTopDecorators();
+    void InitializeBottomDecorators();
+    void InitializeAntiBottomDecorators();
+    void InitializeTtbarDecorators();
+    void InitializeHiggsDecorators();
+    void InitializePhotonDecorators();
+    void InitializeZDecorators();
 
     bool hasParentPdgId(const xAOD::TruthParticle* particle, int PdgId);
     bool hasIdenticalChild(const xAOD::TruthParticle* particle);

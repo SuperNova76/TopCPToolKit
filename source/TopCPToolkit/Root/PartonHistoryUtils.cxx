@@ -4,8 +4,34 @@
 
 namespace top {
   using ROOT::Math::PtEtaPhiMVector;
-  
+
   namespace PartonHistoryUtils {
+
+    bool isChildOf(const xAOD::TruthParticle* parent, const xAOD::TruthParticle* potentialChild) {
+      // Base case: if the potentialchild has no parent, return false
+      if (potentialChild->nParents() == 0) {
+	return false;
+      }
+      // Base case: if the parent has no children, return false
+      if (parent->nChildren() == 0) {
+        return false;
+      }
+      // Loop through all children of the parent
+      for (size_t i = 0; i < parent->nChildren(); ++i) {
+        const xAOD::TruthParticle* child = parent->child(i);
+
+        // Check if the current child is the potentialChild
+        if (child == potentialChild) {
+	  return true;
+        }
+        // Recursively check if potentialChild is a child of the current child
+        if (isChildOf(child, potentialChild)) {
+	  return true;
+        }
+      }
+      // If potentialChild is not found in the children or their descendants, return false
+      return false;
+    }
 
     bool isBrokenTop(const xAOD::TruthParticle* particle) {
       return (particle->pdgId() == 6 && particle->nChildren() == 0);

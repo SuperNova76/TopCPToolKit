@@ -43,29 +43,29 @@ namespace top {
       static const SG::AuxElement::Accessor<float> acc_tbar_phi("MC_tbar_afterFSR_phi");
       static const SG::AuxElement::Accessor<float> acc_tbar_m("MC_tbar_afterFSR_m");
       // first top decay product
-      static const SG::AuxElement::Accessor<float> acc_top_dec1_pt("MC_Wdecay1_from_t_pt");
-      static const SG::AuxElement::Accessor<float> acc_top_dec1_eta("MC_Wdecay1_from_t_eta");
-      static const SG::AuxElement::Accessor<float> acc_top_dec1_phi("MC_Wdecay1_from_t_phi");
-      static const SG::AuxElement::Accessor<float> acc_top_dec1_m("MC_Wdecay1_from_t_m");
-      static const SG::AuxElement::Accessor<int>   acc_top_dec1_pdgid("MC_Wdecay1_from_t_pdgId");
+      static const SG::AuxElement::Accessor<float> acc_top_dec1_pt("MC_Wdecay1_afterFSR_from_t_pt");
+      static const SG::AuxElement::Accessor<float> acc_top_dec1_eta("MC_Wdecay1_afterFSR_from_t_eta");
+      static const SG::AuxElement::Accessor<float> acc_top_dec1_phi("MC_Wdecay1_afterFSR_from_t_phi");
+      static const SG::AuxElement::Accessor<float> acc_top_dec1_m("MC_Wdecay1_afterFSR_from_t_m");
+      static const SG::AuxElement::Accessor<int>   acc_top_dec1_pdgid("MC_Wdecay1_afterFSR_from_t_pdgId");
       // second top decay product
-      static const SG::AuxElement::Accessor<float> acc_top_dec2_pt("MC_Wdecay2_from_t_pt");
-      static const SG::AuxElement::Accessor<float> acc_top_dec2_eta("MC_Wdecay2_from_t_eta");
-      static const SG::AuxElement::Accessor<float> acc_top_dec2_phi("MC_Wdecay2_from_t_phi");
-      static const SG::AuxElement::Accessor<float> acc_top_dec2_m("MC_Wdecay2_from_t_m");
-      static const SG::AuxElement::Accessor<int>   acc_top_dec2_pdgid("MC_Wdecay2_from_t_pdgId");
+      static const SG::AuxElement::Accessor<float> acc_top_dec2_pt("MC_Wdecay2_afterFSR_from_t_pt");
+      static const SG::AuxElement::Accessor<float> acc_top_dec2_eta("MC_Wdecay2_afterFSR_from_t_eta");
+      static const SG::AuxElement::Accessor<float> acc_top_dec2_phi("MC_Wdecay2_afterFSR_from_t_phi");
+      static const SG::AuxElement::Accessor<float> acc_top_dec2_m("MC_Wdecay2_afterFSR_from_t_m");
+      static const SG::AuxElement::Accessor<int>   acc_top_dec2_pdgid("MC_Wdecay2_afterFSR_from_t_pdgId");
       // first anti-top decay product
-      static const SG::AuxElement::Accessor<float> acc_tbar_dec1_pt("MC_Wdecay1_from_tbar_pt");
-      static const SG::AuxElement::Accessor<float> acc_tbar_dec1_eta("MC_Wdecay1_from_tbar_eta");
-      static const SG::AuxElement::Accessor<float> acc_tbar_dec1_phi("MC_Wdecay1_from_tbar_phi");
-      static const SG::AuxElement::Accessor<float> acc_tbar_dec1_m("MC_Wdecay1_from_tbar_m");
-      static const SG::AuxElement::Accessor<int>   acc_tbar_dec1_pdgid("MC_Wdecay1_from_tbar_pdgId");
+      static const SG::AuxElement::Accessor<float> acc_tbar_dec1_pt("MC_Wdecay1_afterFSR_from_tbar_pt");
+      static const SG::AuxElement::Accessor<float> acc_tbar_dec1_eta("MC_Wdecay1_afterFSR_from_tbar_eta");
+      static const SG::AuxElement::Accessor<float> acc_tbar_dec1_phi("MC_Wdecay1_afterFSR_from_tbar_phi");
+      static const SG::AuxElement::Accessor<float> acc_tbar_dec1_m("MC_Wdecay1_afterFSR_from_tbar_m");
+      static const SG::AuxElement::Accessor<int>   acc_tbar_dec1_pdgid("MC_Wdecay1_afterFSR_from_tbar_pdgId");
       // second anti-top decay product
-      static const SG::AuxElement::Accessor<float> acc_tbar_dec2_pt("MC_Wdecay2_from_tbar_pt");
-      static const SG::AuxElement::Accessor<float> acc_tbar_dec2_eta("MC_Wdecay2_from_tbar_eta");
-      static const SG::AuxElement::Accessor<float> acc_tbar_dec2_phi("MC_Wdecay2_from_tbar_phi");
-      static const SG::AuxElement::Accessor<float> acc_tbar_dec2_m("MC_Wdecay2_from_tbar_m");
-      static const SG::AuxElement::Accessor<int>   acc_tbar_dec2_pdgid("MC_Wdecay2_from_tbar_pdgId");
+      static const SG::AuxElement::Accessor<float> acc_tbar_dec2_pt("MC_Wdecay2_afterFSR_from_tbar_pt");
+      static const SG::AuxElement::Accessor<float> acc_tbar_dec2_eta("MC_Wdecay2_afterFSR_from_tbar_eta");
+      static const SG::AuxElement::Accessor<float> acc_tbar_dec2_phi("MC_Wdecay2_afterFSR_from_tbar_phi");
+      static const SG::AuxElement::Accessor<float> acc_tbar_dec2_m("MC_Wdecay2_afterFSR_from_tbar_m");
+      static const SG::AuxElement::Accessor<int>   acc_tbar_dec2_pdgid("MC_Wdecay2_afterFSR_from_tbar_pdgId");
 
       // build the PtEtaPhiMVectors
       PtEtaPhiMVector top, tbar, top_decay, tbar_decay;

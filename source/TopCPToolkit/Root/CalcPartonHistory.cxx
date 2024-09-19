@@ -26,63 +26,6 @@ namespace top {
                     "Store Gate output name for the PartonHistory object");
   }
 
-  StatusCode CalcPartonHistory::buildContainerFromMultipleCollections(const std::vector<std::string> &collections, const std::string& out_contName)
-  {
-    ConstDataVector<DataVector<xAOD::TruthParticle_v1> > *out_cont = new ConstDataVector<DataVector<xAOD::TruthParticle_v1> > (SG::VIEW_ELEMENTS);
-
-    for(const std::string& collection : collections)
-    {
-      const xAOD::TruthParticleContainer* cont=nullptr;
-      ANA_CHECK(evtStore()->retrieve(cont,collection));
-      for(const xAOD::TruthParticle* p : *cont) out_cont->push_back(p);
-    }
-
-    //we give control of the container to the store, because in this way we are able to retrieve it as a const data vector, see https://twiki.cern.ch/twiki/bin/view/AtlasComputing/DataVector#ConstDataVector
-    StatusCode save = TDS()->record(out_cont,out_contName);
-    if (!save) return StatusCode::FAILURE;
-
-    return StatusCode::SUCCESS;
-  }
-
-  StatusCode CalcPartonHistory::linkBosonCollections()
-  {
-    return decorateCollectionWithLinksToAnotherCollection("TruthBoson","TruthBosonsWithDecayParticles","AT_linkToTruthBosonsWithDecayParticles");
-  }
-
-  StatusCode CalcPartonHistory::decorateCollectionWithLinksToAnotherCollection(const std::string &collectionToDecorate, const std::string &collectionToLink, const std::string &nameOfDecoration)
-  {
-    const xAOD::TruthParticleContainer* cont1(nullptr);
-    const xAOD::TruthParticleContainer* cont2(nullptr);
-    ANA_CHECK(evtStore()->retrieve(cont1,collectionToDecorate));
-    ANA_CHECK(evtStore()->retrieve(cont2,collectionToLink));
-
-    for(const xAOD::TruthParticle *p : *cont1)
-    {
-      const xAOD::TruthParticle* link =0;
-      for(const xAOD::TruthParticle *p2 : *cont2)
-      {
-        if(p->pdgId()==p2->pdgId() && p->barcode()==p2->barcode())
-        {
-          link=p2;
-          break;
-        }
-      }
-      p->auxdecor<const xAOD::TruthParticle*>(nameOfDecoration)=link;
-
-    }
-    return StatusCode::SUCCESS;
-  }
-
-  const xAOD::TruthParticle* CalcPartonHistory::getTruthParticleLinkedFromDecoration(const xAOD::TruthParticle* part, const std::string &decorationName)
-  {
-    if(!part->isAvailable<const xAOD::TruthParticle*>(decorationName)) return part;
-
-    const xAOD::TruthParticle* link=part->auxdecor<const xAOD::TruthParticle*>(decorationName);
-    if(link) return link;
-
-    return part;
-  }
-
   bool CalcPartonHistory::ExistsInMap(const std::string& key) {
     // Checks wether a given key exists in the particle map
     return (!(particleMap.find(key) == particleMap.end()));
@@ -127,7 +70,7 @@ namespace top {
     parentpdgId = highestPtParticle->parent()->pdgId();
     return true;
   }
-  
+
   bool CalcPartonHistory::RetrievepdgId(const std::string& key, int& pdgId) {
     // Retrieves the PDG ID associated with a given key from the particleMap.
     // Returns true if the key exists and assigns the PDG ID to pdgId, otherwise returns false.
@@ -149,6 +92,145 @@ namespace top {
     return true;
   }
 
+  void CalcPartonHistory::InitializeTopDecorators() {
+    m_t_dec.initializePtEtaPhiMDecorator("MC_t_beforeFSR");
+    m_t_dec.initializePtEtaPhiMDecorator("MC_b_beforeFSR_from_t");
+    m_t_dec.initializePtEtaPhiMDecorator("MC_W_beforeFSR_from_t");
+    m_t_dec.initializePtEtaPhiMDecorator("MC_Wdecay1_beforeFSR_from_t");
+    m_t_dec.initializePtEtaPhiMDecorator("MC_Wdecay2_beforeFSR_from_t");
+
+    m_t_dec.initializePtEtaPhiMDecorator("MC_t_afterFSR");
+    m_t_dec.initializePtEtaPhiMDecorator("MC_b_afterFSR_from_t");
+    m_t_dec.initializePtEtaPhiMDecorator("MC_W_afterFSR_from_t");
+    m_t_dec.initializePtEtaPhiMDecorator("MC_Wdecay1_afterFSR_from_t");
+    m_t_dec.initializePtEtaPhiMDecorator("MC_Wdecay2_afterFSR_from_t");
+
+    m_t_dec.initializeIntDecorator("MC_t_beforeFSR_pdgId");
+    m_t_dec.initializeIntDecorator("MC_b_beforeFSR_from_t_pdgId");
+    m_t_dec.initializeIntDecorator("MC_W_beforeFSR_from_t_pdgId");
+    m_t_dec.initializeIntDecorator("MC_Wdecay1_beforeFSR_from_t_pdgId");
+    m_t_dec.initializeIntDecorator("MC_Wdecay2_beforeFSR_from_t_pdgId");
+
+    m_t_dec.initializeIntDecorator("MC_t_afterFSR_pdgId");
+    m_t_dec.initializeIntDecorator("MC_b_afterFSR_from_t_pdgId");
+    m_t_dec.initializeIntDecorator("MC_W_afterFSR_from_t_pdgId");
+    m_t_dec.initializeIntDecorator("MC_Wdecay1_afterFSR_from_t_pdgId");
+    m_t_dec.initializeIntDecorator("MC_Wdecay2_afterFSR_from_t_pdgId");
+  }
+
+  void CalcPartonHistory::InitializeAntiTopDecorators() {
+    m_tbar_dec.initializePtEtaPhiMDecorator("MC_tbar_beforeFSR");
+    m_tbar_dec.initializePtEtaPhiMDecorator("MC_bbar_beforeFSR_from_tbar");
+    m_tbar_dec.initializePtEtaPhiMDecorator("MC_W_beforeFSR_from_tbar");
+    m_tbar_dec.initializePtEtaPhiMDecorator("MC_Wdecay1_beforeFSR_from_tbar");
+    m_tbar_dec.initializePtEtaPhiMDecorator("MC_Wdecay2_beforeFSR_from_tbar");
+
+    m_tbar_dec.initializePtEtaPhiMDecorator("MC_tbar_afterFSR");
+    m_tbar_dec.initializePtEtaPhiMDecorator("MC_bbar_afterFSR_from_tbar");
+    m_tbar_dec.initializePtEtaPhiMDecorator("MC_W_afterFSR_from_tbar");
+    m_tbar_dec.initializePtEtaPhiMDecorator("MC_Wdecay1_afterFSR_from_tbar");
+    m_tbar_dec.initializePtEtaPhiMDecorator("MC_Wdecay2_afterFSR_from_tbar");
+
+    m_tbar_dec.initializeIntDecorator("MC_tbar_beforeFSR_pdgId");
+    m_tbar_dec.initializeIntDecorator("MC_bbar_beforeFSR_from_tbar_pdgId");
+    m_tbar_dec.initializeIntDecorator("MC_W_beforeFSR_from_tbar_pdgId");
+    m_tbar_dec.initializeIntDecorator("MC_Wdecay1_beforeFSR_from_tbar_pdgId");
+    m_tbar_dec.initializeIntDecorator("MC_Wdecay2_beforeFSR_from_tbar_pdgId");
+
+    m_tbar_dec.initializeIntDecorator("MC_tbar_afterFSR_pdgId");
+    m_tbar_dec.initializeIntDecorator("MC_bbar_afterFSR_from_tbar_pdgId");
+    m_tbar_dec.initializeIntDecorator("MC_W_afterFSR_from_tbar_pdgId");
+    m_tbar_dec.initializeIntDecorator("MC_Wdecay1_afterFSR_from_tbar_pdgId");
+    m_tbar_dec.initializeIntDecorator("MC_Wdecay2_afterFSR_from_tbar_pdgId");
+  }
+
+  void CalcPartonHistory::InitializeBottomDecorators() {
+    m_b_dec.initializePtEtaPhiMDecorator("MC_b_beforeFSR");
+    m_b_dec.initializePtEtaPhiMDecorator("MC_b_afterFSR");
+
+    m_b_dec.initializeIntDecorator("MC_b_beforeFSR_pdgId");
+    m_b_dec.initializeIntDecorator("MC_b_afterFSR_pdgId");
+  }
+
+  void CalcPartonHistory::InitializeAntiBottomDecorators() {
+    m_bbar_dec.initializePtEtaPhiMDecorator("MC_bbar_beforeFSR");
+    m_bbar_dec.initializePtEtaPhiMDecorator("MC_bbar_afterFSR");
+
+    m_bbar_dec.initializeIntDecorator("MC_bbar_beforeFSR_pdgId");
+    m_bbar_dec.initializeIntDecorator("MC_bbar_afterFSR_pdgId");
+  }
+
+  void CalcPartonHistory::InitializeTtbarDecorators() {
+    m_ttbar_dec.initializeFloatDecorator({"MC_ttbar_beforeFSR_m", "MC_ttbar_beforeFSR_pt", "MC_ttbar_beforeFSR_eta", "MC_ttbar_beforeFSR_phi"});
+    m_ttbar_dec.initializeFloatDecorator({"MC_ttbar_fromDecay_beforeFSR_m", "MC_ttbar_fromDecay_beforeFSR_pt", "MC_ttbar_fromDecay_beforeFSR_eta", "MC_ttbar_fromDecay_beforeFSR_phi"});
+
+    m_ttbar_dec.initializeFloatDecorator({"MC_ttbar_afterFSR_m", "MC_ttbar_afterFSR_pt", "MC_ttbar_afterFSR_eta", "MC_ttbar_afterFSR_phi"});
+    m_ttbar_dec.initializeFloatDecorator({"MC_ttbar_fromDecay_afterFSR_m", "MC_ttbar_fromDecay_afterFSR_pt", "MC_ttbar_fromDecay_afterFSR_eta", "MC_ttbar_fromDecay_afterFSR_phi"});
+  }
+
+  void CalcPartonHistory::InitializePhotonDecorators() {
+    m_gamma_dec.initializePtEtaPhiMDecorator("MC_gamma");
+    m_gamma_dec.initializeIntDecorator("MC_gamma_origin");
+  }
+
+  void CalcPartonHistory::InitializeHiggsDecorators() {
+    m_H_dec.initializePtEtaPhiMDecorator("MC_H_beforeFSR");
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay1_beforeFSR");
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay2_beforeFSR");
+
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay1_decay1_beforeFSR");
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay2_decay1_beforeFSR");
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay1_decay2_beforeFSR");
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay2_decay2_beforeFSR");
+
+    m_H_dec.initializePtEtaPhiMDecorator("MC_H_afterFSR");
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay1_afterFSR");
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay2_afterFSR");
+
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay1_decay1_afterFSR");
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay2_decay1_afterFSR");
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay1_decay2_afterFSR");
+    m_H_dec.initializePtEtaPhiMDecorator("MC_Hdecay2_decay2_afterFSR");
+
+    m_H_dec.initializeIntDecorator("MC_H_beforeFSR_pdgId");
+    m_H_dec.initializeIntDecorator("MC_Hdecay1_beforeFSR_pdgId");
+    m_H_dec.initializeIntDecorator("MC_Hdecay2_beforeFSR_pdgId");
+
+    m_H_dec.initializeIntDecorator("MC_Hdecay1_decay1_beforeFSR_pdgId");
+    m_H_dec.initializeIntDecorator("MC_Hdecay2_decay1_beforeFSR_pdgId");
+    m_H_dec.initializeIntDecorator("MC_Hdecay1_decay2_beforeFSR_pdgId");
+    m_H_dec.initializeIntDecorator("MC_Hdecay2_decay2_beforeFSR_pdgId");
+
+    m_H_dec.initializeIntDecorator("MC_H_afterFSR_pdgId");
+    m_H_dec.initializeIntDecorator("MC_Hdecay1_afterFSR_pdgId");
+    m_H_dec.initializeIntDecorator("MC_Hdecay2_afterFSR_pdgId");
+
+    m_H_dec.initializeIntDecorator("MC_Hdecay1_decay1_afterFSR_pdgId");
+    m_H_dec.initializeIntDecorator("MC_Hdecay2_decay1_afterFSR_pdgId");
+    m_H_dec.initializeIntDecorator("MC_Hdecay1_decay2_afterFSR_pdgId");
+    m_H_dec.initializeIntDecorator("MC_Hdecay2_decay2_afterFSR_pdgId");
+  }
+
+  void CalcPartonHistory::InitializeZDecorators() {
+    m_Z_dec.initializePtEtaPhiMDecorator("MC_Z_beforeFSR");
+    m_Z_dec.initializePtEtaPhiMDecorator("MC_Zdecay1_beforeFSR");
+    m_Z_dec.initializePtEtaPhiMDecorator("MC_Zdecay2_beforeFSR");
+
+    m_Z_dec.initializePtEtaPhiMDecorator("MC_Z_afterFSR");
+    m_Z_dec.initializePtEtaPhiMDecorator("MC_Zdecay1_afterFSR");
+    m_Z_dec.initializePtEtaPhiMDecorator("MC_Zdecay2_afterFSR");
+
+    m_Z_dec.initializeIntDecorator("MC_Z_beforeFSR_pdgId");
+    m_Z_dec.initializeIntDecorator("MC_Zdecay1_beforeFSR_pdgId");
+    m_Z_dec.initializeIntDecorator("MC_Zdecay2_beforeFSR_pdgId");
+
+    m_Z_dec.initializeIntDecorator("MC_Z_afterFSR_pdgId");
+    m_Z_dec.initializeIntDecorator("MC_Zdecay1_afterFSR_pdgId");
+    m_Z_dec.initializeIntDecorator("MC_Zdecay2_afterFSR_pdgId");
+
+    m_Z_dec.initializeIntDecorator("MC_Z_IsOnShell");
+  }
+
   void CalcPartonHistory::EnsureKeyExists(const std::string& key, const std::string& fallbackKey) {
     // Ensures that a given key exists in the particleMap.
     // If the key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
@@ -161,22 +243,75 @@ namespace top {
       particleMap[key] = particleMap[fallbackKey];
     }
   }
-  
+
+  void CalcPartonHistory::EnsureTopKeysExist() {
+    // Ensures that all relevant top keys exists in the particleMap.
+    // Note, if a particle has no FSR it will be saved as afterFSR
+    // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
+    EnsureKeyExists("MC_t_Wp_beforeFSR", "MC_t_Wp_afterFSR");
+    EnsureKeyExists("MC_t_WpDecay1_beforeFSR", "MC_t_WpDecay1_afterFSR");
+    EnsureKeyExists("MC_t_WpDecay2_beforeFSR", "MC_t_WpDecay2_afterFSR");
+    EnsureKeyExists("MC_t_beforeFSR", "MC_t_afterFSR");
+    EnsureKeyExists("MC_t_b_beforeFSR", "MC_t_b_afterFSR");
+  }
+
+  void CalcPartonHistory::EnsureAntiTopKeysExist() {
+    // Ensures that all relevant anti top keys exists in the particleMap.
+    // Note, if a particle has no FSR it will be saved as afterFSR
+    // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
+    EnsureKeyExists("MC_tbar_Wm_beforeFSR", "MC_tbar_Wm_afterFSR");
+    EnsureKeyExists("MC_tbar_WmDecay1_beforeFSR", "MC_tbar_WmDecay1_afterFSR");
+    EnsureKeyExists("MC_tbar_WmDecay2_beforeFSR", "MC_tbar_WmDecay2_afterFSR");
+    EnsureKeyExists("MC_tbar_beforeFSR", "MC_tbar_afterFSR");
+    EnsureKeyExists("MC_tbar_bbar_beforeFSR", "MC_tbar_bbar_afterFSR");
+  }
+
+  void CalcPartonHistory::EnsureBottomKeysExist() {
+    // Ensures that all relevant bottom keys exists in the particleMap.
+    // Note, if a particle has no FSR it will be saved as afterFSR
+    // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
+    EnsureKeyExists("MC_b_beforeFSR", "MC_b_afterFSR");
+  }
+
+  void CalcPartonHistory::EnsureAntiBottomKeysExist() {
+    // Ensures that all relevant anti bottom keys exists in the particleMap.
+    // Note, if a particle has no FSR it will be saved as afterFSR
+    // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
+    EnsureKeyExists("MC_bbar_beforeFSR", "MC_bbar_afterFSR");
+  }
+
+  void CalcPartonHistory::EnsureZKeysExist() {
+    // Ensures that all relevant Z keys exists in the particleMap.
+    // Note, if a particle has no FSR it will be saved as afterFSR
+    // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
+    EnsureKeyExists("MC_Z_beforeFSR", "MC_Z_afterFSR");
+  }
+
+  void CalcPartonHistory::EnsureHiggsKeysExist() {
+    // Ensures that all relevant higgs keys exists in the particleMap.
+    // Note, if a particle has no FSR it will be saved as afterFSR
+    // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
+    EnsureKeyExists("MC_H_beforeFSR", "MC_H_afterFSR");
+    EnsureKeyExists("MC_HDecay1_beforeFSR", "MC_HDecay1_afterFSR");
+    EnsureKeyExists("MC_HDecay2_beforeFSR", "MC_HDecay2_afterFSR");
+    EnsureKeyExists("MC_HDecay1_Decay1_beforeFSR", "MC_HDecay1_Decay1_afterFSR");
+    EnsureKeyExists("MC_HDecay1_Decay2_beforeFSR", "MC_HDecay1_Decay2_afterFSR");
+    EnsureKeyExists("MC_HDecay2_Decay1_beforeFSR", "MC_HDecay2_Decay1_afterFSR");
+    EnsureKeyExists("MC_HDecay2_Decay2_beforeFSR", "MC_HDecay2_Decay2_afterFSR");
+  }
+
   void CalcPartonHistory::EnsureTtbarKeysExist() {
     // Ensures that all relevant Ttbar key exists in the particleMap.
     // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
-    EnsureKeyExists("MC_t_Wp_afterFSR", "MC_t_Wp");
-    EnsureKeyExists("MC_tbar_Wm_afterFSR", "MC_tbar_Wm");
-    EnsureKeyExists("MC_t_Wp_beforeFSR", "MC_t_Wp_afterFSR");
-    EnsureKeyExists("MC_tbar_Wm_beforeFSR", "MC_tbar_Wm_afterFSR");
-    EnsureKeyExists("MC_t_afterFSR", "MC_t");
-    EnsureKeyExists("MC_tbar_afterFSR", "MC_tbar");
-    EnsureKeyExists("MC_t_beforeFSR", "MC_t_afterFSR");
-    EnsureKeyExists("MC_tbar_beforeFSR", "MC_tbar_afterFSR");
-    EnsureKeyExists("MC_t_b_afterFSR", "MC_t_b");
-    EnsureKeyExists("MC_tbar_bbar_afterFSR", "MC_tbar_bbar");
-    EnsureKeyExists("MC_t_b_beforeFSR", "MC_t_b_afterFSR");
-    EnsureKeyExists("MC_tbar_bbar_beforeFSR", "MC_tbar_bbar_afterFSR");
+    EnsureTopKeysExist();
+    EnsureAntiTopKeysExist();
+  }
+
+  void CalcPartonHistory::EnsurebbbarKeysExist() {
+    // Ensures that all relevant bbar key exists in the particleMap.
+    // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
+    EnsureBottomKeysExist();
+    EnsureAntiBottomKeysExist();
   }
 
   std::string CalcPartonHistory::GetParticleType(const xAOD::TruthParticle* particle) {
@@ -246,6 +381,7 @@ namespace top {
     if (PartonHistoryUtils::isAfterFSR(particle) && abs(particle->pdgId()) == 24) {
       particle = getTruthParticleLinkedFromDecoration(particle, "AT_linkToTruthBosonsWithDecayParticles");
     }
+
     // Add the current particle to the current path we are building
     currentPath.push_back(particle);
 
@@ -309,7 +445,13 @@ namespace top {
 	return true;
       }
     }
-    if (hasParentPdgId(particle, particle->pdgId())) {
+    else if (hasParentPdgId(particle, particle->pdgId())) {
+      if (!(newKey == oldKey)) key += newKey;
+      AddToParticleMap(particle, key + postfix);
+      return true;
+    }
+    // finally we can also have particles from the hard interaction
+    else if (!hasParentPdgId(particle, particle->pdgId()) && !hasIdenticalChild(particle)) {
       if (!(newKey == oldKey)) key += newKey;
       AddToParticleMap(particle, key + postfix);
       return true;
@@ -330,7 +472,9 @@ namespace top {
       if (particle->pdgId() == 22) postfix = "_GammaRad";
       else postfix = "Decay";
       postfix += std::to_string(decayID);
-      AddToParticleMap(particle, key + postfix);
+      const xAOD::TruthParticle* particle_afterFSR = PartonHistoryUtils::findAfterFSR(particle);
+      AddToParticleMap(particle, key + postfix + "_beforeFSR");
+      AddToParticleMap(particle_afterFSR, key + postfix + "_afterFSR");
       key += postfix + "_";
       return true;
     }
@@ -359,7 +503,7 @@ namespace top {
       std::string old_key = "";
       std::string new_key = "";
       std::string postfix = "";
-      
+
       for (auto it = path.begin(); it != path.end(); it++) {
 	const xAOD::TruthParticle* particle = *it;
 	bool isbeforeFSR = (hasIdenticalChild(particle));
@@ -424,6 +568,76 @@ namespace top {
     if (!save || !saveAux) return StatusCode::FAILURE;
 
     return StatusCode::SUCCESS;
+  }
+
+  StatusCode CalcPartonHistory::buildContainerFromMultipleCollections(const std::vector<std::string> &collections, const std::string& out_contName)
+  {
+    ConstDataVector<DataVector<xAOD::TruthParticle_v1> > *out_cont = new ConstDataVector<DataVector<xAOD::TruthParticle_v1> > (SG::VIEW_ELEMENTS);
+    std::vector<const xAOD::TruthParticle*> p_candidates;
+    std::vector<const xAOD::TruthParticle*> p_parents;
+
+    for (const std::string& collection : collections) {
+      const xAOD::TruthParticleContainer* cont = nullptr;
+      ANA_CHECK(evtStore()->retrieve(cont, collection));
+      p_candidates.insert(p_candidates.end(), cont->begin(), cont->end());
+    }
+
+    for (const xAOD::TruthParticle* potential_parent : p_candidates) {
+      if (std::none_of(p_candidates.begin(), p_candidates.end(),
+		       [&](const xAOD::TruthParticle* other_candidate) {
+			 return other_candidate != potential_parent &&
+			   PartonHistoryUtils::isChildOf(other_candidate, potential_parent);
+		       })) {
+        p_parents.push_back(potential_parent);
+      }
+    }
+
+    out_cont->insert(out_cont->end(), p_parents.begin(), p_parents.end());
+
+    //we give control of the container to the store, because in this way we are able to retrieve it as a const data vector, see https://twiki.cern.ch/twiki/bin/view/AtlasComputing/DataVector#ConstDataVector
+    StatusCode save = TDS()->record(out_cont,out_contName);
+    if (!save) return StatusCode::FAILURE;
+
+    return StatusCode::SUCCESS;
+  }
+
+  StatusCode CalcPartonHistory::linkBosonCollections()
+  {
+    return decorateCollectionWithLinksToAnotherCollection("TruthBoson","TruthBosonsWithDecayParticles","AT_linkToTruthBosonsWithDecayParticles");
+  }
+
+  StatusCode CalcPartonHistory::decorateCollectionWithLinksToAnotherCollection(const std::string &collectionToDecorate, const std::string &collectionToLink, const std::string &nameOfDecoration)
+  {
+    const xAOD::TruthParticleContainer* cont1(nullptr);
+    const xAOD::TruthParticleContainer* cont2(nullptr);
+    ANA_CHECK(evtStore()->retrieve(cont1,collectionToDecorate));
+    ANA_CHECK(evtStore()->retrieve(cont2,collectionToLink));
+
+    for(const xAOD::TruthParticle *p : *cont1)
+    {
+      const xAOD::TruthParticle* link =0;
+      for(const xAOD::TruthParticle *p2 : *cont2)
+      {
+        if(p->pdgId()==p2->pdgId() && p->barcode()==p2->barcode())
+        {
+          link=p2;
+          break;
+        }
+      }
+      p->auxdecor<const xAOD::TruthParticle*>(nameOfDecoration)=link;
+
+    }
+    return StatusCode::SUCCESS;
+  }
+
+  const xAOD::TruthParticle* CalcPartonHistory::getTruthParticleLinkedFromDecoration(const xAOD::TruthParticle* part, const std::string &decorationName)
+  {
+    if(!part->isAvailable<const xAOD::TruthParticle*>(decorationName)) return part;
+
+    const xAOD::TruthParticle* link=part->auxdecor<const xAOD::TruthParticle*>(decorationName);
+    if(link) return link;
+
+    return part;
   }
 
   StatusCode CalcPartonHistory::linkTruthContainers(const xAOD::TruthParticleContainer* &tp) {
