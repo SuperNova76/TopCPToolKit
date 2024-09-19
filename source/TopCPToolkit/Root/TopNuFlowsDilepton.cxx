@@ -71,10 +71,10 @@ void TopNuFlowsDilepton::Sample(ConstDataVector<xAOD::ElectronContainer> &electr
     this->clearOutputs();
 
     // Add the inputs (appends to m_input_tensors)
-    this->addInput(m_input_jet);
-    this->addInput(m_input_lep);
-    this->addInput(m_input_met);
-    this->addInput(m_input_misc);
+    this->addInputs(m_input_jet);
+    this->addInputs(m_input_lep);
+    this->addInputs(m_input_met);
+    this->addInputs(m_input_misc);
 
     // Select the appropriate network and run using ONNX
     m_model_idx = this->getSessionIndex(eventNumber);

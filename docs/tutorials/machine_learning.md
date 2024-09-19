@@ -112,7 +112,7 @@ The input variables for this model are:
 To compute these input variables, we need electrons, muons, jets, and met.
 
 !!! example "Exercise"
-    Add and initialize the input handles. Add corresponding configurable options in the algorithm's config block as well. 
+    Add and initialize the input handles. Add corresponding configurable options in the algorithm's config block as well.
 
 ??? success "Solution"
     - In `TopMLTutorial/TopMLTutorial/RunMyNNAlg.h`, add the following after the declaration of jet handle `CP::SysReadHandle<xAOD::JetContainer> m_jetsHandle m_jetsHandle`:
@@ -324,7 +324,7 @@ Now we are finally ready to run inference with the model and get the prediction.
       };
 
       m_NN->clearInputs();
-      m_NN->addInputs(input_values, input_shapes);
+      m_NN->linkInputs(input_values, input_shapes);
 
       // Run inference
       m_NN->evaluate();
@@ -768,7 +768,7 @@ Below you can find the full source code of the algorithm and its config file.
         };
 
         m_NN->clearInputs();
-        m_NN->addInputs(input_values, input_shapes);
+        m_NN->linkInputs(input_values, input_shapes);
 
         // Run inference
         m_NN->evaluate();

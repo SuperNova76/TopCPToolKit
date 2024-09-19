@@ -19,7 +19,7 @@ namespace top {
 // So we inlcude helper functions for flattening vectors and getting their shapes
 // This is helpful for passing multi-dimensional vectors to the onnx wrapper
 // without having to know their shape in advance.
-// All this is in service for the linkInput method which can now accept
+// All this is in service for the linkInputs method which can now accept
 // multi-dimensional vectors
 
 // First we define a way to get the type of each element in a vector
@@ -116,33 +116,33 @@ class ONNXWrapper : public asg::AsgTool {
 
     // This form of initialization means that m_input_tensors own the buffers
     template <typename T>
-    void addInput(T* p_data, size_t p_data_element_count, const int64_t* shape, size_t shape_len) {
+    void addInputs(T* p_data, size_t p_data_element_count, const int64_t* shape, size_t shape_len) {
         m_input_tensors.emplace_back(Ort::Value::CreateTensor<T>(m_allocator, shape, shape_len));
         std::memcpy(m_input_tensors.back().GetTensorMutableData<T>(), p_data, p_data_element_count * sizeof(T));
     }
 
     // This does not copy the buffer! So the caller must ensure the buffer persists
     template <typename T>
-    void linkInput(T* p_data, size_t p_data_element_count, const int64_t* shape, size_t shape_len) {
+    void linkInputs(T* p_data, size_t p_data_element_count, const int64_t* shape, size_t shape_len) {
         m_input_tensors.push_back(Ort::Value::CreateTensor<T>(m_memory_info, p_data, p_data_element_count, shape, shape_len));
     }
 
     template <typename T>
-    void addInput(std::vector<T>& values, const std::vector<int64_t>& shape) {
-        addInput(values.data(), values.size(), shape.data(), shape.size());
+    void addInputs(std::vector<T>& values, const std::vector<int64_t>& shape) {
+        addInputs(values.data(), values.size(), shape.data(), shape.size());
     }
 
     template <typename T>
-    void linkInput(std::vector<T>& values, const std::vector<int64_t>& shape) {
-        addInput(values.data(), values.size(), shape.data(), shape.size());
+    void linkInputs(std::vector<T>& values, const std::vector<int64_t>& shape) {
+        addInputs(values.data(), values.size(), shape.data(), shape.size());
     }
 
     // For multidimensional vectors with auto flatten and shape calculation
     template <typename T>
-    void addInput(std::vector<T>& values) {
+    void addInputs(std::vector<T>& values) {
         auto flat = flatten(values);
         auto shape = calculateDimensions(values);
-        addInput(flat, shape);
+        addInputs(flat, shape);
     }
 
     template <typename T>

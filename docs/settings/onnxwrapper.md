@@ -20,7 +20,7 @@
 `clearOutputs()`
 :   Delete all output tensors stored in the wrapper's internal container.
 
-`template<typename T> void linkInput(T* p_data, size_t p_data_element_count, const int64_t* shape, size_t shape_len)`
+`template<typename T> void linkInputs(T* p_data, size_t p_data_element_count, const int64_t* shape, size_t shape_len)`
 :   Link a data array to tensor and add to the wrapper's internal container to be used as inputs for evaluating models.
 Does not copy the underlying data, so the buffer must be kept alive until the evaluation is done.
 
@@ -32,7 +32,7 @@ Does not copy the underlying data, so the buffer must be kept alive until the ev
 
     - `shape_len` length of the dimension array
 
-`template<typename T> void linkInput(const std::vector<T>& values, const std::vector<int64_t>& shape)`
+`template<typename T> void linkInputs(const std::vector<T>& values, const std::vector<int64_t>& shape)`
 :   Link a data vector to tensor and add to the wrapper's internal container to be used as inputs for evaluating models.
 Does not copy the underlying data, so the buffer must be kept alive until the evaluation is done.
 
