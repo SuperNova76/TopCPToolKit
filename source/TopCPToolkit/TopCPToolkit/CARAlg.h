@@ -37,6 +37,7 @@ namespace top {
       void initializeHVVdecorators();
       void initializeHVVaccessors();
       void prepareCARHVVInputs();
+      void prepareCARHVVOutputs();
       void prepareHVVInputVectors(const xAOD::PartonHistory *history);
       void performCAR();
       void performCAR(ROOT::Math::PtEtaPhiMVector& PV1_L1,

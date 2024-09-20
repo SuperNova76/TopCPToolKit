@@ -97,7 +97,7 @@ namespace top {
 
   void CARAlg::prepareCARHVVInputs() {
     // Negatively charged fermions are always decay1!
-    if (m_partonhistory == "HWW") {
+     if (m_partonhistory == "HWW") {
       // We are looking for l+ from W+
       // Hdecay1 is W+:
       // beforeFSR
@@ -127,6 +127,40 @@ namespace top {
       m_decay_map["V1_L2_afterFSR"] = m_Hdecay1_decay2_afterFSR_CAR; // l+
       m_decay_map["V2_L1_afterFSR"] = m_Hdecay2_decay1_afterFSR_CAR; // l-
       m_decay_map["V2_L2_afterFSR"] = m_Hdecay2_decay2_afterFSR_CAR; // l+
+    }
+  }
+
+  void CARAlg::prepareCARHVVOutputs() {
+    if (m_partonhistory == "HWW") {
+      // We are looking for l+ from W+
+      // Hdecay1 is W+:
+      // beforeFSR
+      m_Hdecay1_decay2_beforeFSR_CAR = m_decay_map["V1_L1_beforeFSR"]; // l+
+      m_Hdecay1_decay1_beforeFSR_CAR = m_decay_map["V1_L2_beforeFSR"]; // nu
+      // afterFSR
+      m_Hdecay1_decay2_afterFSR_CAR = m_decay_map["V1_L1_afterFSR"]; // l+
+      m_Hdecay1_decay1_afterFSR_CAR = m_decay_map["V1_L2_afterFSR"]; // nu
+      // We are looking for l- from W-
+      // Hdecay2 is W-:
+      // beforeFSR
+      m_Hdecay2_decay1_beforeFSR_CAR = m_decay_map["V2_L1_beforeFSR"]; // l-
+      m_Hdecay2_decay2_beforeFSR_CAR = m_decay_map["V2_L2_beforeFSR"]; // nubar
+      // afterFSR
+      m_Hdecay2_decay1_afterFSR_CAR = m_decay_map["V2_L1_afterFSR"]; // l-
+      m_Hdecay2_decay2_afterFSR_CAR = m_decay_map["V2_L2_afterFSR"]; // nubar
+    }
+    else if (m_partonhistory == "HZZ") {
+      // We are looking for l- from both Z
+      // beforeFSR
+      m_Hdecay1_decay1_beforeFSR_CAR = m_decay_map["V1_L1_beforeFSR"]; // l-
+      m_Hdecay1_decay2_beforeFSR_CAR = m_decay_map["V1_L2_beforeFSR"]; // l+
+      m_Hdecay2_decay1_beforeFSR_CAR = m_decay_map["V2_L1_beforeFSR"]; // l-
+      m_Hdecay2_decay2_beforeFSR_CAR = m_decay_map["V2_L2_beforeFSR"]; // l+
+      // afterFSR
+      m_Hdecay1_decay1_afterFSR_CAR = m_decay_map["V1_L1_afterFSR"]; // l-
+      m_Hdecay1_decay2_afterFSR_CAR = m_decay_map["V1_L2_afterFSR"]; // l+
+      m_Hdecay2_decay1_afterFSR_CAR = m_decay_map["V2_L1_afterFSR"]; // l-
+      m_Hdecay2_decay2_afterFSR_CAR = m_decay_map["V2_L2_afterFSR"]; // l+
     }
   }
 
@@ -184,16 +218,16 @@ namespace top {
 
   void CARAlg::prepareHVVInputVectors(const xAOD::PartonHistory *history) {
     // Filling PtEtaPhiVectors for beforeFSR
-      m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay1_decay1_beforeFSR", m_Hdecay1_decay1_beforeFSR_CAR, history);
-      m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay1_decay2_beforeFSR", m_Hdecay1_decay2_beforeFSR_CAR, history);
-      m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay2_decay1_beforeFSR", m_Hdecay2_decay1_beforeFSR_CAR, history);
-      m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay2_decay2_beforeFSR", m_Hdecay2_decay2_beforeFSR_CAR, history);
+    m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay1_decay1_beforeFSR", m_Hdecay1_decay1_beforeFSR_CAR, history);
+    m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay1_decay2_beforeFSR", m_Hdecay1_decay2_beforeFSR_CAR, history);
+    m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay2_decay1_beforeFSR", m_Hdecay2_decay1_beforeFSR_CAR, history);
+    m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay2_decay2_beforeFSR", m_Hdecay2_decay2_beforeFSR_CAR, history);
 
-      // Filling PtEtaPhiVectors for afterFSR
-      m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay1_decay1_afterFSR", m_Hdecay1_decay1_afterFSR_CAR, history);
-      m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay1_decay2_afterFSR", m_Hdecay1_decay2_afterFSR_CAR, history);
-      m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay2_decay1_afterFSR", m_Hdecay2_decay1_afterFSR_CAR, history);
-      m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay2_decay2_afterFSR", m_Hdecay2_decay2_afterFSR_CAR, history);
+    // Filling PtEtaPhiVectors for afterFSR
+    m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay1_decay1_afterFSR", m_Hdecay1_decay1_afterFSR_CAR, history);
+    m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay1_decay2_afterFSR", m_Hdecay1_decay2_afterFSR_CAR, history);
+    m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay2_decay1_afterFSR", m_Hdecay2_decay1_afterFSR_CAR, history);
+    m_CAR_acc.getPtEtaPhiMVector("MC_Hdecay2_decay2_afterFSR", m_Hdecay2_decay2_afterFSR_CAR, history);
   }
 
   StatusCode CARAlg::execute() {
@@ -208,6 +242,7 @@ namespace top {
       prepareHVVInputVectors(history);
       prepareCARHVVInputs();
       performCAR();
+      prepareCARHVVOutputs();
       performHVVDecoration(evtInfo, history);
     }
     return StatusCode::SUCCESS;
@@ -307,7 +342,6 @@ namespace top {
     const float PV1_L2_m = PV1_L2.M();
     const float PV2_L1_m = PV2_L1.M();
     const float PV2_L2_m = PV2_L2.M();
-
     PtEtaPhiMVector PV1 = PV1_L1 + PV1_L2;
     PtEtaPhiMVector PV2 = PV2_L1 + PV2_L2;
     Boost LabtoVVCM = Boost(PV1.BoostToCM(PV2));
@@ -365,13 +399,11 @@ namespace top {
     PV2_L1 = transformBack(PV2_L1RT, VVCMtoV2CM);
     PV2_L2 = transformBack(PV2_L2RT, VVCMtoV2CM);
 
-
     // Restore the original masses
     PV1_L1.SetM(PV1_L1_m);
     PV1_L2.SetM(PV1_L2_m);
     PV2_L1.SetM(PV2_L1_m);
     PV2_L2.SetM(PV2_L2_m);
-
     return;
   }
 
