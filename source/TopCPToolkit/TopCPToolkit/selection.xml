@@ -19,7 +19,6 @@
   <class name="top::SoftMuonSelectorAlg" />
   <class name="top::PartonHistoryToSpinInputAlg" />
   <class name="top::TopSpinDensityMatrixAlg" />
-  <class name="TutorialAlg" />
   <class name="BoostedJetTaggersAlg" />
 
 </lcgdict>

@@ -15,7 +15,6 @@
 #include <TopCPToolkit/PartonHistoryToSpinInputAlg.h>
 #include <TopCPToolkit/TopSpinDensityMatrixAlg.h>
 #include <TopCPToolkit/SinglelepHadronicChi2RecoAlg.h>
-#include <TopCPToolkit/TutorialAlg.h>
 #include <TopCPToolkit/BoostedJetTaggersAlg.h>
 
 DECLARE_COMPONENT (top::RunTtbarNNLORecursiveRewAlg)
