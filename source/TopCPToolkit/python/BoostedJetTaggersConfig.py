@@ -6,7 +6,6 @@ class BoostedJetTaggersConfig(ConfigBlock):
     def __init__(self):
         super(BoostedJetTaggersConfig, self).__init__()
         self.addOption('ljets', None, type=str)
-        self.addOption('taggerName', None, type=str)
         self.addOption('taggerType', None, type=str)
         self.addOption('taggerCalibArea', None, type=str)
         self.addOption('taggerConfigFile', None, type=str)
@@ -20,7 +19,7 @@ class BoostedJetTaggersConfig(ConfigBlock):
       
         ljets  = config.readName(self.ljets)
        
-        alg = config.createAlgorithm('top::BoostedJetTaggersAlg', 'BoostedJetTaggers_' + self.taggerName)
+        alg = config.createAlgorithm('top::BoostedJetTaggersAlg', 'BoostedJetTaggers_' + self.taggerDecoration)
         alg.ljets = ljets
         alg.isMC = isMC
         alg.taggerType = self.taggerType
