@@ -12,8 +12,9 @@
 #include "BoostedJetTaggers/JSSWTopTaggerDNN.h"
 #include "BoostedJetTaggers/JSSWTopTaggerANN.h"
 
-//#include "AsgTools/StandaloneToolHandle.h"
 #include "AsgTools/AnaToolHandle.h"
+
+#include <memory>
 
 namespace top {
 
@@ -33,8 +34,8 @@ namespace top {
       std::string m_taggerDecoration;
       
       enum class TaggerType {
-        JSSWTopTaggerDNN = 0, 
-        JSSWTopTaggerANN = 1
+        JSSWTopTaggerDNN, 
+        JSSWTopTaggerANN
       };
       TaggerType m_taggerType;
       asg::AnaToolHandle<JSSWTopTaggerDNN> m_taggerDNN;
@@ -46,24 +47,13 @@ namespace top {
         this, "ljets", "", "the input large-R jet container"
       };
       
-      CP::SysWriteDecorHandle<int> m_ljetsTopTagHandle {
-        this, "tagged", "tagged_%SYS%", "decoration name for top-tagging result"
-      };
-      CP::SysWriteDecorHandle<float> m_ljetsTopTagScoreHandle {
-        this, "tagged_score", "tagged_score_%SYS%", "decoration name for top-tagging score"
-      };
-      CP::SysWriteDecorHandle<int> m_ljetsTopTagPassMassHandle {
-        this, "tagged_passMass", "tagged_passMass_%SYS%", "decoration name for top-tagging pass mass cut"
-      };
-      CP::SysWriteDecorHandle<float> m_ljetsTopTagSFHandle {
-        this, "tagged_SF", "tagged_SF_%SYS%", "decoration name for top-tagging scale factor"
-      };
-      CP::SysWriteDecorHandle<float> m_ljetsTopTagEfficiencyHandle {
-        this, "tagged_efficiency", "tagged_efficiency_%SYS%", "decoration name for top-tagging efficiency"
-      };
-      CP::SysWriteDecorHandle<float> m_ljetsTopTagEffSFHandle {
-        this, "tagged_effSF", "tagged_effSF_%SYS%", "decoration name for top-tagging efficiency scale factor"
-      };
+      std::unique_ptr<CP::SysWriteDecorHandle<int>> m_ljetsTopTagHandle;
+      std::unique_ptr<CP::SysWriteDecorHandle<float>> m_ljetsTopTagScoreHandle;
+      std::unique_ptr<CP::SysWriteDecorHandle<int>> m_ljetsTopTagPassKinRangeHandle;
+      std::unique_ptr<CP::SysWriteDecorHandle<int>> m_ljetsTopTagPassMassHandle;
+      std::unique_ptr<CP::SysWriteDecorHandle<float>> m_ljetsTopTagSFHandle;
+      std::unique_ptr<CP::SysWriteDecorHandle<float>> m_ljetsTopTagEfficiencyHandle;
+      std::unique_ptr<CP::SysWriteDecorHandle<float>> m_ljetsTopTagEffSFHandle;
       
   };
 

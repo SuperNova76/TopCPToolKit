@@ -31,6 +31,7 @@ class BoostedJetTaggersConfig(ConfigBlock):
         config.addOutputVar(self.ljets, self.taggerDecoration + '_tagged_%SYS%', self.taggerDecoration + '_tagged')
         config.addOutputVar(self.ljets, self.taggerDecoration + '_score_%SYS%', self.taggerDecoration + '_score')
         config.addOutputVar(self.ljets, self.taggerDecoration + '_passMass_%SYS%', self.taggerDecoration + '_passMass')
+        config.addOutputVar(self.ljets, self.taggerDecoration + '_validKinRange_%SYS%', self.taggerDecoration + '_validKinRange')
         config.addOutputVar(self.ljets, self.taggerDecoration + '_SF_%SYS%', self.taggerDecoration + '_SF')
         config.addOutputVar(self.ljets, self.taggerDecoration + '_efficiency_%SYS%', self.taggerDecoration + '_efficiency')
         config.addOutputVar(self.ljets, self.taggerDecoration + '_effSF_%SYS%', self.taggerDecoration + '_effSF')
