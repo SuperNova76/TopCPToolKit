@@ -6,11 +6,10 @@ class BoostedJetTaggersConfig(ConfigBlock):
     def __init__(self):
         super(BoostedJetTaggersConfig, self).__init__()
         self.addOption('ljets', None, type=str)
-        self.addOption('taggerType', None, type=str)
-        self.addOption('taggerCalibArea', None, type=str)
-        self.addOption('taggerConfigFile', None, type=str)
-        self.addOption('taggerDecoration', None, type=str)
-        
+        self.addOption('taggerType', 'JSSWTopTaggerDNN', type=str)
+        self.addOption('taggerCalibArea', 'Winter2024_R22_PreRecs/JSSWTopTaggerDNN/', type=str)
+        self.addOption('taggerConfigFile', 'DNNTagger_AntiKt10UFOSD_TopContained80_Oct30.dat', type=str)
+        self.addOption('taggerDecoration', 'DNNTaggerTopQuarkContained80', type=str)
 
     def makeAlgs(self, config):
       
