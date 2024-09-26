@@ -258,3 +258,43 @@ The algorithm to run FastJet with small-R jets as an input. The output of the al
     - `phi`: reclustered jet $\phi$
     - `e`: reclustered jet $E$
     - `small_r_jet_indices`: vector of indices of the small-R jets clustered into this large-R jet
+
+
+### [BoostedJetTaggersConfig](../../source/TopCPToolkit/python/BoostedJetTaggersConfig.py)
+Name in YAML: **BoostedJetTaggers**
+
+The algorithm tags large-R jets using the [BoostedJetTaggers](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/Reconstruction/Jet/BoostedJetTaggers/BoostedJetTaggers) package. It is enabled via
+```
+AddConfigBlocks:
+    - modulePath: 'TopCPToolkit.BoostedJetTaggersConfig'
+          functionName: 'BoostedJetTaggersConfig'
+          algName: 'BoostedJetTaggers'
+          pos: 'Output'
+```
+
+It is possible to define multiple different taggers.
+
+`ljets`
+:   The input large-R jet collection to tag jets.
+
+`taggerType`
+: Selected tagger type. Avaiable options: `JSSWTopTaggerDNN`, `JSSWTopTaggerANN`
+
+`taggerCalibArea`
+:  `Winter2024_R22_PreRecs/JSSWTopTaggerDNN/`
+
+`taggerConfigFile`
+: Selected tagger config file from the calib area
+
+`taggerDecoration`
+: Tagger decoration is defined in the selected `taggerConfigFile`. Open the selected config file and copy the `DecorationName`. The file can be found under path relative to [atlas-groupdata/BoostedJetTaggers](https://atlas-groupdata.web.cern.ch/atlas-groupdata/BoostedJetTaggers/) or `/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/BoostedJetTaggers/`.
+
+!!! success "Registers the following variables:"
+- `ljet_<taggerDecoration>_tagged`
+- `ljet_<taggerDecoration>_score` 
+- `ljet_<taggerDecoration>_passMass`
+- `ljet_<taggerDecoration>_validKinRange`
+- `ljet_<taggerDecoration>_SF`
+- `ljet_<taggerDecoration>_efficiency`
+- `ljet_<taggerDecoration>_efficiencySF`
+
