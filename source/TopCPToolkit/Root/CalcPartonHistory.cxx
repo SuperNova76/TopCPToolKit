@@ -171,6 +171,7 @@ namespace top {
   void CalcPartonHistory::InitializePhotonDecorators() {
     m_gamma_dec.initializePtEtaPhiMDecorator("MC_gamma");
     m_gamma_dec.initializeIntDecorator("MC_gamma_origin");
+    m_gamma_dec.initializeIntDecorator("MC_gamma_pdgId");
   }
 
   void CalcPartonHistory::InitializeHiggsDecorators() {
