@@ -263,7 +263,8 @@ The algorithm to run FastJet with small-R jets as an input. The output of the al
 ### [BoostedJetTaggersConfig](../../source/TopCPToolkit/python/BoostedJetTaggersConfig.py)
 Name in YAML: **BoostedJetTaggers**
 
-The algorithm tags large-R jets using the [BoostedJetTaggers](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/Reconstruction/Jet/BoostedJetTaggers/BoostedJetTaggers) package. It is enabled via
+The algorithm tags large-R jets using the [BoostedJetTaggers](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/Reconstruction/Jet/BoostedJetTaggers/BoostedJetTaggers) package. More details about taggers can be found on [JetTaggingAndScaleFactors twiki](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/JetTaggingAndScaleFactors).
+The boosted jet taggers are enabled by adding a module into AddConfigBlocks block:
 ```
 AddConfigBlocks:
     - modulePath: 'TopCPToolkit.BoostedJetTaggersConfig'
@@ -275,19 +276,19 @@ AddConfigBlocks:
 It is possible to define multiple different taggers.
 
 `ljets`
-:   The input large-R jet collection to tag jets.
+:   The input large-R jet collection to tag jets. No default value.
 
 `taggerType`
-: Selected tagger type. Avaiable options: `JSSWTopTaggerDNN`, `JSSWTopTaggerANN`
+: Selected tagger type. Avaiable options: `JSSWTopTaggerDNN`, `JSSWTopTaggerANN`. Default value: `JSSWTopTaggerDNN`.
 
 `taggerCalibArea`
-:  `Winter2024_R22_PreRecs/JSSWTopTaggerDNN/`
+:  Directory containing taggers with calibrations released at the same time. Default value: `Winter2024_R22_PreRecs/JSSWTopTaggerDNN/`.
 
 `taggerConfigFile`
-: Selected tagger config file from the calib area
+: Selected tagger config file from the calib area. Default value: `DNNTagger_AntiKt10UFOSD_TopContained80_Oct30.dat`.
 
 `taggerDecoration`
-: Tagger decoration is defined in the selected `taggerConfigFile`. Open the selected config file and copy the `DecorationName`. The file can be found under path relative to [atlas-groupdata/BoostedJetTaggers](https://atlas-groupdata.web.cern.ch/atlas-groupdata/BoostedJetTaggers/) or `/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/BoostedJetTaggers/`.
+: Tagger decoration is defined in the selected `taggerConfigFile`. Open the selected config file and copy the `DecorationName`. The file can be found under path relative to [atlas-groupdata/BoostedJetTaggers](https://atlas-groupdata.web.cern.ch/atlas-groupdata/BoostedJetTaggers/) or `/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/BoostedJetTaggers/`. Default value: `DNNTaggerTopQuarkContained80`.
 
 !!! success "Registers the following variables:"
 - `ljet_<taggerDecoration>_tagged`
