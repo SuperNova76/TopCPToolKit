@@ -139,6 +139,7 @@
 #include <TopCPToolkit/SoftMuonSelectorAlg.h>
 #include <TopCPToolkit/TopSpinDensityMatrixAlg.h>
 #include <TopCPToolkit/TutorialAlg.h>
+#include <TopCPToolkit/BoostedJetTaggersAlg.h>
 
 //
 // method implementations
@@ -235,6 +236,8 @@ namespace top
     ANA_CHECK (asg::registerAlgorithmFactory<top::SoftMuonSelectorAlg> ("top::SoftMuonSelectorAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::TopSpinDensityMatrixAlg> ("top::TopSpinDensityMatrixAlg"));
     ANA_CHECK (asg::registerAlgorithmFactory<top::TutorialAlg> ("top::TutorialAlg"));
+    ANA_CHECK (asg::registerAlgorithmFactory<top::BoostedJetTaggersAlg> ("top::BoostedJetTaggersAlg"));
+
 
     ANA_CHECK (asg::registerToolFactory<AsgDeadHVCellRemovalTool> ("AsgDeadHVCellRemovalTool"));
     ANA_CHECK (asg::registerToolFactory<BTaggingSelectionTool> ("BTaggingSelectionTool"));
