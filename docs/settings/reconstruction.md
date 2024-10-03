@@ -201,6 +201,37 @@ Name in YAML: **SpaNet**
 !!! note "Documentation"
     See [arXiv:2106.03898](https://arxiv.org/abs/2106.03898) and [arXiv:2309.01886](https://arxiv.org/abs/2309.01886).
 
+### [NuFlowsConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/NuFlowsConfig.py)
+Name in YAML: **NuFlows**
+
+`btagger`
+:   b-tagging algorithm to use, if only one is needed. The default is `DL1dv01`.
+
+`electrons`
+:   the input electron container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
+
+`muons`
+:   the input muon container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
+
+`jets`
+:   the input jet container, with a possible selection, in the format `container` or `container.selection`. The default is `''` (empty string).
+
+`met`
+:   the input MET container. The default is `''` (empty string).
+
+`eventSelection`
+:   optional event filter to run on. The default is `''` (empty string), i.e. all events.
+
+`onnxfilepath`
+:   the path to the folder containing the ONNX files (even.onnx, odd.onnx). Nominal ($m_{top} =$ 172.5 GeV) network is at `TopCPToolkit/nuflows/nominal_v01_270824`
+
+`write_inputs`
+:   boolean, if true registers the network input features. Contains four vectors `input_lep, input_jet, input_met, input_misc`
+
+!!! success "Registers 2 outputs:"
+    - `nu_out`: vector containing the sampled neutrino momenta $(p_x^{\nu}, p_y^{\nu}, p_z^{\nu}, p_x^{\bar{\nu}}, p_y^{\bar{\nu}}, p_z^{\bar{\nu}})$
+    - `loglik`: single float containing the log-likelihood of the sampled solution
+
 ### [FakeBkgConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/AsgAnalysisAlgorithms/python/FakeBkgConfig.py)
 Name in YAML: **FakeBkgCalculator**
 
