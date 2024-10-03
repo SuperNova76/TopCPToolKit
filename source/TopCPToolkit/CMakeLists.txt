@@ -27,7 +27,7 @@ if( XAOD_STANDALONE )
     LINK_LIBRARIES ${ROOT_LIBRARIES} ${KLFITTER_LIBRARIES} ${ONNXRUNTIME_LIBRARIES}
     AnaAlgorithmLib AsgAnalysisAlgorithmsLib xAODMissingET xAODJet xAODBTagging xAODEgamma xAODMuon xAODTau xAODTruth xAODCore PathResolver FourMomUtils FTagAnalysisInterfacesLib SystematicsHandlesLib SelectionHelpersLib MCTruthClassifierLib GammaORToolsLib AthContainers
     # THE FOLLOWING ARE NEEDED FOR THE COMPONENT PRELOADER:
-    EgammaAnalysisAlgorithmsLib ElectronPhotonFourMomentumCorrectionLib MuonEfficiencyCorrectionsLib ElectronPhotonSelectorToolsLib TrackingAnalysisAlgorithmsLib TruthClassificationLib PMGToolsLib EventSelectionAlgorithmsLib xAODBTaggingEfficiencyLib JetAnalysisAlgorithmsLib JetJvtEfficiencyLib ElectronEfficiencyCorrectionLib JetUncertaintiesLib MuonAnalysisAlgorithmsLib FTagAnalysisAlgorithmsLib TrigGlobalEfficiencyCorrectionLib MuonSelectorToolsLib MuonMomentumCorrectionsLib METUtilitiesLib ParticleJetToolsLib PileupReweightingLib egammaMVACalibLib MetAnalysisAlgorithmsLib GoodRunsListsLib TauAnalysisAlgorithmsLib TriggerAnalysisAlgorithmsLib TrigConfxAODLib AssociationUtilsLib
+    BoostedJetTaggersLib EgammaAnalysisAlgorithmsLib ElectronPhotonFourMomentumCorrectionLib MuonEfficiencyCorrectionsLib ElectronPhotonSelectorToolsLib TrackingAnalysisAlgorithmsLib TruthClassificationLib PMGToolsLib EventSelectionAlgorithmsLib xAODBTaggingEfficiencyLib JetAnalysisAlgorithmsLib JetJvtEfficiencyLib ElectronEfficiencyCorrectionLib JetUncertaintiesLib MuonAnalysisAlgorithmsLib FTagAnalysisAlgorithmsLib TrigGlobalEfficiencyCorrectionLib MuonSelectorToolsLib MuonMomentumCorrectionsLib METUtilitiesLib ParticleJetToolsLib PileupReweightingLib egammaMVACalibLib MetAnalysisAlgorithmsLib GoodRunsListsLib TauAnalysisAlgorithmsLib TriggerAnalysisAlgorithmsLib TrigConfxAODLib AssociationUtilsLib
     # END OF COMPONENT PRELOADER
   )
 else ()
@@ -38,7 +38,7 @@ else ()
     INCLUDE_DIRS ${KLFITTER_INCLUDE_DIRS} ${ONNXRUNTIME_INCLUDE_DIRS} ${FASTJET_INCLUDE_DIRS}
     PUBLIC_HEADERS TopCPToolkit PartonHistory TopParticleLevel TopSpaNet TopNNLOReweighter VectorHelpers
     LINK_LIBRARIES ${KLFITTER_LIBRARIES} ${ONNXRUNTIME_LIBRARIES} ${FASTJET_LIBRARIES}
-    AnaAlgorithmLib AsgAnalysisAlgorithmsLib xAODMissingET xAODJet xAODBTagging xAODEgamma xAODMuon xAODTau xAODTruth xAODCore PathResolver FourMomUtils FTagAnalysisInterfacesLib SystematicsHandlesLib SelectionHelpersLib MCTruthClassifierLib GammaORToolsLib
+    BoostedJetTaggersLib AnaAlgorithmLib AsgAnalysisAlgorithmsLib xAODMissingET xAODJet xAODBTagging xAODEgamma xAODMuon xAODTau xAODTruth xAODCore PathResolver FourMomUtils FTagAnalysisInterfacesLib SystematicsHandlesLib SelectionHelpersLib MCTruthClassifierLib GammaORToolsLib
     )
 endif ()
 

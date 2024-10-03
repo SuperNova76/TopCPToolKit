@@ -50,6 +50,12 @@ Jets:
       - containerName: 'AnaJets.baselineJvt'
         btagger: 'DL1dv01'
         btagWP: 'FixedCutBEff_85'
+  - containerName: 'AnaLJets'
+    jetCollection: 'AntiKt10UFOCSSKSoftDropBeta100Zcut10Jets'
+    largeRMass: 'Comb'
+    PtEtaSelection:
+        minPt: 200000.0
+        maxEta: 2.0
 
 Electrons:
   - containerName: 'AnaElectrons'
@@ -196,6 +202,7 @@ EventSelection:
   - electrons: 'AnaElectrons.loose'
     muons: 'AnaMuons.tight'
     jets: 'AnaJets.baselineJvt'
+    largeRjets: 'AnaLJets'
     met: 'AnaMET'
     btagDecoration: 'ftag_select_DL1dv01_FixedCutBEff_85'
     noFilter: False
@@ -230,6 +237,10 @@ EventSelection:
         SAVE
       'supertight': |
         JET_N 1000000 >= 1
+        SAVE
+      'boostedjet': |
+        LJET_N 350000 >= 1
+        LJETMASS_N 80000 >= 1
         SAVE
 
 KLFitter:
@@ -268,6 +279,18 @@ Bootstraps:
   nReplicas: 2000
   skipOnMC: False
 
+BoostedJetTaggers:
+- ljets: 'AnaLJets'
+  taggerType: 'JSSWTopTaggerDNN'
+  taggerCalibArea:  'Winter2024_R22_PreRecs/JSSWTopTaggerDNN/'
+  taggerConfigFile: 'DNNTagger_AntiKt10UFOSD_TopContained80_Oct30.dat'
+  taggerDecoration: 'DNNTaggerTopQuarkContained80'
+- ljets: 'AnaLJets'
+  taggerType: 'JSSWTopTaggerANN'
+  taggerCalibArea:  'Winter2024_R22_PreRecs/JSSWTopTaggerANN/'
+  taggerConfigFile: 'JSSANN80Tagger_AntiKt10UFOCSSKSoftDrop_Mar23pol3.dat'
+  taggerDecoration: 'ANN80Tagger'
+
 # After configuring each container, many variables will be saved automatically.
 Output:
   treeName: 'reco'
@@ -280,6 +303,7 @@ Output:
       # ph_: 'OutPhotons'
       # tau_: 'OutTauJets'
       jet_: 'OutJets'
+      ljet_: 'AnaLJets'
       met_: 'AnaMET'
       klfitter_: 'KLFitterResult'
       '': 'EventInfo'
@@ -323,3 +347,7 @@ AddConfigBlocks:
       functionName: 'SoftMuonSelectorConfig'
       algName: 'SoftMuonSelector'
       pos: 'EventSelection'
+    - modulePath: 'TopCPToolkit.BoostedJetTaggersConfig'
+      functionName: 'BoostedJetTaggersConfig'
+      algName: 'BoostedJetTaggers'
+      pos: 'Output'
