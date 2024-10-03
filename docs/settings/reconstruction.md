@@ -226,7 +226,7 @@ Name in YAML: **NuFlows**
 :   the path to the folder containing the ONNX files (even.onnx, odd.onnx). Nominal ($m_{top} =$ 172.5 GeV) network is at `TopCPToolkit/nuflows/nominal_v01_270824`
 
 `write_inputs`
-:   boolean, if true registers the network input features. Contains four vectors `input_lep, input_jet, input_met, input_misc`
+:   boolean, if `True` registers the network input features. Contains four vectors `input_lep, input_jet, input_met, input_misc`. The default is `False`.
 
 !!! success "Registers 2 outputs:"
     - `nu_out`: vector containing the sampled neutrino momenta $(p_x^{\nu}, p_y^{\nu}, p_z^{\nu}, p_x^{\bar{\nu}}, p_y^{\bar{\nu}}, p_z^{\bar{\nu}})$
