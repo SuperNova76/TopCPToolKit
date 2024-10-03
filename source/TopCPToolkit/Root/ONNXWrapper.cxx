@@ -46,69 +46,69 @@ ONNXWrapper::ONNXWrapper(
     m_input_shapes = std::vector<std::vector<int64_t>>(input_node_count);
 
     for (size_t inode = 0; inode < input_node_count; inode++) {
-        // node name
-        auto name = std::string(session->GetInputNameAllocated(inode, m_allocator).get());
-        m_input_name_index[session->GetInputNameAllocated(inode, m_allocator).get()] = inode;
-        m_input_node_names.push_back(session->GetInputNameAllocated(inode, m_allocator).get());
+      // node name
+      auto name = std::string(session->GetInputNameAllocated(inode, m_allocator).get());
+      m_input_name_index[session->GetInputNameAllocated(inode, m_allocator).get()] = inode;
+      m_input_node_names.push_back(session->GetInputNameAllocated(inode, m_allocator).get());
 
-        // node shape and type
-        m_input_shapes[inode] = session->GetInputTypeInfo(inode).GetTensorTypeAndShapeInfo().GetShape();
-        m_input_types.push_back(session->GetInputTypeInfo(inode).GetTensorTypeAndShapeInfo().GetElementType());
+      // node shape and type
+      m_input_shapes[inode] = session->GetInputTypeInfo(inode).GetTensorTypeAndShapeInfo().GetShape();
+      m_input_types.push_back(session->GetInputTypeInfo(inode).GetTensorTypeAndShapeInfo().GetElementType());
     }
 
     // outputs
     size_t output_node_count = session->GetOutputCount();
     m_output_shapes = std::vector<std::vector<int64_t>>(output_node_count);
     for (size_t inode = 0; inode < output_node_count; inode++) {
-        // node name
-        auto name = std::string(session->GetOutputNameAllocated(inode, m_allocator).get());
-        m_output_name_index[name] = inode;
-        m_output_node_names.push_back(name);
+      // node name
+      auto name = std::string(session->GetOutputNameAllocated(inode, m_allocator).get());
+      m_output_name_index[name] = inode;
+      m_output_node_names.push_back(name);
 
-        // node shape and type
-        m_output_shapes[inode] = session->GetOutputTypeInfo(inode).GetTensorTypeAndShapeInfo().GetShape();
-        m_output_types.push_back(session->GetOutputTypeInfo(inode).GetTensorTypeAndShapeInfo().GetElementType());
+      // node shape and type
+      m_output_shapes[inode] = session->GetOutputTypeInfo(inode).GetTensorTypeAndShapeInfo().GetShape();
+      m_output_types.push_back(session->GetOutputTypeInfo(inode).GetTensorTypeAndShapeInfo().GetElementType());
     }
 
     if (m_verbose) {
-        printInputInfo();
-        printOutputInfo();
+      printInputInfo();
+      printOutputInfo();
     }
 
-}  // ONNXWrapper::ONNXWrapper
+} // ONNXWrapper::ONNXWrapper
 
 void ONNXWrapper::printInputInfo() {
     ANA_MSG_INFO("Input:");
     for (size_t i = 0; i < m_input_node_names.size(); i++) {
-        // name
-        ANA_MSG_INFO(" " << m_input_node_names[i]);
-        // type
-        ANA_MSG_INFO("  type = " << m_input_types.at(i));
-        // shape
-        auto& shape_i = m_input_shapes[i];
-        ANA_MSG_INFO("  shape = [");
-        for (size_t j = 0; j < shape_i.size(); j++) {
-            ANA_MSG_INFO("   " << shape_i[j]);
-        }
-        ANA_MSG_INFO("  ]");
+      // name
+      ANA_MSG_INFO(" " << m_input_node_names[i]);
+      // type
+      ANA_MSG_INFO("  type = " << m_input_types.at(i));
+      // shape
+      auto& shape_i = m_input_shapes[i];
+      ANA_MSG_INFO("  shape = [");
+      for (size_t j = 0; j < shape_i.size(); j++) {
+        ANA_MSG_INFO("   " << shape_i[j]);
+      }
+      ANA_MSG_INFO("  ]");
     }
 }
 
 void ONNXWrapper::printOutputInfo() {
     ANA_MSG_INFO("Output:");
     for (size_t i = 0; i < m_output_node_names.size(); i++) {
-        // name
-        ANA_MSG_INFO(" " << m_output_node_names[i]);
-        // type
-        ANA_MSG_INFO("  type = " << m_output_types.at(i));
-        // shape
-        auto& shape_i = m_output_shapes[i];
-        ANA_MSG_INFO("  shape = [");
-        for (size_t j = 0; j < shape_i.size(); j++) {
-            ANA_MSG_INFO("   " << shape_i[j]);
-        }
-        ANA_MSG_INFO("  ]");
+      // name
+      ANA_MSG_INFO(" " << m_output_node_names[i]);
+      // type
+      ANA_MSG_INFO("  type = " << m_output_types.at(i));
+      // shape
+      auto& shape_i = m_output_shapes[i];
+      ANA_MSG_INFO("  shape = [");
+      for (size_t j = 0; j < shape_i.size(); j++) {
+        ANA_MSG_INFO("   " << shape_i[j]);
+      }
+      ANA_MSG_INFO("  ]");
     }
 }
 
-}  // namespace top
+} // namespace top

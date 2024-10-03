@@ -104,11 +104,11 @@ class ONNXWrapper : public asg::AsgTool {
     }
 
     inline void evaluate(unsigned index_network = 0) {
-        m_output_tensors = evaluate(m_input_tensors, index_network);
+      m_output_tensors = evaluate(m_input_tensors, index_network);
     }
 
     virtual unsigned getSessionIndex(unsigned long long eventNumber) {
-        return eventNumber % m_sessions.size();
+      return eventNumber % m_sessions.size();
     }
 
     void clearInputs() { m_input_tensors.clear(); }
@@ -178,14 +178,14 @@ class ONNXWrapper : public asg::AsgTool {
 
     template <typename T>
     T* getOutputs(const std::string& node_name) {
-        try {
-            // find the node index from the node name
-            unsigned node = m_output_name_index.at(node_name);
-            return getOutputs<T>(node);
-        } catch (std::out_of_range& ex) {
-            ANA_MSG_ERROR("Fail to retrieve output from " << node_name << ": " << ex.what());
-            return nullptr;
-        }
+      try {
+        // find the node index from the node name
+        unsigned node = m_output_name_index.at(node_name);
+        return getOutputs<T>(node);
+      } catch (std::out_of_range& ex) {
+        ANA_MSG_ERROR("Fail to retrieve output from " << node_name << ": " << ex.what());
+        return nullptr;
+      }
     }
 
     void makeVerbose(bool verbosity) { m_verbose = verbosity; }
@@ -216,6 +216,6 @@ class ONNXWrapper : public asg::AsgTool {
     bool m_verbose;
 };
 
-}  // namespace top
+} // namespace top
 
 #endif
