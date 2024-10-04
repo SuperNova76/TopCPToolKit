@@ -69,7 +69,7 @@ namespace top {
     float m_topResolution = 35;
     float m_wResolution = 25;
     std::string m_bTagDecoration = "";
-    
+
     std::unique_ptr<SG::AuxElement::ConstAccessor<char>> m_bTagDecoAcc;
 
     int m_had_b_idx = -1;

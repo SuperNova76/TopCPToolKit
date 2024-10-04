@@ -194,7 +194,7 @@ namespace top {
     }
 
     PtEtaPhiMVector W_quark_up, W_quark_down, b_had, b_lep;
-  
+
     if (t_isHadronic) {
       b_had.SetCoordinates(MC_b_afterFSR_from_t_pt, MC_b_afterFSR_from_t_eta, MC_b_afterFSR_from_t_phi, MC_b_afterFSR_from_t_m);
       b_lep.SetCoordinates(MC_bbar_afterFSR_from_tbar_pt, MC_bbar_afterFSR_from_tbar_eta, MC_bbar_afterFSR_from_tbar_phi, MC_bbar_afterFSR_from_tbar_m);
@@ -228,10 +228,10 @@ namespace top {
       PtEtaPhiEVector truth_jet;
       truth_jet.SetCoordinates(selected_jets.at(ijet)->pt(), selected_jets.at(ijet)->eta(), selected_jets.at(ijet)->phi(), selected_jets.at(ijet)->e());
 
-      const double dr_up    = DeltaR(truth_jet, W_quark_up); 
-      const double dr_down  = DeltaR(truth_jet, W_quark_down); 
-      const double dr_b_had = DeltaR(truth_jet, b_had); 
-      const double dr_b_lep = DeltaR(truth_jet, b_lep); 
+      const double dr_up    = DeltaR(truth_jet, W_quark_up);
+      const double dr_down  = DeltaR(truth_jet, W_quark_down);
+      const double dr_b_had = DeltaR(truth_jet, b_had);
+      const double dr_b_lep = DeltaR(truth_jet, b_lep);
 
       dr_up_vec.emplace_back(dr_up);
       dr_down_vec.emplace_back(dr_down);

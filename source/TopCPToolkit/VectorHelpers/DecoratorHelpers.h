@@ -142,7 +142,7 @@ struct PartonDecorator {
   std::map<std::string, std::unique_ptr<SG::AuxElement::Decorator<float>>> floatDecorators;
   std::map<std::string, std::unique_ptr<SG::AuxElement::Decorator<int>>> intDecorators;
 
-/** 
+/**
    * @brief Initialize a float decorator by name.
    *
    * @param name The name of the float decorator to initialize.
@@ -152,7 +152,7 @@ struct PartonDecorator {
   }
 
 
-  /** 
+  /**
    * @brief Initialize multiple float decorators by a list of names.
    *
    * @param names A vector of decorator names.
@@ -163,7 +163,7 @@ struct PartonDecorator {
     }
   }
 
-  /** 
+  /**
    * @brief Initialize pT, eta, phi, m float decorators.
    *
    * @param names A vector of decorator names.
@@ -184,7 +184,7 @@ struct PartonDecorator {
     intDecorators[name] = std::make_unique<SG::AuxElement::Decorator<int>>(name);
   }
 
-/** 
+/**
    * @brief Initialize multiple integer decorators by a list of names.
    *
    * @param names A vector of decorator names.
