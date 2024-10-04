@@ -18,7 +18,7 @@
 namespace top {
   using ROOT::Math::PtEtaPhiMVector;
   using ROOT::Math::PtEtaPhiEVector;
-  
+
   class JetMatchingAlg final : public EL::AnaAlgorithm {
 
   public:
@@ -72,7 +72,7 @@ namespace top {
 
     float m_criticalDR = 0.3;
     float m_criticalDR_leptons = 0.4;
-    
+
     float get_minDR_reco(PtEtaPhiEVector jet1, unsigned int ijet1, ConstDataVector<xAOD::JetContainer> selected_jets);
     float get_minDR_truth(const xAOD::JetContainer &truth_jets, int truth_jet_index);
     int get_matched_truth(PtEtaPhiEVector reco_jet, const xAOD::JetContainer &truth_jets);

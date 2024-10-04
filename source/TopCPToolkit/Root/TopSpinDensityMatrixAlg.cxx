@@ -78,31 +78,31 @@ namespace top {
 
       // compute the spin observables
       m_cos_theta_helicity_p.set(*evtInfo,
-				  SpinHelpers::cos_theta_helicity_plus(   top, tbar, ttbar, top_analyser, tbar_analyser), sys);
+				 SpinHelpers::cos_theta_helicity_plus(top, tbar, ttbar, top_analyser, tbar_analyser), sys);
       m_cos_theta_helicity_m.set(*evtInfo,
-				  SpinHelpers::cos_theta_helicity_minus(  top, tbar, ttbar, top_analyser, tbar_analyser), sys);
+				 SpinHelpers::cos_theta_helicity_minus(top, tbar, ttbar, top_analyser, tbar_analyser), sys);
       m_cos_theta_transverse_p.set(*evtInfo,
-				  SpinHelpers::cos_theta_transverse_plus( top, tbar, ttbar, top_analyser, tbar_analyser), sys);
+				   SpinHelpers::cos_theta_transverse_plus(top, tbar, ttbar, top_analyser, tbar_analyser), sys);
       m_cos_theta_transverse_m.set(*evtInfo,
-				  SpinHelpers::cos_theta_transverse_minus(top, tbar, ttbar, top_analyser, tbar_analyser), sys);
+				   SpinHelpers::cos_theta_transverse_minus(top, tbar, ttbar, top_analyser, tbar_analyser), sys);
       m_cos_theta_raxis_p.set(*evtInfo,
-          SpinHelpers::cos_theta_raxis_plus(      top, tbar, ttbar, top_analyser, tbar_analyser), sys);
+			      SpinHelpers::cos_theta_raxis_plus(top, tbar, ttbar, top_analyser, tbar_analyser), sys);
       m_cos_theta_raxis_m.set(*evtInfo,
-			    SpinHelpers::cos_theta_raxis_minus(     top, tbar, ttbar, top_analyser, tbar_analyser), sys);
+			      SpinHelpers::cos_theta_raxis_minus(top, tbar, ttbar, top_analyser, tbar_analyser), sys);
       m_cos_phi.set(*evtInfo,
-		      SpinHelpers::cos_phi(                   top, tbar, ttbar, top_analyser, tbar_analyser), sys);
+		    SpinHelpers::cos_phi(top, tbar, ttbar, top_analyser, tbar_analyser), sys);
       m_cos_theta_x_p.set(*evtInfo,
-				  SpinHelpers::cos_theta_x(   ttbar, top, top_analyser), sys);          
+			  SpinHelpers::cos_theta_x(ttbar, top, top_analyser), sys);
       m_cos_theta_x_m.set(*evtInfo,
-				  SpinHelpers::cos_theta_x(   ttbar, tbar, tbar_analyser), sys);                    
+			  SpinHelpers::cos_theta_x(ttbar, tbar, tbar_analyser), sys);
       m_cos_theta_y_p.set(*evtInfo,
-				  SpinHelpers::cos_theta_y(   ttbar, top, top_analyser), sys);          
+			  SpinHelpers::cos_theta_y(ttbar, top, top_analyser), sys);
       m_cos_theta_y_m.set(*evtInfo,
-				  SpinHelpers::cos_theta_y(   ttbar, tbar, tbar_analyser), sys);    
+			  SpinHelpers::cos_theta_y(ttbar, tbar, tbar_analyser), sys);
       m_cos_theta_z_p.set(*evtInfo,
-				  SpinHelpers::cos_theta_z(   ttbar, top, top_analyser), sys);          
+			  SpinHelpers::cos_theta_z(ttbar, top, top_analyser), sys);
       m_cos_theta_z_m.set(*evtInfo,
-				  SpinHelpers::cos_theta_z(   ttbar, tbar, tbar_analyser), sys);                        
+			  SpinHelpers::cos_theta_z(ttbar, tbar, tbar_analyser), sys);
     }
 
     return StatusCode::SUCCESS;

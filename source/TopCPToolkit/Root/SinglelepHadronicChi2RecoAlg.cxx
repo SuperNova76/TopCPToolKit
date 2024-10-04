@@ -165,7 +165,7 @@ namespace top {
 
     return StatusCode::SUCCESS;
   }
-    
+
   double SinglelepHadronicChi2RecoAlg::chi2(const float recoWmass, const float recoTopMass) const {
     constexpr double wMass = 80.38;
     const double a = (recoWmass - wMass)*(recoWmass - wMass)/(m_wResolution*m_wResolution);

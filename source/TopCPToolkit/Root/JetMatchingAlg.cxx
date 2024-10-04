@@ -138,7 +138,7 @@ namespace top {
     }
     return minDR;
   }
-    
+
   int JetMatchingAlg::get_matched_truth(PtEtaPhiEVector reco_jet, const xAOD::JetContainer &truth_jets) {
     int truth_jet_index = -1;
     float minDR = 9999;

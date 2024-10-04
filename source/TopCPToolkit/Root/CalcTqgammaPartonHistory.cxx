@@ -8,7 +8,7 @@ namespace top {
   {
     initializeDecorators();
   }
-  
+
   void CalcTqgammaPartonHistory::initializeDecorators() {
     CalcPartonHistory::InitializeTopDecorators();
     CalcPartonHistory::InitializeBottomDecorators();
@@ -23,7 +23,7 @@ namespace top {
     // Ensuring the necessary keys exist
     CalcPartonHistory::EnsureTtbarKeysExist();
     CalcPartonHistory::EnsurebbbarKeysExist();
-    
+
     // Fill top parton history (flavour agnostic)
     CalcPartonHistory::FillTopPartonHistory(tqgammaPartonHistory, 2, m_t_dec);
     // Fill b (spectator b) parton history (flavour agnostic)

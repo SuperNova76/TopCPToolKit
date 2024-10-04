@@ -7,7 +7,7 @@
 
 namespace top {
   using ROOT::Math::PtEtaPhiMVector;
-  
+
   class PartonHistory;
 
   namespace PartonHistoryUtils {
@@ -16,7 +16,7 @@ namespace top {
 
     // determine whether potentialChild is child of parent
     bool isChildOf(const xAOD::TruthParticle* parent, const xAOD::TruthParticle* potentialChild);
-	  
+
     ///Looking for tops without children -> must be broken
     bool isBrokenTop(const xAOD::TruthParticle* particle);
 
@@ -25,7 +25,7 @@ namespace top {
 
     ///Return true when particle is a top before FSR
     bool hasParticleIdenticalParent(const xAOD::TruthParticle* particle);
-  
+
   } // namespace PartonHistoryUtils
 } // namespace top
 

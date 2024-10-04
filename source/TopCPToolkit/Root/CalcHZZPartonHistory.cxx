@@ -15,9 +15,9 @@ namespace top {
 
   StatusCode CalcHZZPartonHistory::runHistorySaver(const xAOD::TruthParticleContainer* truthParticles,
 						   xAOD::PartonHistory* hzzPartonHistory) {
-    CalcPartonHistory::TraceParticles(truthParticles);    
+    CalcPartonHistory::TraceParticles(truthParticles);
     CalcPartonHistory::FillHiggsPartonHistory(hzzPartonHistory, m_H_dec);
-    
+
     return StatusCode::SUCCESS;
   }
 

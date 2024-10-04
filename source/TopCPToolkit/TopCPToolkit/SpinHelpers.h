@@ -8,7 +8,7 @@ using ROOT::Math::Boost;
 
 namespace SpinHelpers
 {
-  
+
   float cos_theta_helicity(int sign, PtEtaPhiMVector top, PtEtaPhiMVector parent, const PtEtaPhiMVector &ttbar, PtEtaPhiMVector analyser)
   {
 

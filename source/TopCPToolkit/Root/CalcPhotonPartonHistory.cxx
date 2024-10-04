@@ -4,7 +4,7 @@
 
 namespace top {
   using ROOT::Math::PtEtaPhiMVector;
-  
+
   void CalcPartonHistory::FillGammaPartonHistory(xAOD::PartonHistory* PartonHistory,
 						 const std::string& parent,
 						 PartonDecorator& dec) {
@@ -15,7 +15,7 @@ namespace top {
 
     dec.decorateDefault("MC_gamma" + parentstring, PartonHistory);
     dec.decorateCustom("MC_gamma_origin", 0, PartonHistory);
-    
+
     if (Retrievep4Gamma(gamma, gamma_origin)) {
       dec.decorateParticle("MC_gamma" + parentstring, gamma, PartonHistory);
     }

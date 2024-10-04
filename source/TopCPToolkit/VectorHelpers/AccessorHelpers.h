@@ -15,7 +15,7 @@ struct PartonAccessor {
   std::map<std::string, std::unique_ptr<SG::AuxElement::Accessor<float>>> floatAccessors;
   std::map<std::string, std::unique_ptr<SG::AuxElement::Accessor<int>>> intAccessors;
 
-  /** 
+  /**
    * @brief Initialize a float accessor by name.
    *
    * @param name The name of the float accessor to initialize.
@@ -25,7 +25,7 @@ struct PartonAccessor {
   }
 
 
-  /** 
+  /**
    * @brief Initialize multiple float accessors by a list of names.
    *
    * @param names A vector of accessor names.
@@ -45,7 +45,7 @@ struct PartonAccessor {
     intAccessors[name] = std::make_unique<SG::AuxElement::Accessor<int>>(name);
   }
 
-  /** 
+  /**
    * @brief Initialize multiple integer accessors by a list of names.
    *
    * @param names A vector of accessor names.
@@ -56,7 +56,7 @@ struct PartonAccessor {
     }
   }
 
-  /** 
+  /**
    * @brief Initialize a PtEtaPhiMVector using floats
    *
    * @param prefix A prefix for the name of the PtEtaPhiMvector.
@@ -68,7 +68,7 @@ struct PartonAccessor {
     initializeFloatAccessor(prefix + "_m");
   }
 
-  /** 
+  /**
    * @brief Template to get an Float via the name of an accessor.
    *
    * @param name The name of the Float accessor.
@@ -78,8 +78,8 @@ struct PartonAccessor {
   float getFloat(const std::string&name, T* object) {
     return (*floatAccessors[name])(*object);
   }
-  
-  /** 
+
+  /**
    * @brief Template to get an Int via the name of an accessor.
    *
    * @param name The name of the Int accessor.
@@ -90,7 +90,7 @@ struct PartonAccessor {
     return (*intAccessors[name])(*object);
   }
 
-  /** 
+  /**
    * @brief Template to get a PtEtaPhiMVector via the name of an accessor.
    *
    * @param prefix The prefix of the accessor holding the different components.

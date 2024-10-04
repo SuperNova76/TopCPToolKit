@@ -28,7 +28,7 @@ namespace top {
     CalcPartonHistory& operator = (const CalcPartonHistory& rhs) = delete;
 
     std::map<std::string, const xAOD::TruthParticle* > particleMap;
-    
+
     PartonDecorator m_t_dec;
     PartonDecorator m_tbar_dec;
     PartonDecorator m_ttbar_dec;
