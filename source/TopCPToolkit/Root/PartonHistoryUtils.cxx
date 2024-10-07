@@ -87,11 +87,5 @@ namespace top {
       }
       return;
     }
-
-    void fillEtaBranch(xAOD::PartonHistory* partonHistory, std::string branchName,
-		       TLorentzVector& tlv) {
-      partonHistory->auxdecor< float >(branchName) = tlv.Eta();
-      return;
-    }
   } // namespace PartonHistoryUtils
 } // namespace top
