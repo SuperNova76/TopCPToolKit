@@ -13,7 +13,6 @@
 // TopParton histories
 #include "PartonHistory/CalcPartonHistory.h"
 #include "PartonHistory/CalcTtbarPartonHistory.h"
-// #include "PartonHistory/CalcTtbarLightPartonHistory.h"
 #include "PartonHistory/CalcTtzPartonHistory.h"
 #include "PartonHistory/CalcTthPartonHistory.h"
 #include "PartonHistory/CalcTzqPartonHistory.h"
