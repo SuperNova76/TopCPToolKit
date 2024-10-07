@@ -1,4 +1,5 @@
 #include "TopCPToolkit/RunNuFlowsAlg.h"
+#include "AthContainers/ConstDataVector.h"
 
 namespace top {
 
