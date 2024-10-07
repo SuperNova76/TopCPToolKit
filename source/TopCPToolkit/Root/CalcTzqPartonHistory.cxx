@@ -20,11 +20,6 @@ namespace top {
     // Tracing truth particles
     CalcPartonHistory::TraceParticles(truthParticles);
 
-    // Ensuring the necessary keys exist
-    CalcPartonHistory::EnsureTtbarKeysExist();
-    CalcPartonHistory::EnsurebbbarKeysExist();
-    CalcPartonHistory::EnsureZKeysExist();
-
     // Fill top parton history (flavour agnostic)
     CalcPartonHistory::FillTopPartonHistory(tzqPartonHistory, 2, m_t_dec);
     // Fill b (spectator b) parton history (flavour agnostic)

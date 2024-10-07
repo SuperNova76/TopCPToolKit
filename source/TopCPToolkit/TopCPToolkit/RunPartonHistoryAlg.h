@@ -15,6 +15,7 @@
 #include "PartonHistory/CalcTtbarPartonHistory.h"
 // #include "PartonHistory/CalcTtbarLightPartonHistory.h"
 #include "PartonHistory/CalcTtzPartonHistory.h"
+#include "PartonHistory/CalcTtwPartonHistory.h"
 #include "PartonHistory/CalcTthPartonHistory.h"
 #include "PartonHistory/CalcTzqPartonHistory.h"
 #include "PartonHistory/CalcThqPartonHistory.h"

@@ -21,9 +21,6 @@ namespace top {
     // Tracing truth particles
     CalcPartonHistory::TraceParticles(truthParticles);
 
-    // Ensuring the necessary keys exist
-    CalcPartonHistory::EnsureTtbarKeysExist();
-
     // Fill top parton history
     CalcPartonHistory::FillTopPartonHistory(tthPartonHistory, 0, m_t_dec); // t mode
     // Fill anti top parton history
