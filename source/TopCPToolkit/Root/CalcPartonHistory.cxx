@@ -232,87 +232,24 @@ namespace top {
     m_Z_dec.initializeIntDecorator("MC_Z_IsOnShell");
   }
 
-  void CalcPartonHistory::EnsureKeyExists(const std::string& key, const std::string& fallbackKey) {
-    // Ensures that a given key exists in the particleMap.
-    // If the key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
-    // NOTE: This does not imply that the parton history is perfect. It rather is supposed to work on the
-    // following cases:
-    //
-    // Assume there is a parton history like t->W instead of t->t->W. In this case this will ensure that both
-    // afterFSR and beforeFSR exist (and have the same value)
-    if (particleMap.find(key) == particleMap.end() && particleMap.find(fallbackKey) != particleMap.end()) {
-      particleMap[key] = particleMap[fallbackKey];
-    }
-  }
+  void CalcPartonHistory::InitializeWDecorators() {
+    m_W_dec.initializePtEtaPhiMDecorator("MC_W_beforeFSR");
+    m_W_dec.initializePtEtaPhiMDecorator("MC_Wdecay1_beforeFSR");
+    m_W_dec.initializePtEtaPhiMDecorator("MC_Wdecay2_beforeFSR");
 
-  void CalcPartonHistory::EnsureTopKeysExist() {
-    // Ensures that all relevant top keys exists in the particleMap.
-    // Note, if a particle has no FSR it will be saved as afterFSR
-    // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
-    EnsureKeyExists("MC_t_Wp_beforeFSR", "MC_t_Wp_afterFSR");
-    EnsureKeyExists("MC_t_WpDecay1_beforeFSR", "MC_t_WpDecay1_afterFSR");
-    EnsureKeyExists("MC_t_WpDecay2_beforeFSR", "MC_t_WpDecay2_afterFSR");
-    EnsureKeyExists("MC_t_beforeFSR", "MC_t_afterFSR");
-    EnsureKeyExists("MC_t_b_beforeFSR", "MC_t_b_afterFSR");
-  }
+    m_W_dec.initializePtEtaPhiMDecorator("MC_W_afterFSR");
+    m_W_dec.initializePtEtaPhiMDecorator("MC_Wdecay1_afterFSR");
+    m_W_dec.initializePtEtaPhiMDecorator("MC_Wdecay2_afterFSR");
 
-  void CalcPartonHistory::EnsureAntiTopKeysExist() {
-    // Ensures that all relevant anti top keys exists in the particleMap.
-    // Note, if a particle has no FSR it will be saved as afterFSR
-    // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
-    EnsureKeyExists("MC_tbar_Wm_beforeFSR", "MC_tbar_Wm_afterFSR");
-    EnsureKeyExists("MC_tbar_WmDecay1_beforeFSR", "MC_tbar_WmDecay1_afterFSR");
-    EnsureKeyExists("MC_tbar_WmDecay2_beforeFSR", "MC_tbar_WmDecay2_afterFSR");
-    EnsureKeyExists("MC_tbar_beforeFSR", "MC_tbar_afterFSR");
-    EnsureKeyExists("MC_tbar_bbar_beforeFSR", "MC_tbar_bbar_afterFSR");
-  }
+    m_W_dec.initializeIntDecorator("MC_W_beforeFSR_pdgId");
+    m_W_dec.initializeIntDecorator("MC_Wdecay1_beforeFSR_pdgId");
+    m_W_dec.initializeIntDecorator("MC_Wdecay2_beforeFSR_pdgId");
 
-  void CalcPartonHistory::EnsureBottomKeysExist() {
-    // Ensures that all relevant bottom keys exists in the particleMap.
-    // Note, if a particle has no FSR it will be saved as afterFSR
-    // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
-    EnsureKeyExists("MC_b_beforeFSR", "MC_b_afterFSR");
-  }
+    m_W_dec.initializeIntDecorator("MC_W_afterFSR_pdgId");
+    m_W_dec.initializeIntDecorator("MC_Wdecay1_afterFSR_pdgId");
+    m_W_dec.initializeIntDecorator("MC_Wdecay2_afterFSR_pdgId");
 
-  void CalcPartonHistory::EnsureAntiBottomKeysExist() {
-    // Ensures that all relevant anti bottom keys exists in the particleMap.
-    // Note, if a particle has no FSR it will be saved as afterFSR
-    // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
-    EnsureKeyExists("MC_bbar_beforeFSR", "MC_bbar_afterFSR");
-  }
-
-  void CalcPartonHistory::EnsureZKeysExist() {
-    // Ensures that all relevant Z keys exists in the particleMap.
-    // Note, if a particle has no FSR it will be saved as afterFSR
-    // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
-    EnsureKeyExists("MC_Z_beforeFSR", "MC_Z_afterFSR");
-  }
-
-  void CalcPartonHistory::EnsureHiggsKeysExist() {
-    // Ensures that all relevant higgs keys exists in the particleMap.
-    // Note, if a particle has no FSR it will be saved as afterFSR
-    // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
-    EnsureKeyExists("MC_H_beforeFSR", "MC_H_afterFSR");
-    EnsureKeyExists("MC_HDecay1_beforeFSR", "MC_HDecay1_afterFSR");
-    EnsureKeyExists("MC_HDecay2_beforeFSR", "MC_HDecay2_afterFSR");
-    EnsureKeyExists("MC_HDecay1_Decay1_beforeFSR", "MC_HDecay1_Decay1_afterFSR");
-    EnsureKeyExists("MC_HDecay1_Decay2_beforeFSR", "MC_HDecay1_Decay2_afterFSR");
-    EnsureKeyExists("MC_HDecay2_Decay1_beforeFSR", "MC_HDecay2_Decay1_afterFSR");
-    EnsureKeyExists("MC_HDecay2_Decay2_beforeFSR", "MC_HDecay2_Decay2_afterFSR");
-  }
-
-  void CalcPartonHistory::EnsureTtbarKeysExist() {
-    // Ensures that all relevant Ttbar key exists in the particleMap.
-    // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
-    EnsureTopKeysExist();
-    EnsureAntiTopKeysExist();
-  }
-
-  void CalcPartonHistory::EnsurebbbarKeysExist() {
-    // Ensures that all relevant bbar key exists in the particleMap.
-    // If a key does not exist and the fallbackKey exists, assigns the value of the fallbackKey to the key.
-    EnsureBottomKeysExist();
-    EnsureAntiBottomKeysExist();
+    m_W_dec.initializeIntDecorator("MC_W_IsOnShell");
   }
 
   std::string CalcPartonHistory::GetParticleType(const xAOD::TruthParticle* particle) {
@@ -349,25 +286,6 @@ namespace top {
     } else {
       return "_" + std::to_string(pdgId);
     }
-  }
-
-  bool CalcPartonHistory::hasParentPdgId(const xAOD::TruthParticle* particle, int PdgId) {
-    // Checks if the parent of the given particle has a specific PDG ID.
-    return particle->parent() && particle->parent()->pdgId() == PdgId;
-  }
-
-  bool CalcPartonHistory::hasIdenticalChild(const xAOD::TruthParticle* particle) {
-    // Checks if the given particle has at least one child with an identical PDG ID.
-    bool check = false;
-    for (size_t i = 0; i < particle->nChildren(); i++) {
-      if (particle->child(i)->pdgId() == particle->pdgId()) check=true;
-    }
-    return check;
-  }
-
-  bool CalcPartonHistory::hasParentAbsPdgId(const xAOD::TruthParticle* particle, int absPdgId) {
-    // Checks if the parent of the given particle has a specific absolute PDG ID.
-    return particle->parent() && std::abs(particle->parent()->pdgId()) == absPdgId;
   }
 
   void CalcPartonHistory::TraceParticle(const xAOD::TruthParticle* particle,
@@ -420,54 +338,42 @@ namespace top {
     particleMap[key] = particle;
   }
 
-  bool CalcPartonHistory::handleBeforeFSR(const xAOD::TruthParticle* particle, const std::string& newKey, std::string& key) {
-    // Handles the "Before FSR" case for a given particle. These are cases where we have identical, consecutive particles in the path.
+  bool CalcPartonHistory::handleFSR(const xAOD::TruthParticle* particle, const std::string& newKey, std::string& key) {
+    // Handles the "Before FSR" case for a given particle. These are cases where we have identical, consecutive particles in the path. m
     // If the particle has an identical child, we add the particle to the map with the key "newKey_beforeFSR" and updates the key.
-    if (hasIdenticalChild(particle)) {
-      std::string postfix = "_beforeFSR";
-      AddToParticleMap(particle, key + newKey + postfix);
-      key += newKey;
+    std::string beforeFSR = "_beforeFSR";
+    std::string afterFSR = "_afterFSR";
+    if (!PartonHistoryUtils::hasParentPdgId(particle)) key += newKey;
+    if (particle->nParents() == 0) {
+      // Particles without parents are always beforeFSR
+      AddToParticleMap(particle, key + beforeFSR);
+      // If it doesn't have an identical child it is also afterFSR
+      if (!PartonHistoryUtils::hasIdenticalChild(particle)) AddToParticleMap(particle, key + afterFSR);
       return true;
     }
-    return false;
-  }
-
-  bool CalcPartonHistory::handleAfterFSR(const xAOD::TruthParticle* particle, const std::string& newKey, const std::string& oldKey, std::string& key) {
-    // Handles the "After FSR" case for a given particle.
-    // If the particle is a top quark, W boson, Z boson, or Higgs boson with exactly 2 children, or if it has a parent with the same PDG ID,
-    // We add the particle to the map with the key "newKey_afterFSR" and update the key.
-    std::string postfix = "_afterFSR";
-    // if this is a t, W, Z or H it can only be "AfterFSR" if it has 2 children!
-    if (abs(particle->pdgId()) == 6 || (particle->pdgId() == 23 || abs(particle->pdgId()) == 24 || particle->pdgId() == 25)) {
-      if (! (particle->nChildren() == 2)) return false;
-      else {
-	if (!(newKey == oldKey)) key += newKey;
-	AddToParticleMap(particle, key + postfix);
-	return true;
+    else {
+      // If it has the same pdgId as the parent it is afterFSR
+      if (PartonHistoryUtils::hasParentPdgId(particle)) {
+	AddToParticleMap(particle, key + afterFSR);
       }
-    }
-    else if (hasParentPdgId(particle, particle->pdgId())) {
-      if (!(newKey == oldKey)) key += newKey;
-      AddToParticleMap(particle, key + postfix);
-      return true;
-    }
-    // finally we can also have particles from the hard interaction
-    else if (!hasParentPdgId(particle, particle->pdgId()) && !hasIdenticalChild(particle)) {
-      if (!(newKey == oldKey)) key += newKey;
-      AddToParticleMap(particle, key + postfix);
+      // else it must be beforeFSR
+      else AddToParticleMap(particle, key + beforeFSR);
+      // If it has not the parent pdgId and no identical child it is also afterFSR
+      if (!PartonHistoryUtils::hasParentPdgId(particle) && !PartonHistoryUtils::hasIdenticalChild(particle)) {
+	AddToParticleMap(particle, key + afterFSR);
+      }
       return true;
     }
     return false;
   }
-
+  
   bool CalcPartonHistory::handleDecay(const xAOD::TruthParticle* particle, std::string& key, int decayID) {
     // Handles the case where a particle originates from a decay.
     // We add the particle to the map with a key based on its decay ID and update the key.
-    if (particle->nParents() == 0) return false;
     if ((particle->pdgId() == 22) ||
-	((hasParentAbsPdgId(particle, 25) && !hasParentPdgId(particle, particle->pdgId())) ||
-	 (hasParentAbsPdgId(particle, 24) && !hasParentPdgId(particle, particle->pdgId())) ||
-	 (hasParentAbsPdgId(particle, 23) && !hasParentPdgId(particle, particle->pdgId())))) {
+	((PartonHistoryUtils::hasParentAbsPdgId(particle, 25) && !PartonHistoryUtils::hasParentPdgId(particle)) ||
+	 (PartonHistoryUtils::hasParentAbsPdgId(particle, 24) && !PartonHistoryUtils::hasParentPdgId(particle)) ||
+	 (PartonHistoryUtils::hasParentAbsPdgId(particle, 23) && !PartonHistoryUtils::hasParentPdgId(particle)))) {
       std::string postfix;
       // Sometimes we have decays like W-> (l,nu,gamma) where the photon is FSR
       if (particle->pdgId() == 22) postfix = "_GammaRad";
@@ -501,14 +407,13 @@ namespace top {
     particleMap.clear();
     for (const auto& path : allPaths) {
       std::string key = "MC";
-      std::string old_key = "";
       std::string new_key = "";
       std::string postfix = "";
 
       for (auto it = path.begin(); it != path.end(); it++) {
 	const xAOD::TruthParticle* particle = *it;
-	bool isbeforeFSR = (hasIdenticalChild(particle));
-	bool isafterFSR = (hasParentPdgId(particle, particle->pdgId()));
+	bool isbeforeFSR = (PartonHistoryUtils::hasIdenticalChild(particle));
+	bool isafterFSR = (PartonHistoryUtils::hasParentPdgId(particle));
 
 	int decayID = particle->pdgId() < 0 ? 2 : 1;
 	// if we have a Z or a gamma, we have to define the decayID differently
@@ -522,15 +427,13 @@ namespace top {
 	  }
 	}
 
-	old_key = new_key;
 	new_key = GetParticleType(particle);
 	if (isbeforeFSR && isafterFSR) {
 	  continue; // e.g. t-t-t
 	}
 	if (handleDecay(particle, key, decayID)) continue;
-	if (handleBeforeFSR(particle, new_key, key)) continue;
-	if (handleAfterFSR(particle, new_key, old_key, key)) continue;
-	if (hasParentPdgId(particle, particle->pdgId())) {
+	if (handleFSR(particle, new_key, key)) continue;
+	if (PartonHistoryUtils::hasParentPdgId(particle)) {
 	  handleSameAsParent(particle, key);
 	  continue;
 	}

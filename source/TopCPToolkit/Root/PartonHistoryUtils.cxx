@@ -7,25 +7,38 @@ namespace top {
 
   namespace PartonHistoryUtils {
 
-    bool isChildOf(const xAOD::TruthParticle* parent, const xAOD::TruthParticle* potentialChild) {
-      // Base case: if the potentialchild has no parent, return false
-      if (potentialChild->nParents() == 0) {
-	return false;
+    bool hasParentPdgId(const xAOD::TruthParticle* particle, int PdgId) {
+      // Checks if the parent of the given particle has a specific PDG ID.
+      return particle->parent() && particle->parent()->pdgId() == PdgId;
+    }
+
+    bool hasParentPdgId(const xAOD::TruthParticle* particle) {
+      // Checks if the parent of the given particle has a specific PDG ID.
+      return hasParentPdgId(particle, particle->pdgId());
+    }
+
+    bool hasIdenticalChild(const xAOD::TruthParticle* particle) {
+      // Checks if the given particle has at least one child with an identical PDG ID.
+      bool check = false;
+      for (size_t i = 0; i < particle->nChildren(); i++) {
+	if (particle->child(i)->pdgId() == particle->pdgId()) check=true;
       }
-      // Base case: if the parent has no children, return false
-      if (parent->nChildren() == 0) {
-        return false;
+      return check;
+    }
+
+    bool hasParentAbsPdgId(const xAOD::TruthParticle* particle, int absPdgId) {
+      // Checks if the parent of the given particle has a specific absolute PDG ID.
+      return particle->parent() && std::abs(particle->parent()->pdgId()) == absPdgId;
+    }
+
+    bool isChildOf(const xAOD::TruthParticle* parent, const xAOD::TruthParticle* potentialChild) {
+      if (parent->barcode() == potentialChild->barcode()) {
+	return true;
       }
       // Loop through all children of the parent
       for (size_t i = 0; i < parent->nChildren(); ++i) {
-        const xAOD::TruthParticle* child = parent->child(i);
-
-        // Check if the current child is the potentialChild
-        if (child == potentialChild) {
-	  return true;
-        }
         // Recursively check if potentialChild is a child of the current child
-        if (isChildOf(child, potentialChild)) {
+        if (isChildOf(parent->child(i), potentialChild)) {
 	  return true;
         }
       }

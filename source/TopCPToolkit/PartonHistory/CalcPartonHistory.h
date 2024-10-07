@@ -37,8 +37,7 @@ namespace top {
     PartonDecorator m_H_dec;
     PartonDecorator m_gamma_dec;
     PartonDecorator m_Z_dec;
-    PartonDecorator m_Wp_dec;
-    PartonDecorator m_Wm_dec;
+    PartonDecorator m_W_dec;
 
     void AddToParticleMap(const xAOD::TruthParticle* particle, const std::string& key);
     bool ExistsInMap(const std::string& key);
@@ -48,15 +47,6 @@ namespace top {
     bool RetrieveParticleInfo(const std::string& prefix, PtEtaPhiMVector& particle, int& pdgId);
     bool RetrieveParticleInfo(const std::string& prefix, const std::string& alt_prefix, PtEtaPhiMVector& particle, int& pdgId);
 
-    void EnsureKeyExists(const std::string& key, const std::string& fallbackKey);
-    void EnsureTopKeysExist();
-    void EnsureAntiTopKeysExist();
-    void EnsureTtbarKeysExist();
-    void EnsureBottomKeysExist();
-    void EnsureAntiBottomKeysExist();
-    void EnsurebbbarKeysExist();
-    void EnsureZKeysExist();
-    void EnsureHiggsKeysExist();
     void InitializeTopDecorators();
     void InitializeAntiTopDecorators();
     void InitializeBottomDecorators();
@@ -65,10 +55,7 @@ namespace top {
     void InitializeHiggsDecorators();
     void InitializePhotonDecorators();
     void InitializeZDecorators();
-
-    bool hasParentPdgId(const xAOD::TruthParticle* particle, int PdgId);
-    bool hasIdenticalChild(const xAOD::TruthParticle* particle);
-    bool hasParentAbsPdgId(const xAOD::TruthParticle* particle, int absPdgId);
+    void InitializeWDecorators();
 
     std::string GetParticleType(const xAOD::TruthParticle* particle);
 
@@ -76,8 +63,8 @@ namespace top {
 		       std::vector<const xAOD::TruthParticle*>& currentPath,
 		       std::vector<std::vector<const xAOD::TruthParticle*>>& allPaths);
     void TraceParticles(const xAOD::TruthParticleContainer* truthParticles);
-    bool handleBeforeFSR(const xAOD::TruthParticle* particle, const std::string& newKey, std::string& key);
-    bool handleAfterFSR(const xAOD::TruthParticle* particle, const std::string& newKey, const std::string& oldKey, std::string& key);
+
+    bool handleFSR(const xAOD::TruthParticle* particle, const std::string& newKey, std::string& key);
     bool handleDecay(const xAOD::TruthParticle* particle, std::string& key, int decayID);
     void handleSameAsParent(const xAOD::TruthParticle* particle, std::string& key);
     void handleDefault(const xAOD::TruthParticle* particle, const std::string& newKey, std::string& key);

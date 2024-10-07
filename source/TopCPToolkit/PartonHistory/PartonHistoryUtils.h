@@ -26,6 +26,16 @@ namespace top {
     ///Return true when particle is a top before FSR
     bool hasParticleIdenticalParent(const xAOD::TruthParticle* particle);
 
+    // Checking whether a particle has the same pdgId as its parent
+    bool hasParentPdgId(const xAOD::TruthParticle* particle, int PdgId);
+    bool hasParentPdgId(const xAOD::TruthParticle* particle);
+
+    // Checking whether a particle has the same absolute pdgId as absPdgId
+    bool hasParentAbsPdgId(const xAOD::TruthParticle* particle, int absPdgId);
+
+    // Checking whether a particle has an identical child
+    bool hasIdenticalChild(const xAOD::TruthParticle* particle);
+
   } // namespace PartonHistoryUtils
 } // namespace top
 

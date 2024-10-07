@@ -22,11 +22,6 @@ namespace top {
     // Tracing truth particles
     CalcPartonHistory::TraceParticles(truthParticles);
 
-    // Ensuring the necessary keys exist
-    CalcPartonHistory::EnsureTtbarKeysExist();
-    CalcPartonHistory::EnsureKeyExists("MC_Z_afterFSR", "MC_Z");
-    CalcPartonHistory::EnsureKeyExists("MC_Z_beforeFSR", "MC_Z_afterFSR");
-
     // Fill top parton history
     CalcPartonHistory::FillTopPartonHistory(ttZPartonHistory, 0, m_t_dec); // t mode
     // Fill anti top parton history
