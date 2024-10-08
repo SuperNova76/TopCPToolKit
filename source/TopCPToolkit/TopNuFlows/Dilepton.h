@@ -27,7 +27,7 @@ class TopNuFlowsDilepton : public ONNXWrapper {
 
    public:
     // Vectors for the input and outputs to the model
-    float m_loglik;
+    float m_loglik {0};
     vector<float> m_nu_out;
     vector<vector<float>> m_input_lep;
     vector<vector<float>> m_input_jet;
@@ -48,10 +48,10 @@ class TopNuFlowsDilepton : public ONNXWrapper {
 
     // The methods to set/return the values from the internal state
     virtual vector<float> GetSample() { return m_nu_out; };
-    void setBtagger(string algorithm) { m_btagger = algorithm; };
+    void setBtagger(const string& algorithm) { m_btagger = algorithm; };
 
     // Variable to work out which model to use
-    unsigned m_model_idx;
+    unsigned m_model_idx {0};
 
    protected:
     string m_btagger;
