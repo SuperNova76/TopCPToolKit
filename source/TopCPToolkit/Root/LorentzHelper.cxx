@@ -42,12 +42,3 @@ ROOT::Math::PxPyPzEVector GetPxPyPzEfromTruth(const xAOD::TruthParticle *TruthPa
 					     TruthParticle->e()); //double (generator energy)
   return EnergySafeVector;
 }
-
-ROOT::Math::PtEtaPhiMVector TLorentzToPtEtaPhiM(const TLorentzVector& p){
-  asg::msgUserCode::ANA_MSG_WARNING ("LorentzHelper WARNING: can't guarantee mass from TLorentzVector object will be calculated accurately, consider using ROOT::Math::PtEtaPhiMVector or ROOT::Math::PxPyPzMVector instead");
-  ROOT::Math::PtEtaPhiMVector MassSafeVector(p.Pt(),
-					     p.Eta(),
-					     p.Phi(),
-					     p.M());
-  return MassSafeVector;
-}

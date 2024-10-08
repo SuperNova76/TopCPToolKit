@@ -58,6 +58,5 @@ PtEtaPhiMVector GetPtEtaPhiMfromTruth(const xAOD::TruthParticle *TruthParticle);
 PxPyPzMVector GetPxPyPzMfromTruth(const xAOD::TruthParticle *TruthParticle);
 PtEtaPhiEVector GetPtEtaPhiEfromTruth(const xAOD::TruthParticle *TruthParticle);
 PxPyPzEVector GetPxPyPzEfromTruth(const xAOD::TruthParticle *TruthParticle);
-PtEtaPhiMVector TLorentzToPtEtaPhiM(const TLorentzVector& p);
 
 #endif
