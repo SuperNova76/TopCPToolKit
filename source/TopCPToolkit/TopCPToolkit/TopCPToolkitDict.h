@@ -12,6 +12,7 @@
 #include "TopCPToolkit/ParticleLevelAlg.h"
 #include "TopCPToolkit/PartonToJetsMatchAlg.h"
 #include "TopCPToolkit/RunSpaNetAlg.h"
+#include "TopCPToolkit/RunNuFlowsAlg.h"
 #include "TopCPToolkit/RunTtbarNNLORecursiveRewAlg.h"
 #include "TopCPToolkit/JetMatchingAlg.h"
 #include "TopCPToolkit/SoftMuonSelectorAlg.h"

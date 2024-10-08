@@ -145,7 +145,7 @@ The model inference is done using [ONNX runtime](https://onnxruntime.ai/) C++ in
 
                 // Add inputs and convert to tensors via the ONNXWrapper interface
                 m_NN -> clearInputs();
-                m_NN -> addInputs(input_vec, input_dims);
+                m_NN -> linkInputs(input_vec, input_dims);
 
                 // Pick the right model based on eventNumber
                 // This is for avoiding evaluating the same events that are used for training.

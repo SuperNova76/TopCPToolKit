@@ -13,6 +13,7 @@
   <class name="top::KLFitterResultAuxContainer" />
   <class name="top::KLFitterFinalizeOutputAlg" />
   <class name="top::RunSpaNetAlg" />
+  <class name="top::RunNuFlowsAlg" />
   <class name="top::RunTtbarNNLORecursiveRewAlg" />
   <class name="top::JetMatchingAlg" />
   <function name="top::preloadComponentFactories" />

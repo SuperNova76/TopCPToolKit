@@ -9,6 +9,7 @@
 #include <TopCPToolkit/RunPartonHistoryAlg.h>
 #include <TopCPToolkit/CARAlg.h>
 #include <TopCPToolkit/RunSpaNetAlg.h>
+#include <TopCPToolkit/RunNuFlowsAlg.h>
 #include <TopCPToolkit/RunTtbarNNLORecursiveRewAlg.h>
 #include <TopCPToolkit/JetMatchingAlg.h>
 #include <TopCPToolkit/SoftMuonSelectorAlg.h>
@@ -19,6 +20,7 @@
 
 DECLARE_COMPONENT (top::RunTtbarNNLORecursiveRewAlg)
 DECLARE_COMPONENT (top::RunSpaNetAlg)
+DECLARE_COMPONENT (top::RunNuFlowsAlg)
 DECLARE_COMPONENT (top::RunPartonHistoryAlg)
 DECLARE_COMPONENT (top::CARAlg)
 DECLARE_COMPONENT (top::PartonToJetsMatchAlg)

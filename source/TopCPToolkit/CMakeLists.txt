@@ -20,10 +20,10 @@ if( XAOD_STANDALONE )
 
   atlas_add_library(
     TopCPToolkitLib
-    TopCPToolkit/*.h PartonHistory/*.h TopParticleLevel/*.h TopSpaNet/*.h TopNNLOReweighter/*.h VectorHelpers/*.h
+    TopCPToolkit/*.h PartonHistory/*.h TopParticleLevel/*.h TopSpaNet/*.h TopNuFlows/*.h TopNNLOReweighter/*.h VectorHelpers/*.h
     Root/*.cxx Root/preloader/*.cxx ${_cintDictSource}
     INCLUDE_DIRS ${ROOT_INCLUDE_DIRS} ${KLFITTER_INCLUDE_DIRS} ${ONNXRUNTIME_INCLUDE_DIRS}
-    PUBLIC_HEADERS TopCPToolkit PartonHistory TopParticleLevel TopSpaNet TopNNLOReweighter VectorHelpers
+    PUBLIC_HEADERS TopCPToolkit PartonHistory TopParticleLevel TopSpaNet TopNuFlows TopNNLOReweighter VectorHelpers
     LINK_LIBRARIES ${ROOT_LIBRARIES} ${KLFITTER_LIBRARIES} ${ONNXRUNTIME_LIBRARIES}
     AnaAlgorithmLib AsgAnalysisAlgorithmsLib xAODMissingET xAODJet xAODBTagging xAODEgamma xAODMuon xAODTau xAODTruth xAODCore PathResolver FourMomUtils FTagAnalysisInterfacesLib SystematicsHandlesLib SelectionHelpersLib MCTruthClassifierLib GammaORToolsLib AthContainers
     # THE FOLLOWING ARE NEEDED FOR THE COMPONENT PRELOADER:
@@ -33,10 +33,10 @@ if( XAOD_STANDALONE )
 else ()
   atlas_add_library(
     TopCPToolkitLib
-    TopCPToolkit/*.h HiggsPartons/*.h TopParticleLevel/*.h TopSpaNet/*.h TopNNLOReweighter/*.h VectorHelpers/*.h
+    TopCPToolkit/*.h HiggsPartons/*.h TopParticleLevel/*.h TopSpaNet/*.h TopNuFlows/*.h TopNNLOReweighter/*.h VectorHelpers/*.h
     Root/*.cxx
     INCLUDE_DIRS ${KLFITTER_INCLUDE_DIRS} ${ONNXRUNTIME_INCLUDE_DIRS} ${FASTJET_INCLUDE_DIRS}
-    PUBLIC_HEADERS TopCPToolkit PartonHistory TopParticleLevel TopSpaNet TopNNLOReweighter VectorHelpers
+    PUBLIC_HEADERS TopCPToolkit PartonHistory TopParticleLevel TopSpaNet TopNuFlows TopNNLOReweighter VectorHelpers
     LINK_LIBRARIES ${KLFITTER_LIBRARIES} ${ONNXRUNTIME_LIBRARIES} ${FASTJET_LIBRARIES}
     BoostedJetTaggersLib AnaAlgorithmLib AsgAnalysisAlgorithmsLib xAODMissingET xAODJet xAODBTagging xAODEgamma xAODMuon xAODTau xAODTruth xAODCore PathResolver FourMomUtils FTagAnalysisInterfacesLib SystematicsHandlesLib SelectionHelpersLib MCTruthClassifierLib GammaORToolsLib
     )
