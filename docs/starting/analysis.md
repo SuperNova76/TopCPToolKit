@@ -252,7 +252,7 @@ CommonServices: {}
 GeneratorLevelAnalysis: {}
 
 PartonHistory:
-  - histories: 'Ttbar.TtbarLight'
+  - histories: 'Ttbar'
 
 TtbarNNLO: {}
 
@@ -267,7 +267,6 @@ Output:
       # Format should follow: '<suffix>:<output container>'
       '': 'EventInfo'
       'Ttbar_': 'TopPartonHistoryTtbar'
-      'TtbarLight_': 'TopPartonHistoryTtbarLight'
 ```
 
 ### A few pointers for writing a YAML config

@@ -13,7 +13,6 @@ namespace top {
     ANA_MSG_INFO("  - partonScheme: " << m_PartonScheme);
 
     if (m_PartonScheme == "Ttbar") m_PartonHistory = std::make_unique<CalcTtbarPartonHistory>("top::CalcTtbarPartonHistory");
-    // else if (m_PartonScheme == "TtbarLight") m_PartonHistory = std::make_unique<CalcTtbarLightPartonHistory>("top::CalcTtbarLightPartonHistory");
     else if (m_PartonScheme == "Ttz") m_PartonHistory = std::make_unique<CalcTtzPartonHistory>("top::CalcTtzPartonHistory");
     else if (m_PartonScheme == "Ttw") m_PartonHistory = std::make_unique<CalcTtwPartonHistory>("top::CalcTtwPartonHistory");
     else if (m_PartonScheme == "Tth") m_PartonHistory = std::make_unique<CalcTthPartonHistory>("top::CalcTthPartonHistory");

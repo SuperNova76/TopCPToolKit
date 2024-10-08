@@ -32,7 +32,6 @@ Output:
       # Format should follow: '<suffix>:<output container>'
       '': 'EventInfo'
       'Ttbar_': 'PartonHistoryTtbar'
-      # 'TtbarLight_': 'PartonHistoryTtbarLight'
 
 AddConfigBlocks:
     - modulePath: 'TopCPToolkit.truthConfig'
