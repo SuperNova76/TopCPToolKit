@@ -140,7 +140,7 @@ Name in YAML: **Electrons.WorkingPoint**
 :   save the d0 significance and z0sinTheta variables so they can be written out. The default is `False`.
 
 `identificationWP`
-:   the ID WP (string) to use. Supported ID WPs: `TightLH`, `MediumLH`, `LooseBLayerLH`, `TightDNN`, `MediumDNN`, `LooseDNN`, `TightDNNnoCF`, `MediumDNNnoCF`, `LooseDNNnoCF`.
+:   the ID WP (string) to use. Supported ID WPs: `TightLH`, `MediumLH`, `LooseBLayerLH`, `TightDNN`, `MediumDNN`, `LooseDNN`, `TightDNNnoCF`, `MediumDNNnoCF`, `VeryLooseDNNnoCF97`.
 
 `isolationWP`
 :   the isolation WP (string) to use. Supported isolation WPs: `HighPtCaloOnly`, `Loose_VarRad`, `Tight_VarRad`, `TightTrackOnly_VarRad`, `TightTrackOnly_FixedRad`, `NonIso`.

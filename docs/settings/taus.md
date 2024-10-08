@@ -100,10 +100,10 @@ Name in YAML: **TauJets.WorkingPoint**
 :   a postfix to apply to decorations and algorithm names. Typically not needed here as `selectionName` is used internally.
 
 `quality`
-:   the ID WP (string) to use. Supported ID WPs: `Tight`, `Medium`, `Loose`, `VeryLoose`, `NoID`.
+:   the ID WP (string) to use. Supported ID WPs: `Tight`, `Medium`, `Loose`, `VeryLoose`, `Baseline`.
 
 `use_eVeto`
-:   use selection with or without eVeto combined with tauID recommendations: set it to `False` if electron mis-reconstructed as tau is not large background for your analysis. The default is `True`.
+:   use selection with or without eVeto combined with tauID recommendations: set it to `True` if electron mis-reconstructed as tau is a large background for your analysis. The default is `False`.
 
 `useGNTau`
 :   use GNTau based ID instead of RNNTau ID recommendations: new experimental feature and might become default soon. The default is `False`.

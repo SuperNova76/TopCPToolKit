@@ -260,7 +260,7 @@ The algorithm to run FastJet with small-R jets as an input. The output of the al
     - `small_r_jet_indices`: vector of indices of the small-R jets clustered into this large-R jet
 
 
-### [BoostedJetTaggersConfig](../../source/TopCPToolkit/python/BoostedJetTaggersConfig.py)
+### [BoostedJetTaggersConfig](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/blob/main/source/TopCPToolkit/python/BoostedJetTaggersConfig.py)
 Name in YAML: **BoostedJetTaggers**
 
 The algorithm tags large-R jets using the [BoostedJetTaggers](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/Reconstruction/Jet/BoostedJetTaggers/BoostedJetTaggers) package. More details about taggers can be found on [JetTaggingAndScaleFactors twiki](https://twiki.cern.ch/twiki/bin/viewauth/AtlasProtected/JetTaggingAndScaleFactors).

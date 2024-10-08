@@ -181,7 +181,7 @@ The symbol `$` below is a placeholder for any of the following comparison operat
 | `MU_N` | `ptmin $ ref`<br><br>`sel ptmin $ ref` | Compares (`$`) the number of muons with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify an additional muon selection. |
 | `SUM_EL_N_MU_N` | `ptmin $ ref`<br><br>`ptminEL ptminMU $ ref` | Compares (`$`) the number of electrons and muons with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Same, but with different cuts for electrons/muons. |
 | `JET_N` | `ptmin $ ref`<br><br>`sel ptmin $ ref` | Compares (`$`) the number of jets with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify an additional jet selection. |
-| `JET_N_BTAG` | `$ ref`<br><br>`tagger:WP $ ref` | Compares (`$`) the number of b-tagged jets to `ref`.<br><br>Use `tagger:WP` to specify an additional b-tagging configuration. |
+| `JET_N_BTAG` | `$ ref`<br><br>`tagger:WP $ ref`<br><br>`sel $ ref`<br><br>`sel tagger:WP $ ref` | Compares (`$`) the number of b-tagged jets to `ref`.<br><br>Use `tagger:WP` to specify an additional b-tagging configuration.<br><br>Use `sel` to specify an additional jet selection. |
 | `JET_N_GHOST` | `ghost $ ref` <br><br>`ghost ptmin $ ref` | Compares (`$`) the number of jets that contain `ghost`<br>particles with $p_\mathrm{T}>$`ptmin` (in MeV) to `ref`. Ghosts can be:<br>`B`, `C`, `W`, `Z`, `H`, `T` or `TAU`. Use `X!Y` to select `X`-ghosts but veto `Y`-ghosts. |
 | `LJET_N` | `ptmin $ ref` <br><br>`sel ptmin $ ref` | Compares (`$`) the number of large-R jets with <br>$p_\mathrm{T}>$`ptmin` (in MeV) to `ref`.<br>Use `sel` to specify an additional large-R jet selection. |
 | `LJET_N_GHOST` | `ghost $ ref` <br><br>`ghost ptmin $ ref` | Compares (`$`) the number of large-R jets that contain `ghost`<br>particles with $p_\mathrm{T}>$`ptmin` (in MeV) to `ref`. Ghosts can be:<br>`B`, `C`, `W`, `Z`, `H`, `T` or `TAU`. Use `X!Y` to select `X`-ghosts but veto `Y`-ghosts. |
@@ -198,7 +198,7 @@ The symbol `$` below is a placeholder for any of the following comparison operat
 | `OS` | None | Selects the event if it contains two opposite-sign leptons. |
 | `SS` | None | Selects the event if it contains two same-sign leptons. |
 | `EVENTFLAG` | `sel` | Checks that the event passes the selection `sel`.<br>Allows to fold `sel` into the output branch<br>`pass_<region>_%SYS%` defined below.<br>Useful to save storage space as you can now filter out the<br>`sel` branches themselves. |
-| `GLOBALTRIGMATCH` | None | Selects the event if it passes global trigger<br>matching (electrons/muons/photons).|
+| `GLOBALTRIGMATCH` | None<br><br>`sel` | Selects the event if it passes global trigger<br>matching (electrons/muons/photons).<br>Use `sel` to specify a trigger matching setup (defined as `postfix` in the [`Trigger:`](../settings/trigger.md#triggeranalysisblock-triggeranalysissfblock) config block).|
 | `SAVE` | None | Saves the current selection (can be retrieved as `pass_<region>_%SYS%`). |
 | `IMPORT` | `subreg` | Applies the selection cuts defined in another region `subreg`. |
 
