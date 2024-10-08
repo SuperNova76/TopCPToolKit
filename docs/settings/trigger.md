@@ -3,12 +3,12 @@
 ### [TriggerAnalysisBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TriggerAnalysisAlgorithms/python/TriggerAnalysisConfig.py) / [TriggerAnalysisSFBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TriggerAnalysisAlgorithms/python/TriggerAnalysisSFConfig.py)
 This config block allows you to perform trigger decision for any trigger leg, and for electrons/muons/photons also trigger matching and the retrieval of the correct efficiencies and scale factors (especially for multi-lepton triggers).
 
-Name in YAML: **Trigger**
+Name in YAML: **Trigger** / **TriggerMatching**
 
 !!! note
     The `ConfigFactory` name **Trigger** will actually schedule both the [TriggerAnalysisBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TriggerAnalysisAlgorithms/python/TriggerAnalysisConfig.py) and the [TriggerAnalysisSFBlock](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TriggerAnalysisAlgorithms/python/TriggerAnalysisSFConfig.py) in the backend.
     This is what is needed for most users, and there are ways of turning off the SF part as described below.
-    If you really need to access only one config block, you'll need to set them up yourself.
+    To set up the trigger matching on its own, use the name **TriggerMatching**.
 
 `triggerChainsPerYear`
 :   a dictionary with key (string) the year and value (list of strings) the trigger chains. You can also use `||` within a string to enforce an OR of triggers without looking up the individual triggers. Used for both trigger selection and SFs. The default is `{}` (empty dictionary).
@@ -90,6 +90,12 @@ The default is `[]` (empty list).
 `noL1`
 :   toggle off the L1 trigger decision. This flag is required e.g. for running the algorithm on TLA stream data. The default is `False`.
 
+`postfix`
+:   a unique identifier for the trigger matching decorations. Only useful when defining multiple setups. The default is `''` (empty string).
+
+!!! note
+    The `postfix` option allows you to generate multiple types of global trigger matching flag, which you can then call as `GLOBALTRIGMATCH <postfix>` in the [`EventSelection:`](../settings/eventselection.md) config block.
+
 !!! success "Registers the following variables:"
     - `trigPassed`: whether a specific trigger is passed (no systematics)
     - `globalTriggerMatch`: whether the event passes trigger matching requirements
@@ -116,7 +122,7 @@ Name in YAML: **Electrons.TriggerSF**
 `containerName`
 :   the input electron container, with a possible selection, in the format `container` or `container.selection`.
 
-!!! success "Registers the following variables:
+!!! success "Registers the following variables:"
     - `trigEffSF`: the per-electron trigger efficiency or efficiency SF
     - `trigEff`: the per-electron trigger efficiency (if `saveEff`)
 
@@ -138,7 +144,7 @@ Name in YAML: **Muons.TriggerSF**
 `containerName`
 :   the input electron container, with a possible selection, in the format `container` or `container.selection`.
 
-!!! success "Registers the following variables:
+!!! success "Registers the following variables:"
     - `trigEffSF`: the per-muon trigger efficiency or efficiency SF
     - `trigEff`: the per-muon trigger efficiency (if `saveEff`)
 
