@@ -147,8 +147,9 @@ for jobLabel,jobSequence in jobs:
             cfg.merge( jobSequence(args.analysis, flags) )
         from AthenaConfiguration.ComponentFactory import CompFactory
         cfg.addService(CompFactory.THistSvc(Output=[ f"ANALYSIS DATAFILE='{histoFile}' OPT='RECREATE'", f"NTUPLES DATAFILE='{treeFile}' OPT='RECREATE'" ]))
-        for algo in ["TreeMaker","NTupleMaker","MetNTupleMaker","TreeFiller"]:
-            if algo in cfg._algorithms: cfg.getEventAlgo(algo).RootStreamName = "NTUPLES" # redirect ntuple to this file
+        for algo in cfg._algorithms:
+            if algo.startswith("TreeMaker") or algo.startswith("NTupleMaker") or algo.startswith("MetNTupleMaker") or algo.startswith("TreeFiller"):
+                cfg.getEventAlgo(algo).RootStreamName = "NTUPLES" # redirect ntuple to this file
         from AthenaConfiguration.Utils import setupLoggingLevels
         setupLoggingLevels(flags,cfg) # adjust logging levels according to Exec.XXXMessageComponents flags
         cfg.printConfig() # For debugging
