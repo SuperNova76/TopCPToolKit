@@ -120,9 +120,9 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics=False
 
     if use_largeR_jets:
         jetContainer = 'AntiKt10UFOCSSKSoftDropBeta100Zcut10Jets'
-        configSeq += makeConfig ('Jets', containerName='AnaLargeRJets', jetCollection=jetContainer, postfix='largeR_jets')
+        configSeq += makeConfig ('Jets', containerName='LargeRJets', jetCollection=jetContainer, postfix='largeR_jets')
 
-        configSeq += makeConfig ('Jets.PtEtaSelection', containerName='AnaLargeRJets')
+        configSeq += makeConfig ('Jets.PtEtaSelection', containerName='LargeRJets')
         configSeq.setOptionValue ('.selectionDecoration', 'selectPtEta')
         configSeq.setOptionValue ('.selectionName', 'largeR_jets')
         configSeq.setOptionValue ('.minPt', 350e3)
@@ -216,7 +216,7 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics=False
     if use_jets:
         configSeq += makeConfig ('ObjectCutFlow', containerName='AnaJets', selectionName='baselineJvt')
     if use_largeR_jets:
-        configSeq += makeConfig ('ObjectCutFlow', containerName='AnaLargeRJets', selectionName='')
+        configSeq += makeConfig ('ObjectCutFlow', containerName='LargeRJets', selectionName='')
     if use_track_jets:
         configSeq += makeConfig ('ObjectCutFlow', containerName='AnaTrackJets', selectionName='')
 
@@ -257,7 +257,7 @@ def makeRecoConfiguration(flags, algSeq, configSeq, factory, noSystematics=False
         configSeq.setOptionValue ('.selectionName', 'tight')
         configSeq.setOptionValue ('.outputName', 'OutTauJets')
     if use_largeR_jets:
-        configSeq += makeConfig ('Thinning', containerName='AnaLargeRJets')
+        configSeq += makeConfig ('Thinning', containerName='LargeRJets')
         configSeq.setOptionValue ('.selectionName', 'largeR_jets')
         configSeq.setOptionValue ('.outputName', 'OutLargeRJets')
     if use_track_jets:

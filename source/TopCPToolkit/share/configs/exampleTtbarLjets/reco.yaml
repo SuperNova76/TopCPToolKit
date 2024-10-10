@@ -50,12 +50,12 @@ Jets:
       - containerName: 'AnaJets.baselineJvt'
         btagger: 'DL1dv01'
         btagWP: 'FixedCutBEff_85'
-  - containerName: 'AnaLJets'
-    jetCollection: 'AntiKt10UFOCSSKSoftDropBeta100Zcut10Jets'
-    largeRMass: 'Comb'
-    PtEtaSelection:
-        minPt: 200000.0
-        maxEta: 2.0
+  # - containerName: 'LargeRJets'
+  #   jetCollection: 'AntiKt10UFOCSSKSoftDropBeta100Zcut10Jets'
+  #   largeRMass: 'Comb'
+  #   PtEtaSelection:
+  #       minPt: 200000.0
+  #       maxEta: 2.0
 
 Electrons:
   - containerName: 'AnaElectrons'
@@ -202,7 +202,7 @@ EventSelection:
   - electrons: 'AnaElectrons.loose'
     muons: 'AnaMuons.tight'
     jets: 'AnaJets.baselineJvt'
-    largeRjets: 'AnaLJets'
+    largeRjets: 'LargeRJets'
     met: 'AnaMET'
     btagDecoration: 'ftag_select_DL1dv01_FixedCutBEff_85'
     noFilter: False
@@ -238,10 +238,10 @@ EventSelection:
       'supertight': |
         JET_N 1000000 >= 1
         SAVE
-      'boostedjet': |
-        LJET_N 350000 >= 1
-        LJETMASS_N 80000 >= 1
-        SAVE
+#      'boostedjet': |
+#        LJET_N 350000 >= 1
+#        LJETMASS_N 80000 >= 1
+#        SAVE
 
 KLFitter:
   - containerName: 'KLFitterResult'
@@ -279,17 +279,17 @@ Bootstraps:
   nReplicas: 2000
   skipOnMC: False
 
-BoostedJetTaggers:
-- ljets: 'AnaLJets'
-  taggerType: 'JSSWTopTaggerDNN'
-  taggerCalibArea:  'Winter2024_R22_PreRecs/JSSWTopTaggerDNN/'
-  taggerConfigFile: 'DNNTagger_AntiKt10UFOSD_TopContained80_Oct30.dat'
-  taggerDecoration: 'DNNTaggerTopQuarkContained80'
-- ljets: 'AnaLJets'
-  taggerType: 'JSSWTopTaggerANN'
-  taggerCalibArea:  'Winter2024_R22_PreRecs/JSSWTopTaggerANN/'
-  taggerConfigFile: 'JSSANN80Tagger_AntiKt10UFOCSSKSoftDrop_Mar23pol3.dat'
-  taggerDecoration: 'ANN80Tagger'
+#BoostedJetTaggers:
+#- ljets: 'LargeRJets'
+#  taggerType: 'JSSWTopTaggerDNN'
+#  taggerCalibArea:  'Winter2024_R22_PreRecs/JSSWTopTaggerDNN/'
+#  taggerConfigFile: 'DNNTagger_AntiKt10UFOSD_TopContained80_Oct30.dat'
+#  taggerDecoration: 'DNNTaggerTopQuarkContained80'
+#- ljets: 'LargeRJets'
+#  taggerType: 'JSSWTopTaggerANN'
+#  taggerCalibArea:  'Winter2024_R22_PreRecs/JSSWTopTaggerANN/'
+#  taggerConfigFile: 'JSSANN80Tagger_AntiKt10UFOCSSKSoftDrop_Mar23pol3.dat'
+#  taggerDecoration: 'ANN80Tagger'
 
 # After configuring each container, many variables will be saved automatically.
 Output:
@@ -303,7 +303,7 @@ Output:
       # ph_: 'OutPhotons'
       # tau_: 'OutTauJets'
       jet_: 'OutJets'
-      ljet_: 'AnaLJets'
+      # ljet_: 'LargeRJets'
       met_: 'AnaMET'
       klfitter_: 'KLFitterResult'
       '': 'EventInfo'
