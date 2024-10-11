@@ -3,11 +3,28 @@
 ## TopCPToolkit releases
 
 ### Upcoming release
-- [issue #94](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/94): add algorithm for NuFlows reconstruction
+- [issue #113](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/113): Removing usage of TLorentzVector (KLFitter)
 - [issue #148](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/148): Migrate ParticleLevelAlg to Athena
 - [issue #162](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/162): Add Soft Muon Tagging truth information
-- [issue #177](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/177): Adding NLO b quark information to single-top parton history branches
 - [issue #178](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/178): Adding light quark information to single-top parton history branches
+
+### 2.14.0 <small>October 11, 2024</small>
+- We run on AB 25.2.29
+- [issue #94](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/94): add algorithm for NuFlows reconstruction
+- [issue #163](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/163): (Re)implementation of TtbarLight parton history
+- [issue #177](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/177): Adding NLO b quark information to single-top parton history branches
+- [issue #186](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/186): Adding before and after FSR parton information for all decay particles
+- [issue #187](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/187): Adding Ttw parton history
+- [issue #190](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/190): Removing code branch duplication in truthconfig.py
+- [issue #192](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/192): Some updates to the docs
+- [issue #193](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/193): Fix potentially confusing warning in GridSubmission
+- [issue #194](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/194): Fix code crashes when parton level Higgs branches are created
+- [issue #195](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/195): Creating PartonAccessor struct similar to already existing decorator struct
+- [issue #196](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/196): Improve CAR algorithm structure and apply recent parton level code changes
+- [issue #197](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/197): Add BoostedJetTaggersAlg
+- [issue #198](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/198): Fix CAR values not being filled correctly
+- [issue #199](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/199): Fix parton level code crashes when photon-related histories are used
+- [issue #200](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/200): Instructions for correctly setting up multiple object selections
 
 ### 2.13.0 <small>September 10, 2024</small>
 - We run on AB 25.2.25
