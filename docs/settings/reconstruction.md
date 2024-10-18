@@ -76,6 +76,9 @@ Name in YAML: **DiTauMMC**
 `doMAXW`
 :   save information about the reconstruction with the maximum-weight estimator. The default is `False`.
 
+`saveLlhHisto`
+:   save likelihood histograms (`MMC_likelihoods.root`) for debugging purposes. If enabled, it can slow down the MMC running time! The default is `False`.
+
 !!! success "Registers the following variables:"
     - `mmc_fit_status`: the returned status of the MMC fit
     - `mmc_mlm_mass`: the mass of the di-tau resonance using the maximum-likelihood estimator

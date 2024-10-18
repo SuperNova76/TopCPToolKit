@@ -86,6 +86,7 @@ Name in YAML: **TauJets**
     - `truth_pdgId`: pdgId of the linked truth-tau (no systematics)
     - `truth_IsHadronicTau`: whether the linked truth-tau decays hadronically (no systematics)
     - `truth_DecayMode`: decay mode classification of the linked truth-tau  (no systematics)
+    - `truth_ParticleType`: particle type of the linked truth-tau (no systematics)
 
 ### [TauWorkingPointConfig](https://acode-browser1.usatlas.bnl.gov/lxr/source/athena/PhysicsAnalysis/Algorithms/TauAnalysisAlgorithms/python/TauAnalysisConfig.py)
 Name in YAML: **TauJets.WorkingPoint**
