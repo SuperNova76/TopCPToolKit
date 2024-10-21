@@ -119,6 +119,7 @@ OverlapRemoval:
     electronsSelectionName: 'loose'
     muonsSelectionName: 'loose'
     jetsSelectionName: 'baselineJvtLoose'
+    addPreselection: True
   - inputLabel: 'preselectORtight'
     outputLabel: 'passesORtight'
     jets: 'AnaJets.baselineJvt'
@@ -127,6 +128,7 @@ OverlapRemoval:
     electronsSelectionName: 'tight'
     muonsSelectionName: 'tight'
     jetsSelectionName: 'baselineJvtTight'
+    addPreselection: True
 ```
 
 !!! note
@@ -134,6 +136,7 @@ OverlapRemoval:
     However, these are now enhanced with the decision of the respective instance of `OverlapRemoval` (no need to keep track of anything else yourself!).
 
     For jets however, we plugged in twice the `baselineJvt` selection, but we created the `baselineJvtLoose` and `baselineJvtTight` selections after overlap removal thanks to the `jetsSelectionName` option.
+    The additional option `addPreselection` combines these two new selections with the original one, i.e. `baselineJvt`.
 
 !!! abstract "References for the blocks used:"
     - [OverlapRemoval](../settings/overlap.md#overlapanalysisconfig)
