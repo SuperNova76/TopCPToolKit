@@ -217,7 +217,7 @@ Name in YAML: **Jets.BJetCalib**
 
 Corrections to the b-jet momentum to account also for muon-in-jet calibration, as developped in the $VHbb$ and $HH$ analyses. See the [BJetCalibrationTool](https://gitlab.cern.ch/r3hh-public/b-jet-energy-corrections) and [this presentation](https://indico.cern.ch/event/1401273/contributions/5890523/attachments/2834123/4952335/B-jet%20calibration%20in%20HH%20muon-in-jet%20and%20PtReco-1.pdf) for further information.
 
-`jetContainerName`
+`containerName`
 :   the name of the input jet container.
 
 `muonContainerName`
