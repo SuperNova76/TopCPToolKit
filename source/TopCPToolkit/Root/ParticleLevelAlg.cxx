@@ -170,6 +170,8 @@ namespace top {
     static const SG::AuxElement::Accessor<float> acc_eta_dressed("eta_dressed");
     static const SG::AuxElement::Accessor<unsigned int> acc_particle_type(
 									  "classifierParticleType");
+    static const SG::AuxElement::Accessor<unsigned int> acc_particle_origin(
+                    "classifierParticleOrigin");
     static const SG::AuxElement::Accessor<float> acc_photon_isolation(
 								      photon_isolationVar);
 
@@ -279,7 +281,7 @@ namespace top {
 
 	// if requested, apply origin cut
 	if (photon_origins.size()) {
-	  unsigned int origin = acc_particle_type(*photon);
+	  unsigned int origin = acc_particle_origin(*photon);
 	  if (std::find(photon_origins.begin(), photon_origins.end(), origin) ==
 	      photon_origins.end())
 	    continue;
