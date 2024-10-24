@@ -67,7 +67,8 @@ namespace top {
     // The particle with the highest pt
     const xAOD::TruthParticle* highestPtParticle = gammaRadParticles.at(0);
     p4 = GetPtEtaPhiMfromTruth(highestPtParticle);
-    parentpdgId = highestPtParticle->parent()->pdgId();
+    if (highestPtParticle->nParents() > 0) parentpdgId = highestPtParticle->parent()->pdgId();
+    else parentpdgId = 0;
     return true;
   }
 
