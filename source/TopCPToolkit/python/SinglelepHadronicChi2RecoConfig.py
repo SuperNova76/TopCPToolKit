@@ -14,6 +14,7 @@ class SinglelepHadronicChi2RecoConfig(ConfigBlock):
         self.addOption('wResolution', 25., type=float)
         self.addOption('btagger', '', type=str)
         self.addOption('btagWP', '', type=str)
+        self.addOption('storeFullPermutations', False, type=bool)
 
     def makeAlgs(self, config):
         alg = config.createAlgorithm('top::SinglelepHadronicChi2RecoAlg', 'SinglelepHadronicChi2RecoAlg')
@@ -27,6 +28,7 @@ class SinglelepHadronicChi2RecoConfig(ConfigBlock):
         alg.topResolution = self.topResolution
         alg.wResolution = self.wResolution
         alg.bTagDecoration = 'ftag_select_' + self.btagger + '_' + self.btagWP
+        alg.storeFullPermutations = self.storeFullPermutations
 
         alg.hadronic_b_index  = 'chi2_had_b_index_%SYS%'
         alg.light_1_index     = 'chi2_light_1_index_%SYS%'
