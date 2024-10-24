@@ -76,6 +76,10 @@ namespace top {
     // parse lepton type
     try {
       m_leptonTypeEnum = KLFEnums::strToLeptonType.at(m_leptonType);
+      if ( m_leptonTypeEnum != KLFEnums::LeptonType::kNoLepton && m_LHTypeEnum == KLFEnums::Likelihood::ttbar_AllHad) {
+        ANA_MSG_ERROR("If using ttbar_AllHad likelihood, please use leptonType = kNoLepton.");
+        return StatusCode::FAILURE;
+      }
     } catch (std::out_of_range&) {
       ANA_MSG_ERROR("Unrecognized KLFitter leptonType: " << m_leptonType
                     << ". Available options: " << KLFEnums::printEnumOptions(KLFEnums::strToLeptonType));
@@ -339,8 +343,8 @@ namespace top {
     std::vector<size_t> jet_indices;
     const std::vector<const xAOD::Jet*> selected_sorted_jets = sortPt(selected_jets, jet_indices);
 
-    // add leptons to KLFitter particles
-    ANA_CHECK(add_leptons(selected_sorted_electrons, selected_sorted_muons, myParticles));
+    // add leptons to KLFitter particles (not for ttbar all hadronic)
+    if (m_LHTypeEnum != KLFEnums::Likelihood::ttbar_AllHad) ANA_CHECK(add_leptons(selected_sorted_electrons, selected_sorted_muons, myParticles));
 
     // add jets to KLFitter particles
     ANA_CHECK(add_jets(selected_sorted_jets, myParticles));
