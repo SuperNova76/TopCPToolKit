@@ -230,7 +230,7 @@ def check_sample_status(samples, stop_on_error=False):
                 # Users may have mixed different r-tags (MC campaign) in the same dataset,
                 # so we first check if the LDN and latest LDN actually belong to the same campaign.
                 # If they don't, the current code is not really equipped to deal with it, so we don't check further.
-                if get_rtag(ldn) != get_rtag(latest_ldn):
+                if not is_data(ldn) and get_rtag(ldn) != get_rtag(latest_ldn):
                     status_msg += ", " + logger.OKGREEN + "latest" + logger.ENDC
                 else:
                     try:
