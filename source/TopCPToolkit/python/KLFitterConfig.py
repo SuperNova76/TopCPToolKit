@@ -89,7 +89,7 @@ class KLFitterConfig(ConfigBlock):
         if self.saveAllPermutations:
             config.addOutputVar(self.containerName, 'selected', 'selected')
 
-        if self.likelihoodType != 'ttbar_Allhad':
+        if self.likelihoodType != 'ttbar_AllHad':
             config.addOutputVar(self.containerName, 'model_bhad_jetIndex', 'bhad_jetIndex')
             config.addOutputVar(self.containerName, 'model_blep_jetIndex', 'blep_jetIndex')
             config.addOutputVar(self.containerName, 'model_lq1_jetIndex', 'lq1_jetIndex')

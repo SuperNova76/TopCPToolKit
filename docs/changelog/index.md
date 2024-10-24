@@ -3,6 +3,7 @@
 ## TopCPToolkit releases
 
 ### Upcoming release
+- [issue #207](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/207): Fixing ttbar_AllHad topology in KLFitter.
 - [issue #113](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/113): Removing usage of TLorentzVector (KLFitter)
 - [issue #148](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/148): Migrate ParticleLevelAlg to Athena
 - [issue #162](https://gitlab.cern.ch/atlasphys-top/reco/TopCPToolkit/-/issues/162): Add Soft Muon Tagging truth information

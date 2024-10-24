@@ -11,6 +11,7 @@ namespace top {
         ttbar, ttbar_AllHad, ttbar_JetAngles, ttbar_Angular, ttbar_BoostedLJets, ttH, ttZTrilepton
       };
       enum LeptonType {
+        kNoLepton, // for ttbar all-hadronic
         kElectron, kMuon, // single-lepton
         kTriElectron, kTriMuon // for ttZ trilepton
       };
@@ -24,6 +25,7 @@ namespace top {
       };
 
       static const std::map<std::string, LeptonType> strToLeptonType {
+        {"kNoLepton", kNoLepton},
         {"kElectron", kElectron}, {"kMuon", kMuon},
         {"kTriElectron", kTriElectron}, {"kTriMuon", kTriMuon}
       };
