@@ -20,6 +20,7 @@ namespace top {
     declareProperty("topResolution", m_topResolution, "The sigma parameter for the top quark in the chi^2 (in GeV)");
     declareProperty("wResolution", m_wResolution, "The sigma parameter for the W boson in the chi^2 (in GeV)");
     declareProperty("bTagDecoration", m_bTagDecoration, "Decoration used for b-tagging decision");
+    declareProperty("storeFullPermutations", m_storeFullPermutations, "Toggle to store all permutations or just the best one");
   }
 
   StatusCode SinglelepHadronicChi2RecoAlg::initialize() {
@@ -74,15 +75,15 @@ namespace top {
     ANA_CHECK(m_eventInfoHandle.retrieve(evtInfo, sys));
 
     // default-decorate EventInfo
-    m_had_b_idx_decor.set(*evtInfo, -1, sys);
-    m_light_1_idx_decor.set(*evtInfo, -1, sys);
-    m_light_2_idx_decor.set(*evtInfo, -1, sys);
-    m_best_chi2_decor.set(*evtInfo, -1, sys);
+    m_had_b_idx_decor.set(*evtInfo, {}, sys);
+    m_light_1_idx_decor.set(*evtInfo, {}, sys);
+    m_light_2_idx_decor.set(*evtInfo, {}, sys);
+    m_best_chi2_decor.set(*evtInfo, {}, sys);
 
-    m_best_chi2 = 999999.;
-    m_had_b_idx = -1;
-    m_light_1_idx = -1;
-    m_light_2_idx = -1;
+    m_best_chi2.clear();
+    m_had_b_idx.clear();
+    m_light_1_idx.clear();
+    m_light_2_idx.clear();
 
     // skip events not selected
     if (m_selection && !m_selection.getBool(*evtInfo, sys))
@@ -137,6 +138,8 @@ namespace top {
 
     std::vector<std::tuple<int, int, int> > consideredIndices;
 
+    std::vector<SinglelepHadronicChi2RecoAlg::PermutationParam> params;
+
     // run the permutations
     // b-jet permutations
     do {
@@ -153,9 +156,36 @@ namespace top {
         }
 
         // evaluate this permutation
-        this->runSinglePermutation(selected_jets, bIndices.at(0), lIndices.at(0), lIndices.at(1));
+        const double chi2 = this->runSinglePermutation(selected_jets, bIndices.at(0), lIndices.at(0), lIndices.at(1));
+
+        SinglelepHadronicChi2RecoAlg::PermutationParam param;
+        param.bIndex = bIndices.at(0);
+        param.lIndex1 = lIndices.at(0);
+        param.lIndex2 = lIndices.at(1);
+        param.chi2 = chi2;
+
+        params.emplace_back(std::move(param));
+
       } while (std::next_permutation(lIndices.begin(), lIndices.end()));
     } while (std::next_permutation(bIndices.begin(), bIndices.end()));
+
+    // sort the results
+    std::sort(params.begin(), params.end(),
+      [](const auto& lhs, const auto& rhs) {
+        return lhs.chi2 < rhs.chi2;
+      });
+
+    // if only best permutation is needed, take the first one
+    if (!m_storeFullPermutations) {
+      params.resize(1);
+    }
+
+    for (const auto& iparam : params) {
+      m_best_chi2.emplace_back(iparam.chi2);
+      m_had_b_idx.emplace_back(iparam.bIndex);
+      m_light_1_idx.emplace_back(iparam.lIndex1);
+      m_light_2_idx.emplace_back(iparam.lIndex2);
+    }
 
     // store the results
     m_best_chi2_decor.set(*evtInfo, m_best_chi2, sys);
@@ -174,10 +204,10 @@ namespace top {
     return a + b;
   }
 
-  void SinglelepHadronicChi2RecoAlg::runSinglePermutation(const ConstDataVector<xAOD::JetContainer>& jets,
-                                                          const int bIndex,
-                                                          const int lIndex1,
-                                                          const int lIndex2) {
+  double SinglelepHadronicChi2RecoAlg::runSinglePermutation(const ConstDataVector<xAOD::JetContainer>& jets,
+                                                            const int bIndex,
+                                                            const int lIndex1,
+                                                            const int lIndex2) {
 
     const auto& bjet = jets.at(bIndex);
     const auto& ljet1 = jets.at(lIndex1);
@@ -199,15 +229,6 @@ namespace top {
                                    ljet2->e()/1e3);
     const double mW = (l1+l2).M();
     const double mT = (l1+l2+bHad).M();
-    const double currentChi2 = this->chi2(mW, mT);
-
-    if (currentChi2 < m_best_chi2) {
-        m_best_chi2 = currentChi2;
-        m_light_1_idx = lIndex1;
-        m_light_2_idx = lIndex2;
-        m_had_b_idx = bIndex;
-    }
-
+    return this->chi2(mW, mT);
   }
-
 }

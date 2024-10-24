@@ -367,3 +367,6 @@ Only b-tagged jets are considerted on the position of the b-jet and only light-j
 
 `btagWP`
 :   the name of the b-tag WP. Needs to be set. The default is `''`
+
+`storeAllPermutations`
+:   the flag to control whether all considered permutations should be stored or only the best one. The default is `False`
