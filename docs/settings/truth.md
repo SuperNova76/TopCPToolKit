@@ -195,6 +195,12 @@ The algorithm adds three variables for reco jets: index of matched truth jet, $\
 `eventSelection`
 :   event selection (string) to run the algorithm on. The default is ` ` (run over all events).
 
+`recoIsolationMinPt`
+:   minimum reco jet pT to be considered for the dR isolation for the reco jets. The default is `-1` {no additional selection}.
+
+`truthIsolationMinPt`
+:   minimum truth jet pT to be considered for the dR isolation for the truth jets. The default is `-1` {no additional selection}.
+
 !!! success "Registers the following variables:"
     - `truth_jet_paired_index`: the index of the truth-level jets matched to the detector-level jets
     - `reco_to_reco_jet_closest_dR`: the minimum $\Delta R$ with respect to detector-level jets
