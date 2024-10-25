@@ -13,6 +13,8 @@ class JetMatchingConfig(ConfigBlock):
         self.addOption('truthElectrons', None, type=str)
         self.addOption('truthMuons', None, type=str)
         self.addOption('eventSelection', '', type=str)
+        self.addOption('truthIsolationMinPt', -1., type=float)
+        self.addOption('recoIsolationMinPt', -1., type=float)
 
     def makeAlgs(self, config):
         from AnalysisAlgorithmsConfig.ConfigAccumulator import DataType
@@ -28,6 +30,8 @@ class JetMatchingConfig(ConfigBlock):
         alg.truthElectrons =  self.truthElectrons
         alg.truthMuons = self.truthMuons
         alg.eventSelection = self.eventSelection
+        alg.truthIsolationMinPt = self.truthIsolationMinPt
+        alg.recoIsolationMinPt = self.recoIsolationMinPt
 
         alg.truth_jet_paired_index = 'truth_jet_paired_index_%SYS%'
         alg.reco_to_reco_jet_closest_dR = 'reco_to_reco_jet_closest_dR_%SYS%'

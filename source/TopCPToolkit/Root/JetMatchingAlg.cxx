@@ -11,6 +11,8 @@ namespace top {
   {
     declareProperty("criticalDR", m_criticalDR, "Maximum delta R for matching");
     declareProperty("criticalDR_leptons", m_criticalDR_leptons, "Minimum delta R required between reco jet and truth prompt lepton");
+    declareProperty("truthIsolationMinPt", m_truthIsolationMinPt, "Minimum truth jet pT to be considered for the dR isolation for the truth jets");
+    declareProperty("recoIsolationMinPt", m_recoIsolationMinPt, "Minimum reco jet pT to be considered for the dR isolation for the reco jets");
   }
 
   StatusCode JetMatchingAlg::initialize() {
@@ -131,6 +133,12 @@ namespace top {
         continue;
       }
       PtEtaPhiEVector jet2 = GetPtEtaPhiE(jet);
+
+      if (jet2.Pt() < m_recoIsolationMinPt) {
+        ijet2++;
+        continue;
+      }
+
       if (DeltaR(jet1, jet2) < minDR) {
         minDR = DeltaR(jet1, jet2);
       }
@@ -146,8 +154,8 @@ namespace top {
     for (const xAOD::Jet *truthjet : truth_jets) {
       PtEtaPhiMVector truth_jet = GetPtEtaPhiM(truthjet);
       if (DeltaR(reco_jet, truth_jet) < minDR) {
-	minDR = DeltaR(reco_jet, truth_jet);
-	truth_jet_index = itruth;
+        minDR = DeltaR(reco_jet, truth_jet);
+        truth_jet_index = itruth;
       }
       itruth++;
     }
@@ -187,8 +195,12 @@ namespace top {
               continue;
           }
           PtEtaPhiMVector truth_jet2 = GetPtEtaPhiM(truthjet2);
+          if (truth_jet2.Pt() < m_truthIsolationMinPt) {
+            itruth2++;
+            continue;
+          }
           if (DeltaR(truth_jet1, truth_jet2) < minDR) {
-	    minDR = DeltaR(truth_jet1, truth_jet2);
+            minDR = DeltaR(truth_jet1, truth_jet2);
           }
           itruth2++;
         }

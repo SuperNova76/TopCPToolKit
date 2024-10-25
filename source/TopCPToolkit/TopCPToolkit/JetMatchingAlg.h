@@ -72,6 +72,8 @@ namespace top {
 
     float m_criticalDR = 0.3;
     float m_criticalDR_leptons = 0.4;
+    float m_truthIsolationMinPt = -1.;
+    float m_recoIsolationMinPt = -1.;
 
     float get_minDR_reco(PtEtaPhiEVector jet1, unsigned int ijet1, ConstDataVector<xAOD::JetContainer> selected_jets);
     float get_minDR_truth(const xAOD::JetContainer &truth_jets, int truth_jet_index);
