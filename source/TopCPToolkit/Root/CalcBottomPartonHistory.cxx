@@ -28,15 +28,20 @@ namespace top {
       dec.decorateDefault(baseprefix + suffix + "_afterFSR" + parentstring, PartonHistory);
     }
 
+    std::string retrievalprefix = baseprefix + (parent.empty() ? "" : parent + "_") + suffix;
+    std::string decorationprefix = baseprefix + suffix;
+
     // Note, the order of evaluation matters here. The prefix depends on the mode.
     // The flavour agnostic part is only triggered if mode == 2 AND the first retrieve function returns false
-    if ( RetrieveParticleInfo(baseprefix + suffix + "_beforeFSR", v, pdgId) ||
-	 (mode == 2 && RetrieveParticleInfo(baseprefix + parent + suffix + "_beforeFSR", baseprefix + (parent.empty() ? "bbar" : parent + "bar_bbar") + "_beforeFSR", v, pdgId))) {
-      dec.decorateParticle(baseprefix + suffix + "_beforeFSR" + parentstring, v, pdgId, PartonHistory);
+    if ( RetrieveParticleInfo(retrievalprefix + "_beforeFSR", v, pdgId) ||
+	 (mode == 2 && (RetrieveParticleInfo(retrievalprefix + "_beforeFSR", v, pdgId) ||
+			RetrieveParticleInfo(retrievalprefix + "bar" + "_beforeFSR", v, pdgId)))) {
+      dec.decorateParticle(decorationprefix + "_beforeFSR" + parentstring, v, pdgId, PartonHistory);
     }
-    if ( RetrieveParticleInfo(baseprefix + suffix + "_afterFSR", v, pdgId) ||
-	 (mode == 2 && RetrieveParticleInfo(baseprefix + parent + suffix + "_beforeFSR", baseprefix + (parent.empty() ? "bbar" : parent + "bar_bbar") + "_beforeFSR", v, pdgId))) {
-      dec.decorateParticle(baseprefix + suffix + "_afterFSR" + parentstring, v, pdgId, PartonHistory);
+    if ( RetrieveParticleInfo(retrievalprefix + "_afterFSR", v, pdgId) ||
+	 (mode == 2 && (RetrieveParticleInfo(retrievalprefix + "_afterFSR", v, pdgId) ||
+			RetrieveParticleInfo(retrievalprefix + "bar" + "_afterFSR", v, pdgId)))) {
+      dec.decorateParticle(decorationprefix + "_afterFSR" + parentstring, v, pdgId, PartonHistory);
     }
   }
 }
