@@ -21,14 +21,23 @@ Jets:
     FlavourTagging:
       - btagger: 'DL1dv01'
         btagWP: 'FixedCutBEff_85'
+        generator: 'autoconfig'
       - btagger: 'DL1dv01'
         btagWP: 'FixedCutBEff_70'
+        generator: 'autoconfig'
       - btagger: 'DL1dv01'
         btagWP: 'Continuous'
+        generator: 'autoconfig'
     FlavourTaggingEventSF:
       - containerName: 'AnaJets.baselineJvt'
         btagger: 'DL1dv01'
         btagWP: 'Continuous'
+      - containerName: 'AnaJets.baselineJvt'
+        btagger: 'DL1dv01'
+        btagWP: 'FixedCutBEff_70'
+      - containerName: 'AnaJets.baselineJvt'
+        btagger: 'DL1dv01'
+        btagWP: 'FixedCutBEff_85'
 
 Electrons:
   - containerName: 'AnaElectrons'
@@ -36,11 +45,13 @@ Electrons:
     IFFClassification: {}
     WorkingPoint:
       - selectionName: 'loose'
-        likelihoodWP: 'TightLH'
+        identificationWP: 'TightLH'
         isolationWP: 'NonIso'
+        noEffSF: True
       - selectionName: 'tight'
-        likelihoodWP: 'TightLH'
+        identificationWP: 'TightLH'
         isolationWP: 'Tight_VarRad'
+        noEffSF: True
     PtEtaSelection:
         minPt: 25000.0
         maxEta: 2.47
@@ -96,8 +107,8 @@ Thinning:
     selectionName: 'tight||loose'
 
 LeptonSF:
-  - electrons: 'AnaElectrons.tight'
-    muons: 'AnaMuons.tight'
+  #- electrons: 'AnaElectrons.tight'
+  - muons: 'AnaMuons.tight'
     lepton_postfix: 'tight'
 
 Trigger:
@@ -159,8 +170,3 @@ Output:
     - disable jet_.*_eff.*
     - disable jet_jvtEfficiency.*
 
-AddConfigBlocks:
-    - modulePath: 'TopCPToolkit.LeptonSFCalculatorConfig'
-      functionName: 'LeptonSFCalculatorConfig'
-      algName: 'LeptonSF'
-      pos: 'Output'

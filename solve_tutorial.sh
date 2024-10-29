@@ -25,12 +25,14 @@ Tutorial:\
     muons: '\''AnaMuons'\''\
     met: '\''AnaMET'\''\
     jets: '\''AnaJets'\''\
-    selection: '\''pass_ejets_%SYS% || pass_mujets_%SYS%'\''' "$SCRIPT_DIR/source/TopCPToolkit/share/configs/tutorial/reco.yaml"
+    selection: '\''pass_ejets_%SYS%,as_char || pass_mujets_%SYS%,as_char'\''' "$SCRIPT_DIR/source/TopCPToolkit/share/configs/tutorial/reco.yaml"
 
 sed -i '$a\
-    - modulePath: '\''TopCPToolkit.TutorialConfig'\''\
-      functionName: '\''TutorialConfig'\''\
-      algName: '\''Tutorial'\''\
-      pos: '\''Output'\''' "$SCRIPT_DIR/source/TopCPToolkit/share/configs/tutorial/reco.yaml"
+\
+AddConfigBlocks:\
+  - modulePath: '\''TopCPToolkit.TutorialConfig'\''\
+    functionName: '\''TutorialConfig'\''\
+    algName: '\''Tutorial'\''\
+    pos: '\''Output'\''' "$SCRIPT_DIR/source/TopCPToolkit/share/configs/tutorial/reco.yaml"
 
 echo "Done!"
