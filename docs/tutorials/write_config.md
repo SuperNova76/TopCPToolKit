@@ -513,8 +513,9 @@ Let's do it step by step... and of course you can use the documentation and sear
     **Step 4:** define the `LeptonSF:` block as follows
     ```yaml
     LeptonSF:
-    - electrons: 'AnaElectrons.tight'
-      muons: 'AnaMuons.tight'
+    # comment out electrons for now since electron SFs are switched off above
+    # - electrons: 'AnaElectrons.tight'
+    - muons: 'AnaMuons.tight'
       lepton_postfix: 'tight'
     ```
 
