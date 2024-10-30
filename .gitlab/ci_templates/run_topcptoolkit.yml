@@ -72,6 +72,7 @@ variables:
 
 .run_tutorial_yaml: &run_tutorial_yaml
   - set -e
+  - cd ${CI_PROJECT_DIR} && source solve_tutorial.sh
   - cd ${CI_PROJECT_DIR}/${JOBNAME}
   - mkdir ${RUN_DIR}
   - cd ${RUN_DIR}

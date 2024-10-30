@@ -524,7 +524,7 @@ We can now set up our config block in the `reco.yaml` file we've been using so f
       muons: 'AnaMuons'
       met: 'AnaMET'
       jets: 'AnaJets'
-      selection: 'pass_ejets_%SYS% || pass_mujets_%SYS%'
+      selection: 'pass_ejets_%SYS%,as_char || pass_mujets_%SYS%,as_char'
     ```
 
 ### Taking it for a spin!
