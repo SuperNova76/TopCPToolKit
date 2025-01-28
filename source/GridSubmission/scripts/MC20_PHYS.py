@@ -1,5 +1,19 @@
 import GridSubmission.grid
 
-GridSubmission.grid.Add('PHYS_ttbar_PP8_mc20e').datasets = [
-    'mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYS.e6337_s3681_r13145_p5855'
+GridSubmission.grid.Add('PHYS_tWZ_test_mc20a').datasets = [
+    'mc20_13TeV:mc20_13TeV.504330.aMCPy8EG_NNPDF30NLO_A14N23LO_ttee.deriv.DAOD_PHYS.e8255_s3797_r13167_p6266',
+    'mc20_13TeV:mc20_13TeV.504334.aMCPy8EG_NNPDF30NLO_A14N23LO_ttmumu.deriv.DAOD_PHYS.e8255_s3797_r13167_p6266',
+    'mc20_13TeV:mc20_13TeV.504342.aMCPy8EG_NNPDF30NLO_A14N23LO_tttautau.deriv.DAOD_PHYS.e8255_s3797_r13167_p6266',
+    'mc20_13TeV:mc20_13TeV.700309.Sh_2211_ttll.deriv.DAOD_PHYS.e8312_s3797_r13167_p6266',
+    'mc20_13TeV:mc20_13TeV.504330.aMCPy8EG_NNPDF30NLO_A14N23LO_ttee.deriv.DAOD_PHYS.e8255_a907_r14859_p6490',
+    'mc20_13TeV:mc20_13TeV.504334.aMCPy8EG_NNPDF30NLO_A14N23LO_ttmumu.deriv.DAOD_PHYS.e8255_a907_r14859_p6490',
+    'mc20_13TeV:mc20_13TeV.504342.aMCPy8EG_NNPDF30NLO_A14N23LO_tttautau.deriv.DAOD_PHYS.e8255_a907_r14859_p6490',
+    #'mc20_13TeV:mc20_13TeV.364250.Sherpa_222_NNPDF30NNLO_llll.deriv.DAOD_PHYS.e5894_s3681_r13167_p6026',
+    #'mc20_13TeV:mc20_13TeV.364283.Sherpa_222_NNPDF30NNLO_lllljj_EW6.deriv.DAOD_PHYS.e6055_s3681_r13167_p6026',
+    #'mc20_13TeV:mc20_13TeV.364288.Sherpa_222_NNPDF30NNLO_llll_lowMllPtComplement.deriv.DAOD_PHYS.e6096_s3681_r13167_p6490',
+    #'mc20_13TeV:mc20_13TeV.345706.Sherpa_222_NNPDF30NNLO_ggllll_130M4l.deriv.DAOD_PHYS.e6213_s3681_r13167_p6490'
+    'mc20_13TeV:mc20_13TeV.525955.aMCPy8EG_tWZ_Ztoll_DR1.deriv.DAOD_PHYS.e8553_a907_r14859_p6490',
+    'mc20_13TeV:mc20_13TeV.525956.aMCPy8EG_tWZ_Ztoll_DR2.deriv.DAOD_PHYS.e8553_a907_r14859_p6490'
+    #'data15_13TeV:data15_13TeV.periodAllYear.physics_Main.PhysCont.DAOD_PHYS.grp15_v01_p6479',
+    #'data16_13TeV:data16_13TeV.periodAllYear.physics_Main.PhysCont.DAOD_PHYS.grp16_v01_p6026',
 ]
