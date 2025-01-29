@@ -13,7 +13,7 @@ runTop_el.py -i input_sample.txt -o outputDir --parton --particle
 To submit jobs to the grid, use the following command:
 
 ```bash
-python run/grid/submitToGrid.py
+python source/GridSubmission/scripts/submitToGrid.py
 ```
 
 Before submitting, ensure that the option in the configuration file is set correctly:
